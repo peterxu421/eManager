@@ -1,6 +1,3 @@
-import java.sql.Time;
-
-
 public class Itinerary {
 	private int itineraryID;
 	private String itineraryDetails;

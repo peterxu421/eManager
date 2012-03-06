@@ -1,7 +1,6 @@
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 
 public class DatabaseReader{
@@ -118,14 +117,15 @@ public class DatabaseReader{
 	}
 	
 	/*Meeting*/
-	public ArrayList<MeetingClass> getMeetings(Event event){
-		ArrayList<MeetingClass> meetings = new ArrayList<MeetingClass>();
+	public ArrayList<Meeting> getMeetings(Event event){
+		ArrayList<Meeting> meetings = new ArrayList<Meeting>();
 		ResultSet rs = null;
 		rs = SQLManager.getMeetingDetails(connection, event.getEventID());
 		try {
 			while(rs.next()){
 				Date date = Date.parseDate(rs.getDate("Date").toString());
-				MeetingClass meeting = new MeetingClass(rs.getInt(1), rs.getString(3), date, rs.getTime(5), rs.getBoolean(6));
+				Time time = Time.parseTime(rs.getTime(5).toString());
+				Meeting meeting = new Meeting(rs.getInt(1), rs.getString(3), date, time, rs.getBoolean(6));
 				meetings.add(meeting);
 			}
 		} catch (SQLException e) {
@@ -134,15 +134,15 @@ public class DatabaseReader{
 		}
 		return meetings;
 	}
-	public void insertMeeting(Event event, MeetingClass meeting){
-		int meetingID = SQLManager.insertMeetingDetails(connection, event.getEventID(), meeting.getMeetingDetails(), meeting.getDate().toString(), meeting.getTime(), meeting.isDone());
+	public void insertMeeting(Event event, Meeting meeting){
+		int meetingID = SQLManager.insertMeetingDetails(connection, event.getEventID(), meeting.getMeetingDetails(), meeting.getDate().toString(), meeting.getTime().toString(), meeting.isDone());
 		meeting.setMeetingID(meetingID);
 	}
-	public void deleteMeeting(MeetingClass meeting){
+	public void deleteMeeting(Meeting meeting){
 		SQLManager.deleteMeetingDetails(connection, meeting.getMeetingID());
 	}
-	public void updateMeeting(MeetingClass meeting){
-		SQLManager.updateMeetingDetails(connection, meeting.getMeetingID(), meeting.getMeetingDetails(), meeting.getDate().toString(), meeting.getTime(), meeting.isDone());
+	public void updateMeeting(Meeting meeting){
+		SQLManager.updateMeetingDetails(connection, meeting.getMeetingID(), meeting.getMeetingDetails(), meeting.getDate().toString(), meeting.getTime().toString(), meeting.isDone());
 	}  
 	
 	/*Outflow*/
@@ -180,7 +180,8 @@ public class DatabaseReader{
 			rs = SQLManager.getFeedbackDetails(connection, event.getEventID());
 			while(rs.next()){
 				Date date = Date.parseDate(rs.getDate("Date").toString());
-				Feedback feedback = new Feedback(rs.getInt(1), rs.getString(3), date, rs.getTime("Time"));
+				Time time = Time.parseTime(rs.getTime("Time").toString());
+				Feedback feedback = new Feedback(rs.getInt(1), rs.getString(3), date, time);
 				feedbacks.add(feedback);
 			}
 		}catch (SQLException e) {
@@ -189,14 +190,14 @@ public class DatabaseReader{
 		return feedbacks;
 	}
 	public void insertFeedback(Event event, Feedback feedback){
-		int feedbackID = SQLManager.insertFeedbackDetails(connection, event.getEventID(), feedback.getFeedbackDetails(), feedback.getDate().toString(), feedback.getTime());
+		int feedbackID = SQLManager.insertFeedbackDetails(connection, event.getEventID(), feedback.getFeedbackDetails(), feedback.getDate().toString(), feedback.getTime().toString());
 		feedback.setFeedbackID(feedbackID);
 	}
 	public void deleteFeedback(Feedback feedback){
 		SQLManager.deleteFeedbackDetails(connection, feedback.getFeedbackID());
 	}
 	public void updateFeedback(Feedback feedback){
-		SQLManager.updateFeedbackDetails(connection, feedback.getFeedbackID(), feedback.getFeedbackDetails(), feedback.getDate().toString(), feedback.getTime());
+		SQLManager.updateFeedbackDetails(connection, feedback.getFeedbackID(), feedback.getFeedbackDetails(), feedback.getDate().toString(), feedback.getTime().toString());
 	}
 	
 	/*Itinerary*/
@@ -207,7 +208,8 @@ public class DatabaseReader{
 			rs = SQLManager.getItineraryDetails(connection, event.getEventID());
 			while(rs.next()){
 				Date date = Date.parseDate(rs.getDate("Date").toString());
-				Itinerary itinerary = new Itinerary(rs.getInt(1), rs.getString(3), date, rs.getTime("Time"),rs.getBoolean(6));
+				Time time = Time.parseTime(rs.getTime("Time").toString());
+				Itinerary itinerary = new Itinerary(rs.getInt(1), rs.getString(3), date, time,rs.getBoolean(6));
 				itineraries.add(itinerary);
 			}
 		}catch (SQLException e) {
@@ -216,14 +218,14 @@ public class DatabaseReader{
 		return itineraries;
 	}
 	public void insertItinerary(Event event, Itinerary itinerary){
-		int itineraryID = SQLManager.insertItineraryDetails(connection, event.getEventID(), itinerary.getItineraryDetails(), itinerary.getDate().toString(), itinerary.getTime(), itinerary.isDone());
+		int itineraryID = SQLManager.insertItineraryDetails(connection, event.getEventID(), itinerary.getItineraryDetails(), itinerary.getDate().toString(), itinerary.getTime().toString(), itinerary.isDone());
 		itinerary.setItineraryID(itineraryID);
 	}
 	public void deleteItinerary(Itinerary itinerary){
 		SQLManager.deleteItineraryDetails(connection, itinerary.getItineraryID());
 	}
 	public void updateItinerary(Itinerary itinerary){
-		SQLManager.updateItineraryDetails(connection, itinerary.getItineraryID(), itinerary.getItineraryDetails(), itinerary.getDate().toString(), itinerary.getTime(), itinerary.isDone());
+		SQLManager.updateItineraryDetails(connection, itinerary.getItineraryID(), itinerary.getItineraryDetails(), itinerary.getDate().toString(), itinerary.getTime().toString(), itinerary.isDone());
 	}
 	
 	/*ManpowerAllocation*/
@@ -261,8 +263,6 @@ public class DatabaseReader{
 		manpowerAllocation = db.getManpowerAllocation(event).get(0);
 		int size = db.getManpowerAllocation(event).size();
 		System.out.println(size + manpowerAllocation.getTaskDescription());
-		Time time = new Time(12,12,12);
-		java.sql.Date date = new java.sql.Date(0);
 		//System.out.println(itinerary.getItineraryDetails());
 		//itinerary.setItineraryDetails("UPDATE IS SUCCESSFUL");
 		//db.updateFeedback(itinerary);

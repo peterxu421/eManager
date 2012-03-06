@@ -11,15 +11,13 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.DateTime;
 
 
 public class FeedBackAddItem extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Text textIssue;
-	private Event event;
-	private DateTime dateTime;
+	private Text textDate;
 	private Text textTime;
 
 	/**
@@ -27,7 +25,7 @@ public class FeedBackAddItem extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public FeedBackAddItem(Composite parent, int style, Table table, Event event) {
+	public FeedBackAddItem(Composite parent, int style, Table table) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -36,7 +34,6 @@ public class FeedBackAddItem extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
-		this.event = event;
 		
 		Composite compositeFeedBackAdd = new Composite(this, SWT.NONE);
 		compositeFeedBackAdd.setLayout(null);
@@ -63,13 +60,12 @@ public class FeedBackAddItem extends Composite {
 		textIssue.setBounds(152, 31, 125, 23);
 		toolkit.adapt(textIssue, true, true);
 		
-		dateTime = new DateTime(compositeFeedBackAdd, SWT.BORDER);
-		dateTime.setBounds(152, 77, 88, 24);
-		toolkit.adapt(dateTime);
-		toolkit.paintBordersFor(dateTime);
+		textDate = new Text(compositeFeedBackAdd, SWT.BORDER);
+		textDate.setBounds(152, 74, 125, 23);
+		toolkit.adapt(textDate, true, true);
 		
 		textTime = new Text(compositeFeedBackAdd, SWT.BORDER);
-		textTime.setBounds(152, 111, 125, 23);
+		textTime.setBounds(152, 114, 125, 23);
 		toolkit.adapt(textTime, true, true);
 		
 		Button buttonAdd = new Button(compositeFeedBackAdd, SWT.NONE);
@@ -97,23 +93,18 @@ public class FeedBackAddItem extends Composite {
 			if (!textIssue.getText().isEmpty()) {
 				taskAssignArray[0] = textIssue.getText();
 			}
-			if (!textTime.getText().isEmpty()) {
-				taskAssignArray[1] = textTime.getText();
+			if (!textDate.getText().isEmpty()) {
+				taskAssignArray[1] = textDate.getText();
 			}
-			if (!textIssue.getText().isEmpty() && !textTime.getText().isEmpty()) {
+			if (!textTime.getText().isEmpty()) {
+				taskAssignArray[2] = textTime.getText();
+			}
+			if (!textIssue.getText().isEmpty() && !textDate.getText().isEmpty()
+					&& !textTime.getText().isEmpty()) {
 				TableItem item = new TableItem(table, SWT.NULL);
-				for (int i = 0; i < 1; i++) {
+				for (int i = 0; i < 3; i++) {
 					item.setText(i, taskAssignArray[i]);
 				}
-				//update the database
-				Time time = new Time(taskAssignArray[1]);
-				DatabaseReader db = new DatabaseReader();
-				Date date = new Date(dateTime.getYear(),dateTime.getMonth(),dateTime.getDay());
-				Feedback feedback = new Feedback(taskAssignArray[0], date,time);
-				db.insertFeedback(event, feedback);
-				//update the table
-				item.setText(1,date.toString());
-				item.setText(2,taskAssignArray[1]);
 				getParent().dispose();
 			}
 		}

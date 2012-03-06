@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
 
 /*Helper Class for Database Management
  * Providing additional functionality
@@ -93,6 +92,9 @@ public class SQLManager {
 			"AssignedTo VARCHAR(50)," +
 			"DateDue DATE," +
 			"Done SMALLINT)";
+	private static String insertAllocationDetails =
+			"INSERT INTO AllocationDetails" +
+			"VALUES (?,?,?,?,?)";
 	private static String createItineraryDetailsTable =
 			"CREATE TABLE ItineraryDetails(" +
 			"ItineraryID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
@@ -341,7 +343,7 @@ public class SQLManager {
 		}
 		return budgetID;
 	}
-	public static int insertMeetingDetails(Connection connection, int eventID, String meetingDetails, String date, Time time, boolean isDone){
+	public static int insertMeetingDetails(Connection connection, int eventID, String meetingDetails, String date, String time, boolean isDone){
 		String insertMeetingDetails =
 				"INSERT INTO MeetingDetails (EventID,MeetingDetails,Date,Time,Done) " +
 				"VALUES (?,?,?,?,?)";
@@ -353,7 +355,7 @@ public class SQLManager {
 			prep.setInt(1, eventID);
 			prep.setString(2, meetingDetails);
 			prep.setString(3, date);
-			prep.setTime(4, time);
+			prep.setString(4, time);
 			prep.setBoolean(5, isDone);
 			prep.execute();
 			rs=prep.getGeneratedKeys();
@@ -414,7 +416,7 @@ public class SQLManager {
 		}
 		return outflowID;	
 	}
-	public static int insertFeedbackDetails(Connection connection, int eventID, String feedbackDetails, String date, Time time){
+	public static int insertFeedbackDetails(Connection connection, int eventID, String feedbackDetails, String date, String time){
 		String insertFeedbackDetails =
 				"INSERT INTO FeedbackDetails (EventID,FeedbackDetails,Date,Time) " +
 				"VALUES (?,?,?,?)";
@@ -426,7 +428,7 @@ public class SQLManager {
 			prep.setInt(1, eventID);
 			prep.setString(2, feedbackDetails);
 			prep.setString(3, date);
-			prep.setTime(4, time);
+			prep.setString(4, time);
 			prep.execute();
 			rs=prep.getGeneratedKeys();
 			while(rs.next()){
@@ -437,7 +439,7 @@ public class SQLManager {
 		}
 		return feedbackID;
 	}
-	public static int insertItineraryDetails(Connection connection , int eventID, String itineraryDetails, String date, Time time, boolean isDone){
+	public static int insertItineraryDetails(Connection connection , int eventID, String itineraryDetails, String date, String time, boolean isDone){
 		String insertItineraryDetails =
 				"INSERT INTO ItineraryDetails (EventID,ItineraryDetails,Date,Time,Done) " +
 				"VALUES (?,?,?,?,?)";
@@ -449,7 +451,7 @@ public class SQLManager {
 			prep.setInt(1, eventID);
 			prep.setString(2, itineraryDetails);
 			prep.setString(3, date);
-			prep.setTime(4, time);
+			prep.setString(4, time);
 			prep.setBoolean(5, isDone);
 			prep.execute();
 			rs=prep.getGeneratedKeys();
@@ -631,7 +633,7 @@ public class SQLManager {
 			sqle.printStackTrace();
 		}
 	}
-	public static void updateMeetingDetails(Connection connection, int meetingID, String meetingDetails, String date, Time time, boolean isDone){
+	public static void updateMeetingDetails(Connection connection, int meetingID, String meetingDetails, String date, String time, boolean isDone){
 		String updateMeetingDetails =
 				"UPDATE MeetingDetails SET MeetingDetails=?,Date=?,Time=?,Done=? " +
 				"WHERE MeetingID=?";
@@ -640,7 +642,7 @@ public class SQLManager {
 			prep = connection.prepareStatement(updateMeetingDetails);
 			prep.setString(1, meetingDetails);
 			prep.setString(2, date);
-			prep.setTime(3, time);
+			prep.setString(3, time);
 			prep.setBoolean(4, isDone);
 			prep.setInt(5, meetingID);
 			prep.execute();
@@ -683,7 +685,7 @@ public class SQLManager {
 			sqle.printStackTrace();
 		}
 	}
-	public static void updateFeedbackDetails(Connection connection, int feedbackID, String feedbackDetails, String date, Time time){
+	public static void updateFeedbackDetails(Connection connection, int feedbackID, String feedbackDetails, String date, String time){
 		String updateFeedbackDetails =
 				"UPDATE FeedbackDetails SET FeedbackDetails=?,Date=?,Time=? " +
 				"WHERE FeedbackID=?";
@@ -692,14 +694,14 @@ public class SQLManager {
 			prep = connection.prepareStatement(updateFeedbackDetails);
 			prep.setString(1, feedbackDetails);
 			prep.setString(2, date);
-			prep.setTime(3, time);
+			prep.setString(3, time);
 			prep.setInt(4, feedbackID);
 			prep.execute();
 		}catch(SQLException sqle){
 			sqle.printStackTrace();
 		}
 	}
-	public static void updateItineraryDetails(Connection connection, int itineraryID, String itineraryDetails, String date, Time time, boolean isDone){
+	public static void updateItineraryDetails(Connection connection, int itineraryID, String itineraryDetails, String date, String time, boolean isDone){
 		String updateItineraryDetails =
 				"UPDATE ItineraryDetails SET ItineraryDetails=?,Date=?,Time=?,Done=? " +
 				"WHERE ItineraryID=?";
@@ -708,7 +710,7 @@ public class SQLManager {
 			prep = connection.prepareStatement(updateItineraryDetails);
 			prep.setString(1, itineraryDetails);
 			prep.setString(2, date);
-			prep.setTime(3, time);
+			prep.setString(3, time);
 			prep.setBoolean(4, isDone);
 			prep.setInt(5, itineraryID);
 			prep.execute();
@@ -736,6 +738,6 @@ public class SQLManager {
 	
 	public static void main(String[] args){
 		Connection con = ConnectionManager.getConnection();
-		insertFeedbackDetails(con, 1, "I am here!!!!!","2011-12-11",new Time(12,11,11));
+		insertFeedbackDetails(con, 1, "I am here!!!!!","2011-12-11", "12:11:11");
 		}
 }

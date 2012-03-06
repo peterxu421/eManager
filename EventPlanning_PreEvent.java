@@ -247,8 +247,8 @@ public class EventPlanning_PreEvent extends Composite {
 			if (index < tableTaskAssign.getItemCount() && index >= 0) {
 				Shell taskAssignEditItemPage = new Shell(getDisplay());
 				TaskAssignEditItem taskAssignEditItem = new TaskAssignEditItem(
-						taskAssignEditItemPage, SWT.None, tableTaskAssign, index,
-						taskList.get(index));
+						taskAssignEditItemPage, SWT.None, tableTaskAssign,
+						index);
 				taskAssignEditItem.pack();
 				taskAssignEditItemPage.pack();
 				taskAssignEditItemPage.open();
