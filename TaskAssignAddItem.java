@@ -1,5 +1,3 @@
-import java.sql.Date;
-
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
@@ -72,6 +70,12 @@ public class TaskAssignAddItem extends Composite {
 		textAssignedTo = new Text(compositeTaskAssignAdd, SWT.BORDER);
 		textAssignedTo.setBounds(152, 74, 125, 23);
 		toolkit.adapt(textAssignedTo, true, true);
+		
+		dateTime = new DateTime(compositeTaskAssignAdd, SWT.BORDER);
+		dateTime.setBounds(152, 126, 88, 24);
+		toolkit.adapt(dateTime);
+		toolkit.paintBordersFor(dateTime);
+
 
 		Button btnAddItem = new Button(compositeTaskAssignAdd, SWT.NONE);
 		btnAddItem.addSelectionListener(new TaskAssignAddNewItem(table_1));
@@ -84,11 +88,6 @@ public class TaskAssignAddItem extends Composite {
 		btnCancel.setBounds(208, 208, 66, 27);
 		toolkit.adapt(btnCancel, true, true);
 		btnCancel.setText("Cancel");
-		
-		dateTime = new DateTime(compositeTaskAssignAdd, SWT.BORDER);
-		dateTime.setBounds(152, 126, 88, 24);
-		toolkit.adapt(dateTime);
-		toolkit.paintBordersFor(dateTime);
 
 	}
 
@@ -115,13 +114,11 @@ public class TaskAssignAddItem extends Composite {
 				}
 				//Update the data base.
 				DatabaseReader dbReader= new DatabaseReader();
-				Date date = new Date(0);
-				date.setYear(dateTime.getYear()-1900);
-				date.setMonth(dateTime.getMonth());
-				date.setDate(dateTime.getDay());
-				item.setText(2,date.toString());
-				//Task task = new Task(taskAssignArray[0],taskAssignArray[1], date);
-				//dbReader.insertTask(event, task);
+				Date dateDue = new Date(dateTime.getYear(),dateTime.getMonth(),dateTime.getDay());
+				item.setText(2,dateDue.toString());
+				Boolean done=false;
+				Task task = new Task(taskAssignArray[0], taskAssignArray[1], dateDue, done);
+				dbReader.insertTask(event, task);
 				getParent().dispose();
 			}
 		}
