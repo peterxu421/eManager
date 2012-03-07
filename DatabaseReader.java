@@ -209,7 +209,7 @@ public class DatabaseReader{
 			while(rs.next()){
 				Date date = Date.parseDate(rs.getDate("Date").toString());
 				Time time = Time.parseTime(rs.getTime("Time").toString());
-				Itinerary itinerary = new Itinerary(rs.getInt(1), rs.getString(3), date, time,rs.getBoolean(6));
+				Itinerary itinerary = new Itinerary(rs.getInt(1), rs.getString(3), date, time, rs.getBoolean(6));
 				itineraries.add(itinerary);
 			}
 		}catch (SQLException e) {

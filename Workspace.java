@@ -154,7 +154,7 @@ class Workspace extends Composite{
 			}
 			else if(name.equals("Actual-Event"))
 			{
-				EventPlanning_ActualEvent actual_event = new EventPlanning_ActualEvent(right, SWT.NONE);
+				EventPlanning_ActualEvent actual_event = new EventPlanning_ActualEvent(right, SWT.NONE, event);
 				actual_event.pack();
 			}
 			else if(name.equals("Allocation of Manpower"))

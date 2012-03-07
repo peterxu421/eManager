@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
@@ -24,6 +26,9 @@ public class EventPlanning_ActualEvent extends Composite {
 	private Table table_eventPlanning_actualEvent_participants;
 	private Table table_eventPlanning_actualEvents_allocOfManpower;
 	private Table table_eventPlanning_actualEvents_facilitators;
+	
+	private Event event; 
+	private ArrayList<Itinerary> itineraryList;
 
 	/**
 	 * Create the composite.
@@ -31,7 +36,7 @@ public class EventPlanning_ActualEvent extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public EventPlanning_ActualEvent(Composite parent, int style) {
+	public EventPlanning_ActualEvent(Composite parent, int style, Event event) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -40,6 +45,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		this.event = event;
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(10, 10, 563, 325);
@@ -254,19 +260,22 @@ public class EventPlanning_ActualEvent extends Composite {
 		toolkit.adapt(btn_eventPlanning_actualEvent_participants_participants_edit, true, true);
 		btn_eventPlanning_actualEvent_participants_participants_edit.setText("Edit Item");
 		
+		importItineraryData();
+		
 	}
-
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		EventPlanning_ActualEvent calc = new EventPlanning_ActualEvent(shell,
-				SWT.NONE);
-		calc.pack();
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
+	
+	public void importItineraryData(){
+		DatabaseReader db = new DatabaseReader();
+		itineraryList = db.getItinerary(event);
+		
+		for (int i = 0; i<itineraryList.size(); i++){
+			TableItem temp = new TableItem(table_eventPlanning_actualEvent_tableItinerary, SWT.NULL);
+			temp.setText(0, itineraryList.get(i).getItineraryDetails());
+			temp.setText(1, itineraryList.get(i).getDate().toString());
+			temp.setText(2, itineraryList.get(i).getTime().toString());
+			if(itineraryList.get(i).isDone() == true)
+				temp.setText(3, "Yes");
+			else temp.setText(3, "No");
 		}
 	}
 
@@ -276,7 +285,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell itineraryAddItemPage = new Shell(getDisplay());
 			ItineraryAddItem itineraryAddItem = new ItineraryAddItem(
-					itineraryAddItemPage, SWT.None, table_eventPlanning_actualEvent_tableItinerary);
+					itineraryAddItemPage, SWT.None, table_eventPlanning_actualEvent_tableItinerary, event);
 			itineraryAddItem.pack();
 			itineraryAddItemPage.pack();
 			itineraryAddItemPage.open();
@@ -290,7 +299,11 @@ public class EventPlanning_ActualEvent extends Composite {
 				if (index < 0 || index >= table_eventPlanning_actualEvent_tableItinerary.getItemCount()) {
 					// Do nothing.
 				} else {
+					/* update the itinerary table */
 					table_eventPlanning_actualEvent_tableItinerary.remove(index);
+					/* update the database */
+					DatabaseReader db = new DatabaseReader();
+					db.deleteItinerary(db.getItinerary(event).get(index));
 				}
 			}
 		}
