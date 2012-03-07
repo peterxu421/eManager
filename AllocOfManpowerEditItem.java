@@ -21,7 +21,6 @@ public class AllocOfManpowerEditItem extends Composite {
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Text task;
 	private Text assignedTo;
-	private DateTime date;
 	private DateTime dueDate;
 	private Button done;
 	
@@ -68,22 +67,16 @@ public class AllocOfManpowerEditItem extends Composite {
 		toolkit.adapt(lbl_eP_actual_allocOfManpower_assignedTo, true, true);
 		lbl_eP_actual_allocOfManpower_assignedTo.setText("Assigned To");
 
-		Label lbl_eP_actual_allocOfManpower_dateAssigned = new Label(comp_eP_actual_allocOfManpower_AddPage, SWT.NONE);
-		lbl_eP_actual_allocOfManpower_dateAssigned.setAlignment(SWT.CENTER);
-		lbl_eP_actual_allocOfManpower_dateAssigned.setBounds(35, 128, 81, 20);
-		toolkit.adapt(lbl_eP_actual_allocOfManpower_dateAssigned, true, true);
-		lbl_eP_actual_allocOfManpower_dateAssigned.setText("Date Assigned");
-
 		Label lbl_eP_actual_allocOfManpower_dateDue = new Label(comp_eP_actual_allocOfManpower_AddPage, SWT.NONE);
 		lbl_eP_actual_allocOfManpower_dateDue.setAlignment(SWT.CENTER);
-		lbl_eP_actual_allocOfManpower_dateDue.setBounds(62, 163, 54, 17);
+		lbl_eP_actual_allocOfManpower_dateDue.setBounds(62, 129, 54, 17);
 		toolkit.adapt(lbl_eP_actual_allocOfManpower_dateDue, true, true);
 		lbl_eP_actual_allocOfManpower_dateDue.setText("Date Due");
 		
 		Label lbl_eP_actual_allocOfManpower_done = new Label(comp_eP_actual_allocOfManpower_AddPage, SWT.NONE);
 		lbl_eP_actual_allocOfManpower_done.setAlignment(SWT.CENTER);
 		lbl_eP_actual_allocOfManpower_done.setText("Done");
-		lbl_eP_actual_allocOfManpower_done.setBounds(62, 202, 54, 17);
+		lbl_eP_actual_allocOfManpower_done.setBounds(62, 170, 54, 17);
 		toolkit.adapt(lbl_eP_actual_allocOfManpower_done, true, true);
 
 		task = new Text(comp_eP_actual_allocOfManpower_AddPage, SWT.BORDER);
@@ -100,20 +93,8 @@ public class AllocOfManpowerEditItem extends Composite {
 			 assignedTo.setText(table_1.getItem(index).getText(1));
 		}
 		
-		
-		date = new DateTime(comp_eP_actual_allocOfManpower_AddPage, SWT.BORDER);
-		date.setBounds(152, 128, 125, 24);
-		toolkit.adapt(date);
-		toolkit.paintBordersFor(date);
-		if(index >=0 && index < table_1.getItemCount()){
-			Date dt = Date.parseDate(table_1.getItem(index).getText(1));
-			date.setYear(dt.getYear());
-			date.setMonth(dt.getMonth()-1); 
-			date.setDay(dt.getDay());
-		}
-		
 		dueDate = new DateTime(comp_eP_actual_allocOfManpower_AddPage, SWT.BORDER);
-		dueDate.setBounds(152, 163, 125, 24);
+		dueDate.setBounds(152, 129, 125, 24);
 		toolkit.adapt(dueDate);
 		toolkit.paintBordersFor(dueDate);
 		if(index >=0 && index < table_1.getItemCount()){
@@ -124,19 +105,19 @@ public class AllocOfManpowerEditItem extends Composite {
 		}
 		
 		done = new Button(comp_eP_actual_allocOfManpower_AddPage, SWT.CHECK);
-		done.setBounds(152, 203, 93, 16);
+		done.setBounds(152, 169, 93, 16);
 		toolkit.adapt(done, true, true);
 		if(index >=0 && index < table_1.getItemCount())
 			done.setSelection(table_1.getItem(index).getText(3) == "Yes");
 
 		Button btn_eP_actual_allocOfManpower_add = new Button(comp_eP_actual_allocOfManpower_AddPage, SWT.NONE);
-		btn_eP_actual_allocOfManpower_add.setBounds(87, 250, 66, 27);
+		btn_eP_actual_allocOfManpower_add.setBounds(88, 213, 66, 27);
 		toolkit.adapt(btn_eP_actual_allocOfManpower_add, true, true);
 		btn_eP_actual_allocOfManpower_add.setText("Edit Item");
 		btn_eP_actual_allocOfManpower_add.addSelectionListener(new AllocOfManpowerAddNewItem(table_1, index));
 
 		Button btn_eP_actual_allocOfManpower_cancel = new Button(comp_eP_actual_allocOfManpower_AddPage, SWT.NONE);
-		btn_eP_actual_allocOfManpower_cancel.setBounds(211, 250, 66, 27);
+		btn_eP_actual_allocOfManpower_cancel.setBounds(198, 213, 66, 27);
 		toolkit.adapt(btn_eP_actual_allocOfManpower_cancel, true, true);
 		btn_eP_actual_allocOfManpower_cancel.setText("Cancel");
 		btn_eP_actual_allocOfManpower_cancel.addSelectionListener(new Cancel());
@@ -153,24 +134,21 @@ public class AllocOfManpowerEditItem extends Composite {
 		}
 
 		public void widgetSelected(SelectionEvent e) {
-			String[] manPowerArray = new String[5];
+			String[] manPowerArray = new String[4];
 			if (!task.getText().isEmpty()) {
 				manPowerArray[0] = task.getText();
 			}
 			if (!assignedTo.getText().isEmpty()) {
 				manPowerArray[1] = assignedTo.getText();
-				manPowerArray[2] = String.format("%04d",date.getYear())  + "-"
-				        + String.format("%02d", date.getMonth()+1)  + "-" 
-						+ String.format("%02d",date.getDay()) ;  // getMonth() + 1 since getMonth() returns 0 to 11
-				manPowerArray[3] = String.format("%02d",dueDate.getHours()) + ":"
-				        + String.format("%02d",dueDate.getMinutes())  + ":" 
-						+ String.format("%02d",dueDate.getSeconds()) ;
+				manPowerArray[2] = String.format("%02d",dueDate.getYear()) + "-"
+				        + String.format("%02d",dueDate.getMonth()+1)  + "-" 
+						+ String.format("%02d",dueDate.getDay()) ; // getMonth() returns 0 to 11
 				if (done.getSelection()) manPowerArray[3] = "Yes";
-				else manPowerArray[4] = "No";
+				else manPowerArray[3] = "No";
 			if (!task.getText().isEmpty() && !assignedTo.getText().isEmpty()) {
 				/* update the manpower allocation table */
 				TableItem item = table_1.getItem(index);
-				for (int i = 0; i < 5; i++) {
+				for (int i = 0; i < 4; i++) {
 					item.setText(i, manPowerArray[i]);
 				}
 				
@@ -180,8 +158,7 @@ public class AllocOfManpowerEditItem extends Composite {
 				newAlloc.setTaskDescription(manPowerArray[0]);
 				newAlloc.setAssignedTo(manPowerArray[1]);
 				newAlloc.setDate(Date.parseDate(manPowerArray[2]));
-				newAlloc.setDueDate(Date.parseDate(manPowerArray[3]));
-				newAlloc.setDone(manPowerArray[4]=="Yes");
+				newAlloc.setDone(manPowerArray[3]=="Yes");
 				db.updateManpowerAllocation(newAlloc);
 
 				getParent().dispose();

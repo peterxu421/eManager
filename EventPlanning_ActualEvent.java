@@ -56,7 +56,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		TabFolder folder_eventPlanning_actualEvent = new TabFolder(composite, SWT.NONE);
 		//tabFolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		folder_eventPlanning_actualEvent.setToolTipText("Itinerary");
-		folder_eventPlanning_actualEvent.setBounds(10, 10, 666, 305);
+		folder_eventPlanning_actualEvent.setBounds(10, 10, 576, 305);
 		toolkit.adapt(folder_eventPlanning_actualEvent);
 		toolkit.paintBordersFor(folder_eventPlanning_actualEvent);
 
@@ -120,7 +120,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		table_eventPlanning_actualEvents_allocOfManpower = new Table(composite_eventPlanning_actualEvents_allocOfManpower, SWT.BORDER | SWT.FULL_SELECTION);
 		table_eventPlanning_actualEvents_allocOfManpower.setLinesVisible(true);
 		table_eventPlanning_actualEvents_allocOfManpower.setHeaderVisible(true);
-		table_eventPlanning_actualEvents_allocOfManpower.setBounds(10, 10, 552, 255);
+		table_eventPlanning_actualEvents_allocOfManpower.setBounds(10, 10, 457, 255);
 		toolkit.adapt(table_eventPlanning_actualEvents_allocOfManpower);
 		toolkit.paintBordersFor(table_eventPlanning_actualEvents_allocOfManpower);
 		
@@ -131,10 +131,6 @@ public class EventPlanning_ActualEvent extends Composite {
 		TableColumn col_eventPlanning_actualEvents_allocOfManpower_assignedTo = new TableColumn(table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
 		col_eventPlanning_actualEvents_allocOfManpower_assignedTo.setWidth(97);
 		col_eventPlanning_actualEvents_allocOfManpower_assignedTo.setText("Assigned To");
-		
-		TableColumn col_eventPlanning_actualEvents_allocOfManpower_dateAssigned = new TableColumn(table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
-		col_eventPlanning_actualEvents_allocOfManpower_dateAssigned.setWidth(96);
-		col_eventPlanning_actualEvents_allocOfManpower_dateAssigned.setText("Date Assigned");
 		
 		TableColumn col_eventPlanning_actualEvents_allocOfManpower_dateDue = new TableColumn(table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
 		col_eventPlanning_actualEvents_allocOfManpower_dateDue.setWidth(96);
@@ -147,19 +143,19 @@ public class EventPlanning_ActualEvent extends Composite {
 		Button btn_eventPlanning_actualEvent_AllocationManpower_add = new Button(composite_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
 		btn_eventPlanning_actualEvent_AllocationManpower_add.addSelectionListener(new AllocOfManpowerAddItemPage());
 		btn_eventPlanning_actualEvent_AllocationManpower_add.setText("Add Item");
-		btn_eventPlanning_actualEvent_AllocationManpower_add.setBounds(568, 10, 80, 27);
+		btn_eventPlanning_actualEvent_AllocationManpower_add.setBounds(473, 10, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_add, true, true);
 		
 		Button btn_eventPlanning_actualEvent_AllocationManpower_del = new Button(composite_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
 		btn_eventPlanning_actualEvent_AllocationManpower_del.addSelectionListener(new AllocOfManpowerDelItem());
 		btn_eventPlanning_actualEvent_AllocationManpower_del.setText("Delete Item");
-		btn_eventPlanning_actualEvent_AllocationManpower_del.setBounds(568, 43, 80, 27);
+		btn_eventPlanning_actualEvent_AllocationManpower_del.setBounds(473, 43, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_del, true, true);
 		
 		Button btn_eventPlanning_actualEvent_AllocationManpower_edit = new Button(composite_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
 		btn_eventPlanning_actualEvent_AllocationManpower_edit.addSelectionListener(new AllocOfManpowerEditItemPage());
 		btn_eventPlanning_actualEvent_AllocationManpower_edit.setText("Edit Item");
-		btn_eventPlanning_actualEvent_AllocationManpower_edit.setBounds(568, 76, 80, 27);
+		btn_eventPlanning_actualEvent_AllocationManpower_edit.setBounds(473, 76, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_edit, true, true);
 		
 		//facilitators
@@ -291,8 +287,8 @@ public class EventPlanning_ActualEvent extends Composite {
 		    temp.setText(1, manpowerList.get(i).getAssignedTo());
 		    temp.setText(2, manpowerList.get(i).getDate().toString());
 			if(manpowerList.get(i).isDone() == true)
-				temp.setText(4, "Yes");
-			else temp.setText(4, "No");
+				temp.setText(3, "Yes");
+			else temp.setText(3, "No");
 		}
 	}
 
