@@ -29,6 +29,7 @@ public class EventPlanning_ActualEvent extends Composite {
 	
 	private Event event; 
 	private ArrayList<Itinerary> itineraryList;
+	private ArrayList<ManpowerAllocation> manpowerList;
 
 	/**
 	 * Create the composite.
@@ -48,14 +49,14 @@ public class EventPlanning_ActualEvent extends Composite {
 		this.event = event;
 
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 613, 329);
+		composite.setBounds(10, 10, 686, 329);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 
 		TabFolder folder_eventPlanning_actualEvent = new TabFolder(composite, SWT.NONE);
 		//tabFolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		folder_eventPlanning_actualEvent.setToolTipText("Itinerary");
-		folder_eventPlanning_actualEvent.setBounds(10, 10, 576, 305);
+		folder_eventPlanning_actualEvent.setBounds(10, 10, 666, 305);
 		toolkit.adapt(folder_eventPlanning_actualEvent);
 		toolkit.paintBordersFor(folder_eventPlanning_actualEvent);
 
@@ -119,46 +120,46 @@ public class EventPlanning_ActualEvent extends Composite {
 		table_eventPlanning_actualEvents_allocOfManpower = new Table(composite_eventPlanning_actualEvents_allocOfManpower, SWT.BORDER | SWT.FULL_SELECTION);
 		table_eventPlanning_actualEvents_allocOfManpower.setLinesVisible(true);
 		table_eventPlanning_actualEvents_allocOfManpower.setHeaderVisible(true);
-		table_eventPlanning_actualEvents_allocOfManpower.setBounds(10, 10, 418, 255);
+		table_eventPlanning_actualEvents_allocOfManpower.setBounds(10, 10, 552, 255);
 		toolkit.adapt(table_eventPlanning_actualEvents_allocOfManpower);
 		toolkit.paintBordersFor(table_eventPlanning_actualEvents_allocOfManpower);
 		
 		TableColumn col_eventPlanning_actualEvents_allocOfManpower_task = new TableColumn(table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
-		col_eventPlanning_actualEvents_allocOfManpower_task.setWidth(134);
+		col_eventPlanning_actualEvents_allocOfManpower_task.setWidth(217);
 		col_eventPlanning_actualEvents_allocOfManpower_task.setText("Task");
 		
-		TableColumn col_eventPlanning_actualEvents_allocOfManpower_assignedTo = new TableColumn(table_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
-		col_eventPlanning_actualEvents_allocOfManpower_assignedTo.setWidth(71);
+		TableColumn col_eventPlanning_actualEvents_allocOfManpower_assignedTo = new TableColumn(table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
+		col_eventPlanning_actualEvents_allocOfManpower_assignedTo.setWidth(97);
 		col_eventPlanning_actualEvents_allocOfManpower_assignedTo.setText("Assigned To");
 		
-		TableColumn col_eventPlanning_actualEvents_allocOfManpower_dateAssigned = new TableColumn(table_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
-		col_eventPlanning_actualEvents_allocOfManpower_dateAssigned.setWidth(85);
+		TableColumn col_eventPlanning_actualEvents_allocOfManpower_dateAssigned = new TableColumn(table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
+		col_eventPlanning_actualEvents_allocOfManpower_dateAssigned.setWidth(96);
 		col_eventPlanning_actualEvents_allocOfManpower_dateAssigned.setText("Date Assigned");
 		
-		TableColumn col_eventPlanning_actualEvents_allocOfManpower_dateDue = new TableColumn(table_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
-		col_eventPlanning_actualEvents_allocOfManpower_dateDue.setWidth(60);
+		TableColumn col_eventPlanning_actualEvents_allocOfManpower_dateDue = new TableColumn(table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
+		col_eventPlanning_actualEvents_allocOfManpower_dateDue.setWidth(96);
 		col_eventPlanning_actualEvents_allocOfManpower_dateDue.setText("Date Due");
 		
-		TableColumn col_eventPlanning_actualEvents_allocOfManpower_done = new TableColumn(table_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
-		col_eventPlanning_actualEvents_allocOfManpower_done.setWidth(62);
+		TableColumn col_eventPlanning_actualEvents_allocOfManpower_done = new TableColumn(table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
+		col_eventPlanning_actualEvents_allocOfManpower_done.setWidth(42);
 		col_eventPlanning_actualEvents_allocOfManpower_done.setText("Done");
 		
 		Button btn_eventPlanning_actualEvent_AllocationManpower_add = new Button(composite_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
 		btn_eventPlanning_actualEvent_AllocationManpower_add.addSelectionListener(new AllocOfManpowerAddItemPage());
 		btn_eventPlanning_actualEvent_AllocationManpower_add.setText("Add Item");
-		btn_eventPlanning_actualEvent_AllocationManpower_add.setBounds(445, 10, 80, 27);
+		btn_eventPlanning_actualEvent_AllocationManpower_add.setBounds(568, 10, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_add, true, true);
 		
 		Button btn_eventPlanning_actualEvent_AllocationManpower_del = new Button(composite_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
 		btn_eventPlanning_actualEvent_AllocationManpower_del.addSelectionListener(new AllocOfManpowerDelItem());
 		btn_eventPlanning_actualEvent_AllocationManpower_del.setText("Delete Item");
-		btn_eventPlanning_actualEvent_AllocationManpower_del.setBounds(445, 43, 80, 27);
+		btn_eventPlanning_actualEvent_AllocationManpower_del.setBounds(568, 43, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_del, true, true);
 		
 		Button btn_eventPlanning_actualEvent_AllocationManpower_edit = new Button(composite_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
 		btn_eventPlanning_actualEvent_AllocationManpower_edit.addSelectionListener(new AllocOfManpowerEditItemPage());
 		btn_eventPlanning_actualEvent_AllocationManpower_edit.setText("Edit Item");
-		btn_eventPlanning_actualEvent_AllocationManpower_edit.setBounds(445, 76, 80, 27);
+		btn_eventPlanning_actualEvent_AllocationManpower_edit.setBounds(568, 76, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_edit, true, true);
 		
 		//facilitators
@@ -261,6 +262,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		btn_eventPlanning_actualEvent_participants_participants_edit.setText("Edit Item");
 		
 		importItineraryData();
+		importManpowerAllocationData();
 		
 	}
 	
@@ -276,6 +278,22 @@ public class EventPlanning_ActualEvent extends Composite {
 			if(itineraryList.get(i).isDone() == true)
 				temp.setText(3, "Yes");
 			else temp.setText(3, "No");
+		}
+	}
+	
+	public void importManpowerAllocationData(){
+		DatabaseReader db = new DatabaseReader();
+		manpowerList = db.getManpowerAllocation(event);
+		
+		for(int i=0; i>manpowerList.size(); i++){
+			TableItem temp = new TableItem(table_eventPlanning_actualEvents_allocOfManpower, SWT.NULL);
+			temp.setText(0, manpowerList.get(i).getTaskDescription());
+		    temp.setText(1, manpowerList.get(i).getAssignedTo());
+		    temp.setText(2, manpowerList.get(i).getDate().toString());
+		    temp.setText(3, manpowerList.get(i).getDueDate().toString());
+			if(manpowerList.get(i).isDone() == true)
+				temp.setText(4, "Yes");
+			else temp.setText(4, "No");
 		}
 	}
 
@@ -330,7 +348,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell allocOfManpowerAddItemPage = new Shell(getDisplay());
 			AllocOfManpowerAddItem allocOfManpowerAddItem = new AllocOfManpowerAddItem(
-					allocOfManpowerAddItemPage, SWT.None, table_eventPlanning_actualEvents_allocOfManpower);
+					allocOfManpowerAddItemPage, SWT.None, table_eventPlanning_actualEvents_allocOfManpower, event);
 			allocOfManpowerAddItem.pack();
 			allocOfManpowerAddItemPage.pack();
 			allocOfManpowerAddItemPage.open();
@@ -344,7 +362,11 @@ public class EventPlanning_ActualEvent extends Composite {
 				if (index < 0 || index >= table_eventPlanning_actualEvents_allocOfManpower.getItemCount()) {
 					// Do nothing.
 				} else {
+					/* update the allocation table */
 					table_eventPlanning_actualEvents_allocOfManpower.remove(index);
+					/* update the database */
+					DatabaseReader db = new DatabaseReader();
+					db.deleteManpowerAllocation(db.getManpowerAllocation(event).get(index));
 				}
 			}
 		}
