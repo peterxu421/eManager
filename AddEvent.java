@@ -151,30 +151,31 @@ public class AddEvent extends Composite {
 			databaseReader.deleteEvent(events.get(index));
 		}
 	}
-	
 	class SelectProjectHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell shell = new Shell(getDisplay());
 			shell.setLocation(200,100);
 			int index=list.getSelectionIndex();
-			Event existEvent=events.get(index);
-			Workspace workspace = new Workspace(shell, SWT.None, existEvent);
-			workspace.pack();
-			shell.pack();
-			shell.open();
-			getParent().dispose();
+			if(index!=-1){
+				Event existEvent=events.get(index);
+				Workspace workspace = new Workspace(shell, SWT.None, existEvent);
+				workspace.pack();
+				shell.pack();
+				shell.open();
+				getParent().dispose();
+			}	
 		}
 	}
 	class AddEventHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell  add_newEvent_shell = new Shell(getDisplay(),SWT.NO_TRIM|SWT.ON_TOP);
+			add_newEvent_shell.setLocation(400, 300);
 			CreatNewEventPage add_newEvent_page = new CreatNewEventPage(add_newEvent_shell, SWT.None);
 			add_newEvent_page.pack();
 			add_newEvent_shell.pack();
 			add_newEvent_shell.open();
 		}
 	}
-	
 	public class CreatNewEventPage extends Composite {
 
 		private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
@@ -229,7 +230,11 @@ public class AddEvent extends Composite {
 			btnCancel.setBounds(133, 121, 94, 28);
 			toolkit.adapt(btnCancel, true, true);
 			btnCancel.setText("Cancel");
-			btnCancel.addSelectionListener(new Cancel());
+			btnCancel.addSelectionListener(new SelectionAdapter(){
+				public void widgetSelected(SelectionEvent e){
+					getParent().dispose();
+				}
+			});
 		}
 		class CreateEventHandler extends SelectionAdapter {
 			public void widgetSelected(SelectionEvent e) {
