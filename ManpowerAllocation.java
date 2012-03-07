@@ -4,26 +4,22 @@ public class ManpowerAllocation {
 	private String taskDescription;
 	private String assignedTo;
 	private Date date;
-	private Date dueDate;
 	private boolean done;
 	public ManpowerAllocation(int taskID, String taskDescription,
-			String assignedTo, Date date, Date dueDate, boolean done) {
+			String assignedTo, Date date, boolean done) {
 		super();
 		this.taskID = taskID;
 		this.taskDescription = taskDescription;
 		this.assignedTo = assignedTo;
 		this.date = date;
-		this.dueDate = dueDate;
 		this.done = done;
 	}
-
 	public ManpowerAllocation(String taskDescription, String assignedTo,
-			Date date, Date dueDate, boolean done) {
+			Date date, boolean done) {
 		super();
 		this.taskDescription = taskDescription;
 		this.assignedTo = assignedTo;
 		this.date = date;
-		this.dueDate = dueDate;
 		this.done = done;
 	}
 	public int getTaskID() {
@@ -41,14 +37,6 @@ public class ManpowerAllocation {
 	public String getAssignedTo() {
 		return assignedTo;
 	}
-	public Date getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-
 	public void setAssignedTo(String assignedTo) {
 		this.assignedTo = assignedTo;
 	}
@@ -64,4 +52,5 @@ public class ManpowerAllocation {
 	public void setDone(boolean done) {
 		this.done = done;
 	}
+	
 }

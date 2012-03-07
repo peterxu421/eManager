@@ -154,7 +154,7 @@ public class AllocOfManpowerAddItem extends Composite {
 				
 				/* update the database */
 				DatabaseReader db = new DatabaseReader();
-				ManpowerAllocation newAlloc = new ManpowerAllocation(manPowerArray[0], manPowerArray[1], Date.parseDate(manPowerArray[3]), Date.parseDate(manPowerArray[3]), manPowerArray[4] == "Yes");
+				ManpowerAllocation newAlloc = new ManpowerAllocation(manPowerArray[0], manPowerArray[1], Date.parseDate(manPowerArray[3]), manPowerArray[4] == "Yes");
 				db.insertManpowerAllocation(event, newAlloc);
 
 				getParent().dispose();

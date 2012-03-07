@@ -290,7 +290,6 @@ public class EventPlanning_ActualEvent extends Composite {
 			temp.setText(0, manpowerList.get(i).getTaskDescription());
 		    temp.setText(1, manpowerList.get(i).getAssignedTo());
 		    temp.setText(2, manpowerList.get(i).getDate().toString());
-		    temp.setText(3, manpowerList.get(i).getDueDate().toString());
 			if(manpowerList.get(i).isDone() == true)
 				temp.setText(4, "Yes");
 			else temp.setText(4, "No");
