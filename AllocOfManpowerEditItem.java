@@ -98,7 +98,7 @@ public class AllocOfManpowerEditItem extends Composite {
 		toolkit.adapt(dueDate);
 		toolkit.paintBordersFor(dueDate);
 		if(index >=0 && index < table_1.getItemCount()){
-			Date dt = Date.parseDate(table_1.getItem(index).getText(1));
+			Date dt = Date.parseDate(table_1.getItem(index).getText(2));
 			dueDate.setYear(dt.getYear());
 			dueDate.setMonth(dt.getMonth()-1); 
 			dueDate.setDay(dt.getDay());

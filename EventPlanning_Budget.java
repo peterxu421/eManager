@@ -482,8 +482,7 @@ public class EventPlanning_Budget extends Composite {
 					
 					/* update database */
 					DatabaseReader db = new DatabaseReader();
-					BudgetAllocation toBeDeleted = db.getBudgetAllocation(event).get(index);
-					db.deleteBudgetAllocation(toBeDeleted);
+					db.deleteBudgetAllocation(budgetAllocationList.get(index));
 					
 					/* update budget overview section */
 					LabelCashFlow lbl = new LabelCashFlow();
@@ -531,8 +530,7 @@ public class EventPlanning_Budget extends Composite {
 					
 					/* update database */
 					DatabaseReader db = new DatabaseReader();
-					Inflow toBeDeleted = db.getInflow(event).get(index);
-					db.deleteInflow(toBeDeleted);
+					db.deleteInflow(inflowList.get(index));
 					
 					/* update budget overview section */
 					LabelCashFlow lbl = new LabelCashFlow();
@@ -578,8 +576,7 @@ public class EventPlanning_Budget extends Composite {
 					
 					/* update database */
 					DatabaseReader db = new DatabaseReader();
-					Outflow toBeDeleted = db.getOutflow(event).get(index);
-					db.deleteOutflow(toBeDeleted);
+					db.deleteOutflow(outflowList.get(index));
 					
 					/* update budget overview section */
 					LabelCashFlow lbl = new LabelCashFlow();

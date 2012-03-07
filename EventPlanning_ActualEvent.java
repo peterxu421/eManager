@@ -316,7 +316,7 @@ public class EventPlanning_ActualEvent extends Composite {
 					table_eventPlanning_actualEvent_tableItinerary.remove(index);
 					/* update the database */
 					DatabaseReader db = new DatabaseReader();
-					db.deleteItinerary(db.getItinerary(event).get(index));
+					db.deleteItinerary(itineraryList.get(index));
 				}
 			}
 		}
@@ -361,7 +361,7 @@ public class EventPlanning_ActualEvent extends Composite {
 					table_eventPlanning_actualEvents_allocOfManpower.remove(index);
 					/* update the database */
 					DatabaseReader db = new DatabaseReader();
-					db.deleteManpowerAllocation(db.getManpowerAllocation(event).get(index));
+					db.deleteManpowerAllocation(manpowerList.get(index));
 				}
 			}
 		}

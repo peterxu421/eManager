@@ -155,7 +155,7 @@ public class EventPlanning_Meeting extends Composite {
 					
 				/* update the database */
 				DatabaseReader db = new DatabaseReader();
-				db.deleteMeeting(db.getMeetings(event).get(index));
+				db.deleteMeeting(meetingList.get(index));
 				}
 			}
 		}
