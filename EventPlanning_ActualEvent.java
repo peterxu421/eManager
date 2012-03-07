@@ -98,13 +98,13 @@ public class EventPlanning_ActualEvent extends Composite {
 
 		Button btn_eventPlanning_actualEvent_Itinerary_del = new Button(comp_eventPlanning_actualEvent_Itinerary, SWT.NONE);
 		btn_eventPlanning_actualEvent_Itinerary_del.addSelectionListener(new ItineraryDeleteItem());
-		btn_eventPlanning_actualEvent_Itinerary_del.setBounds(462, 82, 80, 27);
+		btn_eventPlanning_actualEvent_Itinerary_del.setBounds(462, 45, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_del, true, true);
 		btn_eventPlanning_actualEvent_Itinerary_del.setText("Delete Item");
 
 		Button btn_eventPlanning_actualEvent_Itinerary_edit = new Button(comp_eventPlanning_actualEvent_Itinerary, SWT.NONE);
 		btn_eventPlanning_actualEvent_Itinerary_edit.addSelectionListener(new ItineraryEditItemPage());
-		btn_eventPlanning_actualEvent_Itinerary_edit.setBounds(462, 158, 80, 27);
+		btn_eventPlanning_actualEvent_Itinerary_edit.setBounds(462, 78, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_edit, true, true);
 		btn_eventPlanning_actualEvent_Itinerary_edit.setText("Edit Item");
 
