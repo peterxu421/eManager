@@ -447,6 +447,7 @@ public class EventPlanning_Budget extends Composite {
 			temp.setText(4, String.valueOf(outflowList.get(i).getCost()));
 			
 			totalOutflow += outflowList.get(i).getCost();
+			System.out.println(totalOutflow);
 		}	
 		double currentAmount = Double.parseDouble(EventPlanning_Budget.lblSpentAmount.getText());
 		EventPlanning_Budget.lblSpentAmount.setText(String.valueOf(df.format(currentAmount + totalOutflow)));
@@ -456,18 +457,6 @@ public class EventPlanning_Budget extends Composite {
         lbl.label(); 
 	}
 
-/*	public static void main(String[] args){
-	    Display display = new Display();
-	    Shell shell = new Shell(display);
-	    EventPlanning_Budget page = new EventPlanning_Budget(shell, SWT.NONE, event);
-	    page.pack();
-	    shell.pack();
-	    shell.open();
-	    while(!shell.isDisposed()){
-	        if(!display.readAndDispatch()) display.sleep();
-	    }
-	} //End of main()
-*/	
 	// Budget Allocation
 	class AddAllocation extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
