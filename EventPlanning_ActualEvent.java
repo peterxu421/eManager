@@ -48,14 +48,14 @@ public class EventPlanning_ActualEvent extends Composite {
 		this.event = event;
 
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 563, 325);
+		composite.setBounds(10, 10, 613, 329);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 
 		TabFolder folder_eventPlanning_actualEvent = new TabFolder(composite, SWT.NONE);
 		//tabFolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		folder_eventPlanning_actualEvent.setToolTipText("Itinerary");
-		folder_eventPlanning_actualEvent.setBounds(10, 10, 543, 305);
+		folder_eventPlanning_actualEvent.setBounds(10, 10, 576, 305);
 		toolkit.adapt(folder_eventPlanning_actualEvent);
 		toolkit.paintBordersFor(folder_eventPlanning_actualEvent);
 
@@ -67,7 +67,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		toolkit.paintBordersFor(comp_eventPlanning_actualEvent_Itinerary);
 
 		table_eventPlanning_actualEvent_tableItinerary = new Table(comp_eventPlanning_actualEvent_Itinerary, SWT.BORDER | SWT.FULL_SELECTION);
-		table_eventPlanning_actualEvent_tableItinerary.setBounds(10, 10, 418, 255);
+		table_eventPlanning_actualEvent_tableItinerary.setBounds(10, 10, 446, 255);
 		toolkit.adapt(table_eventPlanning_actualEvent_tableItinerary);
 		toolkit.paintBordersFor(table_eventPlanning_actualEvent_tableItinerary);
 		table_eventPlanning_actualEvent_tableItinerary.setHeaderVisible(true);
@@ -79,32 +79,32 @@ public class EventPlanning_ActualEvent extends Composite {
 		col_eventPlanning_actualEvent__itinerary_description.setText("Description");
 
 		TableColumn col_eventPlanning_actualEvent__itinerary_date = new TableColumn(table_eventPlanning_actualEvent_tableItinerary, SWT.NONE);
-		col_eventPlanning_actualEvent__itinerary_date.setWidth(71);
+		col_eventPlanning_actualEvent__itinerary_date.setWidth(93);
 		col_eventPlanning_actualEvent__itinerary_date.setText("Date");
 
 		TableColumn col_eventPlanning_actualEvent__itinerary_time = new TableColumn(table_eventPlanning_actualEvent_tableItinerary, SWT.NONE);
-		col_eventPlanning_actualEvent__itinerary_time.setWidth(68);
+		col_eventPlanning_actualEvent__itinerary_time.setWidth(93);
 		col_eventPlanning_actualEvent__itinerary_time.setText("Time");
 
 		TableColumn col_eventPlanning_actualEvent__itinerary_done = new TableColumn(table_eventPlanning_actualEvent_tableItinerary, SWT.NONE);
-		col_eventPlanning_actualEvent__itinerary_done.setWidth(77);
+		col_eventPlanning_actualEvent__itinerary_done.setWidth(59);
 		col_eventPlanning_actualEvent__itinerary_done.setText("Done");
 
 		Button btn_eventPlanning_actualEvent_Itinerary_add = new Button(comp_eventPlanning_actualEvent_Itinerary, SWT.NONE);
 		btn_eventPlanning_actualEvent_Itinerary_add.addSelectionListener(new ItineraryAddItemPage());
-		btn_eventPlanning_actualEvent_Itinerary_add.setBounds(445, 10, 80, 27);
+		btn_eventPlanning_actualEvent_Itinerary_add.setBounds(462, 10, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_add, true, true);
 		btn_eventPlanning_actualEvent_Itinerary_add.setText("Add Item");
 
 		Button btn_eventPlanning_actualEvent_Itinerary_del = new Button(comp_eventPlanning_actualEvent_Itinerary, SWT.NONE);
 		btn_eventPlanning_actualEvent_Itinerary_del.addSelectionListener(new ItineraryDeleteItem());
-		btn_eventPlanning_actualEvent_Itinerary_del.setBounds(445, 43, 80, 27);
+		btn_eventPlanning_actualEvent_Itinerary_del.setBounds(462, 82, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_del, true, true);
 		btn_eventPlanning_actualEvent_Itinerary_del.setText("Delete Item");
 
 		Button btn_eventPlanning_actualEvent_Itinerary_edit = new Button(comp_eventPlanning_actualEvent_Itinerary, SWT.NONE);
 		btn_eventPlanning_actualEvent_Itinerary_edit.addSelectionListener(new ItineraryEditItemPage());
-		btn_eventPlanning_actualEvent_Itinerary_edit.setBounds(445, 76, 80, 27);
+		btn_eventPlanning_actualEvent_Itinerary_edit.setBounds(462, 158, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_edit, true, true);
 		btn_eventPlanning_actualEvent_Itinerary_edit.setText("Edit Item");
 
@@ -315,7 +315,7 @@ public class EventPlanning_ActualEvent extends Composite {
 			if (index < table_eventPlanning_actualEvent_tableItinerary.getItemCount() && index >= 0) {
 				Shell itineraryEditItemPage = new Shell(getDisplay());
 				ItineraryEditItem itineraryEditItem = new ItineraryEditItem(
-						itineraryEditItemPage, SWT.None, table_eventPlanning_actualEvent_tableItinerary, index);
+						itineraryEditItemPage, SWT.None, table_eventPlanning_actualEvent_tableItinerary, index, event);
 				itineraryEditItem.pack();
 				itineraryEditItemPage.pack();
 				itineraryEditItemPage.open();

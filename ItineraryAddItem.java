@@ -87,10 +87,13 @@ public class ItineraryAddItem extends Composite {
 		toolkit.adapt(date);
 		toolkit.paintBordersFor(date);
 		
-		time = new DateTime(comp_eP_actual_itinerary_addPage, SWT.BORDER);
+		time = new DateTime(comp_eP_actual_itinerary_addPage, SWT.BORDER | SWT.TIME);
 		time.setBounds(152, 126, 125, 24);
 		toolkit.adapt(time);
 		toolkit.paintBordersFor(time);
+		time.setHours(0);
+		time.setMinutes(0);
+		time.setSeconds(0);
 		
 		done = new Button(comp_eP_actual_itinerary_addPage, SWT.CHECK);
 		done.setBounds(152, 178, 93, 16);
@@ -98,14 +101,12 @@ public class ItineraryAddItem extends Composite {
 
 
 		Button btn_eP_actual_itinerary_add = new Button(comp_eP_actual_itinerary_addPage, SWT.NONE);
-		btn_eP_actual_itinerary_add.addSelectionListener(new ItineraryAddNewItem(table_1));
 		btn_eP_actual_itinerary_add.setBounds(85, 237, 66, 27);
 		toolkit.adapt(btn_eP_actual_itinerary_add, true, true);
 		btn_eP_actual_itinerary_add.setText("Add Item");
 		btn_eP_actual_itinerary_add.addSelectionListener(new ItineraryAddNewItem(table_1));
 
 		Button btn_eP_actual_itinerary_cancel = new Button(comp_eP_actual_itinerary_addPage, SWT.NONE);
-		btn_eP_actual_itinerary_cancel.addSelectionListener(new ItineraryCancel());
 		btn_eP_actual_itinerary_cancel.setBounds(209, 237, 66, 27);
 		toolkit.adapt(btn_eP_actual_itinerary_cancel, true, true);
 		btn_eP_actual_itinerary_cancel.setText("Cancel");
