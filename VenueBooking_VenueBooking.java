@@ -41,7 +41,7 @@ public class VenueBooking_VenueBooking extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 440, 307);
+		composite.setBounds(10, 10, 450, 330);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		

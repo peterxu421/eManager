@@ -63,6 +63,7 @@ public class WelcomePage extends Composite {
 		btnVenueManagement.setLayoutData(fd_btnVenueManagement);
 		toolkit.adapt(btnVenueManagement, true, true);
 		btnVenueManagement.setText("Venue Management");
+		btnVenueManagement.addSelectionListener(new venueManager());
 
 	}
 	class Event extends SelectionAdapter {
@@ -77,4 +78,17 @@ public class WelcomePage extends Composite {
 			getParent().dispose();
 		}
 	}
+	class venueManager extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
+			Shell shell = new Shell(getDisplay());
+			shell.setLocation(200,100);
+			Workspace2 ws2 = new Workspace2(shell, SWT.None);
+				ws2.pack();
+				shell.pack();
+				shell.open();
+				getParent().dispose();
+			}	
+		}
 }
+
+

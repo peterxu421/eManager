@@ -15,7 +15,7 @@ import org.eclipse.swt.events.SelectionEvent;
 public class VenueManagement_VenueList extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	private Table table;
+	private Table venueTable;
 
 	/**
 	 * Create the composite.
@@ -33,104 +33,86 @@ public class VenueManagement_VenueList extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(0, 0, 799, 492);
+		composite.setBounds(10, 10, 500, 350);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
-		Composite composite_1 = new Composite(composite, SWT.NONE);
-		composite_1.setBounds(0, 0, 463, 334);
-		toolkit.adapt(composite_1);
-		toolkit.paintBordersFor(composite_1);
+		venueTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		venueTable.setLinesVisible(true);
+		venueTable.setHeaderVisible(true);
+		venueTable.setBounds(10, 10, 307, 314);
+		toolkit.adapt(venueTable);
+		toolkit.paintBordersFor(venueTable);
 		
-		table = new Table(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setBounds(10, 10, 307, 314);
-		toolkit.adapt(table);
-		toolkit.paintBordersFor(table);
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
+		TableColumn tableColumn = new TableColumn(venueTable, SWT.CENTER);
+		tableColumn.setWidth(100);
+		tableColumn.setText("Name");
 		
-		TableColumn tblclmnNewColumn = new TableColumn(table, SWT.NONE);
-		tblclmnNewColumn.setWidth(100);
-		tblclmnNewColumn.setText("Name");
+		TableColumn tableColumn_1 = new TableColumn(venueTable, SWT.CENTER);
+		tableColumn_1.setWidth(100);
+		tableColumn_1.setText("Location");
 		
-		TableColumn tblclmnNewColumn_1 = new TableColumn(table, SWT.NONE);
-		tblclmnNewColumn_1.setWidth(100);
-		tblclmnNewColumn_1.setText("Location");
+		TableColumn tableColumn_2 = new TableColumn(venueTable, SWT.CENTER);
+		tableColumn_2.setWidth(103);
+		tableColumn_2.setText("Type");
 		
-		TableColumn tblclmnNewColumn_2 = new TableColumn(table, SWT.NONE);
-		tblclmnNewColumn_2.setWidth(100);
-		tblclmnNewColumn_2.setText("Type");
+		Button btnAdd = new Button(composite, SWT.NONE);
+		btnAdd.setText("Add");
+		btnAdd.setBounds(348, 10, 89, 27);
+		toolkit.adapt(btnAdd, true, true);
+		btnAdd.addSelectionListener(new add());
 		
-		Button btnAddVenue = new Button(composite_1, SWT.NONE);
-		btnAddVenue.addSelectionListener(new VenueListAddPage());
-		btnAddVenue.setBounds(366, 10, 89, 27);
-		toolkit.adapt(btnAddVenue, true, true);
-		btnAddVenue.setText("Add Venue");
+		Button btnDelete = new Button(composite, SWT.NONE);
+		btnDelete.setText("Delete");
+		btnDelete.setBounds(348, 43, 89, 27);
+		toolkit.adapt(btnDelete, true, true);
+		btnDelete.addSelectionListener(new delete());
 		
-		Button btnDeleteVenue = new Button(composite_1, SWT.NONE);
-		btnDeleteVenue.addSelectionListener(new VenueListDeleteItem(table));
-		btnDeleteVenue.setBounds(366, 48, 89, 27);
-		toolkit.adapt(btnDeleteVenue, true, true);
-		btnDeleteVenue.setText("Delete Venue");
-		
-		Button btnEditVenue = new Button(composite_1, SWT.NONE);
-		btnEditVenue.addSelectionListener(new VenueListEditPage());
-		btnEditVenue.setBounds(366, 93, 89, 27);
-		toolkit.adapt(btnEditVenue, true, true);
-		btnEditVenue.setText("Edit Venue");
+		Button btnEdit = new Button(composite, SWT.NONE);
+		btnEdit.setText("Edit");
+		btnEdit.setBounds(348, 76, 89, 27);
+		toolkit.adapt(btnEdit, true, true);
+	    btnEdit.addSelectionListener(new edit());
 
 	}
 	
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		VenueManagement_VenueList calc = new VenueManagement_VenueList(shell,
-				SWT.NONE);
-		calc.pack();
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-	}
-	public class VenueListAddPage extends SelectionAdapter {
+	public class add extends SelectionAdapter {
 
 		public void widgetSelected(SelectionEvent e) {
-			Shell venueListAddItemPage = new Shell(getDisplay());
-			VenueListAddItem venueListAddItem = new VenueListAddItem (venueListAddItemPage, SWT.None, table);
-			venueListAddItem.pack();
-			venueListAddItemPage.pack();
-			venueListAddItemPage.open();
+			Shell addVenueShell = new Shell(getDisplay());
+			VenueListAddItem addVenuePage = new VenueListAddItem(addVenueShell, SWT.None, venueTable);
+			addVenuePage.pack();
+			addVenueShell.pack();
+			addVenueShell.open();
 		}
 	}
-	public class VenueListDeleteItem extends SelectionAdapter {
-		Table table;
-		public VenueListDeleteItem(Table table){
-			this.table=table;
-		}
+	
+	public class delete extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if (table.getColumnCount() != 0) {
-				int index = table.getSelectionIndex();
-				if (index < 0 || index >= table.getItemCount()) {
+			if (venueTable.getColumnCount() != 0) {
+				int index = venueTable.getSelectionIndex();
+				if (index < 0 || index >= venueTable.getItemCount()) {
 					// Do nothing.
 				} else {
-					table.remove(index);
+					/* update the itinerary table */
+					venueTable.remove(index);
+					/* update the database */
+/*					DatabaseReader db = new DatabaseReader();
+					db.deleteItinerary(venueList.get(index));*/
 				}
 			}
 		}
 	}
-
-	public class VenueListEditPage extends SelectionAdapter {
+	
+	public class edit extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			int index = table.getSelectionIndex();
-			if (index < table.getItemCount() && index >= 0) {
-				Shell venueListEditMemberPage = new Shell(getDisplay());
-				VenueListEditItem venueListEditMember = new VenueListEditItem(
-						venueListEditMemberPage, SWT.None, table, index);
-				venueListEditMember.pack();
-				venueListEditMemberPage.pack();
-				venueListEditMemberPage.open();
+			int index = venueTable.getSelectionIndex();
+			if(index >=0 && index < venueTable.getItemCount()){
+				Shell editVenueShell = new Shell(getDisplay());
+				VenueListEditItem editVenuePage = new VenueListEditItem(editVenueShell, SWT.None, venueTable, index);
+				editVenuePage.pack();
+				editVenueShell.pack();
+				editVenueShell.open();
 			}
 		}
 	}
