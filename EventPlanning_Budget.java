@@ -447,7 +447,6 @@ public class EventPlanning_Budget extends Composite {
 			temp.setText(4, String.valueOf(outflowList.get(i).getCost()));
 			
 			totalOutflow += outflowList.get(i).getCost();
-			System.out.println(totalOutflow);
 		}	
 		double currentAmount = Double.parseDouble(EventPlanning_Budget.lblSpentAmount.getText());
 		EventPlanning_Budget.lblSpentAmount.setText(String.valueOf(df.format(currentAmount + totalOutflow)));
