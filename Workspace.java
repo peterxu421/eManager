@@ -213,6 +213,5 @@ class Workspace extends Composite{
 			right.pack();
 			body.pack();
 		}
-		
 	}
 }
