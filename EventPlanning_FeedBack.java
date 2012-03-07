@@ -146,7 +146,7 @@ public class EventPlanning_FeedBack extends Composite {
 			if (index < tableFeedBack.getItemCount() && index >= 0) {
 				Shell feedbackEditItemPage = new Shell(getDisplay());
 				FeedBackEditItem feedbackEditItem = new FeedBackEditItem(
-						feedbackEditItemPage, SWT.None, tableFeedBack, index);
+						feedbackEditItemPage, SWT.None, tableFeedBack, index, feedbackList.get(index));
 				feedbackEditItem.pack();
 				feedbackEditItemPage.pack();
 				feedbackEditItemPage.open();

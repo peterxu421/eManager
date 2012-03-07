@@ -18,13 +18,14 @@ public class FeedBackEditItem extends Composite {
 	private Text textIssue;
 	private Text textDate;
 	private Text textTime;
+	private Feedback feedback;
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public FeedBackEditItem(Composite parent, int style, Table table, int index) {
+	public FeedBackEditItem(Composite parent, int style, Table table, int index, Feedback feedback) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -33,6 +34,7 @@ public class FeedBackEditItem extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		this.feedback=feedback;
 		
 		Composite compositeFeedBackEdit = new Composite(this, SWT.NONE);
 		compositeFeedBackEdit.setLayout(null);
@@ -108,6 +110,13 @@ public class FeedBackEditItem extends Composite {
 			}
 			if (!textIssue.getText().isEmpty() && !textDate.getText().isEmpty()
 					&& !textTime.getText().isEmpty()) {
+				//update feedback
+				feedback.setFeedbackDetails(taskAssignArray[0]);
+				feedback.setDate(new Date(taskAssignArray[1]));
+				feedback.setTime(new Time(taskAssignArray[2]));
+				//update database
+				DatabaseReader db = new DatabaseReader();
+				db.updateFeedback(feedback);
 				getParent().dispose();
 			}
 		}

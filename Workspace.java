@@ -144,7 +144,7 @@ class Workspace extends Composite{
 			}
 			else if(name.equals("Feedback"))
 			{
-				EventPlanning_FeedBack feedback = new EventPlanning_FeedBack(right, SWT.None);
+				EventPlanning_FeedBack feedback = new EventPlanning_FeedBack(right, SWT.None, event);
 				feedback.pack();
 			}
 			else if(name.equals("Budget"))
