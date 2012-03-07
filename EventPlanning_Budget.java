@@ -248,31 +248,32 @@ public class EventPlanning_Budget extends Composite {
 		
 		Button btnOutflowAdd = new Button(OutflowComposite, SWT.NONE);
 		FormData fd_btnOutflowAdd = new FormData();
-		fd_btnOutflowAdd.right = new FormAttachment(100, -82);
-		fd_btnOutflowAdd.left = new FormAttachment(OutflowTable, 4);
+		fd_btnOutflowAdd.bottom = new FormAttachment(0, 57);
+		fd_btnOutflowAdd.top = new FormAttachment(0, 30);
+		fd_btnOutflowAdd.left = new FormAttachment(OutflowTable, 19);
+		fd_btnOutflowAdd.right = new FormAttachment(100, -67);
 		btnOutflowAdd.setLayoutData(fd_btnOutflowAdd);
 		toolkit.adapt(btnOutflowAdd, true, true);
 		btnOutflowAdd.setText("Add");
 		btnOutflowAdd.addSelectionListener(new AddOutflow());
 		
 		Button btnOutflowEdit = new Button(OutflowComposite, SWT.NONE);
-		fd_btnOutflowAdd.bottom = new FormAttachment(btnOutflowEdit, -21);
 		FormData fd_btnOutflowEdit = new FormData();
-		fd_btnOutflowEdit.top = new FormAttachment(0, 93);
-		fd_btnOutflowEdit.right = new FormAttachment(100, -82);
-		fd_btnOutflowEdit.left = new FormAttachment(OutflowTable, 4);
+		fd_btnOutflowEdit.top = new FormAttachment(btnOutflowAdd, 12);
+		fd_btnOutflowEdit.right = new FormAttachment(100, -67);
+		fd_btnOutflowEdit.left = new FormAttachment(OutflowTable, 19);
 		btnOutflowEdit.setLayoutData(fd_btnOutflowEdit);
 		toolkit.adapt(btnOutflowEdit, true, true);
 		btnOutflowEdit.setText("Edit");
 		btnOutflowEdit.addSelectionListener(new EditOutflow());
 		
 		Button btnOutflowDelete = new Button(OutflowComposite, SWT.NONE);
-		fd_btnOutflowEdit.bottom = new FormAttachment(btnOutflowDelete, -26);
+		fd_btnOutflowEdit.bottom = new FormAttachment(btnOutflowDelete, -13);
 		FormData fd_btnOutflowDelete = new FormData();
-		fd_btnOutflowDelete.bottom = new FormAttachment(100, -86);
-		fd_btnOutflowDelete.top = new FormAttachment(0, 146);
-		fd_btnOutflowDelete.right = new FormAttachment(100, -82);
-		fd_btnOutflowDelete.left = new FormAttachment(OutflowTable, 4);
+		fd_btnOutflowDelete.right = new FormAttachment(100, -67);
+		fd_btnOutflowDelete.left = new FormAttachment(OutflowTable, 19);
+		fd_btnOutflowDelete.top = new FormAttachment(0, 109);
+		fd_btnOutflowDelete.bottom = new FormAttachment(100, -123);
 		btnOutflowDelete.setLayoutData(fd_btnOutflowDelete);
 		toolkit.adapt(btnOutflowDelete, true, true);
 		btnOutflowDelete.setText("Delete");
@@ -308,18 +309,19 @@ public class EventPlanning_Budget extends Composite {
 		
 		Composite OverviewComposite = new Composite(BudgetOverviewComposite, SWT.NONE);
 		FormData fd_OverviewComposite = new FormData();
-		fd_OverviewComposite.bottom = new FormAttachment(0, 395);
-		fd_OverviewComposite.right = new FormAttachment(0, 121);
-		fd_OverviewComposite.top = new FormAttachment(0);
-		fd_OverviewComposite.left = new FormAttachment(0);
+		fd_OverviewComposite.top = new FormAttachment(0, 10);
+		fd_OverviewComposite.bottom = new FormAttachment(100, -10);
+		fd_OverviewComposite.left = new FormAttachment(0, 10);
 		OverviewComposite.setLayoutData(fd_OverviewComposite);
 		toolkit.adapt(OverviewComposite);
 		toolkit.paintBordersFor(OverviewComposite);
 		
 		Label lblTotalMoneySpent1 = new Label(BudgetOverviewComposite, SWT.NONE);
+		fd_OverviewComposite.right = new FormAttachment(lblTotalMoneySpent1, -6);
 		lblTotalMoneySpent1.setAlignment(SWT.CENTER);
 		FormData fd_lblTotalMoneySpent1 = new FormData();
-		fd_lblTotalMoneySpent1.left = new FormAttachment(OverviewComposite, 6);
+		fd_lblTotalMoneySpent1.left = new FormAttachment(0, 524);
+		fd_lblTotalMoneySpent1.right = new FormAttachment(100, -10);
 		lblTotalMoneySpent1.setLayoutData(fd_lblTotalMoneySpent1);
 		toolkit.adapt(lblTotalMoneySpent1, true, true);
 		lblTotalMoneySpent1.setText(" Total Money Spent($):");
@@ -328,6 +330,8 @@ public class EventPlanning_Budget extends Composite {
 		lblSpentAmount1.setAlignment(SWT.CENTER);
 		lblSpentAmount1.setText("0.0");
 		FormData fd_lblSpentAmount1 = new FormData();
+		fd_lblSpentAmount1.left = new FormAttachment(OverviewComposite, 28);
+		fd_lblSpentAmount1.right = new FormAttachment(100, -32);
 		fd_lblSpentAmount1.top = new FormAttachment(lblTotalMoneySpent1, 6);
 		lblSpentAmount1.setLayoutData(fd_lblSpentAmount1);
 		toolkit.adapt(lblSpentAmount1, true, true);
@@ -336,9 +340,9 @@ public class EventPlanning_Budget extends Composite {
 		lblRemainingBudget.setAlignment(SWT.CENTER);
 		lblRemainingBudget.setText("Remaining Budget($):");
 		FormData fd_lblRemainingBudget = new FormData();
-		fd_lblRemainingBudget.top = new FormAttachment(lblSpentAmount1, 17);
 		fd_lblRemainingBudget.left = new FormAttachment(OverviewComposite, 6);
-		fd_lblRemainingBudget.right = new FormAttachment(100, -407);
+		fd_lblRemainingBudget.right = new FormAttachment(100, -10);
+		fd_lblRemainingBudget.top = new FormAttachment(lblSpentAmount1, 36);
 		lblRemainingBudget.setLayoutData(fd_lblRemainingBudget);
 		toolkit.adapt(lblRemainingBudget, true, true);
 		
@@ -346,33 +350,36 @@ public class EventPlanning_Budget extends Composite {
 		lblRemainingAmount.setAlignment(SWT.CENTER);
 		lblRemainingAmount.setText("0.0");
 		FormData fd_lblRemainingAmount = new FormData();
-		fd_lblRemainingAmount.left = new FormAttachment(lblSpentAmount1, 0, SWT.LEFT);
-		fd_lblRemainingAmount.right = new FormAttachment(lblSpentAmount1, 0, SWT.RIGHT);
+		fd_lblRemainingAmount.left = new FormAttachment(OverviewComposite, 28);
+		fd_lblRemainingAmount.right = new FormAttachment(100, -32);
 		fd_lblRemainingAmount.top = new FormAttachment(lblRemainingBudget, 6);
 		lblRemainingAmount.setLayoutData(fd_lblRemainingAmount);
 		toolkit.adapt(lblRemainingAmount, true, true);
 		
 		Label lblTotalMoneyReceived1 = new Label(BudgetOverviewComposite, SWT.NONE);
-		fd_lblTotalMoneySpent1.right = new FormAttachment(lblTotalMoneyReceived1, 0, SWT.RIGHT);
 		lblTotalMoneyReceived1.setText("Total Money Received($):");
 		lblTotalMoneyReceived1.setAlignment(SWT.CENTER);
 		FormData fd_lblTotalMoneyReceived1 = new FormData();
-		fd_lblTotalMoneyReceived1.top = new FormAttachment(0, 10);
 		fd_lblTotalMoneyReceived1.left = new FormAttachment(OverviewComposite, 7);
-		fd_lblTotalMoneyReceived1.right = new FormAttachment(100, -407);
+		
+		Label lblNewLabel = new Label(OverviewComposite, SWT.NONE);
+		lblNewLabel.setAlignment(SWT.CENTER);
+		lblNewLabel.setBounds(163, 113, 106, 15);
+		toolkit.adapt(lblNewLabel, true, true);
+		lblNewLabel.setText("Budget Chart");
+		fd_lblTotalMoneyReceived1.right = new FormAttachment(100, -10);
+		fd_lblTotalMoneyReceived1.top = new FormAttachment(0, 43);
 		lblTotalMoneyReceived1.setLayoutData(fd_lblTotalMoneyReceived1);
 		toolkit.adapt(lblTotalMoneyReceived1, true, true);
 		
 		lblReceivedAmount1 = new Label(BudgetOverviewComposite, SWT.BORDER);
-		fd_lblSpentAmount1.left = new FormAttachment(lblReceivedAmount1, 0, SWT.LEFT);
-		fd_lblSpentAmount1.right = new FormAttachment(lblReceivedAmount1, 0, SWT.RIGHT);
-		fd_lblTotalMoneySpent1.top = new FormAttachment(lblReceivedAmount1, 21);
+		fd_lblTotalMoneySpent1.top = new FormAttachment(lblReceivedAmount1, 39);
 		lblReceivedAmount1.setText("0.0");
 		lblReceivedAmount1.setAlignment(SWT.CENTER);
 		FormData fd_label = new FormData();
-		fd_label.top = new FormAttachment(lblTotalMoneyReceived1, 6);
-		fd_label.left = new FormAttachment(OverviewComposite, 28);
-		fd_label.right = new FormAttachment(100, -429);
+		fd_label.top = new FormAttachment(lblTotalMoneyReceived1, 10);
+		fd_label.left = new FormAttachment(lblTotalMoneyReceived1, 21, SWT.LEFT);
+		fd_label.right = new FormAttachment(100, -32);
 		lblReceivedAmount1.setLayoutData(fd_label);
 		toolkit.adapt(lblReceivedAmount1, true, true);
 		

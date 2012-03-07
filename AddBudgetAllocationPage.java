@@ -99,8 +99,12 @@ public class AddBudgetAllocationPage extends Composite {
 		date.setBounds(265, 203, 127, 24);
 		toolkit.adapt(date);
 		toolkit.paintBordersFor(date);
-		if(index >=0 && index < EventPlanning_Budget.AllocationTable.getItemCount())
-			date.setData(Date.parseDate((EventPlanning_Budget.AllocationTable.getItem(index).getText(3))));
+		if(index >=0 && index < EventPlanning_Budget.AllocationTable.getItemCount()){
+				Date dt = Date.parseDate( EventPlanning_Budget.AllocationTable.getItem(index).getText(3));
+				date.setYear(dt.getYear());
+				date.setMonth(dt.getMonth()-1);
+				date.setDay(dt.getDay());
+			}
 		
 		EventPlanning_Budget.AllocationTable.deselect(index);  // deselect 
 		
@@ -136,10 +140,9 @@ public class AddBudgetAllocationPage extends Composite {
 			if (!cost.getText().isEmpty()) {
 				_cost = Double.parseDouble(cost.getText());
 			}
-			_date = date.getYear() + "-" + date.getMonth() + "-" + date.getDay();
-/*			if (!date.getText().isEmpty()) {
-			    date = Date.parseDate(AllocDate.getText());
-			}*/
+			_date = String.format("%04d",date.getYear())  + "-"
+			        + String.format("%02d", date.getMonth()+1)  + "-" 
+					+ String.format("%02d",date.getDay()) ;  // getMonth() + 1 since getMonth() returns 0 to 11
 			if (!item.getText().isEmpty()
 					&& !personInCharge.getText().isEmpty()
 					&& !cost.getText().isEmpty()) {

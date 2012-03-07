@@ -112,8 +112,12 @@ public class AddOutflowPage extends Composite {
 		date.setBounds(253, 172, 123, 24);
 		toolkit.adapt(date);
 		toolkit.paintBordersFor(date);
-		if(index >=0 && index < EventPlanning_Budget.OutflowTable.getItemCount())
-			date.setData(Date.parseDate((EventPlanning_Budget.OutflowTable.getItem(index).getText(3))));
+		if(index >=0 && index < EventPlanning_Budget.OutflowTable.getItemCount()){
+			Date dt = Date.parseDate( EventPlanning_Budget.OutflowTable.getItem(index).getText(3));
+			date.setYear(dt.getYear());
+			date.setMonth(dt.getMonth()-1);
+			date.setDay(dt.getDay());
+		}
 		
 		cost = new Text(composite, SWT.BORDER);
 		cost.setBounds(253, 208, 123, 21);
@@ -159,7 +163,9 @@ public class AddOutflowPage extends Composite {
 			if(!type.getText().isEmpty()){
 				_type = type.getText();
 			}
-			_date = date.getYear() + "-" + date.getMonth() + "-" + date.getDay();
+			_date = String.format("%04d",date.getYear())  + "-"
+			        + String.format("%02d", date.getMonth()+1)  + "-" 
+					+ String.format("%02d",date.getDay()) ;  // getMonth() + 1 since getMonth() returns 0 to 11
 			if (!item.getText().isEmpty()
 					&& !type.getText().isEmpty()
 					&& !quantity.getText().isEmpty()

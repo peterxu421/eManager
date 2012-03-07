@@ -33,7 +33,7 @@ public class Date {
 		this.day = day;
 	}
 	public String toString(){
-		return year + "-" + month + "-" + day;
+		return String.format("%02d", year) + "-" + String.format("%02d", month) + "-" + String.format("%02d", day);
 	}
 	public static Date parseDate(String dateString){
 		String[] dates = dateString.split("-");

@@ -23,9 +23,11 @@ import org.eclipse.swt.layout.FormAttachment;
 public class EventPlanning_Meeting extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	private Table table;
+	
 	private Event event;
-	private ArrayList<MeetingClass> meetingList;
+	private ArrayList<Meeting> meetingList;
+	private Table table;
+
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -40,103 +42,120 @@ public class EventPlanning_Meeting extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		this.event = event;
+		
 		FormLayout formLayout = new FormLayout();
 		formLayout.marginRight = 30;
 		formLayout.marginBottom = 30;
 		setLayout(formLayout);
 		
-		this.event = event;
-		DatabaseReader db= new DatabaseReader();
-		this.meetingList=db.getMeetings(event);
-		
 		Composite composite = new Composite(this, SWT.NONE);
 		FormData fd_composite = new FormData();
 		fd_composite.top = new FormAttachment(0);
 		fd_composite.left = new FormAttachment(0);
-		fd_composite.bottom = new FormAttachment(0, 286);
-		fd_composite.right = new FormAttachment(0, 454);
+		fd_composite.bottom = new FormAttachment(0, 298);
+		fd_composite.right = new FormAttachment(0, 682);
 		composite.setLayoutData(fd_composite);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
+		
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setLinesVisible(true);
-		table.setHeaderVisible(true);
-		table.setBounds(10, 30, 339, 246);
+		table.setBounds(10, 10, 521, 278);
 		toolkit.adapt(table);
 		toolkit.paintBordersFor(table);
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
 		
-		TableColumn tableColumn_MeetingDetails = new TableColumn(table, SWT.CENTER);
-		tableColumn_MeetingDetails.setWidth(175);
-		tableColumn_MeetingDetails.setText("Meeting Details");
+		TableColumn tblclmnMeetingDetails = new TableColumn(table, SWT.CENTER);
+		tblclmnMeetingDetails.setWidth(268);
+		tblclmnMeetingDetails.setText("Meeting Details");
 		
-		TableColumn tableColumn_Date = new TableColumn(table, SWT.CENTER);
-		tableColumn_Date.setWidth(63);
-		tableColumn_Date.setText("Date");
+		TableColumn tblclmnDate = new TableColumn(table, SWT.CENTER);
+		tblclmnDate.setWidth(103);
+		tblclmnDate.setText("Date");
 		
-		TableColumn tableColumn_Time = new TableColumn(table, SWT.CENTER);
-		tableColumn_Time.setWidth(48);
-		tableColumn_Time.setText("Time");
+		TableColumn tblclmnTime = new TableColumn(table, SWT.CENTER);
+		tblclmnTime.setWidth(103);
+		tblclmnTime.setText("Time");
 		
-		TableColumn tableColumn_Done = new TableColumn(table, SWT.CENTER);
-		tableColumn_Done.setWidth(49);
-		tableColumn_Done.setText("Done");
-		
-		TableCursor tableCursor = new TableCursor(table, SWT.NONE);
-		toolkit.adapt(tableCursor);
-		toolkit.paintBordersFor(tableCursor);
+		TableColumn tblclmnDone = new TableColumn(table, SWT.CENTER);
+		tblclmnDone.setWidth(48);
+		tblclmnDone.setText("Done");
 		
 		
 		Button Add = new Button(composite, SWT.NONE);
 		Add.setText("Add");
-		Add.setBounds(364, 30, 75, 25);
+		Add.setBounds(564, 31, 75, 25);
 		toolkit.adapt(Add, true, true);
 		Add.addSelectionListener(new Add());
 		
 		Button Delete = new Button(composite, SWT.NONE);
 		Delete.setText("Delete");
-		Delete.setBounds(364, 61, 75, 25);
+		Delete.setBounds(564, 81, 75, 25);
 		toolkit.adapt(Delete, true, true);
 		Delete.addSelectionListener(new Delete());
 		
 		Button Edit = new Button(composite, SWT.NONE);
 		Edit.setText("Edit");
-		Edit.setBounds(364, 92, 75, 25);
+		Edit.setBounds(564, 130, 75, 25);
 		toolkit.adapt(Edit, true, true);
 		Edit.addSelectionListener(new Edit());
 	
-		fillTable();
+        importMeetingData();
 	}
-	public void fillTable()
-	{
-		TableItem item;
-
-		for (int i = 0; i < meetingList.size(); i++) {
-			item = new TableItem(table, SWT.NONE);
-			item.setText(0, meetingList.get(i).getMeetingDetails());
-			item.setText(1, meetingList.get(i).getDate().toString());
-			item.setText(2, meetingList.get(i).getTime().toString());
-			item.setText(3, meetingList.get(i).isDone()?"Done":"Undone");
+	
+	public void importMeetingData(){
+		DatabaseReader db = new DatabaseReader();
+		meetingList = db.getMeetings(event);
+		
+		/* update the meeting table */
+		for(int i=0; i<meetingList.size(); i++){
+			TableItem temp = new TableItem(table, SWT.NULL);
+			temp.setText(0, meetingList.get(i).getMeetingDetails());
+			temp.setText(1, meetingList.get(i).getDate().toString());
+			temp.setText(2, meetingList.get(i).getTime().toString());
+			if(meetingList.get(i).isDone() == true)
+				temp.setText(3, "Yes");
+			else temp.setText(3, "No");
 		}
 	}
-	class Add extends SelectionAdapter {
+	
+/*	public static void main(String[] args){
+	    Display display = new Display();
+	    Shell shell = new Shell(display);
+	    EventPlanning_Meeting page = new EventPlanning_Meeting(shell, SWT.NONE);
+	    page.pack();
+	    shell.pack();
+	    shell.open();
+	    while(!shell.isDisposed()){
+	        if(!display.readAndDispatch()) display.sleep();
+	    }
+	} //End of main()
+*/	class Add extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if(table.getSelectionCount()==0){
 				Shell add_meeting_shell = new Shell(getDisplay());
-				Meeting add_meeting_page = new Meeting(add_meeting_shell, SWT.None, table);
+				AddMeetingPage add_meeting_page = new AddMeetingPage(add_meeting_shell, SWT.None, table, event);
 				add_meeting_page.pack();
 				add_meeting_shell.pack();
 				add_meeting_shell.open();
 			}
+			else table.deselectAll(); // get rid of redundant selection
 		}
 	}
 	
 	class Delete extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
 			if (table.getItemCount() != 0){
+				/* update the meeting table */
 				int index = table.getSelectionIndex();
 				if(index >=0 && index < table.getItemCount()){
 					table.remove(index);
+					
+				/* update the database */
+				DatabaseReader db = new DatabaseReader();
+				db.deleteMeeting(db.getMeetings(event).get(index));
 				}
 			}
 		}
@@ -145,12 +164,11 @@ public class EventPlanning_Meeting extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			if(table.getSelectionCount()!=0){
 				Shell edit_meeting_shell = new Shell(getDisplay());
-				Meeting edit_meeting_page = new Meeting(edit_meeting_shell, SWT.None, table);
+				AddMeetingPage edit_meeting_page = new AddMeetingPage(edit_meeting_shell, SWT.None, table, event);
 				edit_meeting_page.pack();
 				edit_meeting_shell.pack();
 				edit_meeting_shell.open();
 			}
 		}
 	}
-
 }

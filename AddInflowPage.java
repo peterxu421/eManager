@@ -87,8 +87,12 @@ public class AddInflowPage extends Composite {
 		date.setBounds(265, 159, 127, 24);
 		toolkit.adapt(date);
 		toolkit.paintBordersFor(date);
-		if(index >=0 && index < EventPlanning_Budget.InflowTable.getItemCount())
-			date.setData(Date.parseDate((EventPlanning_Budget.InflowTable.getItem(index).getText(2))));
+		if(index >=0 && index < EventPlanning_Budget.InflowTable.getItemCount()){
+			Date dt = Date.parseDate( EventPlanning_Budget.InflowTable.getItem(index).getText(2));
+			date.setYear(dt.getYear());
+			date.setMonth(dt.getMonth()-1);
+			date.setDay(dt.getDay());
+		}
 		
 		Label lblRemarks = new Label(composite, SWT.NONE);
 		lblRemarks.setBounds(188, 203, 48, 15);
@@ -136,7 +140,9 @@ public class AddInflowPage extends Composite {
 			if (!remarks.getText().isEmpty()) {
 			    _remarks = remarks.getText();
 			}
-			_date = date.getYear() + "-" + date.getMonth() + "-" + date.getDay();
+			_date = String.format("%04d",date.getYear())  + "-"
+			        + String.format("%02d", date.getMonth()+1)  + "-" 
+					+ String.format("%02d",date.getDay()) ;  // getMonth() + 1 since getMonth() returns 0 to 11
 			if (!sponsor.getText().isEmpty()
 					&& !amount.getText().isEmpty()
 					&& !remarks.getText().isEmpty()) {
