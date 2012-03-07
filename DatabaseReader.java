@@ -1,3 +1,4 @@
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -255,16 +256,40 @@ public class DatabaseReader{
 		SQLManager.updateAllocationDetails(connection, manpowerAllocation.getTaskID(), manpowerAllocation.getTaskDescription(), manpowerAllocation.getAssignedTo(), manpowerAllocation.getDate().toString(), manpowerAllocation.isDone());
 	}
 	
+	/*FileDetails*/
+	public ArrayList<EventFile> getFiles(Event event){
+		ArrayList<EventFile> files = new ArrayList<EventFile>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getFileDetails(connection, event.getEventID());
+			while(rs.next()){
+				EventFile file = new EventFile(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5));
+				files.add(file);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return files;
+	}
+	public void insertFile(Event event, EventFile eventFile){
+		int id = SQLManager.insertFileDetails(connection, event.getEventID(), eventFile.getFileName(), eventFile.getFileDirectory(), eventFile.getFileDescription());
+		eventFile.setFileID(id);
+	}
+	public void deleteFile(EventFile file){
+		SQLManager.deleteFileDetails(connection, file.getFileID());
+	}
+	public void updateFile(EventFile file){
+		SQLManager.updateFileDetails(connection, file.getFileID(), file.getFileName(), file.getFileDirectory(), file.getFileDescription());
+	}
+	
 	public static void main(String[] args){
 		DatabaseReader db = new DatabaseReader();
 		Event event = db.getEvents().get(0);
-		ManpowerAllocation manpowerAllocation = new ManpowerAllocation("BACK AGAIN", "GUAN YILUN", new Date("2012-03-03"),false);
-		db.insertManpowerAllocation(event, manpowerAllocation);
-		manpowerAllocation = db.getManpowerAllocation(event).get(0);
-		int size = db.getManpowerAllocation(event).size();
-		System.out.println(size + manpowerAllocation.getTaskDescription());
-		//System.out.println(itinerary.getItineraryDetails());
-		//itinerary.setItineraryDetails("UPDATE IS SUCCESSFUL");
-		//db.updateFeedback(itinerary);
+		EventFile file = db.getFiles(event).get(0);
+		file.setFileDescription("I have been changed");
+		db.updateFile(file);
+		int size = db.getFiles(event).size();
+		System.out.println(size);
+		
 	}
 }

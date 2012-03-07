@@ -80,12 +80,7 @@ public class eManager{
 		
 		//shell
 		
-		
-		/*Test Block*/
-		
 		Image image = new Image(display, "resources/bg.png");
-		/*End Of Test Block*/
-
 		rootShell.setMaximized(true);
 		rootShell.setText("eManagerV1.0");
 		rootShell.setBackgroundImage(image);

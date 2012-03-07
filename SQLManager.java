@@ -92,9 +92,6 @@ public class SQLManager {
 			"AssignedTo VARCHAR(50)," +
 			"DateDue DATE," +
 			"Done SMALLINT)";
-	private static String insertAllocationDetails =
-			"INSERT INTO AllocationDetails" +
-			"VALUES (?,?,?,?,?)";
 	private static String createItineraryDetailsTable =
 			"CREATE TABLE ItineraryDetails(" +
 			"ItineraryID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
@@ -272,7 +269,21 @@ public class SQLManager {
 		}
 		return rs;
 	}
-	
+	public static ResultSet getFileDetails(Connection connection, int eventID){
+		String getFileDetails =
+				"SELECT * FROM FileDetails " +
+				"WHERE EventID=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getFileDetails);
+			prep.setInt(1, eventID);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
 	public static int insertEventDetails(Connection connection, String eventName, String eventDescription){
 		int eventID = 0;
@@ -487,7 +498,30 @@ public class SQLManager {
 		}
 		return allocationID;
 	}
-	
+	public static int insertFileDetails(Connection connection, int eventID, String fileName, String fileDirectory, String fileDescription){
+		String insertFileDetails = 
+				"INSERT INTO FileDetails (EventID, FileName, FileDirectory, FileDescription) " +
+				"VALUES (?,?,?,?)";
+		int fileID = 0;
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(insertFileDetails,Statement.RETURN_GENERATED_KEYS);
+			prep.setInt(1, eventID);
+			prep.setString(2, fileName);
+			prep.setString(3, fileDirectory);
+			prep.setString(4, fileDescription);
+			prep.execute();
+			rs=prep.getGeneratedKeys();
+			while(rs.next()){
+				fileID = rs.getInt(1);
+			}
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return fileID;
+	}
+
 	/*-------------------------------------------------------DELETE----------------------------------------------------------------------------------*/
 	public static void deleteEventDetails(Connection connection, int eventID){
 		String deleteEvent = 
@@ -592,6 +626,18 @@ public class SQLManager {
 		try {
 			PreparedStatement prep = connection.prepareStatement(deleteAllocationDetails);
 			prep.setInt(1, allocationID);
+			prep.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void deleteFileDetails(Connection connection, int fileID){
+		String deleteFileDetails = 
+				"DELETE FROM FileDetails " +
+				"WHERE fileID=?";
+		try {
+			PreparedStatement prep = connection.prepareStatement(deleteFileDetails);
+			prep.setInt(1, fileID);
 			prep.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -735,7 +781,22 @@ public class SQLManager {
 			sqle.printStackTrace();
 		}
 	}
-	
+	public static void updateFileDetails(Connection connection, int fileID, String fileName, String fileDirectory, String fileDescription){
+		String updateFileDetails =
+				"UPDATE FileDetails SET FileName=?,FileDirectory=?,FileDescription=? " +
+				"WHERE FileID=?";
+		PreparedStatement prep = null;
+		try{
+			prep = connection.prepareStatement(updateFileDetails);
+			prep.setString(1, fileName);
+			prep.setString(2, fileDirectory);
+			prep.setString(3, fileDescription);
+			prep.setInt(4, fileID);
+			prep.execute();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+	}
 	public static void main(String[] args){
 		Connection con = ConnectionManager.getConnection();
 		insertFeedbackDetails(con, 1, "I am here!!!!!","2011-12-11", "12:11:11");
