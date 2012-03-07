@@ -281,7 +281,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		DatabaseReader db = new DatabaseReader();
 		manpowerList = db.getManpowerAllocation(event);
 		
-		for(int i=0; i>manpowerList.size(); i++){
+		for(int i=0; i<manpowerList.size(); i++){
 			TableItem temp = new TableItem(table_eventPlanning_actualEvents_allocOfManpower, SWT.NULL);
 			temp.setText(0, manpowerList.get(i).getTaskDescription());
 		    temp.setText(1, manpowerList.get(i).getAssignedTo());

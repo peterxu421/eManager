@@ -33,7 +33,7 @@ public class VenueManagement_VenueApplicants extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 659, 377);
+		composite.setBounds(10, 10, 600, 350);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		

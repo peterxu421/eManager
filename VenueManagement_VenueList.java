@@ -38,7 +38,7 @@ public class VenueManagement_VenueList extends Composite {
 		toolkit.paintBordersFor(composite);
 		
 		Composite composite_1 = new Composite(composite, SWT.NONE);
-		composite_1.setBounds(0, 0, 583, 334);
+		composite_1.setBounds(0, 0, 463, 334);
 		toolkit.adapt(composite_1);
 		toolkit.paintBordersFor(composite_1);
 		
