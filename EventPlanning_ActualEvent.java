@@ -378,7 +378,7 @@ public class EventPlanning_ActualEvent extends Composite {
 			if (index < table_eventPlanning_actualEvents_allocOfManpower.getItemCount() && index >= 0) {
 				Shell allocOfManpowerEditItemPage = new Shell(getDisplay());
 				AllocOfManpowerEditItem allocOfManpowerEditItem = new AllocOfManpowerEditItem(
-						allocOfManpowerEditItemPage, SWT.None, table_eventPlanning_actualEvents_allocOfManpower, index);
+						allocOfManpowerEditItemPage, SWT.None, table_eventPlanning_actualEvents_allocOfManpower, index, event);
 				allocOfManpowerEditItem.pack();
 				allocOfManpowerEditItemPage.pack();
 				allocOfManpowerEditItemPage.open();

@@ -113,7 +113,7 @@ public class AllocOfManpowerAddItem extends Composite {
 		btn_eP_actual_allocOfManpower_add.addSelectionListener(new AllocOfManpowerAddNewItem(table_1));
 		btn_eP_actual_allocOfManpower_add.setBounds(87, 250, 66, 27);
 		toolkit.adapt(btn_eP_actual_allocOfManpower_add, true, true);
-		btn_eP_actual_allocOfManpower_add.setText("Add");
+		btn_eP_actual_allocOfManpower_add.setText("Add Item");
 
 		Button btn_eP_actual_allocOfManpower_cancel = new Button(comp_eP_actual_allocOfManpower_AddPage, SWT.NONE);
 		btn_eP_actual_allocOfManpower_cancel.setBounds(211, 250, 66, 27);
