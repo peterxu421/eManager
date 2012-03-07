@@ -797,6 +797,7 @@ public class SQLManager {
 			sqle.printStackTrace();
 		}
 	}
+	
 	public static void main(String[] args){
 		Connection con = ConnectionManager.getConnection();
 		insertFeedbackDetails(con, 1, "I am here!!!!!","2011-12-11", "12:11:11");
