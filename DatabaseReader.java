@@ -297,7 +297,6 @@ public class DatabaseReader{
 		}
 		return packings;
 	}
-	
 	public void insertPackingItem(Event event, PackingItem packing){
 		int id = SQLManager.insertPackingDetails(connection, event.getEventID(), packing.getCategory(), packing.getName(), packing.getQuantity(), packing.getRemarks());
 		packing.setItemID(id);
@@ -308,6 +307,33 @@ public class DatabaseReader{
 	public void updatePackingItem(PackingItem packing){
 		SQLManager.updatePackingDetails(connection, packing.getItemID(), packing.getCategory(), packing.getName(), packing.getQuantity(), packing.getRemarks());
 	}
+	
+	/*VenueDetails*/
+	public ArrayList<Venue> getVenues(Event event){
+		ArrayList<Venue> venues = new ArrayList<Venue>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getVenueDetails(connection, event.getEventID());
+			while(rs.next()){
+				Venue venue = new Venue(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5));
+				venues.add(venue);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return venues;
+	}
+	public void insertVenue(Event event, Venue venue){
+		int venueID = SQLManager.insertVenueDetails(connection, event.getEventID(), venue.getName(), venue.getLocation(), venue.getType());
+		venue.setVenueId(venueID);
+	}
+	public void delete(Venue venue){
+		SQLManager.deleteVenueDetails(connection, venue.getVenueId());
+	}
+	public void update(Venue venue){
+		SQLManager.updateVenueDetails(connection, venue.getVenueId(), venue.getName(), venue.getLocation(), venue.getType());
+	}
+	
 	public static void main(String[] args){
 		DatabaseReader db = new DatabaseReader();
 		Event event = db.getEvents().get(0);
