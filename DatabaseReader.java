@@ -282,6 +282,32 @@ public class DatabaseReader{
 		SQLManager.updateFileDetails(connection, file.getFileID(), file.getFileName(), file.getFileDirectory(), file.getFileDescription());
 	}
 	
+	/*PackingDetails*/
+	public ArrayList<PackingItem> getPackingItems(Event event){
+		ArrayList<PackingItem> packings = new ArrayList<PackingItem>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getPackingDetails(connection, event.getEventID());
+			while(rs.next()){
+				PackingItem packing = new PackingItem(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6));
+				packings.add(packing);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return packings;
+	}
+	
+	public void insertPackingItem(Event event, PackingItem packing){
+		int id = SQLManager.insertPackingDetails(connection, event.getEventID(), packing.getCategory(), packing.getName(), packing.getQuantity(), packing.getRemarks());
+		packing.setItemID(id);
+	}
+	public void deletePackingItem(PackingItem packing){
+		SQLManager.deletePackingDetails(connection, packing.getItemID());
+	}
+	public void updatePackingItem(PackingItem packing){
+		SQLManager.updatePackingDetails(connection, packing.getItemID(), packing.getCategory(), packing.getName(), packing.getQuantity(), packing.getRemarks());
+	}
 	public static void main(String[] args){
 		DatabaseReader db = new DatabaseReader();
 		Event event = db.getEvents().get(0);
