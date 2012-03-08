@@ -42,20 +42,20 @@ public class eP_participants_packingList extends Composite {
 		toolkit.paintBordersFor(table_eP_participants_packingList);
 		
 		TableColumn col_eP_participants_description = new TableColumn(table_eP_participants_packingList, SWT.CENTER);
-		col_eP_participants_description.setWidth(196);
-		col_eP_participants_description.setText("Description");
+		col_eP_participants_description.setWidth(130);
+		col_eP_participants_description.setText("Category");
 		
 		TableColumn col_eP_participants_date = new TableColumn(table_eP_participants_packingList, SWT.NONE);
-		col_eP_participants_date.setWidth(71);
-		col_eP_participants_date.setText("Date");
+		col_eP_participants_date.setWidth(96);
+		col_eP_participants_date.setText("Item");
 		
 		TableColumn col_eP_participants_time = new TableColumn(table_eP_participants_packingList, SWT.NONE);
 		col_eP_participants_time.setWidth(68);
-		col_eP_participants_time.setText("Time");
+		col_eP_participants_time.setText("Quantity");
 		
 		TableColumn col_eP_participants_done = new TableColumn(table_eP_participants_packingList, SWT.NONE);
 		col_eP_participants_done.setWidth(77);
-		col_eP_participants_done.setText("Done");
+		col_eP_participants_done.setText("Remark");
 		
 		Button btn_eP_participants_print = new Button(comp_eP_participants_packingList, SWT.NONE);
 		btn_eP_participants_print.setText("Print");
