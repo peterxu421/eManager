@@ -159,7 +159,7 @@ class Workspace extends Composite{
 			}
 			else if(name.equals("Allocation of Manpower"))
 			{
-				eP_facilitator_AllocOfManpower allocation = new eP_facilitator_AllocOfManpower(right,SWT.None);
+				eP_facilitator_AllocOfManpower allocation = new eP_facilitator_AllocOfManpower(right,SWT.None, event);
 				allocation.pack();
 			}
 			else if(name.equals("Itinerary"))

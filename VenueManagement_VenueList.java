@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -16,7 +18,8 @@ public class VenueManagement_VenueList extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Table venueTable;
-
+    
+	/*private ArrayList<Venue> venueList;*/
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -73,8 +76,15 @@ public class VenueManagement_VenueList extends Composite {
 		btnEdit.setBounds(348, 76, 89, 27);
 		toolkit.adapt(btnEdit, true, true);
 	    btnEdit.addSelectionListener(new edit());
+	    
+/*	    importVenueListData();*/
 
 	}
+	
+/*	public void importVenueListData() {
+		DatabaseReader db = new DatabaseReader();
+		venueList = db.getVenues(event)
+	}*/
 	
 	public class add extends SelectionAdapter {
 

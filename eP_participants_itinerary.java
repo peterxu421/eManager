@@ -16,7 +16,7 @@ public class eP_participants_itinerary extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Table table_eP_participants_itinerary;
-	private ArrayList<PackingItem> packingList;
+	private ArrayList<Itinerary> itineraryList;
 	private Event event;
 
 	/**
@@ -33,55 +33,56 @@ public class eP_participants_itinerary extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
-		this.packingList = new ArrayList<PackingItem>();
 		this.event = event;
 		
 		Composite comp_participants_itinerary = new Composite(this, SWT.NONE);
-		comp_participants_itinerary.setBounds(10, 10, 553, 290);
+		comp_participants_itinerary.setBounds(10, 10, 654, 325);
 		toolkit.adapt(comp_participants_itinerary);
 		toolkit.paintBordersFor(comp_participants_itinerary);
 		
 		table_eP_participants_itinerary = new Table(comp_participants_itinerary, SWT.BORDER | SWT.FULL_SELECTION);
 		table_eP_participants_itinerary.setLinesVisible(true);
 		table_eP_participants_itinerary.setHeaderVisible(true);
-		table_eP_participants_itinerary.setBounds(10, 10, 418, 255);
+		table_eP_participants_itinerary.setBounds(10, 10, 527, 305);
 		toolkit.adapt(table_eP_participants_itinerary);
 		toolkit.paintBordersFor(table_eP_participants_itinerary);
 		
 		TableColumn col_eP_participants_description = new TableColumn(table_eP_participants_itinerary, SWT.CENTER);
-		col_eP_participants_description.setWidth(196);
+		col_eP_participants_description.setWidth(276);
 		col_eP_participants_description.setText("Description");
 		
-		TableColumn col_eP_participants_date = new TableColumn(table_eP_participants_itinerary, SWT.NONE);
-		col_eP_participants_date.setWidth(71);
+		TableColumn col_eP_participants_date = new TableColumn(table_eP_participants_itinerary, SWT.CENTER);
+		col_eP_participants_date.setWidth(95);
 		col_eP_participants_date.setText("Date");
 		
-		TableColumn col_eP_participants_time = new TableColumn(table_eP_participants_itinerary, SWT.NONE);
-		col_eP_participants_time.setWidth(68);
+		TableColumn col_eP_participants_time = new TableColumn(table_eP_participants_itinerary, SWT.CENTER);
+		col_eP_participants_time.setWidth(95);
 		col_eP_participants_time.setText("Time");
 		
 		TableColumn col_eP_participants_done = new TableColumn(table_eP_participants_itinerary, SWT.NONE);
-		col_eP_participants_done.setWidth(77);
+		col_eP_participants_done.setWidth(57);
 		col_eP_participants_done.setText("Done");
 		
 		Button btn_eP_participants_print = new Button(comp_participants_itinerary, SWT.NONE);
 		btn_eP_participants_print.setText("Print");
-		btn_eP_participants_print.setBounds(445, 10, 80, 27);
+		btn_eP_participants_print.setBounds(552, 10, 80, 27);
 		toolkit.adapt(btn_eP_participants_print, true, true);
+		
+		importItineraryData();
 
 	}
-	public void fillTable()
-	{
-		DatabaseReader dbReader = new DatabaseReader();
-		packingList = dbReader.getPackingItems(event);
-		TableItem item;
-
-		for (int i = 0; i < packingList.size(); i++) {
-			item = new TableItem(table_eP_participants_itinerary, SWT.NONE);
-			item.setText(0, packingList.get(i).getCategory());
-			item.setText(1, packingList.get(i).getName());
-			item.setText(2, Integer.toString(packingList.get(i).getQuantity()));
-			item.setText(3, packingList.get(i).getRemarks());
+	public void importItineraryData(){
+		DatabaseReader db = new DatabaseReader();
+		itineraryList = db.getItinerary(event);
+		
+		for (int i = 0; i<itineraryList.size(); i++){
+			TableItem temp = new TableItem(table_eP_participants_itinerary, SWT.NULL);
+			temp.setText(0, itineraryList.get(i).getItineraryDetails());
+			temp.setText(1, itineraryList.get(i).getDate().toString());
+			temp.setText(2, itineraryList.get(i).getTime().toString());
+			if(itineraryList.get(i).isDone() == true)
+				temp.setText(3, "Yes");
+			else temp.setText(3, "No");
 		}
 	}
 
