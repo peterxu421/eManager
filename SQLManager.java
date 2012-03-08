@@ -100,6 +100,14 @@ public class SQLManager {
 			"Date DATE," +
 			"Time TIME," +
 			"Done SMALLINT)";
+	private static String createPackingDetailsTable = 
+			"CREATE TABLE PackingDetails(" +
+			"PackingID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
+			"EventID INTEGER NOT NULL REFERENCES EventDetails(EventID)," +
+			"Category VARCHAR(50)," +
+			"Item VARCHAR(50)," +
+			"Quantity INTEGER," +
+			"Remarks VARCHAR(50))";
 	public static Connection createDatabase(){
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -126,6 +134,8 @@ public class SQLManager {
 			statement = connection.prepareStatement(createAllocationDetailsTable);
 			statement.execute();
 			statement = connection.prepareStatement(createItineraryDetailsTable);
+			statement.execute();
+			statement = connection.prepareStatement(createPackingDetailsTable);
 			statement.execute();
 			
 		}catch(SQLException sqle){
@@ -284,6 +294,22 @@ public class SQLManager {
 		}
 		return rs;
 	}
+	public static ResultSet getPackingDetails(Connection connection, int eventID){
+		String getPackingDetails =
+				"SELECT * FROM PackingDetails " +
+				"WHERE EventID=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getPackingDetails);
+			prep.setInt(1, eventID);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
+	
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
 	public static int insertEventDetails(Connection connection, String eventName, String eventDescription){
 		int eventID = 0;
@@ -521,6 +547,30 @@ public class SQLManager {
 		}
 		return fileID;
 	}
+	public static int insertPackingDetails(Connection connection, int eventID, String category, String item, int quantity, String remarks){
+		String insertPackingDetails = 
+				"INSERT INTO PackingDetails (EventID, FileName, FileDirectory, FileDescription) " +
+				"VALUES (?,?,?,?)";
+		int packingID = 0;
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(insertPackingDetails,Statement.RETURN_GENERATED_KEYS);
+			prep.setInt(1, eventID);
+			prep.setString(2, category);
+			prep.setString(3, item);
+			prep.setInt(4, quantity);
+			prep.setString(5, remarks);
+			prep.execute();
+			rs=prep.getGeneratedKeys();
+			while(rs.next()){
+				packingID = rs.getInt(1);
+			}
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return packingID;
+	}
 
 	/*-------------------------------------------------------DELETE----------------------------------------------------------------------------------*/
 	public static void deleteEventDetails(Connection connection, int eventID){
@@ -643,7 +693,19 @@ public class SQLManager {
 			e.printStackTrace();
 		}
 	}
-	
+	public static void deletePackingDetails(Connection connection, int packingID){
+		String deletePackingDetails = 
+				"DELETE FROM PackingDetails " +
+				"WHERE packingID=?";
+		try {
+			PreparedStatement prep = connection.prepareStatement(deletePackingDetails);
+			prep.setInt(1, packingID);
+			prep.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/*------------------------------------------------------UPDATE--------------------------------------------------------------*/
 	public static void updateTaskDetails(Connection connection, int taskID, String taskDescription, String assignedTo, String date, boolean done){
 		String updateTaskDetails =
@@ -792,6 +854,23 @@ public class SQLManager {
 			prep.setString(2, fileDirectory);
 			prep.setString(3, fileDescription);
 			prep.setInt(4, fileID);
+			prep.execute();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+	}
+	public static void updatePackingDetails(Connection connection, int packingID, String category, String item, int quantity, String remarks){
+		String updatePackingDetails =
+				"UPDATE PackingDetails SET Category=?,Item=?,Quantity=?,Remarks=? " +
+				"WHERE PackingID=?";
+		PreparedStatement prep = null;
+		try{
+			prep = connection.prepareStatement(updatePackingDetails);
+			prep.setString(1, category);
+			prep.setString(2, item);
+			prep.setInt(3, quantity);
+			prep.setString(4, remarks);
+			prep.setInt(5, packingID);
 			prep.execute();
 		}catch(SQLException sqle){
 			sqle.printStackTrace();
