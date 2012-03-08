@@ -164,12 +164,12 @@ class Workspace extends Composite{
 			}
 			else if(name.equals("Itinerary"))
 			{
-				eP_participants_itinerary itinerary = new eP_participants_itinerary(right, SWT.None);
+				eP_participants_itinerary itinerary = new eP_participants_itinerary(right, SWT.None, event);
 				itinerary.pack();
 			}
 			else if(name.equals("Packing List"))
 			{
-				eP_participants_packingList packing = new eP_participants_packingList(right, SWT.None);
+				eP_participants_packingList packing = new eP_participants_packingList(right, SWT.None,event);
 				packing.pack();
 			}
 			else if(name.equals("Event Registration"))

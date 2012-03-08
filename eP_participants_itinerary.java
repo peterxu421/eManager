@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
@@ -7,19 +9,22 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.TableItem;
 
 
 public class eP_participants_itinerary extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Table table_eP_participants_itinerary;
+	private ArrayList<PackingItem> packingList;
+	private Event event;
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public eP_participants_itinerary(Composite parent, int style) {
+	public eP_participants_itinerary(Composite parent, int style, Event event) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -28,6 +33,8 @@ public class eP_participants_itinerary extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		this.packingList = new ArrayList<PackingItem>();
+		this.event = event;
 		
 		Composite comp_participants_itinerary = new Composite(this, SWT.NONE);
 		comp_participants_itinerary.setBounds(10, 10, 553, 290);
@@ -62,6 +69,20 @@ public class eP_participants_itinerary extends Composite {
 		btn_eP_participants_print.setBounds(445, 10, 80, 27);
 		toolkit.adapt(btn_eP_participants_print, true, true);
 
+	}
+	public void fillTable()
+	{
+		DatabaseReader dbReader = new DatabaseReader();
+		packingList = dbReader.getPackingItems(event);
+		TableItem item;
+
+		for (int i = 0; i < packingList.size(); i++) {
+			item = new TableItem(table_eP_participants_itinerary, SWT.NONE);
+			item.setText(0, packingList.get(i).getCategory());
+			item.setText(1, packingList.get(i).getName());
+			item.setText(2, Integer.toString(packingList.get(i).getQuantity()));
+			item.setText(3, packingList.get(i).getRemarks());
+		}
 	}
 
 }

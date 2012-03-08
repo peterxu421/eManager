@@ -26,6 +26,7 @@ public class EventPlanning_PreEvent extends Composite {
 	private Table tableCommittee;
 	private Event event;
 	private ArrayList<Task> taskList;
+	private ArrayList<Member> memberList;
 
 	/**
 	 * Create the composite.
@@ -186,6 +187,7 @@ public class EventPlanning_PreEvent extends Composite {
 	{
 		DatabaseReader dbReader = new DatabaseReader();
 		taskList = dbReader.getTasks(event);
+		//memberList = dbReader.getMember(event);
 		TableItem item;
 
 		for (int i = 0; i < taskList.size(); i++) {
@@ -195,6 +197,14 @@ public class EventPlanning_PreEvent extends Composite {
 			item.setText(2, taskList.get(i).getDateDue().toString());
 			item.setText(3, taskList.get(i).isDone()?"Done":"Undone");
 		}
+		/*for (int i = 0; i < memberList.size(); i++) {
+			item = new TableItem(tableCommittee, SWT.NONE);
+			item.setText(0, memberList.get(i).getName());
+			item.setText(1, Integer.toString(memberList.get(i).getYear()));
+			item.setText(2, memberList.get(i).getFaculty());
+			item.setText(3, memberList.get(i).getCell());
+			item.setText(4, memberList.get(i).getPosition());
+		}*/
 	}
 	public class TaskAssignAddItemPage extends SelectionAdapter {
 
