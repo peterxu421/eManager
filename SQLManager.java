@@ -331,7 +331,54 @@ public class SQLManager {
 		}
 		return rs;
 	}
-	
+	public static ResultSet getOrganizerDetails(Connection connection, int eventID){
+		String getOrganizerDetails =
+				"SELECT * FROM MemberDetails " +
+				"WHERE EventID=? AND Role=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getOrganizerDetails);
+			prep.setInt(1, eventID);
+			prep.setInt(2, MACRO.ORGANIZER);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
+	public static ResultSet getFacilitatorDetails(Connection connection, int eventID){
+		String getFacilitatorDetails =
+				"SELECT * FROM MemberDetails " +
+				"WHERE EventID=? AND Role=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getFacilitatorDetails);
+			prep.setInt(1, eventID);
+			prep.setInt(2, MACRO.FACILITATOR);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
+	public static ResultSet getParticipantDetails(Connection connection, int eventID){
+		String getParticipantDetails =
+				"SELECT * FROM MemberDetails " +
+				"WHERE EventID=? AND Role=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getParticipantDetails);
+			prep.setInt(1, eventID);
+			prep.setInt(2, MACRO.PARTICIPANT);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
 	
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
 	public static int insertEventDetails(Connection connection, String eventName, String eventDescription){
@@ -616,7 +663,96 @@ public class SQLManager {
 		}
 		return venueID;
 	}
-	
+	public static int insertOrganizerDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy, String position){
+		String insertOrganizerDetails = 
+				"INSERT INTO MemberDetails (EventID, Name, MatricNo, Faculty, SchoolYear, Contact, Email, FoodType, Allergy, Role, Position) " +
+				"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		int memberID = 0;
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(insertOrganizerDetails,Statement.RETURN_GENERATED_KEYS);
+			prep.setInt(1, eventID);
+			prep.setString(2, name);
+			prep.setString(3, matricNo);
+			prep.setString(4, faculty);
+			prep.setInt(5, schoolYear);
+			prep.setInt(6, contact);
+			prep.setString(7,email);
+			prep.setString(8, foodType);
+			prep.setString(9, allergy);
+			prep.setInt(10, MACRO.ORGANIZER);
+			prep.setString(11, position);
+			prep.execute();
+			rs=prep.getGeneratedKeys();
+			while(rs.next()){
+				memberID = rs.getInt(1);
+			}
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return memberID;
+	}
+	public static int insertFacilitatorDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy, String position){
+		String insertFacilitatorDetails = 
+				"INSERT INTO MemberDetails (EventID, Name, MatricNo, Faculty, SchoolYear, Contact, Email, FoodType, Allergy, Role, Position) " +
+				"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		int memberID = 0;
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(insertFacilitatorDetails,Statement.RETURN_GENERATED_KEYS);
+			prep.setInt(1, eventID);
+			prep.setString(2, name);
+			prep.setString(3, matricNo);
+			prep.setString(4, faculty);
+			prep.setInt(5, schoolYear);
+			prep.setInt(6, contact);
+			prep.setString(7,email);
+			prep.setString(8, foodType);
+			prep.setString(9, allergy);
+			prep.setInt(10, MACRO.FACILITATOR);
+			prep.setString(11, position);
+			prep.execute();
+			rs=prep.getGeneratedKeys();
+			while(rs.next()){
+				memberID = rs.getInt(1);
+			}
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return memberID;
+	}
+	public static int insertParticipantDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy){
+		String insertParticipantDetails = 
+				"INSERT INTO MemberDetails (EventID, Name, MatricNo, Faculty, SchoolYear, Contact, Email, FoodType, Allergy, Role) " +
+				"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		int memberID = 0;
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(insertParticipantDetails,Statement.RETURN_GENERATED_KEYS);
+			prep.setInt(1, eventID);
+			prep.setString(2, name);
+			prep.setString(3, matricNo);
+			prep.setString(4, faculty);
+			prep.setInt(5, schoolYear);
+			prep.setInt(6, contact);
+			prep.setString(7,email);
+			prep.setString(8, foodType);
+			prep.setString(9, allergy);
+			prep.setInt(10, MACRO.PARTICIPANT);
+			prep.execute();
+			rs=prep.getGeneratedKeys();
+			while(rs.next()){
+				memberID = rs.getInt(1);
+			}
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return memberID;
+	}
+
 	/*-------------------------------------------------------DELETE----------------------------------------------------------------------------------*/
 	public static void deleteEventDetails(Connection connection, int eventID){
 		String deleteEvent = 
@@ -757,6 +893,18 @@ public class SQLManager {
 		try {
 			PreparedStatement prep = connection.prepareStatement(deleteVenueDetails);
 			prep.setInt(1, venueID);
+			prep.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void deleteMemberDetails(Connection connection, int memberID){
+		String deletePackingDetails = 
+				"DELETE FROM MemberDetails " +
+				"WHERE MemberID=?";
+		try {
+			PreparedStatement prep = connection.prepareStatement(deletePackingDetails);
+			prep.setInt(1, memberID);
 			prep.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -948,6 +1096,47 @@ public class SQLManager {
 		}catch(SQLException sqle){
 			sqle.printStackTrace();
 		}
+	}
+	public static void updateOrganizerFacilitatorDetails(Connection connection, int memberID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy, String position){
+		String updateOrganizerFacilitatorDetails =
+				"UPDATE MemberDetails SET Name=?,MatricNo=?,Faculty=?,SchoolYear=?,Contact=?,Email=?,FoodType=?,Allergy=?,Position=? " +
+						"WHERE MemberID=?";
+				PreparedStatement prep = null;
+				try{
+					prep = connection.prepareStatement(updateOrganizerFacilitatorDetails);
+					prep.setString(1, name);
+					prep.setString(2, matricNo);
+					prep.setString(3, faculty);
+					prep.setInt(4, schoolYear);
+					prep.setInt(5, contact);
+					prep.setString(6,email);
+					prep.setString(7, foodType);
+					prep.setString(8, allergy);
+					prep.setString(9, position);
+					prep.execute();
+				}catch(SQLException sqle){
+					sqle.printStackTrace();
+				}
+	}
+	public static void updateParticipantDetails(Connection connection, int memberID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy){
+		String updateFacilitatorDetails =
+				"UPDATE MemberDetails SET Name=?,MatricNo=?,Faculty=?,SchoolYear=?,Contact=?,Email=?,FoodType=?,Allergy=?" +
+						"WHERE MemberID=?";
+				PreparedStatement prep = null;
+				try{
+					prep = connection.prepareStatement(updateFacilitatorDetails);
+					prep.setString(1, name);
+					prep.setString(2, matricNo);
+					prep.setString(3, faculty);
+					prep.setInt(4, schoolYear);
+					prep.setInt(5, contact);
+					prep.setString(6,email);
+					prep.setString(7, foodType);
+					prep.setString(8, allergy);
+					prep.execute();
+				}catch(SQLException sqle){
+					sqle.printStackTrace();
+				}
 	}
 	
 	public static void main(String[] args){

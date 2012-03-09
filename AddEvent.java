@@ -176,12 +176,14 @@ public class AddEvent extends Composite {
 			add_newEvent_shell.open();
 		}
 	}
+	public void disposeShell(){
+		getParent().dispose();
+	}
 	public class CreatNewEventPage extends Composite {
 
 		private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 		private Text text;
 		private Text text_1;
-
 		/**
 		 * Create the composite.
 		 * @param parent
@@ -248,6 +250,8 @@ public class AddEvent extends Composite {
 				shell.pack();
 				shell.open();
 				getParent().dispose();
+				disposeShell();
+				
 			}
 		}
 	}
