@@ -121,18 +121,8 @@ public class EventPlanning_Meeting extends Composite {
 		}
 	}
 	
-/*	public static void main(String[] args){
-	    Display display = new Display();
-	    Shell shell = new Shell(display);
-	    EventPlanning_Meeting page = new EventPlanning_Meeting(shell, SWT.NONE);
-	    page.pack();
-	    shell.pack();
-	    shell.open();
-	    while(!shell.isDisposed()){
-	        if(!display.readAndDispatch()) display.sleep();
-	    }
-	} //End of main()
-*/	class Add extends SelectionAdapter {
+
+	class Add extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if(table.getSelectionCount()==0){
 				Shell add_meeting_shell = new Shell(getDisplay());

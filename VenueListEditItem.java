@@ -106,16 +106,16 @@ public class VenueListEditItem extends Composite {
 	
 	public class edit extends SelectionAdapter{
 		public void widgetSelected(SelectionEvent e){
-			String[] venueList = new String[3];
+			String[] _venueList = new String[3];
 			
 			if (!name.getText().isEmpty()){
-				venueList[0] = name.getText();
+				_venueList[0] = name.getText();
 			}
 			if (!location.getText().isEmpty()){
-				venueList[1] = location.getText();
+				_venueList[1] = location.getText();
 			}
 			if (!type.getText().isEmpty()){
-				venueList[2] = type.getText();
+				_venueList[2] = type.getText();
 			}
 			
 			if (!name.getText().isEmpty() &&
@@ -124,15 +124,16 @@ public class VenueListEditItem extends Composite {
 				/* update the venue table */ 
 				TableItem temp = table.getItem(index);
 				for (int i=0; i<3; i++){
-					temp.setText(i, venueList[i]);
+					temp.setText(i, _venueList[i]);
 				}
 				
 				/* update the database */
-				/*------------------------------------
-				 * ------------------------------
-				 * ---------------------
-				 * -----------------------------
-				 */
+				DatabaseReader db = new DatabaseReader();
+				Venue toBeEdited = db.getVenues().get(index);
+				toBeEdited.setName(_venueList[0]);
+				toBeEdited.setLocation(_venueList[1]);
+				toBeEdited.setType(_venueList[2]);
+				db.updateVenue(toBeEdited);
 				
 				getParent().dispose();
 			}

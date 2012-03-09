@@ -27,8 +27,7 @@ class Workspace2 extends Composite{
 			},
 			{	
 				"Regulations and Rules",
-				"View Venues",
-				"Book"
+				"Select and Book",
 			}
 	};
 
@@ -121,12 +120,7 @@ class Workspace2 extends Composite{
 				VenueBooking_InstructionPage vInstruc = new VenueBooking_InstructionPage (right, SWT.None);
 	    		vInstruc.pack();
 			}
-			else if(name.equals("Book"))
-			{
-			    VenueBooking_VenueBooking vBook  = new VenueBooking_VenueBooking(right, SWT.None);
-			    vBook.pack();
-			}
-			else if(name.equals("View Venues"))
+			else if(name.equals("Select and Book"))
 			{
 			    VenueBooking_VenueList vList  = new VenueBooking_VenueList(right, SWT.None);
 			    vList.pack();

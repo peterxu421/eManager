@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -20,6 +22,7 @@ public class VenueListAddItem extends Composite {
 	private Text type;
 	
 	private Table table;
+	//private ArrayList<Venue> venueList; //  from database 
 
 	/**
 	 * Create the composite.
@@ -27,7 +30,7 @@ public class VenueListAddItem extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public VenueListAddItem(Composite parent, int style, Table table) {
+	public VenueListAddItem(Composite parent, int style, Table table /*ArrayList<Venue> venueList*/ ) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -37,6 +40,7 @@ public class VenueListAddItem extends Composite {
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
 		this.table = table;
+		//this.venueList = venueList;
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayout(null);
@@ -95,16 +99,16 @@ public class VenueListAddItem extends Composite {
 	
 	public class Add extends SelectionAdapter{
 		public void widgetSelected(SelectionEvent e){
-			String[] venueList = new String[3];
+			String[] _venueList = new String[3];
 			
 			if (!name.getText().isEmpty()){
-				venueList[0] = name.getText();
+				_venueList[0] = name.getText();
 			}
 			if (!location.getText().isEmpty()){
-				venueList[1] = location.getText();
+				_venueList[1] = location.getText();
 			}
 			if (!type.getText().isEmpty()){
-				venueList[2] = type.getText();
+				_venueList[2] = type.getText();
 			}
 			
 			if (!name.getText().isEmpty() &&
@@ -113,15 +117,13 @@ public class VenueListAddItem extends Composite {
 				/* update the venue table */ 
 				TableItem temp = new TableItem(table, SWT.None);
 				for (int i=0; i<3; i++){
-					temp.setText(i, venueList[i]);
+					temp.setText(i, _venueList[i]);
 				}
 				
 				/* update the database */
-				/*------------------------------------
-				 * ------------------------------
-				 * ---------------------
-				 * -----------------------------
-				 */
+				DatabaseReader db = new DatabaseReader();
+				Venue newVenue = new Venue(_venueList[0], _venueList[1], _venueList[2]);
+				db.insertVenue(newVenue);
 				
 				getParent().dispose();
 			}

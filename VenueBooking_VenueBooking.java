@@ -43,13 +43,15 @@ public class VenueBooking_VenueBooking extends Composite {
 	private DateTime timeEnd;
 	private Text contact;
 	private Text email;
+	
+	private Venue selected;
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public VenueBooking_VenueBooking(Composite parent, int style) {
+	public VenueBooking_VenueBooking(Composite parent, int style, Venue selected) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -58,6 +60,7 @@ public class VenueBooking_VenueBooking extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		this.selected = selected; 
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(10, 10, 450, 436);
@@ -193,7 +196,9 @@ public class VenueBooking_VenueBooking extends Composite {
 	public class deleteDateTime extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
 			int index = listDateTime.getSelectionIndex();
-			listDateTime.remove(index);	
+			if(index >0 && index <= listDateTime.getItemCount()){
+				listDateTime.remove(index);
+			}	
 		}	
 	}
 	public class submit extends SelectionAdapter{
@@ -225,12 +230,10 @@ public class VenueBooking_VenueBooking extends Composite {
 					_listDateTime.set(i, listDateTime.getItem(i));
 			}
 			
-			/* update related tables and the database */
-			/* -----------------------------------------------
-			   --------------------------
-			   -----------------------------------------
-			   ----------------------------------
-			 */
+			/* update the table of applications under venue management */
+			/* ---can be updated via database later on--- */
+			/* ---or can be updated by a reference to the applicationtable---*/
+
 			getParent().dispose();
 		}
 	}

@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Button;
 public class VenueManagement_BookingApplications extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	private Table table_1;
+	private Table applicationTable;
 
 	/**
 	 * Create the composite.
@@ -33,53 +33,53 @@ public class VenueManagement_BookingApplications extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 849, 350);
+		composite.setBounds(10, 10, 541, 350);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
-		table_1 = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
-		table_1.setLinesVisible(true);
-		table_1.setHeaderVisible(true);
-		table_1.setBounds(10, 10, 734, 324);
-		toolkit.adapt(table_1);
-		toolkit.paintBordersFor(table_1);
+		applicationTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		applicationTable.setLinesVisible(true);
+		applicationTable.setHeaderVisible(true);
+		applicationTable.setBounds(10, 10, 424, 324);
+		toolkit.adapt(applicationTable);
+		toolkit.paintBordersFor(applicationTable);
 		
-		TableColumn tblclmnVenueName = new TableColumn(table_1, SWT.NONE);
+		TableColumn tblclmnVenueName = new TableColumn(applicationTable, SWT.NONE);
 		tblclmnVenueName.setWidth(98);
 		tblclmnVenueName.setText("Booked Venue");
 		
-		TableColumn tblclmnName = new TableColumn(table_1, SWT.CENTER);
+		TableColumn tblclmnName = new TableColumn(applicationTable, SWT.CENTER);
 		tblclmnName.setWidth(80);
 		tblclmnName.setText("Name");
 		
-		TableColumn tblclmnMatricNo = new TableColumn(table_1, SWT.CENTER);
+		TableColumn tblclmnMatricNo = new TableColumn(applicationTable, SWT.CENTER);
 		tblclmnMatricNo.setWidth(100);
 		tblclmnMatricNo.setText("Matric No.");
 		
-		TableColumn tblclmnOrganization = new TableColumn(table_1, SWT.CENTER);
+		TableColumn tblclmnOrganization = new TableColumn(applicationTable, SWT.CENTER);
 		tblclmnOrganization.setWidth(88);
 		tblclmnOrganization.setText("Organization");
 		
-		TableColumn tblclmnContact = new TableColumn(table_1, SWT.CENTER);
+		TableColumn tblclmnContact = new TableColumn(applicationTable, SWT.CENTER);
 		tblclmnContact.setWidth(100);
 		tblclmnContact.setText("Contact No.");
 		
-		TableColumn tblclmnNewEmail = new TableColumn(table_1, SWT.CENTER);
+		TableColumn tblclmnNewEmail = new TableColumn(applicationTable, SWT.CENTER);
 		tblclmnNewEmail.setWidth(106);
 		tblclmnNewEmail.setText("Eamil");
 		
-		TableColumn tblclmnDateAndTime = new TableColumn(table_1, SWT.CENTER);
+		TableColumn tblclmnDateAndTime = new TableColumn(applicationTable, SWT.CENTER);
 		tblclmnDateAndTime.setWidth(181);
 		tblclmnDateAndTime.setText("Date and Time");
 		
 		Button btnAccept = new Button(composite, SWT.NONE);
 		btnAccept.setText("Accept");
-		btnAccept.setBounds(750, 21, 89, 27);
+		btnAccept.setBounds(440, 10, 89, 27);
 		toolkit.adapt(btnAccept, true, true);
 		
 		Button btnReject = new Button(composite, SWT.NONE);
 		btnReject.setText("Reject");
-		btnReject.setBounds(750, 54, 89, 27);
+		btnReject.setBounds(440, 43, 89, 27);
 		toolkit.adapt(btnReject, true, true);
 
 	}

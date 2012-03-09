@@ -6,6 +6,7 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -19,7 +20,7 @@ public class VenueManagement_VenueList extends Composite {
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Table venueTable;
     
-	/*private ArrayList<Venue> venueList;*/
+	private ArrayList<Venue> venueList;
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -82,14 +83,21 @@ public class VenueManagement_VenueList extends Composite {
 		toolkit.adapt(btnView, true, true);
 	    btnEdit.addSelectionListener(new edit());
 	    
-/*	    importVenueListData();*/
+	    importVenueListData();
 
 	}
 	
-/*	public void importVenueListData() {
+	public void importVenueListData() {
 		DatabaseReader db = new DatabaseReader();
-		venueList = db.getVenues(event)
-	}*/
+		venueList = db.getVenues();
+		/* update the venue list table */
+		for (int i=0; i<venueList.size(); i++){
+			TableItem temp = new TableItem(venueTable, SWT.None);
+			temp.setText(0, venueList.get(i).getName());
+			temp.setText(1, venueList.get(i).getLocation());
+			temp.setText(2, venueList.get(i).getType());
+		}
+	}
 	
 	public class add extends SelectionAdapter {
 
@@ -112,8 +120,8 @@ public class VenueManagement_VenueList extends Composite {
 					/* update the itinerary table */
 					venueTable.remove(index);
 					/* update the database */
-/*					DatabaseReader db = new DatabaseReader();
-					db.deleteItinerary(venueList.get(index));*/
+					DatabaseReader db = new DatabaseReader();
+					db.deleteVenue(venueList.get(index));
 				}
 			}
 		}
