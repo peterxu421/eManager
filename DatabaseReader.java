@@ -327,10 +327,10 @@ public class DatabaseReader{
 		int venueID = SQLManager.insertVenueDetails(connection, venue.getName(), venue.getLocation(), venue.getType());
 		venue.setVenueId(venueID);
 	}
-	public void delete(Venue venue){
+	public void deleteVenue(Venue venue){
 		SQLManager.deleteVenueDetails(connection, venue.getVenueId());
 	}
-	public void update(Venue venue){
+	public void updateVenue(Venue venue){
 		SQLManager.updateVenueDetails(connection, venue.getVenueId(), venue.getName(), venue.getLocation(), venue.getType());
 	}
 	
@@ -376,6 +376,27 @@ public class DatabaseReader{
 				e.printStackTrace();
 		}
 		return participants;
+	}
+	public void insertOrganizer(Event event, Organizer organizer){
+		int organizerID = SQLManager.insertOrganizerDetails(connection, event.getEventID(), organizer.getName(), organizer.getMatricNo(), organizer.getFaculty(), organizer.getYear(), organizer.getContact(), organizer.getEmail(), organizer.getFoodType(), organizer.getAllergy(), organizer.getPosition());
+		organizer.setID(organizerID);
+	}
+	public void insertFacilitator(Event event, Facilitator facilitator){
+		int facilitatorID = SQLManager.insertFacilitatorDetails(connection, event.getEventID(), facilitator.getName(), facilitator.getMatricNo(), facilitator.getFaculty(), facilitator.getYear(), facilitator.getContact(), facilitator.getEmail(), facilitator.getFoodType(), facilitator.getAllergy(), facilitator.getPosition());
+		facilitator.setID(facilitatorID);
+	}
+	public void insertParticipant(Event event, Participant participant){
+		int participantID = SQLManager.insertParticipantDetails(connection, event.getEventID(), participant.getName(), participant.getMatricNo(), participant.getFaculty(), participant.getYear(), participant.getContact(), participant.getEmail(), participant.getFoodType(), participant.getAllergy());
+		participant.setID(participantID);
+	}
+	public void updateOrganizer(Organizer member){
+		SQLManager.updateOrganizerFacilitatorDetails(connection, member.getID(), member.getName(), member.getMatricNo(), member.getFaculty(), member.getYear(), member.getContact(), member.getEmail(), member.getFoodType(), member.getAllergy(), member.getPosition());
+	}
+	public void updateFacilitator(Facilitator member){
+		SQLManager.updateOrganizerFacilitatorDetails(connection, member.getID(), member.getName(), member.getMatricNo(), member.getFaculty(), member.getYear(), member.getContact(), member.getEmail(), member.getFoodType(), member.getAllergy(), member.getPosition());
+	}
+	public void updateParticipant(Participant member){
+		SQLManager.updateParticipantDetails(connection, member.getID(), member.getName(), member.getMatricNo(), member.getFaculty(), member.getYear(), member.getContact(), member.getEmail(), member.getFoodType(), member.getAllergy());
 	}
 	
 	
