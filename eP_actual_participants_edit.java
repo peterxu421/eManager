@@ -24,14 +24,13 @@ public class eP_actual_participants_edit extends Composite {
 	private Text text_eP_actual_participants_age;
 	private Text text_eP_actual_participants_faculty;
 	private Text text_eP_actual_participants_foodType;
-	private Text text_eP_actual_participants_status;
-
+	private Participant participant;
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public eP_actual_participants_edit(Composite parent, int style, Table table, int index) {
+	public eP_actual_participants_edit(Composite parent, int style, Table table, int index, Participant participant) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -40,6 +39,7 @@ public class eP_actual_participants_edit extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		this.participant=participant;
 		
 		Composite comp_eP_actual_participants_edit = new Composite(this, SWT.NONE);
 		comp_eP_actual_participants_edit.setLayout(null);
@@ -53,7 +53,7 @@ public class eP_actual_participants_edit extends Composite {
 		toolkit.adapt(lbl_eP_actual_participants_name, true, true);
 		
 		Label lbl_eP_actual_participants_faculty = new Label(comp_eP_actual_participants_edit, SWT.NONE);
-		lbl_eP_actual_participants_faculty.setText("Age");
+		lbl_eP_actual_participants_faculty.setText("Year");
 		lbl_eP_actual_participants_faculty.setBounds(33, 72, 72, 17);
 		toolkit.adapt(lbl_eP_actual_participants_faculty, true, true);
 		
@@ -66,11 +66,6 @@ public class eP_actual_participants_edit extends Composite {
 		lbl_eP_actual_participants_foodType.setText("Food Type");
 		lbl_eP_actual_participants_foodType.setBounds(35, 150, 70, 17);
 		toolkit.adapt(lbl_eP_actual_participants_foodType, true, true);
-		
-		Label lbl_eP_actual_participants_status = new Label(comp_eP_actual_participants_edit, SWT.NONE);
-		lbl_eP_actual_participants_status.setText("Status");
-		lbl_eP_actual_participants_status.setBounds(35, 188, 54, 17);
-		toolkit.adapt(lbl_eP_actual_participants_status, true, true);
 		
 		text_eP_actual_participants_name = new Text(comp_eP_actual_participants_edit, SWT.BORDER);
 		text_eP_actual_participants_name.setBounds(152, 31, 125, 23);
@@ -92,21 +87,16 @@ public class eP_actual_participants_edit extends Composite {
 		toolkit.adapt(text_eP_actual_participants_foodType, true, true);
 		text_eP_actual_participants_foodType.setText(table.getItem(index).getText(3));
 		
-		text_eP_actual_participants_status = new Text(comp_eP_actual_participants_edit, SWT.BORDER);
-		text_eP_actual_participants_status.setText(table.getItem(index).getText(4));
-		text_eP_actual_participants_status.setBounds(152, 185, 125, 23);
-		toolkit.adapt(text_eP_actual_participants_status, true, true);
-		
 		Button btn_eP_actual_participants_edit = new Button(comp_eP_actual_participants_edit, SWT.NONE);
 		btn_eP_actual_participants_edit.addSelectionListener(new ParticipantsEditOldItem(table, index));
 		btn_eP_actual_participants_edit.setText("Edit");
-		btn_eP_actual_participants_edit.setBounds(87, 219, 66, 27);
+		btn_eP_actual_participants_edit.setBounds(87, 203, 66, 27);
 		toolkit.adapt(btn_eP_actual_participants_edit, true, true);
 		
 		Button btn_eP_actual_participants_cancel = new Button(comp_eP_actual_participants_edit, SWT.NONE);
 		btn_eP_actual_participants_cancel.addSelectionListener(new ParticipantsCancel2());
 		btn_eP_actual_participants_cancel.setText("Cancel");
-		btn_eP_actual_participants_cancel.setBounds(211, 219, 66, 27);
+		btn_eP_actual_participants_cancel.setBounds(211, 203, 66, 27);
 		toolkit.adapt(btn_eP_actual_participants_cancel, true, true);
 
 	}
@@ -121,31 +111,32 @@ public class eP_actual_participants_edit extends Composite {
 		}
 
 		public void widgetSelected(SelectionEvent e) {
-			String[] itineraryArray = new String[5];
+			String[] participantArray = new String[5];
 			if (!text_eP_actual_participants_name.getText().isEmpty()) {
-				itineraryArray[0] = text_eP_actual_participants_name.getText();
-				table.getItem(index).setText(0, itineraryArray[0]);
+				participantArray[0] = text_eP_actual_participants_name.getText();
+				table.getItem(index).setText(0, participantArray[0]);
 			}
 			if (!text_eP_actual_participants_age.getText().isEmpty()) {
-				itineraryArray[1] = text_eP_actual_participants_age.getText();
-				table.getItem(index).setText(1, itineraryArray[1]);
+				participantArray[1] = text_eP_actual_participants_age.getText();
+				table.getItem(index).setText(1, participantArray[1]);
 			}
 			if (!text_eP_actual_participants_faculty.getText().isEmpty()) {
-				itineraryArray[2] = text_eP_actual_participants_faculty.getText();
-				table.getItem(index).setText(2, itineraryArray[2]);
+				participantArray[2] = text_eP_actual_participants_faculty.getText();
+				table.getItem(index).setText(2, participantArray[2]);
 			}
 			if (!text_eP_actual_participants_foodType.getText().isEmpty()) {
-				itineraryArray[3] = text_eP_actual_participants_foodType.getText();
-				table.getItem(index).setText(3, itineraryArray[3]);
-			}
-			if (!text_eP_actual_participants_foodType.getText().isEmpty()) {
-				itineraryArray[4] = text_eP_actual_participants_status.getText();
-				table.getItem(index).setText(4, itineraryArray[4]);
+				participantArray[3] = text_eP_actual_participants_foodType.getText();
+				table.getItem(index).setText(3, participantArray[3]);
 			}
 			if (!text_eP_actual_participants_name.getText().isEmpty() && !text_eP_actual_participants_age.getText().isEmpty()
 					&& !text_eP_actual_participants_faculty.getText().isEmpty()
-					&& !text_eP_actual_participants_foodType.getText().isEmpty()
-					&& !text_eP_actual_participants_status.getText().isEmpty()) {
+					&& !text_eP_actual_participants_foodType.getText().isEmpty()) {
+				participant.setName(participantArray[0]);
+				participant.setYear(Integer.parseInt(participantArray[1]));
+				participant.setFaculty(participantArray[2]);
+				participant.setFoodType(participantArray[3]);
+				DatabaseReader db = new DatabaseReader();
+				db.updateParticipant(participant);
 				getParent().dispose();
 			}
 		}

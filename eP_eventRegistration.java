@@ -23,14 +23,14 @@ public class eP_eventRegistration extends Composite {
 	private Text textFoodType;
 	private Text textAllergy;
 	private Text textMatriculation;
-
+	private Event event;
 	/**
 	 * Create the composite.
 	 * 
 	 * @param parent
 	 * @param style
 	 */
-	public eP_eventRegistration(Composite parent, int style) {
+	public eP_eventRegistration(Composite parent, int style, Event event) {
 		super(parent, SWT.NONE);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -39,6 +39,7 @@ public class eP_eventRegistration extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		this.event = event;
 
 		ScrolledComposite scrolledCompositeRegistration = new ScrolledComposite(
 				this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -116,20 +117,28 @@ public class eP_eventRegistration extends Composite {
 		textAllergy = new Text(compositeRegistration, SWT.BORDER);
 		textAllergy.setBounds(10, 345, 165, 23);
 		toolkit.adapt(textAllergy, true, true);
-
+		
+		Button btnSubmit = new Button(compositeRegistration, SWT.NONE);
+		btnSubmit.addSelectionListener(new RegistrationSubmit());
+		btnSubmit.setText("Submit");
+		btnSubmit.setBounds(10, 374, 80, 27);
+		toolkit.adapt(btnSubmit, true, true);
+		
 		Button btnClear = new Button(compositeRegistration, SWT.NONE);
 		btnClear.addSelectionListener(new RegistrationClear());
 		btnClear.setBounds(95, 374, 80, 27);
 		toolkit.adapt(btnClear, true, true);
 		btnClear.setText("Clear");
 
-		Button btnSubmit = new Button(compositeRegistration, SWT.NONE);
-		btnSubmit.setText("Submit");
-		btnSubmit.setBounds(10, 374, 80, 27);
-		toolkit.adapt(btnSubmit, true, true);
 		scrolledCompositeRegistration.setContent(compositeRegistration);
 		scrolledCompositeRegistration.setMinSize(compositeRegistration
 				.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	}
+	public class RegistrationSubmit{
+		public void widgetSelected(SelectionEvent e) {
+			DatabaseReader db = new DatabaseReader();
+			
+		}		
 	}
 
 	public class RegistrationClear extends SelectionAdapter {

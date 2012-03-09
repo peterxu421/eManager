@@ -1,6 +1,12 @@
 
 public class Facilitator extends Member {
 	private String position;
+	public Facilitator(String name, int year, String faculty, String position, String status){
+		this.name = name;
+		this.year = year;
+		this.faculty = faculty;
+		this.position = position;
+	}
 	public Facilitator(String name, String matricNo, String faculty, int year,
 			int contact, String email, String foodType, String allergy, String position) {
 		this.name = name;
