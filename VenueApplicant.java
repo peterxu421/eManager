@@ -37,5 +37,6 @@ public class VenueApplicant extends Member {
 		this.contact = contact;
 		this.email = email;
 		this.organization = organization;
+		this.role = MACRO.APPLICANT;
 	}
 }
