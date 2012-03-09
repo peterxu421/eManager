@@ -15,7 +15,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-public Abstract AddItemSkeleton extends Composite {
+public abstract class AddItemSkeleton extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private ArrayList<String> stringList;
@@ -58,8 +58,10 @@ public Abstract AddItemSkeleton extends Composite {
 			toolkit.adapt(label, true, true);
 			label.setLayoutData(new GridData(80, 20));
 
-			Text text = new Text(this, SWT.BORDER);
+			ArrayList<Text> textList = new ArrayList <Text>();
+			Text text=new Text(this, SWT.None);
 			text.setLayoutData(new GridData(80, 20));
+			textList.add(text);
 			toolkit.adapt(text, true, true);
 		}
 		
@@ -76,7 +78,7 @@ public Abstract AddItemSkeleton extends Composite {
 		
 		class AddNewItem extends SelectionAdapter{
 			public void widgetSelected(SelectionEvent e){
-				
+				DatabaseReader db = new DatabaseReader();
 			}
 		}
 		
@@ -104,7 +106,7 @@ public Abstract AddItemSkeleton extends Composite {
 		btnCancel.setLayoutData(new GridData(60,30));*/
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Display display = new Display();
 		Shell shell = new Shell(display);
 		ArrayList<String> stringList = new ArrayList<String>();
@@ -119,5 +121,5 @@ public Abstract AddItemSkeleton extends Composite {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
-	}
+	}*/
 }

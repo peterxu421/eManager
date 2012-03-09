@@ -6,6 +6,7 @@ public class Facilitator extends Member {
 		this.year = year;
 		this.faculty = faculty;
 		this.position = position;
+		this.role = MACRO.FACILITATOR;
 	}
 	public Facilitator(String name, String matricNo, String faculty, int year,
 			int contact, String email, String foodType, String allergy, String position) {

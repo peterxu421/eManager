@@ -99,6 +99,7 @@ public class eP_eventRegistration extends Composite {
 		textEvent = new Text(compositeRegistration, SWT.BORDER);
 		textEvent.setBounds(10, 241, 165, 23);
 		toolkit.adapt(textEvent, true, true);
+		textEvent.setText(event.getEventName());
 
 		Label lblFoodType = new Label(compositeRegistration, SWT.H_SCROLL);
 		lblFoodType.setText("Food Type");
@@ -134,10 +135,16 @@ public class eP_eventRegistration extends Composite {
 		scrolledCompositeRegistration.setMinSize(compositeRegistration
 				.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
-	public class RegistrationSubmit{
+	public class RegistrationSubmit extends SelectionAdapter{
 		public void widgetSelected(SelectionEvent e) {
 			DatabaseReader db = new DatabaseReader();
-			
+			Participant participant = new Participant();
+			participant.setName(textName.getText());
+			participant.setYear(Integer.parseInt(textYearOfStudy.getText()));
+			participant.setFaculty(textFaculty.getText());
+			participant.setFoodType(textFoodType.getText());
+			participant.setMatricNo(textMatriculation.getText());
+			db.insertParticipant(event, participant);
 		}		
 	}
 

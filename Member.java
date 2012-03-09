@@ -24,8 +24,8 @@ public abstract class Member {
 	public String getMatricNo() {
 		return matricNo;
 	}
-	public void setMatricNo(String matricNo) {
-		this.matricNo = matricNo;
+	public void setMatricNo(String i) {
+		this.matricNo = i;
 	}
 	public String getFaculty() {
 		return faculty;
