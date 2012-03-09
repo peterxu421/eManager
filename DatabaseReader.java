@@ -315,8 +315,8 @@ public class DatabaseReader{
 		try{
 			rs = SQLManager.getVenueDetails(connection);
 			while(rs.next()){
-				Venue venue = new Venue(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5));
-				venues.add(venue);
+				//Venue venue = new Venue(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5));
+				//venues.add(venue);
 			}
 		}catch (SQLException e) {
 				e.printStackTrace();
@@ -333,6 +333,51 @@ public class DatabaseReader{
 	public void update(Venue venue){
 		SQLManager.updateVenueDetails(connection, venue.getVenueId(), venue.getName(), venue.getLocation(), venue.getType());
 	}
+	
+	/*MemberDetails*/
+	public ArrayList<Organizer> getOrganizers(Event event){
+		ArrayList<Organizer> organizers = new ArrayList<Organizer>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getOrganizerDetails(connection, event.getEventID());
+			while(rs.next()){
+				Organizer organizer = new Organizer(rs.getInt("EventID"), rs.getString("Name"), rs.getString("MatricNo"), rs.getString("Faculty"), rs.getInt("SchoolYear"), rs.getInt("Contact"), rs.getString("Email"), rs.getString("FoodType"), rs.getString("Allergy"), rs.getString("Position"));
+				organizers.add(organizer);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return organizers;
+	}
+	public ArrayList<Facilitator> getFacilitators(Event event){
+		ArrayList<Facilitator> facilitators = new ArrayList<Facilitator>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getFacilitatorDetails(connection, event.getEventID());
+			while(rs.next()){
+				Facilitator facilitator = new Facilitator(rs.getInt("EventID"), rs.getString("Name"), rs.getString("MatricNo"), rs.getString("Faculty"), rs.getInt("SchoolYear"), rs.getInt("Contact"), rs.getString("Email"), rs.getString("FoodType"), rs.getString("Allergy"), rs.getString("Position"));
+				facilitators.add(facilitator);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return facilitators;
+	}
+	public ArrayList<Participant> getParticipants(Event event){
+		ArrayList<Participant> participants = new ArrayList<Participant>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getFacilitatorDetails(connection, event.getEventID());
+			while(rs.next()){
+				Participant participant = new Participant(rs.getInt("EventID"), rs.getString("Name"), rs.getString("MatricNo"), rs.getString("Faculty"), rs.getInt("SchoolYear"), rs.getInt("Contact"), rs.getString("Email"), rs.getString("FoodType"), rs.getString("Allergy"));
+				participants.add(participant);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return participants;
+	}
+	
 	
 	public static void main(String[] args){
 		DatabaseReader db = new DatabaseReader();

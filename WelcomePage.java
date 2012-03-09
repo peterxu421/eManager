@@ -68,14 +68,13 @@ public class WelcomePage extends Composite {
 	}
 	class Event extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM|SWT.ON_TOP);
+			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM | SWT.ON_TOP);
 			add_item_shell.setLocation(400,250);
 			AddEvent add_new_item_page = new AddEvent(add_item_shell,
 					SWT.None);
 			add_new_item_page.pack();
 			add_item_shell.pack();
 			add_item_shell.open();
-			getParent().dispose();
 		}
 	}
 	class venueManager extends SelectionAdapter {
@@ -86,7 +85,6 @@ public class WelcomePage extends Composite {
 				ws2.pack();
 				shell.pack();
 				shell.open();
-				getParent().dispose();
 			}	
 		}
 }

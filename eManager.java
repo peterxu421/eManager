@@ -87,7 +87,7 @@ public class eManager{
 		rootShell.open();
 		
 		//welcome page
-		Shell welcome_shell = new Shell(display,SWT.NO_TRIM | SWT.ON_TOP);
+		Shell welcome_shell = new Shell(display,SWT.NO_TRIM);
 		welcome_shell.setLocation(400, 250);
 		WelcomePage welcome_page = new WelcomePage(welcome_shell, SWT.None);
 		
