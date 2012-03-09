@@ -172,7 +172,7 @@ class Workspace extends Composite{
 			}
 			else if(name.equals("Event Registration"))
 			{
-				eP_eventRegistration register = new eP_eventRegistration(right, SWT.None);
+				eP_eventRegistration register = new eP_eventRegistration(right, SWT.None, event);
 				register.pack();
 			}
 			right.pack();

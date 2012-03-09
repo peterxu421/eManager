@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
@@ -23,15 +25,14 @@ public class FacilitatorAddItem extends Composite {
 	private Text text_eP_actual_facilitator_year;
 	private Text text_eP_actual_facilitator_faculty;
 	private Text text_eP_actual_facilitator_interestedIn;
-	private Text text_eP_actual_facilitator_status;
-
+	private Event event;
 	/**
 	 * Create the composite.
 	 * 
 	 * @param parent
 	 * @param style
 	 */
-	public FacilitatorAddItem(Composite parent, int style, Table table_1) {
+	public FacilitatorAddItem(Composite parent, int style, Table table_1, Event event) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -41,7 +42,8 @@ public class FacilitatorAddItem extends Composite {
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
 		setLayout(null);
-
+		this.event = event;
+		
 		Composite comp_eP_actual_facilitator_AddPage = new Composite(this, SWT.NONE);
 		comp_eP_actual_facilitator_AddPage.setBounds(56, 10, 372, 290);
 		comp_eP_actual_facilitator_AddPage.setLayout(null);
@@ -67,11 +69,6 @@ public class FacilitatorAddItem extends Composite {
 		lbl_eP_actual_facilitator_interestedIn.setBounds(35, 143, 73, 17);
 		toolkit.adapt(lbl_eP_actual_facilitator_interestedIn, true, true);
 		lbl_eP_actual_facilitator_interestedIn.setText("Interested In");
-		
-		Label lbl_eP_actual_facilitator_status = new Label(comp_eP_actual_facilitator_AddPage, SWT.NONE);
-		lbl_eP_actual_facilitator_status.setText("Status");
-		lbl_eP_actual_facilitator_status.setBounds(35, 183, 54, 17);
-		toolkit.adapt(lbl_eP_actual_facilitator_status, true, true);
 
 		text_eP_actual_facilitator_name = new Text(comp_eP_actual_facilitator_AddPage, SWT.BORDER);
 		text_eP_actual_facilitator_name.setBounds(152, 31, 125, 23);
@@ -88,20 +85,16 @@ public class FacilitatorAddItem extends Composite {
 		text_eP_actual_facilitator_interestedIn = new Text(comp_eP_actual_facilitator_AddPage, SWT.BORDER);
 		text_eP_actual_facilitator_interestedIn.setBounds(152, 140, 125, 23);
 		toolkit.adapt(text_eP_actual_facilitator_interestedIn, true, true);
-		
-		text_eP_actual_facilitator_status = new Text(comp_eP_actual_facilitator_AddPage, SWT.BORDER);
-		text_eP_actual_facilitator_status.setBounds(152, 180, 125, 23);
-		toolkit.adapt(text_eP_actual_facilitator_status, true, true);
 
 		Button btn_eP_actual_facilitator_add = new Button(comp_eP_actual_facilitator_AddPage, SWT.NONE);
 		btn_eP_actual_facilitator_add.addSelectionListener(new FacilitatorAddNewItem(table_1));
-		btn_eP_actual_facilitator_add.setBounds(87, 219, 66, 27);
+		btn_eP_actual_facilitator_add.setBounds(87, 199, 66, 27);
 		toolkit.adapt(btn_eP_actual_facilitator_add, true, true);
 		btn_eP_actual_facilitator_add.setText("Add");
 
 		Button btn_eP_actual_facilitator_cancel = new Button(comp_eP_actual_facilitator_AddPage, SWT.NONE);
 		btn_eP_actual_facilitator_cancel.addSelectionListener(new FacilitatorCancel());
-		btn_eP_actual_facilitator_cancel.setBounds(211, 219, 66, 27);
+		btn_eP_actual_facilitator_cancel.setBounds(211, 199, 66, 27);
 		toolkit.adapt(btn_eP_actual_facilitator_cancel, true, true);
 		btn_eP_actual_facilitator_cancel.setText("Cancel");
 
@@ -115,30 +108,31 @@ public class FacilitatorAddItem extends Composite {
 		}
 
 		public void widgetSelected(SelectionEvent e) {
-			String[] itineraryArray = new String[5];
+			String[] facilitatorArray = new String[5];
 			if (!text_eP_actual_facilitator_name.getText().isEmpty()) {
-				itineraryArray[0] = text_eP_actual_facilitator_name.getText();
+				facilitatorArray[0] = text_eP_actual_facilitator_name.getText();
 			}
 			if (!text_eP_actual_facilitator_year.getText().isEmpty()) {
-				itineraryArray[1] = text_eP_actual_facilitator_year.getText();
+				facilitatorArray[1] = text_eP_actual_facilitator_year.getText();
 			}
 			if (!text_eP_actual_facilitator_faculty.getText().isEmpty()) {
-				itineraryArray[2] = text_eP_actual_facilitator_faculty.getText();
+				facilitatorArray[2] = text_eP_actual_facilitator_faculty.getText();
 			}
 			if (!text_eP_actual_facilitator_interestedIn.getText().isEmpty()) {
-				itineraryArray[3] = text_eP_actual_facilitator_interestedIn.getText();
-			}
-			if (!text_eP_actual_facilitator_interestedIn.getText().isEmpty()) {
-				itineraryArray[4] = text_eP_actual_facilitator_status.getText();
+				facilitatorArray[3] = text_eP_actual_facilitator_interestedIn.getText();
 			}
 			if (!text_eP_actual_facilitator_name.getText().isEmpty()
 					&& !text_eP_actual_facilitator_year.getText().isEmpty()
 					&& !text_eP_actual_facilitator_faculty.getText().isEmpty()
-					&& !text_eP_actual_facilitator_interestedIn.getText().isEmpty()
-					&& !text_eP_actual_facilitator_status.getText().isEmpty()) {
+					&& !text_eP_actual_facilitator_interestedIn.getText().isEmpty()) {
+				//update facilitatorList;
 				TableItem item = new TableItem(table_1, SWT.NULL);
-				for (int i = 0; i < 5; i++) {
-					item.setText(i, itineraryArray[i]);
+				System.out.println("Come to here");
+				DatabaseReader db = new DatabaseReader();
+				Facilitator facilitator = new Facilitator(facilitatorArray[0],Integer.parseInt(facilitatorArray[1]),facilitatorArray[2],facilitatorArray[3],facilitatorArray[4]);
+				db.insertFacilitator(event, facilitator);
+				for (int i = 0; i < 4; i++) {
+					item.setText(i, facilitatorArray[i]);
 				}
 				getParent().dispose();
 			}
