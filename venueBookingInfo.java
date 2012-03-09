@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 
-public class venueBookingInfo {
+public class VenueBookingInfo {
 	private int venueBookingInfoId;
 	private String fullName;
 	private String matricNo;
@@ -10,7 +10,7 @@ public class venueBookingInfo {
 	private String organization;
 	private ArrayList<BookingDateTime> dateTimeList; // dates and time slots for each booking is stored in an ArrayList
 	
-	public venueBookingInfo(int venueBookingInfoId, String fullName,
+	public VenueBookingInfo(int venueBookingInfoId, String fullName,
 			String matricNo, String contactNo, String email,
 			String organization, ArrayList<BookingDateTime> dateTimeList) {
 		this.venueBookingInfoId = venueBookingInfoId;
@@ -21,7 +21,7 @@ public class venueBookingInfo {
 		this.organization = organization;
 		this.dateTimeList = dateTimeList;
 	}
-	public venueBookingInfo(String fullName,
+	public VenueBookingInfo(String fullName,
 			String matricNo, String contactNo, String email,
 			String organization, ArrayList<BookingDateTime> dateTimeList) {
 		this.fullName = fullName;
