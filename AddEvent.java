@@ -148,7 +148,7 @@ public class AddEvent extends Composite {
 		public void widgetSelected(SelectionEvent e){
 			int index=list.getSelectionIndex();
 			list.remove(index);
-			//databaseReader.deleteEvent(events.get(index));
+			databaseReader.deleteEvent(events.get(index));
 		}
 	}
 	class SelectProjectHandler extends SelectionAdapter {

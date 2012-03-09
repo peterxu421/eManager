@@ -8,11 +8,11 @@ public class venueBookingInfo {
 	private String contactNo;
 	private String email;
 	private String organization;
-	private ArrayList<String> dateTimeList; // dates and time slots for each booking is stored in an ArrayList
+	private ArrayList<BookingDateTime> dateTimeList; // dates and time slots for each booking is stored in an ArrayList
 	
 	public venueBookingInfo(int venueBookingInfoId, String fullName,
 			String matricNo, String contactNo, String email,
-			String organization, ArrayList<String> dateTimeList) {
+			String organization, ArrayList<BookingDateTime> dateTimeList) {
 		this.venueBookingInfoId = venueBookingInfoId;
 		this.fullName = fullName;
 		this.matricNo = matricNo;
@@ -23,7 +23,7 @@ public class venueBookingInfo {
 	}
 	public venueBookingInfo(String fullName,
 			String matricNo, String contactNo, String email,
-			String organization, ArrayList<String> dateTimeList) {
+			String organization, ArrayList<BookingDateTime> dateTimeList) {
 		this.fullName = fullName;
 		this.matricNo = matricNo;
 		this.contactNo = contactNo;
@@ -67,10 +67,10 @@ public class venueBookingInfo {
 	public void setOrganization(String organization) {
 		this.organization = organization;
 	}
-	public ArrayList<String> getDateTimeList() {
+	public ArrayList<BookingDateTime> getDateTimeList() {
 		return dateTimeList;
 	}
-	public void setDateTimeList(ArrayList<String> dateTimeList) {
+	public void setDateTimeList(ArrayList<BookingDateTime> dateTimeList) {
 		this.dateTimeList = dateTimeList;
 	}
 }
