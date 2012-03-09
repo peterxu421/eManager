@@ -1,35 +1,23 @@
-import java.util.ArrayList;
-
 
 public class VenueBookingInfo {
 	private int venueBookingInfoId;
-	private String fullName;
-	private String matricNo;
-	private String contactNo;
-	private String email;
-	private String organization;
-	private ArrayList<BookingDateTime> dateTimeList; // dates and time slots for each booking is stored in an ArrayList
-	
-	public VenueBookingInfo(int venueBookingInfoId, String fullName,
-			String matricNo, String contactNo, String email,
-			String organization, ArrayList<BookingDateTime> dateTimeList) {
+	private Venue venue;
+	private VenueApplicant applicant;
+	private BookingDateTime dateTime;
+	public VenueBookingInfo(int venueBookingInfoId, Venue venue,
+			VenueApplicant applicant, BookingDateTime dateTime) {
+		super();
 		this.venueBookingInfoId = venueBookingInfoId;
-		this.fullName = fullName;
-		this.matricNo = matricNo;
-		this.contactNo = contactNo;
-		this.email = email;
-		this.organization = organization;
-		this.dateTimeList = dateTimeList;
+		this.venue = venue;
+		this.applicant = applicant;
+		this.dateTime = dateTime;
 	}
-	public VenueBookingInfo(String fullName,
-			String matricNo, String contactNo, String email,
-			String organization, ArrayList<BookingDateTime> dateTimeList) {
-		this.fullName = fullName;
-		this.matricNo = matricNo;
-		this.contactNo = contactNo;
-		this.email = email;
-		this.organization = organization;
-		this.dateTimeList = dateTimeList;
+	public VenueBookingInfo(Venue venue, VenueApplicant applicant,
+			BookingDateTime dateTime) {
+		super();
+		this.venue = venue;
+		this.applicant = applicant;
+		this.dateTime = dateTime;
 	}
 	public int getVenueBookingInfoId() {
 		return venueBookingInfoId;
@@ -37,40 +25,25 @@ public class VenueBookingInfo {
 	public void setVenueBookingInfoId(int venueBookingInfoId) {
 		this.venueBookingInfoId = venueBookingInfoId;
 	}
-	public String getFullName() {
-		return fullName;
+	public Venue getVenue() {
+		return venue;
 	}
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setVenue(Venue venue) {
+		this.venue = venue;
 	}
-	public String getMatricNo() {
-		return matricNo;
+	public VenueApplicant getApplicant() {
+		return applicant;
 	}
-	public void setMatricNo(String matricNo) {
-		this.matricNo = matricNo;
+	public void setApplicant(VenueApplicant applicant) {
+		this.applicant = applicant;
 	}
-	public String getContactNo() {
-		return contactNo;
+	public BookingDateTime getDateTime() {
+		return dateTime;
 	}
-	public void setContactNo(String contactNo) {
-		this.contactNo = contactNo;
+	public void setDateTime(BookingDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getOrganization() {
-		return organization;
-	}
-	public void setOrganization(String organization) {
-		this.organization = organization;
-	}
-	public ArrayList<BookingDateTime> getDateTimeList() {
-		return dateTimeList;
-	}
-	public void setDateTimeList(ArrayList<BookingDateTime> dateTimeList) {
-		this.dateTimeList = dateTimeList;
-	}
+	
+	
+	
 }

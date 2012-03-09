@@ -28,4 +28,15 @@ public class VenueApplicant extends Member {
 		this.role = MACRO.APPLICANT;
 		this.organization = organization;
 	}
+	
+	/* constructor for venueBookingInfo */
+	public VenueApplicant(String name, String matricNo,
+			int contact, String email, String organization) {
+		this.name = name;
+		this.matricNo = matricNo;
+		this.contact = contact;
+		this.email = email;
+		this.organization = organization;
+		this.role = MACRO.APPLICANT;
+	}
 }

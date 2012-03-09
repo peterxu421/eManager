@@ -6,23 +6,18 @@ public class Venue {
 	private String name;
 	private String location;
 	private String type;
-	private ArrayList<VenueBookingInfo> bookingApplicationList;
 	
-	public Venue(int venueId, String name, String location, String type,
-			ArrayList<VenueBookingInfo> bookingApplicationList) {
+	public Venue(int venueId, String name, String location, String type) {
 		this.venueId = venueId;
 		this.name = name;
 		this.location = location;
 		this.type = type;
-		this.bookingApplicationList = bookingApplicationList;
 	}
 	
-	public Venue(String name, String location, String type,
-			ArrayList<VenueBookingInfo> bookingApplicationList) {
+	public Venue(String name, String location, String type) {
 		this.name = name;
 		this.location = location;
 		this.type = type;
-		this.bookingApplicationList = bookingApplicationList;
 	}
 
 	public int getVenueId() {
@@ -57,14 +52,6 @@ public class Venue {
 		this.type = type;
 	}
 
-	public ArrayList<VenueBookingInfo> getBookingApplicationList() {
-		return bookingApplicationList;
-	}
-
-	public void setBookingApplicationList(
-			ArrayList<VenueBookingInfo> bookingApplicationList) {
-		this.bookingApplicationList = bookingApplicationList;
-	}
 }
 	
 

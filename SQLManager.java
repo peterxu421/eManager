@@ -1109,10 +1109,11 @@ public class SQLManager {
 					prep.setString(3, faculty);
 					prep.setInt(4, schoolYear);
 					prep.setInt(5, contact);
-					prep.setString(6,email);
+					prep.setString(6, email);
 					prep.setString(7, foodType);
 					prep.setString(8, allergy);
 					prep.setString(9, position);
+					prep.setInt(10, memberID);
 					prep.execute();
 				}catch(SQLException sqle){
 					sqle.printStackTrace();
@@ -1130,9 +1131,10 @@ public class SQLManager {
 					prep.setString(3, faculty);
 					prep.setInt(4, schoolYear);
 					prep.setInt(5, contact);
-					prep.setString(6,email);
+					prep.setString(6, email);
 					prep.setString(7, foodType);
 					prep.setString(8, allergy);
+					prep.setInt(9, memberID);
 					prep.execute();
 				}catch(SQLException sqle){
 					sqle.printStackTrace();
@@ -1142,6 +1144,5 @@ public class SQLManager {
 	public static void main(String[] args){
 		/*Connection con = ConnectionManager.getConnection();
 		insertFeedbackDetails(con, 1, "I am here!!!!!","2011-12-11", "12:11:11");*/
-		System.out.println(createMemberDetailsTable);
 		}
 }
