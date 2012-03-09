@@ -418,7 +418,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell facilitatorAddItemPage = new Shell(getDisplay());
 			FacilitatorAddItem facilitatorAddItem = new FacilitatorAddItem(
-					facilitatorAddItemPage, SWT.None, table_eventPlanning_actualEvents_facilitators, facilitatorList);
+					facilitatorAddItemPage, SWT.None, table_eventPlanning_actualEvents_facilitators, event);
 			facilitatorAddItem.pack();
 			facilitatorAddItemPage.pack();
 			facilitatorAddItemPage.open();

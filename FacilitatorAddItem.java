@@ -127,13 +127,13 @@ public class FacilitatorAddItem extends Composite {
 					&& !text_eP_actual_facilitator_interestedIn.getText().isEmpty()) {
 				//update facilitatorList;
 				TableItem item = new TableItem(table_1, SWT.NULL);
-				System.out.println("Come to here");
 				DatabaseReader db = new DatabaseReader();
 				Facilitator facilitator = new Facilitator(facilitatorArray[0],Integer.parseInt(facilitatorArray[1]),facilitatorArray[2],facilitatorArray[3],facilitatorArray[4]);
 				db.insertFacilitator(event, facilitator);
 				for (int i = 0; i < 4; i++) {
 					item.setText(i, facilitatorArray[i]);
 				}
+				System.out.println("Come to here");
 				getParent().dispose();
 			}
 		}
