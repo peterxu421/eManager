@@ -4,6 +4,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -11,19 +12,22 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
-
-public class AddItemSkeleton extends Composite {
+public Abstract AddItemSkeleton extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private ArrayList<String> stringList;
-	private Table table;
+
 	/**
 	 * Create the composite.
+	 * 
 	 * @param parent
 	 * @param style
 	 */
-	public AddItemSkeleton(Composite parent, int style, ArrayList<String> stringList, Table table) {
+	public AddItemSkeleton(Composite parent, int style,
+			ArrayList<String> stringList) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -32,35 +36,82 @@ public class AddItemSkeleton extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+
+		this.stringList = stringList;
 		
-		this.stringList=stringList;
-		this.table=table;
-		
+		//Set the boundary
 		GridLayout gridLayout = new GridLayout();
+		gridLayout.marginLeft = 20;
+		gridLayout.marginRight=20;
+		gridLayout.marginTop=20;
+		gridLayout.marginBottom=20;
+		gridLayout.marginWidth=20;
+		gridLayout.marginHeight=10;
 		gridLayout.numColumns = 2;
 		this.setLayout(gridLayout);
-    	
-    	Label label;
-		for(int i=0; i<stringList.size(); i++){
-			label = new Label(parent, SWT.NONE);
+
+		//Set the input
+		Label label;
+		for (int i = 0; i < stringList.size(); i++) {
+			label = new Label(this, SWT.NONE);
 			label.setText(stringList.get(i));
 			toolkit.adapt(label, true, true);
-			label.setLayoutData(new GridData(80,20));
-		
-			Text text = new Text(parent, SWT.BORDER);
-			text.setLayoutData(new GridData(80,20));
+			label.setLayoutData(new GridData(80, 20));
+
+			Text text = new Text(this, SWT.BORDER);
+			text.setLayoutData(new GridData(80, 20));
 			toolkit.adapt(text, true, true);
 		}
+		
+		//Set buttons
+		Button btnAdd=new Button(this, SWT.None);
+		btnAdd.addSelectionListener(new AddNewItem());
+		btnAdd.setText("Add");
+		btnAdd.setLayoutData(new GridData(60,30));
+		
+		Button btnCancel=new Button(this, SWT.None);
+		btnCancel.addSelectionListener(new CancelNewItem());
+		btnCancel.setText("Cancel");
+		btnCancel.setLayoutData(new GridData(60,30));
+		
+		class AddNewItem extends SelectionAdapter{
+			public void widgetSelected(SelectionEvent e){
+				
+			}
+		}
+		
+		class CancelNewItem extends SelectionAdapter{
+			public void widgetSelected(SelectionEvent e){
+				
+			}
+		}
+		/*Composite compositeBtnAdd = new Composite(this, SWT.None);
+		GridLayout gridLayoutBtnAdd = new GridLayout();
+		compositeBtnAdd.setLayout(gridLayoutBtnAdd);
+		gridLayoutBtnAdd.numColumns=1;
+		gridLayoutBtnAdd.marginLeft=40;
+		
+		Button btnAdd=new Button(compositeBtnAdd, SWT.None);
+		btnAdd.setText("Add");
+		btnAdd.setLayoutData(new GridData(60,30));
+		
+		Composite compositeBtnCancel = new Composite(this, SWT.None);
+		GridLayout gridLayoutBtnCancel = new GridLayout();
+		compositeBtnCancel.setLayout(gridLayoutBtnCancel);
+		
+		Button btnCancel=new Button(compositeBtnCancel, SWT.None);
+		btnCancel.setText("Cancel");
+		btnCancel.setLayoutData(new GridData(60,30));*/
 	}
+
 	public static void main(String[] args) {
 		Display display = new Display();
 		Shell shell = new Shell(display);
-		ArrayList<String> string = new ArrayList<String>();
-		string.set(0, "a");
-		string.set(1, "b");
-		string.set(2, "c");
-		AddItemSkeleton calc = new AddItemSkeleton(shell,
-				SWT.NONE, string, new Table(shell, SWT.None));
+		ArrayList<String> stringList = new ArrayList<String>();
+		stringList.add("a");
+		stringList.add("b");
+		stringList.add("c");
+		AddItemSkeleton calc = new AddItemSkeleton(shell, SWT.NONE, stringList);
 		calc.pack();
 		shell.pack();
 		shell.open();
@@ -70,5 +121,3 @@ public class AddItemSkeleton extends Composite {
 		}
 	}
 }
-
-
