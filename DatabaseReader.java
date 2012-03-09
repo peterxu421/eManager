@@ -315,8 +315,8 @@ public class DatabaseReader{
 		try{
 			rs = SQLManager.getVenueDetails(connection);
 			while(rs.next()){
-				Venue venue = new Venue(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5));
-				venues.add(venue);
+				//Venue venue = new Venue(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5));
+				//venues.add(venue);
 			}
 		}catch (SQLException e) {
 				e.printStackTrace();
@@ -327,12 +327,78 @@ public class DatabaseReader{
 		int venueID = SQLManager.insertVenueDetails(connection, venue.getName(), venue.getLocation(), venue.getType());
 		venue.setVenueId(venueID);
 	}
-	public void delete(Venue venue){
+	public void deleteVenue(Venue venue){
 		SQLManager.deleteVenueDetails(connection, venue.getVenueId());
 	}
-	public void update(Venue venue){
+	public void updateVenue(Venue venue){
 		SQLManager.updateVenueDetails(connection, venue.getVenueId(), venue.getName(), venue.getLocation(), venue.getType());
 	}
+	
+	/*MemberDetails*/
+	public ArrayList<Organizer> getOrganizers(Event event){
+		ArrayList<Organizer> organizers = new ArrayList<Organizer>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getOrganizerDetails(connection, event.getEventID());
+			while(rs.next()){
+				Organizer organizer = new Organizer(rs.getInt("EventID"), rs.getString("Name"), rs.getString("MatricNo"), rs.getString("Faculty"), rs.getInt("SchoolYear"), rs.getInt("Contact"), rs.getString("Email"), rs.getString("FoodType"), rs.getString("Allergy"), rs.getString("Position"));
+				organizers.add(organizer);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return organizers;
+	}
+	public ArrayList<Facilitator> getFacilitators(Event event){
+		ArrayList<Facilitator> facilitators = new ArrayList<Facilitator>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getFacilitatorDetails(connection, event.getEventID());
+			while(rs.next()){
+				Facilitator facilitator = new Facilitator(rs.getInt("EventID"), rs.getString("Name"), rs.getString("MatricNo"), rs.getString("Faculty"), rs.getInt("SchoolYear"), rs.getInt("Contact"), rs.getString("Email"), rs.getString("FoodType"), rs.getString("Allergy"), rs.getString("Position"));
+				facilitators.add(facilitator);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return facilitators;
+	}
+	public ArrayList<Participant> getParticipants(Event event){
+		ArrayList<Participant> participants = new ArrayList<Participant>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getFacilitatorDetails(connection, event.getEventID());
+			while(rs.next()){
+				Participant participant = new Participant(rs.getInt("EventID"), rs.getString("Name"), rs.getString("MatricNo"), rs.getString("Faculty"), rs.getInt("SchoolYear"), rs.getInt("Contact"), rs.getString("Email"), rs.getString("FoodType"), rs.getString("Allergy"));
+				participants.add(participant);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return participants;
+	}
+	public void insertOrganizer(Event event, Organizer organizer){
+		int organizerID = SQLManager.insertOrganizerDetails(connection, event.getEventID(), organizer.getName(), organizer.getMatricNo(), organizer.getFaculty(), organizer.getYear(), organizer.getContact(), organizer.getEmail(), organizer.getFoodType(), organizer.getAllergy(), organizer.getPosition());
+		organizer.setID(organizerID);
+	}
+	public void insertFacilitator(Event event, Facilitator facilitator){
+		int facilitatorID = SQLManager.insertFacilitatorDetails(connection, event.getEventID(), facilitator.getName(), facilitator.getMatricNo(), facilitator.getFaculty(), facilitator.getYear(), facilitator.getContact(), facilitator.getEmail(), facilitator.getFoodType(), facilitator.getAllergy(), facilitator.getPosition());
+		facilitator.setID(facilitatorID);
+	}
+	public void insertParticipant(Event event, Participant participant){
+		int participantID = SQLManager.insertParticipantDetails(connection, event.getEventID(), participant.getName(), participant.getMatricNo(), participant.getFaculty(), participant.getYear(), participant.getContact(), participant.getEmail(), participant.getFoodType(), participant.getAllergy());
+		participant.setID(participantID);
+	}
+	public void updateOrganizer(Organizer member){
+		SQLManager.updateOrganizerFacilitatorDetails(connection, member.getID(), member.getName(), member.getMatricNo(), member.getFaculty(), member.getYear(), member.getContact(), member.getEmail(), member.getFoodType(), member.getAllergy(), member.getPosition());
+	}
+	public void updateFacilitator(Facilitator member){
+		SQLManager.updateOrganizerFacilitatorDetails(connection, member.getID(), member.getName(), member.getMatricNo(), member.getFaculty(), member.getYear(), member.getContact(), member.getEmail(), member.getFoodType(), member.getAllergy(), member.getPosition());
+	}
+	public void updateParticipant(Participant member){
+		SQLManager.updateParticipantDetails(connection, member.getID(), member.getName(), member.getMatricNo(), member.getFaculty(), member.getYear(), member.getContact(), member.getEmail(), member.getFoodType(), member.getAllergy());
+	}
+	
 	
 	public static void main(String[] args){
 		DatabaseReader db = new DatabaseReader();

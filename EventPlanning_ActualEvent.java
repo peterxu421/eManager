@@ -25,11 +25,12 @@ public class EventPlanning_ActualEvent extends Composite {
 	private Table table_eventPlanning_actualEvent_tableItinerary;
 	private Table table_eventPlanning_actualEvent_participants;
 	private Table table_eventPlanning_actualEvents_allocOfManpower;
-	private Table table_eventPlanning_actualEvents_facilitators;
-	
+	private Table table_eventPlanning_actualEvents_facilitators;	
 	private Event event; 
 	private ArrayList<Itinerary> itineraryList;
 	private ArrayList<ManpowerAllocation> manpowerList;
+	private ArrayList<Facilitator> facilitatorList;
+	private ArrayList<Participant> participantList;
 
 	/**
 	 * Create the composite.
@@ -190,7 +191,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		col_eventPlanning_actualEvents_facilitators_status.setText("Interested In(Pos)");
 		
 		Button btnFacilitatorsAddItem = new Button(composite_eventPlanning_actualEvents_facilitators, SWT.NONE);
-		btnFacilitatorsAddItem.addSelectionListener(new ParticipantAddItemPage());
+		btnFacilitatorsAddItem.addSelectionListener(new FacilitatorAddItemPage());
 		btnFacilitatorsAddItem.setText("Add Item");
 		btnFacilitatorsAddItem.setBounds(445, 10, 80, 27);
 		toolkit.adapt(btnFacilitatorsAddItem, true, true);
@@ -259,6 +260,8 @@ public class EventPlanning_ActualEvent extends Composite {
 		
 		importItineraryData();
 		importManpowerAllocationData();
+		importFacilitorData();
+		importParticipantData();
 		
 	}
 	
@@ -292,6 +295,31 @@ public class EventPlanning_ActualEvent extends Composite {
 		}
 	}
 
+	public void importFacilitorData(){
+		DatabaseReader db = new DatabaseReader();
+		facilitatorList = db.getFacilitators(event);
+		
+		for (int i = 0; i<facilitatorList.size(); i++){
+			TableItem temp = new TableItem(table_eventPlanning_actualEvents_facilitators, SWT.NULL);
+			temp.setText(0, facilitatorList.get(i).getName());
+			temp.setText(1, Integer.toString(facilitatorList.get(i).getYear()));
+			temp.setText(2, facilitatorList.get(i).getFaculty());
+			temp.setText(3,facilitatorList.get(i).getPosition());
+		}
+	}
+	
+	public void importParticipantData(){
+		DatabaseReader db = new DatabaseReader();
+		participantList = db.getParticipants(event);
+		
+		for (int i = 0; i<participantList.size(); i++){
+			TableItem temp = new TableItem(table_eventPlanning_actualEvent_participants, SWT.NULL);
+			temp.setText(0, participantList.get(i).getName());
+			temp.setText(1, Integer.toString(participantList.get(i).getYear()));
+			temp.setText(2, participantList.get(i).getFaculty());
+			temp.setText(3,participantList.get(i).getFoodType());
+		}
+	}
 	//Itinerary start
 	public class ItineraryAddItemPage extends SelectionAdapter {
 
@@ -317,6 +345,7 @@ public class EventPlanning_ActualEvent extends Composite {
 					/* update the database */
 					DatabaseReader db = new DatabaseReader();
 					db.deleteItinerary(itineraryList.get(index));
+					itineraryList.remove(index);
 				}
 			}
 		}
@@ -362,6 +391,7 @@ public class EventPlanning_ActualEvent extends Composite {
 					/* update the database */
 					DatabaseReader db = new DatabaseReader();
 					db.deleteManpowerAllocation(manpowerList.get(index));
+					manpowerList.remove(index);
 				}
 			}
 		}
@@ -388,7 +418,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell facilitatorAddItemPage = new Shell(getDisplay());
 			FacilitatorAddItem facilitatorAddItem = new FacilitatorAddItem(
-					facilitatorAddItemPage, SWT.None, table_eventPlanning_actualEvents_facilitators);
+					facilitatorAddItemPage, SWT.None, table_eventPlanning_actualEvents_facilitators, event);
 			facilitatorAddItem.pack();
 			facilitatorAddItemPage.pack();
 			facilitatorAddItemPage.open();
@@ -403,6 +433,9 @@ public class EventPlanning_ActualEvent extends Composite {
 					// Do nothing.
 				} else {
 					table_eventPlanning_actualEvents_facilitators.remove(index);
+					DatabaseReader db = new DatabaseReader();
+					db.deleteFacilitator(facilitatorList.get(index));
+					facilitatorList.remove(index);
 				}
 			}
 		}
@@ -414,7 +447,7 @@ public class EventPlanning_ActualEvent extends Composite {
 			if (index < table_eventPlanning_actualEvents_facilitators.getItemCount() && index >= 0) {
 				Shell facilitatorEditItemPage = new Shell(getDisplay());
 				FacilitatorEditItem facilitatorEditItem = new FacilitatorEditItem(
-						facilitatorEditItemPage, SWT.None, table_eventPlanning_actualEvents_facilitators, index);
+						facilitatorEditItemPage, SWT.None, table_eventPlanning_actualEvents_facilitators, index, facilitatorList.get(index));
 				facilitatorEditItem.pack();
 				facilitatorEditItemPage.pack();
 				facilitatorEditItemPage.open();
@@ -430,7 +463,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell participantAddItemPage = new Shell(getDisplay());
 			eP_actual_participants_add participantAddItem = new eP_actual_participants_add(
-					participantAddItemPage, SWT.None, table_eventPlanning_actualEvent_participants);
+					participantAddItemPage, SWT.None, table_eventPlanning_actualEvent_participants, event);
 			participantAddItem.pack();
 			participantAddItemPage.pack();
 			participantAddItemPage.open();
@@ -445,6 +478,9 @@ public class EventPlanning_ActualEvent extends Composite {
 					// Do nothing.
 				} else {
 					table_eventPlanning_actualEvent_participants.remove(index);
+					DatabaseReader db = new DatabaseReader();
+					db.deleteParticipant(participantList.get(index));
+					participantList.remove(index);
 				}
 			}
 		}
@@ -456,7 +492,7 @@ public class EventPlanning_ActualEvent extends Composite {
 			if (index < table_eventPlanning_actualEvent_participants.getItemCount() && index >= 0) {
 				Shell participantEditItemPage = new Shell(getDisplay());
 				eP_actual_participants_edit participantEditItem = new eP_actual_participants_edit(
-						participantEditItemPage, SWT.None, table_eventPlanning_actualEvent_participants, index);
+						participantEditItemPage, SWT.None, table_eventPlanning_actualEvent_participants, index, participantList.get(index));
 				participantEditItem.pack();
 				participantEditItemPage.pack();
 				participantEditItemPage.open();

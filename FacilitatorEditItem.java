@@ -15,14 +15,14 @@ public class FacilitatorEditItem extends Composite {
 	private Text text_eP_actual_facilitator_year;
 	private Text text_eP_actual_facilitator_faculty;
 	private Text text_eP_actual_facilitator_interestedIn;
-	private Text text_eP_actual_facilitator_status;
+	private Facilitator facilitator;
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public FacilitatorEditItem(Composite parent, int style, Table table, int index) {
+	public FacilitatorEditItem(Composite parent, int style, Table table, int index, Facilitator facilitator) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -31,6 +31,7 @@ public class FacilitatorEditItem extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		this.facilitator = facilitator;
 		
 		Composite comp_eP_actual_facilitator_EditPage = new Composite(this, SWT.NONE);
 		comp_eP_actual_facilitator_EditPage.setLayout(null);
@@ -58,11 +59,6 @@ public class FacilitatorEditItem extends Composite {
 		lbl_eP_actual_facilitator_interestedIn.setBounds(35, 150, 70, 17);
 		toolkit.adapt(lbl_eP_actual_facilitator_interestedIn, true, true);
 		
-		Label lbl_eP_actual_facilitator_status = new Label(comp_eP_actual_facilitator_EditPage, SWT.NONE);
-		lbl_eP_actual_facilitator_status.setText("Status");
-		lbl_eP_actual_facilitator_status.setBounds(35, 188, 54, 17);
-		toolkit.adapt(lbl_eP_actual_facilitator_status, true, true);
-		
 		text_eP_actual_facilitator_name = new Text(comp_eP_actual_facilitator_EditPage, SWT.BORDER);
 		text_eP_actual_facilitator_name.setBounds(152, 31, 125, 23);
 		toolkit.adapt(text_eP_actual_facilitator_name, true, true);
@@ -83,21 +79,16 @@ public class FacilitatorEditItem extends Composite {
 		toolkit.adapt(text_eP_actual_facilitator_interestedIn, true, true);
 		text_eP_actual_facilitator_interestedIn.setText(table.getItem(index).getText(3));
 		
-		text_eP_actual_facilitator_status = new Text(comp_eP_actual_facilitator_EditPage, SWT.BORDER);
-		text_eP_actual_facilitator_status.setText(table.getItem(index).getText(4));
-		text_eP_actual_facilitator_status.setBounds(152, 185, 125, 23);
-		toolkit.adapt(text_eP_actual_facilitator_status, true, true);
-		
 		Button btn_eP_actual_facilitator_edit = new Button(comp_eP_actual_facilitator_EditPage, SWT.NONE);
 		btn_eP_actual_facilitator_edit.addSelectionListener(new FacilitatorEditOldItem(table, index));
 		btn_eP_actual_facilitator_edit.setText("Edit");
-		btn_eP_actual_facilitator_edit.setBounds(87, 219, 66, 27);
+		btn_eP_actual_facilitator_edit.setBounds(87, 207, 66, 27);
 		toolkit.adapt(btn_eP_actual_facilitator_edit, true, true);
 		
 		Button btn_eP_actual_facilitator_cancel = new Button(comp_eP_actual_facilitator_EditPage, SWT.NONE);
 		btn_eP_actual_facilitator_cancel.addSelectionListener(new FacilitatorCancel2());
 		btn_eP_actual_facilitator_cancel.setText("Cancel");
-		btn_eP_actual_facilitator_cancel.setBounds(211, 219, 66, 27);
+		btn_eP_actual_facilitator_cancel.setBounds(211, 207, 66, 27);
 		toolkit.adapt(btn_eP_actual_facilitator_cancel, true, true);
 
 	}
@@ -112,32 +103,33 @@ public class FacilitatorEditItem extends Composite {
 		}
 
 		public void widgetSelected(SelectionEvent e) {
-			String[] itineraryArray = new String[5];
+			String[] facilitatorArray = new String[5];
 			if (!text_eP_actual_facilitator_name.getText().isEmpty()) {
-				itineraryArray[0] = text_eP_actual_facilitator_name.getText();
-				table.getItem(index).setText(0, itineraryArray[0]);
+				facilitatorArray[0] = text_eP_actual_facilitator_name.getText();
+				table.getItem(index).setText(0, facilitatorArray[0]);
 			}
 			if (!text_eP_actual_facilitator_year.getText().isEmpty()) {
-				itineraryArray[1] = text_eP_actual_facilitator_year.getText();
-				table.getItem(index).setText(1, itineraryArray[1]);
+				facilitatorArray[1] = text_eP_actual_facilitator_year.getText();
+				table.getItem(index).setText(1, facilitatorArray[1]);
 			}
 			if (!text_eP_actual_facilitator_faculty.getText().isEmpty()) {
-				itineraryArray[2] = text_eP_actual_facilitator_faculty.getText();
-				table.getItem(index).setText(2, itineraryArray[2]);
+				facilitatorArray[2] = text_eP_actual_facilitator_faculty.getText();
+				table.getItem(index).setText(2, facilitatorArray[2]);
 			}
 			if (!text_eP_actual_facilitator_interestedIn.getText().isEmpty()) {
-				itineraryArray[3] = text_eP_actual_facilitator_interestedIn.getText();
-				table.getItem(index).setText(3, itineraryArray[3]);
-			}
-			if (!text_eP_actual_facilitator_interestedIn.getText().isEmpty()) {
-				itineraryArray[4] = text_eP_actual_facilitator_status.getText();
-				table.getItem(index).setText(4, itineraryArray[4]);
+				facilitatorArray[3] = text_eP_actual_facilitator_interestedIn.getText();
+				table.getItem(index).setText(3, facilitatorArray[3]);
 			}
 			if (!text_eP_actual_facilitator_name.getText().isEmpty()
 					&& !text_eP_actual_facilitator_year.getText().isEmpty()
 					&& !text_eP_actual_facilitator_faculty.getText().isEmpty()
-					&& !text_eP_actual_facilitator_interestedIn.getText().isEmpty()
-					&& !text_eP_actual_facilitator_status.getText().isEmpty()) {
+					&& !text_eP_actual_facilitator_interestedIn.getText().isEmpty()) {
+				facilitator.setName(facilitatorArray[0]);
+				facilitator.setYear(Integer.parseInt(facilitatorArray[1]));
+				facilitator.setFaculty(facilitatorArray[2]);
+				facilitator.setPosition(facilitatorArray[3]);
+				DatabaseReader db = new DatabaseReader();
+				db.updateFacilitator(facilitator);
 				getParent().dispose();
 			}
 		}
