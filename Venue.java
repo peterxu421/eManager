@@ -1,21 +1,28 @@
+import java.util.ArrayList;
+
 
 public class Venue {
 	private int venueId;
 	private String name;
 	private String location;
 	private String type;
+	private ArrayList<VenueBookingInfo> bookingApplicationList;
 	
-	public Venue(int venueId, String name, String location, String type) {
+	public Venue(int venueId, String name, String location, String type,
+			ArrayList<VenueBookingInfo> bookingApplicationList) {
 		this.venueId = venueId;
 		this.name = name;
 		this.location = location;
 		this.type = type;
+		this.bookingApplicationList = bookingApplicationList;
 	}
 	
-	public Venue(String name, String location, String type) {
+	public Venue(String name, String location, String type,
+			ArrayList<VenueBookingInfo> bookingApplicationList) {
 		this.name = name;
 		this.location = location;
 		this.type = type;
+		this.bookingApplicationList = bookingApplicationList;
 	}
 
 	public int getVenueId() {
@@ -49,4 +56,15 @@ public class Venue {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	public ArrayList<VenueBookingInfo> getBookingApplicationList() {
+		return bookingApplicationList;
+	}
+
+	public void setBookingApplicationList(
+			ArrayList<VenueBookingInfo> bookingApplicationList) {
+		this.bookingApplicationList = bookingApplicationList;
+	}
 }
+	
+

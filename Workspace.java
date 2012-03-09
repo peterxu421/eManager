@@ -31,7 +31,7 @@ class Workspace extends Composite{
 				"Budget",
 				"Feedback"
 			},
-			{	"Allocation of Manpower"
+			{	"Manpower Allocation"
 			},
 			{	"Itinerary",
 				"Packing List"
@@ -60,7 +60,7 @@ class Workspace extends Composite{
 	    
 	    //optionBar->
 	    GridLayout optionBarLayout = new GridLayout();
-	    optionBarLayout.marginLeft = 100;
+	    optionBarLayout.marginLeft = 150;
 	    optionBarLayout.numColumns = 4;
 	    optionBar.setLayout(optionBarLayout);
 	    
@@ -85,7 +85,7 @@ class Workspace extends Composite{
 	    body.setLayout(bodyLayout);
 	    
 	    //body->left & right panel
-	    GridData leftData = new GridData(100,450);
+	    GridData leftData = new GridData(150,450);
 	    GridData rightData = new GridData(800,450);
 	    left = new Composite(body, SWT.None);
 	    right = new Composite(body, SWT.None);
@@ -114,13 +114,11 @@ class Workspace extends Composite{
 	    {
 	    	buttons[i] = new Button(left, SWT.PUSH);
 	    	buttons[i].setText(tabList[0][i]);
-	    	buttons[i].setLayoutData(new GridData(80,20));
+	    	buttons[i].setLayoutData(new GridData(130,20));
 	    	buttons[i].addSelectionListener(new TabSelectionAdapter());
 	    }
 	    
 	    //body -> right panel
-	    FillLayout rightLayout = new FillLayout();
-	    right.setLayout(rightLayout);
 	    EventPlanning_PreEvent pre_event  = new EventPlanning_PreEvent(right, SWT.None, event);
 	    pre_event.pack();
 	  
@@ -157,7 +155,7 @@ class Workspace extends Composite{
 				EventPlanning_ActualEvent actual_event = new EventPlanning_ActualEvent(right, SWT.NONE, event);
 				actual_event.pack();
 			}
-			else if(name.equals("Allocation of Manpower"))
+			else if(name.equals("Manpower Allocation"))
 			{
 				eP_facilitator_AllocOfManpower allocation = new eP_facilitator_AllocOfManpower(right,SWT.None, event);
 				allocation.pack();
@@ -203,7 +201,7 @@ class Workspace extends Composite{
 					{
 				    	Button button = new Button(left, SWT.PUSH);
 				    	button.setText(tabList[i][j]);
-				    	button.setLayoutData(new GridData(80,20));
+				    	button.setLayoutData(new GridData(130,20));
 				    	button.addSelectionListener(new TabSelectionAdapter());
 				    	if(j==0)button.notifyListeners(SWT.Selection, null);
 					}

@@ -75,6 +75,11 @@ public class VenueManagement_VenueList extends Composite {
 		btnEdit.setText("Edit");
 		btnEdit.setBounds(348, 76, 89, 27);
 		toolkit.adapt(btnEdit, true, true);
+		
+		Button btnView = new Button(composite, SWT.NONE);
+		btnView.setText("View Booking Status");
+		btnView.setBounds(335, 109, 119, 27);
+		toolkit.adapt(btnView, true, true);
 	    btnEdit.addSelectionListener(new edit());
 	    
 /*	    importVenueListData();*/

@@ -23,10 +23,12 @@ class Workspace2 extends Composite{
 	
 	private String[][] tabList = new String[][]{
 			{	"Venue List",
-				"Applicants",
+				"Booking Applications",
 			},
-			{	"View Venues",
-				"Book a Venue"
+			{	
+				"Regulations and Rules",
+				"View Venues",
+				"Book"
 			}
 	};
 
@@ -43,7 +45,7 @@ class Workspace2 extends Composite{
 	    
 	    //optionBar->
 	    GridLayout optionBarLayout = new GridLayout();
-	    optionBarLayout.marginLeft = 110;
+	    optionBarLayout.marginLeft = 150;
 	    optionBarLayout.numColumns = 4;
 	    optionBar.setLayout(optionBarLayout);
 	    
@@ -65,7 +67,7 @@ class Workspace2 extends Composite{
 	    body.setLayout(bodyLayout);
 	    left = new Composite(body, SWT.None);
 	    right = new Composite(body, SWT.None);
-	    left.setLayoutData(new GridData(100,450));
+	    left.setLayoutData(new GridData(150,450));
 	    right.setLayoutData(new GridData(660,450));
 
 	    //header->
@@ -90,7 +92,7 @@ class Workspace2 extends Composite{
 	    {
 	    	buttons[i] = new Button(left, SWT.PUSH);
 	    	buttons[i].setText(tabList[0][i]);
-	    	buttons[i].setLayoutData(new GridData(80,20));
+	    	buttons[i].setLayoutData(new GridData(130,20));
 	    	buttons[i].addSelectionListener(new TabSelectionAdapter());
 	    }
 	    
@@ -110,20 +112,24 @@ class Workspace2 extends Composite{
 			    VenueManagement_VenueList vList  = new VenueManagement_VenueList(right, SWT.None);
 			    vList.pack();
 			}
-			else if(name.equals("Applicants"))
+			else if(name.equals("Booking Applications"))
 			{
-			    VenueManagement_VenueApplicants vApplicants  = new VenueManagement_VenueApplicants(right, SWT.None);
+			    VenueManagement_BookingApplications vApplicants  = new VenueManagement_BookingApplications(right, SWT.None);
 			    vApplicants.pack();
+			}
+			else if(name.equals("Regulations and Rules")){
+				VenueBooking_InstructionPage vInstruc = new VenueBooking_InstructionPage (right, SWT.None);
+	    		vInstruc.pack();
+			}
+			else if(name.equals("Book"))
+			{
+			    VenueBooking_VenueBooking vBook  = new VenueBooking_VenueBooking(right, SWT.None);
+			    vBook.pack();
 			}
 			else if(name.equals("View Venues"))
 			{
 			    VenueBooking_VenueList vList  = new VenueBooking_VenueList(right, SWT.None);
 			    vList.pack();
-			}
-			else if(name.equals("Book a Venue"))
-			{
-			    VenueBooking_VenueBooking vBook  = new VenueBooking_VenueBooking(right, SWT.None);
-			    vBook.pack();
 			}
 			right.pack();
 		}
@@ -151,10 +157,10 @@ class Workspace2 extends Composite{
 					{
 				    	Button button = new Button(left, SWT.PUSH);
 				    	button.setText(tabList[i][j]);
-				    	button.setLayoutData(new GridData(80,20));
+				    	button.setLayoutData(new GridData(130,20));
 				    	button.addSelectionListener(new TabSelectionAdapter());
-				    	if(j==0)button.notifyListeners(SWT.Selection, null);
-					}
+				    	if(j==0)button.notifyListeners(SWT.Selection, null); // to display the the first page of each component in the menu bar
+ 					}
 				}
 			}
 			left.pack();

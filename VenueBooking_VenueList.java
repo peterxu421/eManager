@@ -1,6 +1,8 @@
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -55,22 +57,23 @@ public class VenueBooking_VenueList extends Composite {
 		tableColumn_2.setText("Type");
 		
 		Button btnSelectLocation = new Button(composite, SWT.NONE);
-		btnSelectLocation.setText("Select Location");
+		btnSelectLocation.setText("Change Location");
 		btnSelectLocation.setBounds(338, 10, 99, 27);
 		toolkit.adapt(btnSelectLocation, true, true);
-
+		btnSelectLocation.addSelectionListener(new selecLoc());
 	}
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		VenueBooking_VenueList calc = new VenueBooking_VenueList(shell,
-				SWT.NONE);
-		calc.pack();
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
+	
+	public class selecLoc extends SelectionAdapter{
+		public void widgetSelected(SelectionEvent e){
+			/* From Database 
+			 -----------------
+			 -------------------
+			 ----------------------------
+			 ------------
+			 ---------------
+			 ----------------
+			 */
+			
 		}
 	}
 }
