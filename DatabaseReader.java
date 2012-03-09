@@ -313,7 +313,7 @@ public class DatabaseReader{
 		ArrayList<Venue> venues = new ArrayList<Venue>();
 		ResultSet rs = null;
 		try{
-			rs = SQLManager.getVenueDetails(connection, event.getEventID());
+			rs = SQLManager.getVenueDetails(connection);
 			while(rs.next()){
 				Venue venue = new Venue(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5));
 				venues.add(venue);
@@ -324,7 +324,7 @@ public class DatabaseReader{
 		return venues;
 	}
 	public void insertVenue(Event event, Venue venue){
-		int venueID = SQLManager.insertVenueDetails(connection, event.getEventID(), venue.getName(), venue.getLocation(), venue.getType());
+		int venueID = SQLManager.insertVenueDetails(connection, venue.getName(), venue.getLocation(), venue.getType());
 		venue.setVenueId(venueID);
 	}
 	public void delete(Venue venue){

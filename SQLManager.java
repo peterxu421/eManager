@@ -29,14 +29,16 @@ public class SQLManager {
 			"MemberID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
 			"EventID INTEGER NOT NULL REFERENCES EventDetails(EventID)," +
 			"Name VARCHAR(50)," +
-			"Matric VARCHAR(10)," +
-			"SchoolYear INTEGER," +
+			"MatricNo VARCHAR(10)," +
 			"Faculty VARCHAR(50)," +
-			"BloodType VARCHAR(1)," +
-			"Allergy VARCHAR(50)," +
-			"FoodType VARCHAR(20)," +
-			"Role VARCHAR(20)," +
-			"Cell VARCHAR(10))";
+			"Year INTEGER," +
+			"Contact INTEGER," +
+			"Email VARCHAR(20)," +
+			"FoodType VARCHAR(10)," +
+			"Allergy VARCHAR(20)," +
+			"Role SMALLINT," +
+			"Position VARCHAR(20)," +
+			"Organization VARCHAR(20))";
 	private static String createMeetingDetailsTable =
 			"CREATE TABLE MeetingDetails(" +
 			"MeetingID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
@@ -111,11 +113,9 @@ public class SQLManager {
 	private static String createVenueDetailsTable = 
 			"CREATE TABLE VenueDetails(" +
 			"VenueID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
-			"EventID INTEGER NOT NULL REFERENCES EventDetails(EventID)," +
 			"Name VARCHAR(20)," +
 			"Location VARCHAR(50)," +
 			"Type VARCHAR(20))";
-	
 	public static Connection createDatabase(){
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -318,15 +318,13 @@ public class SQLManager {
 		}
 		return rs;
 	}
-	public static ResultSet getVenueDetails(Connection connection, int eventID){
+	public static ResultSet getVenueDetails(Connection connection){
 		String getVenueDetails =
-				"SELECT * FROM VenueDetails " +
-				"WHERE EventID=?";
+				"SELECT * FROM VenueDetails";
 		PreparedStatement prep = null;
 		ResultSet rs = null;
 		try{
 			prep = connection.prepareStatement(getVenueDetails);
-			prep.setInt(1, eventID);
 			rs = prep.executeQuery();
 		}catch(SQLException sqle){
 			sqle.printStackTrace();
@@ -596,19 +594,18 @@ public class SQLManager {
 		}
 		return packingID;
 	}
-	public static int insertVenueDetails(Connection connection, int eventID, String name, String location, String type){
+	public static int insertVenueDetails(Connection connection, String name, String location, String type){
 		String insertVenueDetails = 
-				"INSERT INTO VenueDetails (EventID, Name, Location, Type) " +
-				"VALUES (?,?,?,?)";
+				"INSERT INTO VenueDetails (Name, Location, Type) " +
+				"VALUES (?,?,?)";
 		int venueID = 0;
 		PreparedStatement prep = null;
 		ResultSet rs = null;
 		try{
 			prep = connection.prepareStatement(insertVenueDetails,Statement.RETURN_GENERATED_KEYS);
-			prep.setInt(1, eventID);
-			prep.setString(2, name);
-			prep.setString(3, location);
-			prep.setString(4, type);
+			prep.setString(1, name);
+			prep.setString(2, location);
+			prep.setString(3, type);
 			prep.execute();
 			rs = prep.getGeneratedKeys();
 			while(rs.next()){
@@ -954,7 +951,8 @@ public class SQLManager {
 	}
 	
 	public static void main(String[] args){
-		Connection con = ConnectionManager.getConnection();
-		insertFeedbackDetails(con, 1, "I am here!!!!!","2011-12-11", "12:11:11");
+		/*Connection con = ConnectionManager.getConnection();
+		insertFeedbackDetails(con, 1, "I am here!!!!!","2011-12-11", "12:11:11");*/
+		System.out.println(createMemberDetailsTable);
 		}
 }
