@@ -1,47 +1,72 @@
-public class Member {
-	private String name;
-	private int year;
-	private String faculty;
-	private String cell;
-	private String position;
-
+public abstract class Member {
+	protected int ID;
+	protected String name;
+	protected String matricNo;
+	protected String faculty;
+	protected int year;
+	protected int contact;
+	protected String email;
+	protected String foodType;
+	protected String allergy;
+	protected int role;
+	public int getID() {
+		return ID;
+	}
+	public void setID(int iD) {
+		ID = iD;
+	}
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public int getYear() {
-		return year;
+	public String getMatricNo() {
+		return matricNo;
 	}
-
-	public void setYear(int year) {
-		this.year = year;
+	public void setMatricNo(String matricNo) {
+		this.matricNo = matricNo;
 	}
-
 	public String getFaculty() {
 		return faculty;
 	}
-
 	public void setFaculty(String faculty) {
 		this.faculty = faculty;
 	}
-
-	public String getCell() {
-		return cell;
+	public int getYear() {
+		return year;
 	}
-
-	public void setCell(String cell) {
-		this.cell = cell;
+	public void setYear(int year) {
+		this.year = year;
 	}
-
-	public String getPosition() {
-		return position;
+	public int getContact() {
+		return contact;
 	}
-
-	public void setPosition(String position) {
-		this.position = position;
+	public void setContact(int contact) {
+		this.contact = contact;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getFoodType() {
+		return foodType;
+	}
+	public void setFoodType(String foodType) {
+		this.foodType = foodType;
+	}
+	public String getAllergy() {
+		return allergy;
+	}
+	public void setAllergy(String allergy) {
+		this.allergy = allergy;
+	}
+	public int getRole() {
+		return role;
+	}
+	public void setRole(int role) {
+		this.role = role;
 	}
 }
