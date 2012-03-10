@@ -119,8 +119,10 @@ public class EventPlanning_PreEvent extends Composite {
 		tbtmTaskChart.setControl(composite_2);
 		toolkit.paintBordersFor(composite_2);
 		FillLayout fillLayout = new FillLayout();
+		fillLayout.marginWidth =0;
 		composite_2.setLayout(fillLayout);
 		TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
+        taskChart.setSize(300, 300);
 		taskChart.pack();
 		composite_2.pack();
 		*/
