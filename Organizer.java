@@ -2,7 +2,7 @@
 public class Organizer extends Member{
 	private String position;
 	public Organizer(String name, String matricNo, String faculty, int year,
-			int contact, String email, String foodType, String allergy, String position) {
+			String contact, String email, String foodType, String allergy, String position) {
 		this.name = name;
 		this.matricNo = matricNo;
 		this.faculty = faculty;
@@ -15,7 +15,7 @@ public class Organizer extends Member{
 		this.position = position;
 	}
 	public Organizer(int ID, String name, String matricNo, String faculty, int year,
-			int contact, String email, String foodType, String allergy, String position) {
+			String contact, String email, String foodType, String allergy, String position) {
 		this.ID = ID;
 		this.name = name;
 		this.matricNo = matricNo;

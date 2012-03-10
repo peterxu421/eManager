@@ -70,20 +70,20 @@ public class EventPlanning_FeedBack extends Composite {
 		btnFeedBackAddItem.addSelectionListener(new FeedBackAddItemPage());
 		btnFeedBackAddItem.setBounds(398, 31, 80, 27);
 		toolkit.adapt(btnFeedBackAddItem, true, true);
-		btnFeedBackAddItem.setText("Add Item");
+		btnFeedBackAddItem.setText("Add");
 
 		Button btnFeedBackDeleteItem = new Button(compositeFeedBack, SWT.NONE);
 		btnFeedBackDeleteItem.addSelectionListener(new FeedBackDeleteItem(
 				tableFeedBack));
 		btnFeedBackDeleteItem.setBounds(398, 73, 80, 27);
 		toolkit.adapt(btnFeedBackDeleteItem, true, true);
-		btnFeedBackDeleteItem.setText("Delete Item");
+		btnFeedBackDeleteItem.setText("Delete ");
 
 		Button btnFeedBackEditItem = new Button(compositeFeedBack, SWT.NONE);
 		btnFeedBackEditItem.addSelectionListener(new FeedBackEditItemPage());
 		btnFeedBackEditItem.setBounds(398, 116, 80, 27);
 		toolkit.adapt(btnFeedBackEditItem, true, true);
-		btnFeedBackEditItem.setText("Edit Item");
+		btnFeedBackEditItem.setText("Edit ");
 
 		fillTable();
 

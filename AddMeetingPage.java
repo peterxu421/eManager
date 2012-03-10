@@ -65,7 +65,7 @@ public class AddMeetingPage extends Composite {
 		Label lblMeetingDetails = new Label(composite, SWT.NONE);
 		lblMeetingDetails.setBounds(50, 74, 85, 15);
 		toolkit.adapt(lblMeetingDetails, true, true);
-		lblMeetingDetails.setText("Meeting Details:");
+		lblMeetingDetails.setText("Meeting Details");
 		
 		meetingDetails = new Text(composite, SWT.BORDER);
 		meetingDetails.setBounds(149, 71, 192, 21);
@@ -76,10 +76,10 @@ public class AddMeetingPage extends Composite {
 		Label lblDate = new Label(composite, SWT.NONE);
 		lblDate.setBounds(108, 118, 27, 15);
 		toolkit.adapt(lblDate, true, true);
-		lblDate.setText("Date:");
+		lblDate.setText("Date");
 		
 		date = new DateTime(composite, SWT.BORDER);
-		date.setBounds(149, 109, 100, 24);
+		date.setBounds(149, 118, 100, 24);
 		toolkit.adapt(date);
 		toolkit.paintBordersFor(date);
 		if(index >=0 && index < table.getItemCount()){
@@ -90,12 +90,12 @@ public class AddMeetingPage extends Composite {
 		}
 			
 		Label lblTime = new Label(composite, SWT.NONE);
-		lblTime.setBounds(108, 155, 30, 15);
+		lblTime.setBounds(105, 155, 30, 15);
 		toolkit.adapt(lblTime, true, true);
-		lblTime.setText("Time:");
+		lblTime.setText("Time");
 		
 		time = new DateTime(composite, SWT.BORDER | SWT.TIME);
-		time.setBounds(149, 146, 100, 24);
+		time.setBounds(149, 155, 100, 24);
 		toolkit.adapt(time);
 		toolkit.paintBordersFor(time);
 		if(index >=0 && index < table.getItemCount()){
@@ -114,7 +114,7 @@ public class AddMeetingPage extends Composite {
 		Label lblDone = new Label(composite, SWT.NONE);
 		lblDone.setBounds(104, 188, 31, 15);
 		toolkit.adapt(lblDone, true, true);
-		lblDone.setText("Done:");
+		lblDone.setText("Done");
 		
 		done = new Button(composite, SWT.CHECK | SWT.CENTER);
 		done.setBounds(149, 187, 85, 16);

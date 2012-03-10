@@ -59,7 +59,7 @@ public class AddInflowPage extends Composite {
 		lblSponsor.setAlignment(SWT.RIGHT);
 		lblSponsor.setBounds(175, 94, 61, 15);
 		toolkit.adapt(lblSponsor, true, true);
-		lblSponsor.setText("Sponsor:");
+		lblSponsor.setText("Sponsor");
 		
 		sponsor = new Text(composite, SWT.BORDER);
 		sponsor.setBounds(265, 91, 127, 21);
@@ -70,7 +70,7 @@ public class AddInflowPage extends Composite {
 		Label lblAmount = new Label(composite, SWT.NONE);
 		lblAmount.setBounds(175, 130, 61, 15);
 		toolkit.adapt(lblAmount, true, true);
-		lblAmount.setText("Amount($):");
+		lblAmount.setText("Amount($)");
 		
 		amount = new Text(composite, SWT.BORDER);
 		amount.setBounds(265, 127, 127, 21);
@@ -79,7 +79,7 @@ public class AddInflowPage extends Composite {
 			amount.setText(EventPlanning_Budget.InflowTable.getItem(index).getText(1));
 		
 		Label lblDate = new Label(composite, SWT.NONE);
-		lblDate.setText("Date:");
+		lblDate.setText("Date");
 		lblDate.setBounds(209, 168, 27, 15);
 		toolkit.adapt(lblDate, true, true);
 		
@@ -97,7 +97,7 @@ public class AddInflowPage extends Composite {
 		Label lblRemarks = new Label(composite, SWT.NONE);
 		lblRemarks.setBounds(188, 203, 48, 15);
 		toolkit.adapt(lblRemarks, true, true);
-		lblRemarks.setText("Remarks:");
+		lblRemarks.setText("Remarks");
 		
 		remarks = new Text(composite, SWT.BORDER);
 		remarks.setBounds(265, 200, 127, 21);

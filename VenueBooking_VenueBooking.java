@@ -208,7 +208,7 @@ public class VenueBooking_VenueBooking extends Composite {
 			String _organization = "";
 			String _contact = "";
 			String _email = "";
-			ArrayList<String> _listDateTime = null;
+			ArrayList<BookingDateTime> _listDateTime = null;
 			
 			if(!name.getText().isEmpty()){
 				_name = name.getText();
@@ -226,14 +226,20 @@ public class VenueBooking_VenueBooking extends Composite {
 				_email = email.getText();
 			}
 			if(listDateTime.getItemCount()!=0){
-				for (int i=0; i<listDateTime.getItemCount(); i++)
-					_listDateTime.set(i, listDateTime.getItem(i));
+				for (int i=0; i<listDateTime.getItemCount(); i++){
+					_listDateTime.set(i, BookingDateTime.parseBookingDateTime(listDateTime.getItem(i)));
+				}
 			}
 			
 			/* update the table of applications under venue management */
 			/* ---can be updated via database later on--- */
 			/* ---or can be updated by a reference to the applicationtable---*/
-
+			DatabaseReader db = new DatabaseReader();
+			for(int i=0; i<_listDateTime.size(); i++){
+				VenueApplicant newApplicant = new VenueApplicant(_name, _matricNo, _contact, _email, _organization);
+				VenueBookingInfo newBookingInfo = new VenueBookingInfo(selected, newApplicant, _listDateTime.get(i));
+				//db.insertVenueBookingInfo(newBookingInfo);
+			}
 			getParent().dispose();
 		}
 	}

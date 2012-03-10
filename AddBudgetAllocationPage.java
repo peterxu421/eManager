@@ -59,7 +59,7 @@ public class AddBudgetAllocationPage extends Composite {
 		Label lblItem = new Label(composite, SWT.NONE);
 		lblItem.setBounds(209, 94, 27, 15);
 		toolkit.adapt(lblItem, true, true);
-		lblItem.setText("Item:");
+		lblItem.setText("Item");
 		
 		item = new Text(composite, SWT.BORDER);
 		item.setBounds(265, 91, 127, 21);
@@ -70,7 +70,7 @@ public class AddBudgetAllocationPage extends Composite {
 		Label lblPersonInCharge = new Label(composite, SWT.NONE);
 		lblPersonInCharge.setBounds(145, 130, 91, 15);
 		toolkit.adapt(lblPersonInCharge, true, true);
-		lblPersonInCharge.setText("Person in charge:");
+		lblPersonInCharge.setText("Person in charge");
 		
 		personInCharge = new Text(composite, SWT.BORDER);
 		personInCharge.setBounds(265, 127, 127, 21);
@@ -82,7 +82,7 @@ public class AddBudgetAllocationPage extends Composite {
 		lblCost.setAlignment(SWT.RIGHT);
 		lblCost.setBounds(175, 168, 61, 15);
 		toolkit.adapt(lblCost, true, true);
-		lblCost.setText("Cost($):");
+		lblCost.setText("Cost($)");
 		
 		cost = new Text(composite, SWT.BORDER);
 		cost.setBounds(265, 165, 127, 21);
@@ -93,7 +93,7 @@ public class AddBudgetAllocationPage extends Composite {
 		Label lblDate = new Label(composite, SWT.NONE);
 		lblDate.setBounds(209, 203, 27, 15);
 		toolkit.adapt(lblDate, true, true);
-		lblDate.setText("Date:");
+		lblDate.setText("Date");
 		
 		date = new DateTime(composite, SWT.BORDER);
 		date.setBounds(265, 203, 127, 24);

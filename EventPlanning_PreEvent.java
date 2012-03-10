@@ -95,21 +95,21 @@ public class EventPlanning_PreEvent extends Composite {
 		btnTaskAssinAddItem.addSelectionListener(new TaskAssignAddItemPage());
 		btnTaskAssinAddItem.setBounds(445, 10, 80, 27);
 		toolkit.adapt(btnTaskAssinAddItem, true, true);
-		btnTaskAssinAddItem.setText("Add Item");
+		btnTaskAssinAddItem.setText("Add ");
 
 		Button btnTaskAssignDeleteItem = new Button(composite_1, SWT.NONE);
 		btnTaskAssignDeleteItem.addSelectionListener(new TaskAssignDeleteItem(
 				tableTaskAssign));
 		btnTaskAssignDeleteItem.setBounds(445, 43, 80, 27);
 		toolkit.adapt(btnTaskAssignDeleteItem, true, true);
-		btnTaskAssignDeleteItem.setText("Delete Item");
+		btnTaskAssignDeleteItem.setText("Delete ");
 
 		Button btnTaskAssignEditItem = new Button(composite_1, SWT.NONE);
 		btnTaskAssignEditItem
 				.addSelectionListener(new TaskAssignEditItemPage());
 		btnTaskAssignEditItem.setBounds(445, 76, 80, 27);
 		toolkit.adapt(btnTaskAssignEditItem, true, true);
-		btnTaskAssignEditItem.setText("Edit Item");
+		btnTaskAssignEditItem.setText("Edit ");
 
 		TabItem tbtmTaskChart = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskChart.setText("Task Chart");
@@ -164,21 +164,21 @@ public class EventPlanning_PreEvent extends Composite {
 				.addSelectionListener(new TaskAssignAddMemberPage());
 		btnCommitteeAddMember.setBounds(424, 10, 101, 27);
 		toolkit.adapt(btnCommitteeAddMember, true, true);
-		btnCommitteeAddMember.setText("Add Member");
+		btnCommitteeAddMember.setText("Add");
 
 		Button btnCommitteeDeleteMember = new Button(composite_4, SWT.NONE);
 		btnCommitteeDeleteMember.addSelectionListener(new TaskAssignDeleteItem(
 				tableCommittee));
 		btnCommitteeDeleteMember.setBounds(424, 43, 101, 27);
 		toolkit.adapt(btnCommitteeDeleteMember, true, true);
-		btnCommitteeDeleteMember.setText("Delete Member");
+		btnCommitteeDeleteMember.setText("Delete");
 
 		Button btnCommitteeEditMember = new Button(composite_4, SWT.NONE);
 		btnCommitteeEditMember
 				.addSelectionListener(new TaskAssignEditMemberPage());
 		btnCommitteeEditMember.setBounds(424, 76, 101, 27);
 		toolkit.adapt(btnCommitteeEditMember, true, true);
-		btnCommitteeEditMember.setText("Edit Member");
+		btnCommitteeEditMember.setText("Edit");
 		
 		fillTable();
 
