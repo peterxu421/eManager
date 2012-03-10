@@ -177,13 +177,7 @@ public class EventPlanning_PreEvent extends Composite {
 				.addSelectionListener(new TaskAssignEditMemberPage());
 		btnCommitteeEditMember.setBounds(424, 76, 101, 27);
 		toolkit.adapt(btnCommitteeEditMember, true, true);
-<<<<<<< HEAD
 		btnCommitteeEditMember.setText("Edit");
-		
-=======
-		btnCommitteeEditMember.setText("Edit Member");
-
->>>>>>> 4bafc5eca8f50f40537fe9b82028dc57cadf896a
 		fillTable();
 
 	}

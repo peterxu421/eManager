@@ -65,13 +65,7 @@ public class AddMeetingPage extends Composite {
 		Label lblMeetingDetails = new Label(composite, SWT.NONE);
 		lblMeetingDetails.setBounds(50, 74, 85, 15);
 		toolkit.adapt(lblMeetingDetails, true, true);
-<<<<<<< HEAD
-		lblMeetingDetails.setText("Meeting Details");
-		
-=======
 		lblMeetingDetails.setText("Meeting Details:");
-
->>>>>>> 4bafc5eca8f50f40537fe9b82028dc57cadf896a
 		meetingDetails = new Text(composite, SWT.BORDER);
 		meetingDetails.setBounds(149, 71, 192, 21);
 		toolkit.adapt(meetingDetails, true, true);
@@ -81,13 +75,7 @@ public class AddMeetingPage extends Composite {
 		Label lblDate = new Label(composite, SWT.NONE);
 		lblDate.setBounds(108, 118, 27, 15);
 		toolkit.adapt(lblDate, true, true);
-<<<<<<< HEAD
-		lblDate.setText("Date");
-		
-=======
 		lblDate.setText("Date:");
-
->>>>>>> 4bafc5eca8f50f40537fe9b82028dc57cadf896a
 		date = new DateTime(composite, SWT.BORDER);
 		date.setBounds(149, 118, 100, 24);
 		toolkit.adapt(date);
@@ -102,13 +90,7 @@ public class AddMeetingPage extends Composite {
 		Label lblTime = new Label(composite, SWT.NONE);
 		lblTime.setBounds(105, 155, 30, 15);
 		toolkit.adapt(lblTime, true, true);
-<<<<<<< HEAD
-		lblTime.setText("Time");
-		
-=======
 		lblTime.setText("Time:");
-
->>>>>>> 4bafc5eca8f50f40537fe9b82028dc57cadf896a
 		time = new DateTime(composite, SWT.BORDER | SWT.TIME);
 		time.setBounds(149, 155, 100, 24);
 		toolkit.adapt(time);
@@ -127,13 +109,7 @@ public class AddMeetingPage extends Composite {
 		Label lblDone = new Label(composite, SWT.NONE);
 		lblDone.setBounds(104, 188, 31, 15);
 		toolkit.adapt(lblDone, true, true);
-<<<<<<< HEAD
-		lblDone.setText("Done");
-		
-=======
 		lblDone.setText("Done:");
-
->>>>>>> 4bafc5eca8f50f40537fe9b82028dc57cadf896a
 		done = new Button(composite, SWT.CHECK | SWT.CENTER);
 		done.setBounds(149, 187, 85, 16);
 		toolkit.adapt(done, true, true);

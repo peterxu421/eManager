@@ -72,15 +72,6 @@ public class AllocOfManpowerAddItem extends Composite {
 		toolkit.adapt(lbl_eP_actual_allocOfManpower_assignedTo, true, true);
 		lbl_eP_actual_allocOfManpower_assignedTo.setText("Assigned To");
 
-<<<<<<< HEAD
-		Label lbl_eP_actual_allocOfManpower_dateDue = new Label(comp_eP_actual_allocOfManpower_AddPage, SWT.NONE);
-		lbl_eP_actual_allocOfManpower_dateDue.setAlignment(SWT.RIGHT);
-		lbl_eP_actual_allocOfManpower_dateDue.setBounds(62, 132, 54, 17);
-		toolkit.adapt(lbl_eP_actual_allocOfManpower_dateDue, true, true);
-		lbl_eP_actual_allocOfManpower_dateDue.setText("Date Due");
-		
-		Label lbl_eP_actual_allocOfManpower_done = new Label(comp_eP_actual_allocOfManpower_AddPage, SWT.RIGHT);
-=======
 		Label lbl_eP_actual_allocOfManpower_dateDue = new Label(
 				comp_eP_actual_allocOfManpower_AddPage, SWT.NONE);
 		lbl_eP_actual_allocOfManpower_dateDue.setAlignment(SWT.CENTER);
@@ -91,7 +82,6 @@ public class AllocOfManpowerAddItem extends Composite {
 		Label lbl_eP_actual_allocOfManpower_done = new Label(
 				comp_eP_actual_allocOfManpower_AddPage, SWT.RIGHT);
 		lbl_eP_actual_allocOfManpower_done.setAlignment(SWT.CENTER);
->>>>>>> 4bafc5eca8f50f40537fe9b82028dc57cadf896a
 		lbl_eP_actual_allocOfManpower_done.setText("Done");
 		lbl_eP_actual_allocOfManpower_done.setBounds(62, 171, 54, 17);
 		toolkit.adapt(lbl_eP_actual_allocOfManpower_done, true, true);

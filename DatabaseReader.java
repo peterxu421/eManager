@@ -102,7 +102,6 @@ public class DatabaseReader {
 	public void deleteBudgetAllocation(BudgetAllocation budget) {
 		SQLManager.deleteBudgetDetails(connection, budget.getBudgetID());
 	}
-
 	public void updateBudgetAllocation(BudgetAllocation budget) {
 		SQLManager.updateBudgetDetails(connection, budget.getBudgetID(),
 				budget.getItem(), budget.getPersonInCharge(), budget.getCost(),
@@ -441,12 +440,7 @@ public class DatabaseReader {
 		try {
 			rs = SQLManager.getOrganizerDetails(connection, event.getEventID());
 			while (rs.next()) {
-				Organizer organizer = new Organizer(rs.getInt("MemberID"),
-						rs.getString("Name"), rs.getString("MatricNo"),
-						rs.getString("Faculty"), rs.getInt("SchoolYear"),
-						rs.getInt("Contact"), rs.getString("Email"),
-						rs.getString("FoodType"), rs.getString("Allergy"),
-						rs.getString("Position"));
+				Organizer organizer = new Organizer(rs.getInt("MemberID"),rs.getString("Name"), rs.getString("MatricNo"),rs.getString("Faculty"), rs.getInt("SchoolYear"),rs.getString("Contact"), rs.getString("Email"),rs.getString("FoodType"), rs.getString("Allergy"),rs.getString("Position"));
 				organizers.add(organizer);
 			}
 		} catch (SQLException e) {
@@ -465,7 +459,7 @@ public class DatabaseReader {
 				Facilitator facilitator = new Facilitator(
 						rs.getInt("MemberID"), rs.getString("Name"),
 						rs.getString("MatricNo"), rs.getString("Faculty"),
-						rs.getInt("SchoolYear"), rs.getInt("Contact"),
+						rs.getInt("SchoolYear"), rs.getString("Contact"),
 						rs.getString("Email"), rs.getString("FoodType"),
 						rs.getString("Allergy"), rs.getString("Position"));
 				facilitators.add(facilitator);
@@ -486,7 +480,7 @@ public class DatabaseReader {
 				Participant participant = new Participant(
 						rs.getInt("MemberID"), rs.getString("Name"),
 						rs.getString("MatricNo"), rs.getString("Faculty"),
-						rs.getInt("SchoolYear"), rs.getInt("Contact"),
+						rs.getInt("SchoolYear"), rs.getString("Contact"),
 						rs.getString("Email"), rs.getString("FoodType"),
 						rs.getString("Allergy"));
 				participants.add(participant);
@@ -556,7 +550,7 @@ public class DatabaseReader {
 
 	
 	/*VenueBookingInfo*/
-	public ArrayList<VenueBookingInfo> getVenueBookingInfo(Venue venue){
+	/*public ArrayList<VenueBookingInfo> getVenueBookingInfo(Venue venue){
 		ArrayList<VenueBookingInfo> bookings = new ArrayList<VenueBookingInfo>();
 		ResultSet rs = null;
 		try{
@@ -570,9 +564,6 @@ public class DatabaseReader {
 				e.printStackTrace();
 		}
 		return participants;
-
-	public static void main(String[] args) {
-
->>>>>>> a406ac17a201ade0d9aa0d2d1bddda836c5d0a1f
 	}
+	*/
 }

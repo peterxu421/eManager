@@ -32,7 +32,7 @@ public class SQLManager {
 			"MatricNo VARCHAR(10)," +
 			"Faculty VARCHAR(50)," +
 			"Year INTEGER," +
-			"Contact INTEGER," +
+			"Contact VARCHAR(20)," +
 			"Email VARCHAR(20)," +
 			"FoodType VARCHAR(10)," +
 			"Allergy VARCHAR(20)," +
@@ -124,7 +124,7 @@ public class SQLManager {
 			"Date DATE," +
 			"TimeStart Time," +
 			"TimeEnd Time)";
-public static Connection createDatabase(){
+	public static Connection createDatabase(){
 		Connection connection = null;
 		PreparedStatement statement = null;
 		try{
@@ -154,6 +154,8 @@ public static Connection createDatabase(){
 			statement = connection.prepareStatement(createPackingDetailsTable);
 			statement.execute();
 			statement = connection.prepareStatement(createVenueDetailsTable);
+			statement.execute();
+			statement = connection.prepareStatement(createVenueBookingDetailsTable);
 			statement.execute();
 		}catch(SQLException sqle){
 			sqle.printStackTrace();
@@ -686,7 +688,7 @@ public static Connection createDatabase(){
 		}
 		return venueID;
 	}
-	public static int insertOrganizerDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy, String position){
+	public static int insertOrganizerDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, String contact, String email, String foodType, String allergy, String position){
 		String insertOrganizerDetails = 
 				"INSERT INTO MemberDetails (EventID, Name, MatricNo, Faculty, SchoolYear, Contact, Email, FoodType, Allergy, Role, Position) " +
 				"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -700,7 +702,7 @@ public static Connection createDatabase(){
 			prep.setString(3, matricNo);
 			prep.setString(4, faculty);
 			prep.setInt(5, schoolYear);
-			prep.setInt(6, contact);
+			prep.setString(6, contact);
 			prep.setString(7, email);
 			prep.setString(8, foodType);
 			prep.setString(9, allergy);
@@ -716,7 +718,7 @@ public static Connection createDatabase(){
 		}
 		return memberID;
 	}
-	public static int insertFacilitatorDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy, String position){
+	public static int insertFacilitatorDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, String contact, String email, String foodType, String allergy, String position){
 		String insertFacilitatorDetails = 
 				"INSERT INTO MemberDetails (EventID, Name, MatricNo, Faculty, SchoolYear, Contact, Email, FoodType, Allergy, Role, Position) " +
 				"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -730,7 +732,7 @@ public static Connection createDatabase(){
 			prep.setString(3, matricNo);
 			prep.setString(4, faculty);
 			prep.setInt(5, schoolYear);
-			prep.setInt(6, contact);
+			prep.setString(6, contact);
 			prep.setString(7,email);
 			prep.setString(8, foodType);
 			prep.setString(9, allergy);
@@ -746,7 +748,7 @@ public static Connection createDatabase(){
 		}
 		return memberID;
 	}
-	public static int insertParticipantDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy){
+	public static int insertParticipantDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, String contact, String email, String foodType, String allergy){
 		String insertParticipantDetails = 
 				"INSERT INTO MemberDetails (EventID, Name, MatricNo, Faculty, SchoolYear, Contact, Email, FoodType, Allergy, Role) " +
 				"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -760,7 +762,7 @@ public static Connection createDatabase(){
 			prep.setString(3, matricNo);
 			prep.setString(4, faculty);
 			prep.setInt(5, schoolYear);
-			prep.setInt(6, contact);
+			prep.setString(6, contact);
 			prep.setString(7,email);
 			prep.setString(8, foodType);
 			prep.setString(9, allergy);
@@ -1155,7 +1157,7 @@ public static Connection createDatabase(){
 			sqle.printStackTrace();
 		}
 	}
-	public static void updateOrganizerFacilitatorDetails(Connection connection, int memberID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy, String position){
+	public static void updateOrganizerFacilitatorDetails(Connection connection, int memberID, String name, String matricNo, String faculty, int schoolYear, String contact, String email, String foodType, String allergy, String position){
 		String updateOrganizerFacilitatorDetails =
 				"UPDATE MemberDetails SET Name=?,MatricNo=?,Faculty=?,SchoolYear=?,Contact=?,Email=?,FoodType=?,Allergy=?,Position=? " +
 						"WHERE MemberID=?";
@@ -1166,7 +1168,7 @@ public static Connection createDatabase(){
 					prep.setString(2, matricNo);
 					prep.setString(3, faculty);
 					prep.setInt(4, schoolYear);
-					prep.setInt(5, contact);
+					prep.setString(5, contact);
 					prep.setString(6, email);
 					prep.setString(7, foodType);
 					prep.setString(8, allergy);
@@ -1177,7 +1179,7 @@ public static Connection createDatabase(){
 					sqle.printStackTrace();
 				}
 	}
-	public static void updateParticipantDetails(Connection connection, int memberID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy){
+	public static void updateParticipantDetails(Connection connection, int memberID, String name, String matricNo, String faculty, int schoolYear, String contact, String email, String foodType, String allergy){
 		String updateFacilitatorDetails =
 				"UPDATE MemberDetails SET Name=?,MatricNo=?,Faculty=?,SchoolYear=?,Contact=?,Email=?,FoodType=?,Allergy=?" +
 						"WHERE MemberID=?";
@@ -1188,7 +1190,7 @@ public static Connection createDatabase(){
 					prep.setString(2, matricNo);
 					prep.setString(3, faculty);
 					prep.setInt(4, schoolYear);
-					prep.setInt(5, contact);
+					prep.setString(5, contact);
 					prep.setString(6, email);
 					prep.setString(7, foodType);
 					prep.setString(8, allergy);
@@ -1215,6 +1217,25 @@ public static Connection createDatabase(){
 			sqle.printStackTrace();
 		}
 	}
+	
+	/*Get Object By ID*/
+	public static ResultSet getVenueByID(Connection connection, int venueID){
+		String query = 
+				"SELECT * FROM VenueDetails " +
+				"WHERE VenueID=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(query);
+			prep.setInt(1, venueID);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
+
+	
 	public static void main(String[] args){
 		/*Connection con = ConnectionManager.getConnection();
 		insertFeedbackDetails(con, 1, "I am here!!!!!","2011-12-11", "12:11:11");*/

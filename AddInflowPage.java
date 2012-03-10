@@ -60,13 +60,8 @@ public class AddInflowPage extends Composite {
 		lblSponsor.setAlignment(SWT.RIGHT);
 		lblSponsor.setBounds(175, 94, 61, 15);
 		toolkit.adapt(lblSponsor, true, true);
-<<<<<<< HEAD
-		lblSponsor.setText("Sponsor");
-		
-=======
 		lblSponsor.setText("Sponsor:");
 
->>>>>>> 4bafc5eca8f50f40537fe9b82028dc57cadf896a
 		sponsor = new Text(composite, SWT.BORDER);
 		sponsor.setBounds(265, 91, 127, 21);
 		toolkit.adapt(sponsor, true, true);
@@ -78,13 +73,8 @@ public class AddInflowPage extends Composite {
 		Label lblAmount = new Label(composite, SWT.NONE);
 		lblAmount.setBounds(175, 130, 61, 15);
 		toolkit.adapt(lblAmount, true, true);
-<<<<<<< HEAD
-		lblAmount.setText("Amount($)");
-		
-=======
 		lblAmount.setText("Amount($):");
 
->>>>>>> 4bafc5eca8f50f40537fe9b82028dc57cadf896a
 		amount = new Text(composite, SWT.BORDER);
 		amount.setBounds(265, 127, 127, 21);
 		toolkit.adapt(amount, true, true);
@@ -114,13 +104,7 @@ public class AddInflowPage extends Composite {
 		Label lblRemarks = new Label(composite, SWT.NONE);
 		lblRemarks.setBounds(188, 203, 48, 15);
 		toolkit.adapt(lblRemarks, true, true);
-<<<<<<< HEAD
-		lblRemarks.setText("Remarks");
-		
-=======
 		lblRemarks.setText("Remarks:");
-
->>>>>>> 4bafc5eca8f50f40537fe9b82028dc57cadf896a
 		remarks = new Text(composite, SWT.BORDER);
 		remarks.setBounds(265, 200, 127, 21);
 		toolkit.adapt(remarks, true, true);
