@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -6,6 +8,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -81,20 +84,30 @@ public class VenueManagement_BookingApplications extends Composite {
 		btnReject.setText("Reject");
 		btnReject.setBounds(440, 43, 89, 27);
 		toolkit.adapt(btnReject, true, true);
+		
+		importApplicationData();
 
 	}
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		VenueManagement_BookingApplications calc = new VenueManagement_BookingApplications(shell,
-				SWT.NONE);
-		calc.pack();
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
+	
+	public void importApplicationData() {
+		DatabaseReader db = new DatabaseReader();
+		ArrayList<Venue> venueList = db.getVenues();
+		
+		for(int i=0; i<venueList.size(); i++){
+		    Venue venue = venueList.get(i);
+		    ArrayList<VenueBookingInfo> bookingInfoList = db.getVenueBookingInfo(venue);
+			if(!bookingInfoList.isEmpty()){ //  booked
+				for(int j=0; j<bookingInfoList.size(); j++){
+					TableItem item = new TableItem(applicationTable, SWT.NULL);
+					item.setText(0, venue.getName() + " at " + venue.getLocation());
+					item.setText(1, bookingInfoList.get(j).getApplicant().getName());
+					item.setText(1, bookingInfoList.get(j).getApplicant().getMatricNo());
+					item.setText(1, bookingInfoList.get(j).getApplicant().getOrganization());
+					item.setText(1, bookingInfoList.get(j).getApplicant().getContact());
+					item.setText(1, bookingInfoList.get(j).getApplicant().getEmail());
+					item.setText(1, bookingInfoList.get(j).getDateTime().toString());
+				}
+			}	
 		}
 	}
-	
 }

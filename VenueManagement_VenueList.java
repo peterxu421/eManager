@@ -98,6 +98,9 @@ public class VenueManagement_VenueList extends Composite {
 			temp.setText(1, venueList.get(i).getLocation());
 			temp.setText(2, venueList.get(i).getType());
 		}
+		
+/*		ArrayList<VenueBookingInfo> bookingInfoList = db.getVenueBookingInfo(venueList.get(0));
+		System.out.println(bookingInfoList.get(0).getApplicant().getName());*/
 	}
 	
 	public class add extends SelectionAdapter {
@@ -142,8 +145,14 @@ public class VenueManagement_VenueList extends Composite {
 	
 	public class viewBookingInfo extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
-			
-			
+			int index = venueTable.getSelectionIndex();
+			if(index >=0 && index < venueTable.getItemCount()){
+				Shell viewBookingInfoShell = new Shell(getDisplay());
+				VenueViewBookingInfo viewBookingInfoPage = new VenueViewBookingInfo(viewBookingInfoShell, SWT.None, index);
+				viewBookingInfoPage.pack();
+				viewBookingInfoShell.pack();
+				viewBookingInfoShell.open();
+			}
 		}
 	}
 }

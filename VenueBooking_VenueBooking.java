@@ -208,7 +208,7 @@ public class VenueBooking_VenueBooking extends Composite {
 			String _organization = "";
 			String _contact = "";
 			String _email = "";
-			ArrayList<BookingDateTime> _listDateTime = null;
+			ArrayList<BookingDateTime> _listDateTime = new ArrayList<BookingDateTime>();
 			
 			if(!name.getText().isEmpty()){
 				_name = name.getText();
@@ -227,7 +227,8 @@ public class VenueBooking_VenueBooking extends Composite {
 			}
 			if(listDateTime.getItemCount()!=0){
 				for (int i=0; i<listDateTime.getItemCount(); i++){
-					_listDateTime.set(i, BookingDateTime.parseBookingDateTime(listDateTime.getItem(i)));
+					BookingDateTime dateTime = BookingDateTime.parseBookingDateTime(listDateTime.getItem(i));
+					_listDateTime.add(dateTime);
 				}
 			}
 			
@@ -238,7 +239,7 @@ public class VenueBooking_VenueBooking extends Composite {
 			for(int i=0; i<_listDateTime.size(); i++){
 				VenueApplicant newApplicant = new VenueApplicant(_name, _matricNo, _contact, _email, _organization);
 				VenueBookingInfo newBookingInfo = new VenueBookingInfo(selected, newApplicant, _listDateTime.get(i));
-				//db.insertVenueBookingInfo(newBookingInfo);
+			    db.insertVenueBookingInfo(newBookingInfo);
 			}
 			getParent().dispose();
 		}
