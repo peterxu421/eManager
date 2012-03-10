@@ -6,7 +6,6 @@ public class Organizer extends Member {
 		this.year = year;
 		this.faculty = faculty;
 		this.position = position;
-		this.role = MACRO.ORGANIZER;
 	}
 
 	public Organizer(String name, String matricNo, String faculty, int year, String contact, String email, String foodType, String allergy, String position) {
@@ -18,7 +17,6 @@ public class Organizer extends Member {
 		this.email = email;
 		this.foodType = foodType;
 		this.allergy = allergy;
-		this.role = MACRO.ORGANIZER;
 		this.position = position;
 	}
 	public Organizer(int ID, String name, String matricNo, String faculty, int year, String contact, String email, String foodType, String allergy, String position) {
@@ -31,7 +29,6 @@ public class Organizer extends Member {
 		this.email = email;
 		this.foodType = foodType;
 		this.allergy = allergy;
-		this.role = MACRO.ORGANIZER;
 		this.position = position;
 	}
 

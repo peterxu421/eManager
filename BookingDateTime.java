@@ -7,7 +7,6 @@ public class BookingDateTime {
 	private Time timeEnd;
 
 	public BookingDateTime(Date date, Time timeStart, Time timeEnd) {
-		super();
 		this.date = date;
 		this.timeStart = timeStart;
 		this.timeEnd = timeEnd;

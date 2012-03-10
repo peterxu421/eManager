@@ -389,6 +389,23 @@ public class SQLManager {
 		}
 		return rs;
 	}
+	public static ResultSet getVenueApplicantDetails(Connection connection, int venueID){
+		String getVenueApplicantDetails =
+				"SELECT * FROM MemberDetails " +
+				"WHERE EventID=? AND Role=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getVenueApplicantDetails);
+			prep.setInt(1, venueID);
+			prep.setInt(2, MACRO.APPLICANT);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
+	
 	public static ResultSet getVenueBookingDetails(Connection connection, int venueID){
 		String getVenueBookingDetails = 
 				"SELECT * FROM VenueBookingDetails " +
@@ -404,6 +421,7 @@ public class SQLManager {
 		}
 		return rs;
 	}
+
 	
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
 	public static int insertEventDetails(Connection connection, String eventName, String eventDescription){
@@ -971,6 +989,7 @@ public class SQLManager {
 			e.printStackTrace();
 		}
 	}
+	
 	/*------------------------------------------------------UPDATE--------------------------------------------------------------*/
 	public static void updateTaskDetails(Connection connection, int taskID, String taskDescription, String assignedTo, String date, boolean done){
 		String updateTaskDetails =
@@ -1234,7 +1253,21 @@ public class SQLManager {
 		}
 		return rs;
 	}
-
+	public static ResultSet getVenueApplicantByID(Connection connection, int memberID){
+		String query = 
+				"SELECT * FROM MemberDetails " +
+				"WHERE MemberID=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(query);
+			prep.setInt(1, memberID);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
 	
 	public static void main(String[] args){
 		/*Connection con = ConnectionManager.getConnection();
