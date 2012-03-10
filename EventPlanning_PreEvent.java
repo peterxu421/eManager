@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.FillLayout;
 
 public class EventPlanning_PreEvent extends Composite {
 
@@ -116,6 +117,11 @@ public class EventPlanning_PreEvent extends Composite {
 		Composite composite_2 = new Composite(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskChart.setControl(composite_2);
 		toolkit.paintBordersFor(composite_2);
+		FillLayout fillLayout = new FillLayout();
+		composite_2.setLayout(fillLayout);
+		TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
+		taskChart.pack();
+		composite_2.pack();
 
 		TabItem tbtmPublicity = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmPublicity.setText("Publicity");
