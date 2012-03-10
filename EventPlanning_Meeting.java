@@ -138,14 +138,13 @@ public class EventPlanning_Meeting extends Composite {
 	class Delete extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
 			if (table.getItemCount() != 0){
-				/* update the meeting table */
 				int index = table.getSelectionIndex();
 				if(index >=0 && index < table.getItemCount()){
+					/* update the database */
+					DatabaseReader db = new DatabaseReader();
+					db.deleteMeeting(meetingList.get(index));
+					/* update the meeting table */
 					table.remove(index);
-					
-				/* update the database */
-				DatabaseReader db = new DatabaseReader();
-				db.deleteMeeting(meetingList.get(index));
 				}
 			}
 		}
