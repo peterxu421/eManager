@@ -1,11 +1,10 @@
-
-public class BudgetAllocation{
+public class BudgetAllocation {
 	private int budgetID;
 	private String item;
 	private String personInCharge;
 	private double cost;
 	private Date date;
-	
+
 	public BudgetAllocation(int budgetID, String item, String personInCharge,
 			double cost, Date date) {
 		this.budgetID = budgetID;
@@ -14,6 +13,7 @@ public class BudgetAllocation{
 		this.cost = cost;
 		this.date = date;
 	}
+
 	public BudgetAllocation(String item, String personInCharge, double cost,
 			Date date) {
 		this.item = item;
@@ -21,36 +21,45 @@ public class BudgetAllocation{
 		this.cost = cost;
 		this.date = date;
 	}
+
 	public int getBudgetID() {
 		return budgetID;
 	}
+
 	public void setBudgetID(int budgetID) {
 		this.budgetID = budgetID;
 	}
+
 	public String getItem() {
 		return item;
 	}
+
 	public void setItem(String item) {
 		this.item = item;
 	}
+
 	public String getPersonInCharge() {
 		return personInCharge;
 	}
+
 	public void setPersonInCharge(String personInCharge) {
 		this.personInCharge = personInCharge;
 	}
+
 	public double getCost() {
 		return cost;
 	}
+
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
+
 	public Date getDate() {
 		return date;
 	}
+
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-	
+
 }

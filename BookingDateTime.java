@@ -1,12 +1,11 @@
 import com.ibm.icu.util.StringTokenizer;
 
-
 public class BookingDateTime {
 
 	private Date date;
 	private Time timeStart;
 	private Time timeEnd;
-	
+
 	public BookingDateTime(Date date, Time timeStart, Time timeEnd) {
 		super();
 		this.date = date;
@@ -37,12 +36,13 @@ public class BookingDateTime {
 	public void setTimeEnd(Time timeEnd) {
 		this.timeEnd = timeEnd;
 	}
-	
-	public String toString(){
-		return date.toString() + "   From " + timeStart.toString() + " to " + timeEnd.toString();
+
+	public String toString() {
+		return date.toString() + "   From " + timeStart.toString() + " to "
+				+ timeEnd.toString();
 	}
-	
-	public static BookingDateTime parseBookingDateTime(String dateTimeStr){
+
+	public static BookingDateTime parseBookingDateTime(String dateTimeStr) {
 		StringTokenizer st = new StringTokenizer(dateTimeStr);
 		String dummy;
 		String _date = st.nextToken(); // get date
@@ -50,11 +50,8 @@ public class BookingDateTime {
 		String _timeStart = st.nextToken(); // get timeStart
 		dummy = st.nextToken(); // skip 'to'
 		String _timeEnd = st.nextToken();
-		BookingDateTime dateTime = new BookingDateTime(Date.parseDate(_date), Time.parseTime(_timeStart), Time.parseTime(_timeEnd));
+		BookingDateTime dateTime = new BookingDateTime(Date.parseDate(_date),
+				Time.parseTime(_timeStart), Time.parseTime(_timeEnd));
 		return dateTime;
 	}
 }
-
-
-
-

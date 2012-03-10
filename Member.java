@@ -4,7 +4,7 @@ public abstract class Member {
 	protected String matricNo;
 	protected String faculty;
 	protected int year;
-	protected int contact;
+	protected String contact;
 	protected String email;
 	protected String foodType;
 	protected String allergy;
@@ -39,10 +39,10 @@ public abstract class Member {
 	public void setYear(int year) {
 		this.year = year;
 	}
-	public int getContact() {
+	public String getContact() {
 		return contact;
 	}
-	public void setContact(int contact) {
+	public void setContact(String contact) {
 		this.contact = contact;
 	}
 	public String getEmail() {
