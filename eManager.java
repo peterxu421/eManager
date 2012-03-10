@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -9,7 +11,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public class eManager{
 	public static void main(String[] args)
-	{
+	{	
 		Display display = new Display();
 		Shell rootShell = new Shell(display);
 		//menu
