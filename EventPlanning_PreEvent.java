@@ -18,7 +18,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-
 public class EventPlanning_PreEvent extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
@@ -26,7 +25,7 @@ public class EventPlanning_PreEvent extends Composite {
 	private Table tableCommittee;
 	private Event event;
 	private ArrayList<Task> taskList;
-	private ArrayList<Member> memberList;
+	private ArrayList<Organizer> memberList;
 
 	/**
 	 * Create the composite.
@@ -95,21 +94,21 @@ public class EventPlanning_PreEvent extends Composite {
 		btnTaskAssinAddItem.addSelectionListener(new TaskAssignAddItemPage());
 		btnTaskAssinAddItem.setBounds(445, 10, 80, 27);
 		toolkit.adapt(btnTaskAssinAddItem, true, true);
-		btnTaskAssinAddItem.setText("Add Item");
+		btnTaskAssinAddItem.setText("Add ");
 
 		Button btnTaskAssignDeleteItem = new Button(composite_1, SWT.NONE);
-		btnTaskAssignDeleteItem.addSelectionListener(new TaskAssignDeleteItem(
-				tableTaskAssign));
+		btnTaskAssignDeleteItem
+				.addSelectionListener(new TaskAssignDeleteItem());
 		btnTaskAssignDeleteItem.setBounds(445, 43, 80, 27);
 		toolkit.adapt(btnTaskAssignDeleteItem, true, true);
-		btnTaskAssignDeleteItem.setText("Delete Item");
+		btnTaskAssignDeleteItem.setText("Delete ");
 
 		Button btnTaskAssignEditItem = new Button(composite_1, SWT.NONE);
 		btnTaskAssignEditItem
 				.addSelectionListener(new TaskAssignEditItemPage());
 		btnTaskAssignEditItem.setBounds(445, 76, 80, 27);
 		toolkit.adapt(btnTaskAssignEditItem, true, true);
-		btnTaskAssignEditItem.setText("Edit Item");
+		btnTaskAssignEditItem.setText("Edit ");
 
 		TabItem tbtmTaskChart = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskChart.setText("Task Chart");
@@ -164,30 +163,35 @@ public class EventPlanning_PreEvent extends Composite {
 				.addSelectionListener(new TaskAssignAddMemberPage());
 		btnCommitteeAddMember.setBounds(424, 10, 101, 27);
 		toolkit.adapt(btnCommitteeAddMember, true, true);
-		btnCommitteeAddMember.setText("Add Member");
+		btnCommitteeAddMember.setText("Add");
 
 		Button btnCommitteeDeleteMember = new Button(composite_4, SWT.NONE);
-		btnCommitteeDeleteMember.addSelectionListener(new TaskAssignDeleteItem(
-				tableCommittee));
+		btnCommitteeDeleteMember
+				.addSelectionListener(new TaskAssignDeleteMember());
 		btnCommitteeDeleteMember.setBounds(424, 43, 101, 27);
 		toolkit.adapt(btnCommitteeDeleteMember, true, true);
-		btnCommitteeDeleteMember.setText("Delete Member");
+		btnCommitteeDeleteMember.setText("Delete");
 
 		Button btnCommitteeEditMember = new Button(composite_4, SWT.NONE);
 		btnCommitteeEditMember
 				.addSelectionListener(new TaskAssignEditMemberPage());
 		btnCommitteeEditMember.setBounds(424, 76, 101, 27);
 		toolkit.adapt(btnCommitteeEditMember, true, true);
-		btnCommitteeEditMember.setText("Edit Member");
+<<<<<<< HEAD
+		btnCommitteeEditMember.setText("Edit");
 		
+=======
+		btnCommitteeEditMember.setText("Edit Member");
+
+>>>>>>> 4bafc5eca8f50f40537fe9b82028dc57cadf896a
 		fillTable();
 
 	}
-	public void fillTable()
-	{
+
+	public void fillTable() {
 		DatabaseReader dbReader = new DatabaseReader();
 		taskList = dbReader.getTasks(event);
-		//memberList = dbReader.getMember(event);
+		memberList = dbReader.getOrganizers(event);
 		TableItem item;
 
 		for (int i = 0; i < taskList.size(); i++) {
@@ -195,17 +199,19 @@ public class EventPlanning_PreEvent extends Composite {
 			item.setText(0, taskList.get(i).getTaskDesciption());
 			item.setText(1, taskList.get(i).getAssignedTo());
 			item.setText(2, taskList.get(i).getDateDue().toString());
-			item.setText(3, taskList.get(i).isDone()?"Done":"Undone");
+			item.setText(3, taskList.get(i).isDone() ? "Done" : "Undone");
 		}
-		/*for (int i = 0; i < memberList.size(); i++) {
-			item = new TableItem(tableCommittee, SWT.NONE);
-			item.setText(0, memberList.get(i).getName());
-			item.setText(1, Integer.toString(memberList.get(i).getYear()));
-			item.setText(2, memberList.get(i).getFaculty());
-			item.setText(3, memberList.get(i).getCell());
-			item.setText(4, memberList.get(i).getPosition());
-		}*/
+		/*
+		 * for (int i = 0; i < memberList.size(); i++) { item = new
+		 * TableItem(tableCommittee, SWT.NONE); item.setText(0,
+		 * memberList.get(i).getName()); item.setText(1,
+		 * Integer.toString(memberList.get(i).getYear())); item.setText(2,
+		 * memberList.get(i).getFaculty()); item.setText(3,
+		 * memberList.get(i).getCell()); item.setText(4,
+		 * memberList.get(i).getPosition()); }
+		 */
 	}
+
 	public class TaskAssignAddItemPage extends SelectionAdapter {
 
 		public void widgetSelected(SelectionEvent e) {
@@ -223,7 +229,7 @@ public class EventPlanning_PreEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddMemberPage = new Shell(getDisplay());
 			TaskAssignAddMember taskAssignAddMember = new TaskAssignAddMember(
-					taskAssignAddMemberPage, SWT.None, tableCommittee);
+					taskAssignAddMemberPage, SWT.None, tableCommittee, event);
 			taskAssignAddMember.pack();
 			taskAssignAddMemberPage.pack();
 			taskAssignAddMemberPage.open();
@@ -231,21 +237,31 @@ public class EventPlanning_PreEvent extends Composite {
 	}
 
 	public class TaskAssignDeleteItem extends SelectionAdapter {
-		Table table;
-
-		public TaskAssignDeleteItem(Table table) {
-			this.table = table;
-		}
 
 		public void widgetSelected(SelectionEvent e) {
-			if (table.getColumnCount() != 0) {
-				int index = table.getSelectionIndex();
-				if (index < 0 || index >= table.getItemCount()) {
+			if (tableTaskAssign.getColumnCount() != 0) {
+				int index = tableTaskAssign.getSelectionIndex();
+				if (index < 0 || index >= tableTaskAssign.getItemCount()) {
 					// Do nothing.
 				} else {
 					DatabaseReader dbReader = new DatabaseReader();
 					dbReader.deleteTask(taskList.get(index));
-					table.remove(index);
+					tableTaskAssign.remove(index);
+				}
+			}
+		}
+	}
+
+	public class TaskAssignDeleteMember extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
+			if (tableCommittee.getColumnCount() != 0) {
+				int index = tableCommittee.getSelectionIndex();
+				if (index < 0 || index >= tableCommittee.getItemCount()) {
+					// Do nothing.
+				} else {
+					DatabaseReader dbReader = new DatabaseReader();
+					dbReader.deleteMember(memberList.get(index));
+					tableCommittee.remove(index);
 				}
 			}
 		}
@@ -257,8 +273,8 @@ public class EventPlanning_PreEvent extends Composite {
 			if (index < tableTaskAssign.getItemCount() && index >= 0) {
 				Shell taskAssignEditItemPage = new Shell(getDisplay());
 				TaskAssignEditItem taskAssignEditItem = new TaskAssignEditItem(
-						taskAssignEditItemPage, SWT.None, tableTaskAssign, index,
-						taskList.get(index));
+						taskAssignEditItemPage, SWT.None, tableTaskAssign,
+						index, taskList.get(index));
 				taskAssignEditItem.pack();
 				taskAssignEditItemPage.pack();
 				taskAssignEditItemPage.open();
@@ -273,7 +289,7 @@ public class EventPlanning_PreEvent extends Composite {
 				Shell taskAssignEditMemberPage = new Shell(getDisplay());
 				TaskAssignEditMember taskAssignEditMember = new TaskAssignEditMember(
 						taskAssignEditMemberPage, SWT.None, tableCommittee,
-						index);
+						index, memberList.get(index));
 				taskAssignEditMember.pack();
 				taskAssignEditMemberPage.pack();
 				taskAssignEditMemberPage.open();

@@ -2,7 +2,7 @@
 public class VenueApplicant extends Member {
 	private String organization;
 	public VenueApplicant(String name, String matricNo, String faculty, int year,
-			int contact, String email, String foodType, String allergy, String position, String organization) {
+			String contact, String email, String foodType, String allergy, String position, String organization) {
 		this.name = name;
 		this.matricNo = matricNo;
 		this.faculty = faculty;
@@ -15,7 +15,7 @@ public class VenueApplicant extends Member {
 		this.organization = organization;
 	}
 	public VenueApplicant(int ID, String name, String matricNo, String faculty, int year,
-			int contact, String email, String foodType, String allergy, String position, String organization) {
+			String contact, String email, String foodType, String allergy, String position, String organization) {
 		this.ID = ID;
 		this.name = name;
 		this.matricNo = matricNo;
@@ -31,7 +31,7 @@ public class VenueApplicant extends Member {
 	
 	/* constructor for venueBookingInfo */
 	public VenueApplicant(String name, String matricNo,
-			int contact, String email, String organization) {
+			String contact, String email, String organization) {
 		this.name = name;
 		this.matricNo = matricNo;
 		this.contact = contact;

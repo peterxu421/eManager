@@ -82,6 +82,7 @@ public class VenueManagement_VenueList extends Composite {
 		btnView.setBounds(335, 109, 119, 27);
 		toolkit.adapt(btnView, true, true);
 	    btnEdit.addSelectionListener(new edit());
+	    btnView.addSelectionListener(new viewBookingInfo());
 	    
 	    importVenueListData();
 
@@ -100,7 +101,6 @@ public class VenueManagement_VenueList extends Composite {
 	}
 	
 	public class add extends SelectionAdapter {
-
 		public void widgetSelected(SelectionEvent e) {
 			Shell addVenueShell = new Shell(getDisplay());
 			VenueListAddItem addVenuePage = new VenueListAddItem(addVenueShell, SWT.None, venueTable);
@@ -137,6 +137,13 @@ public class VenueManagement_VenueList extends Composite {
 				editVenueShell.pack();
 				editVenueShell.open();
 			}
+		}
+	}
+	
+	public class viewBookingInfo extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e){
+			
+			
 		}
 	}
 }

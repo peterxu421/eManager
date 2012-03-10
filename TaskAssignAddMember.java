@@ -18,8 +18,8 @@ public class TaskAssignAddMember extends Composite {
 	private Text textName;
 	private Text textYear;
 	private Text textFaculty;
-	private Text textCell;
 	private Text textPosition;
+	private Event event;
 
 	/**
 	 * Create the composite.
@@ -27,7 +27,7 @@ public class TaskAssignAddMember extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public TaskAssignAddMember(Composite parent, int style, Table table_2) {
+	public TaskAssignAddMember(Composite parent, int style, Table table_2, Event event) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -36,6 +36,7 @@ public class TaskAssignAddMember extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		this.event =event;
 
 		Composite compositeCommitteeAdd = new Composite(this, SWT.NONE);
 		compositeCommitteeAdd.setLayout(null);
@@ -58,14 +59,9 @@ public class TaskAssignAddMember extends Composite {
 		lblFaculty.setBounds(35, 117, 54, 17);
 		toolkit.adapt(lblFaculty, true, true);
 
-		Label lblCell = new Label(compositeCommitteeAdd, SWT.NONE);
-		lblCell.setText("Cell");
-		lblCell.setBounds(35, 162, 54, 17);
-		toolkit.adapt(lblCell, true, true);
-
 		Label lblPosition = new Label(compositeCommitteeAdd, SWT.NONE);
 		lblPosition.setText("Position");
-		lblPosition.setBounds(35, 209, 54, 17);
+		lblPosition.setBounds(35, 161, 54, 17);
 		toolkit.adapt(lblPosition, true, true);
 		
 		textName = new Text(compositeCommitteeAdd, SWT.BORDER);
@@ -80,24 +76,20 @@ public class TaskAssignAddMember extends Composite {
 		textFaculty.setBounds(152, 114, 125, 23);
 		toolkit.adapt(textFaculty, true, true);
 
-		textCell = new Text(compositeCommitteeAdd, SWT.BORDER);
-		textCell.setBounds(152, 159, 125, 23);
-		toolkit.adapt(textCell, true, true);
-
 		textPosition = new Text(compositeCommitteeAdd, SWT.BORDER);
-		textPosition.setBounds(152, 206, 125, 23);
+		textPosition.setBounds(152, 158, 125, 23);
 		toolkit.adapt(textPosition, true, true);
 		
 		Button btnAddMember = new Button(compositeCommitteeAdd, SWT.NONE);
 		btnAddMember.addSelectionListener(new TaskAssignAddNewMember(table_2));
 		btnAddMember.setText("Add Member");
-		btnAddMember.setBounds(91, 253, 90, 27);
+		btnAddMember.setBounds(91, 205, 90, 27);
 		toolkit.adapt(btnAddMember, true, true);
 
 		Button buttonCancel = new Button(compositeCommitteeAdd, SWT.NONE);
 		buttonCancel.addSelectionListener(new TaskAssignMemberCancel());
 		buttonCancel.setText("Cancel");
-		buttonCancel.setBounds(230, 253, 66, 27);
+		buttonCancel.setBounds(230, 205, 66, 27);
 		toolkit.adapt(buttonCancel, true, true);
 
 	}
@@ -110,30 +102,29 @@ public class TaskAssignAddMember extends Composite {
 		}
 
 		public void widgetSelected(SelectionEvent e) {
-			String[] taskAssignArray = new String[5];
+			String[] memberArray = new String[4];
 			if (!textName.getText().isEmpty()) {
-				taskAssignArray[0] = textName.getText();
+				memberArray[0] = textName.getText();
 			}
 			if (!textYear.getText().isEmpty()) {
-				taskAssignArray[1] = textYear.getText();
+				memberArray[1] = textYear.getText();
 			}
 			if (!textFaculty.getText().isEmpty()) {
-				taskAssignArray[2] = textFaculty.getText();
-			}
-			if (!textCell.getText().isEmpty()) {
-				taskAssignArray[3] = textCell.getText();
+				memberArray[2] = textFaculty.getText();
 			}
 			if (!textPosition.getText().isEmpty()) {
-				taskAssignArray[4] = textPosition.getText();
+				memberArray[3] = textPosition.getText();
 			}
 			if (!textName.getText().isEmpty() && !textYear.getText().isEmpty()
 					&& !textFaculty.getText().isEmpty()
-					&& !textCell.getText().isEmpty()
 					&& !textPosition.getText().isEmpty()) {
 				TableItem item = new TableItem(table, SWT.NULL);
-				for (int i = 0; i < 5; i++) {
-					item.setText(i, taskAssignArray[i]);
+				for (int i = 0; i < 4; i++) {
+					item.setText(i, memberArray[i]);
 				}
+				DatabaseReader db = new DatabaseReader();
+				Organizer organizer = new Organizer(memberArray[0],Integer.parseInt(memberArray[1]),memberArray[2],memberArray[3]);
+				db.insertOrganizer(event, organizer);
 				getParent().dispose();
 			}
 		}

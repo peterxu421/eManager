@@ -96,19 +96,19 @@ public class EventPlanning_ActualEvent extends Composite {
 		btn_eventPlanning_actualEvent_Itinerary_add.addSelectionListener(new ItineraryAddItemPage());
 		btn_eventPlanning_actualEvent_Itinerary_add.setBounds(462, 10, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_add, true, true);
-		btn_eventPlanning_actualEvent_Itinerary_add.setText("Add Item");
+		btn_eventPlanning_actualEvent_Itinerary_add.setText("Add ");
 
 		Button btn_eventPlanning_actualEvent_Itinerary_del = new Button(comp_eventPlanning_actualEvent_Itinerary, SWT.NONE);
 		btn_eventPlanning_actualEvent_Itinerary_del.addSelectionListener(new ItineraryDeleteItem());
 		btn_eventPlanning_actualEvent_Itinerary_del.setBounds(462, 45, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_del, true, true);
-		btn_eventPlanning_actualEvent_Itinerary_del.setText("Delete Item");
+		btn_eventPlanning_actualEvent_Itinerary_del.setText("Delete");
 
 		Button btn_eventPlanning_actualEvent_Itinerary_edit = new Button(comp_eventPlanning_actualEvent_Itinerary, SWT.NONE);
 		btn_eventPlanning_actualEvent_Itinerary_edit.addSelectionListener(new ItineraryEditItemPage());
 		btn_eventPlanning_actualEvent_Itinerary_edit.setBounds(462, 78, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_edit, true, true);
-		btn_eventPlanning_actualEvent_Itinerary_edit.setText("Edit Item");
+		btn_eventPlanning_actualEvent_Itinerary_edit.setText("Edit ");
 
 		//alloc of manpower
 		TabItem tab_eventPlanning_actualEvent_allocOfManpower = new TabItem(folder_eventPlanning_actualEvent, SWT.NONE);
@@ -143,19 +143,19 @@ public class EventPlanning_ActualEvent extends Composite {
 		
 		Button btn_eventPlanning_actualEvent_AllocationManpower_add = new Button(composite_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
 		btn_eventPlanning_actualEvent_AllocationManpower_add.addSelectionListener(new AllocOfManpowerAddItemPage());
-		btn_eventPlanning_actualEvent_AllocationManpower_add.setText("Add Item");
+		btn_eventPlanning_actualEvent_AllocationManpower_add.setText("Add");
 		btn_eventPlanning_actualEvent_AllocationManpower_add.setBounds(473, 10, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_add, true, true);
 		
 		Button btn_eventPlanning_actualEvent_AllocationManpower_del = new Button(composite_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
 		btn_eventPlanning_actualEvent_AllocationManpower_del.addSelectionListener(new AllocOfManpowerDelItem());
-		btn_eventPlanning_actualEvent_AllocationManpower_del.setText("Delete Item");
+		btn_eventPlanning_actualEvent_AllocationManpower_del.setText("Delete");
 		btn_eventPlanning_actualEvent_AllocationManpower_del.setBounds(473, 43, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_del, true, true);
 		
 		Button btn_eventPlanning_actualEvent_AllocationManpower_edit = new Button(composite_eventPlanning_actualEvents_allocOfManpower, SWT.NONE);
 		btn_eventPlanning_actualEvent_AllocationManpower_edit.addSelectionListener(new AllocOfManpowerEditItemPage());
-		btn_eventPlanning_actualEvent_AllocationManpower_edit.setText("Edit Item");
+		btn_eventPlanning_actualEvent_AllocationManpower_edit.setText("Edit");
 		btn_eventPlanning_actualEvent_AllocationManpower_edit.setBounds(473, 76, 80, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_edit, true, true);
 		
@@ -192,19 +192,19 @@ public class EventPlanning_ActualEvent extends Composite {
 		
 		Button btnFacilitatorsAddItem = new Button(composite_eventPlanning_actualEvents_facilitators, SWT.NONE);
 		btnFacilitatorsAddItem.addSelectionListener(new FacilitatorAddItemPage());
-		btnFacilitatorsAddItem.setText("Add Item");
+		btnFacilitatorsAddItem.setText("Add ");
 		btnFacilitatorsAddItem.setBounds(445, 10, 80, 27);
 		toolkit.adapt(btnFacilitatorsAddItem, true, true);
 		
 		Button btnFacilitatorsDelItem = new Button(composite_eventPlanning_actualEvents_facilitators, SWT.NONE);
 		btnFacilitatorsDelItem.addSelectionListener(new FacilitatorDeleteItem());
-		btnFacilitatorsDelItem.setText("Delete Item");
+		btnFacilitatorsDelItem.setText("Delete");
 		btnFacilitatorsDelItem.setBounds(445, 43, 80, 27);
 		toolkit.adapt(btnFacilitatorsDelItem, true, true);
 		
 		Button btnFacilitatorsEditItem = new Button(composite_eventPlanning_actualEvents_facilitators, SWT.NONE);
 		btnFacilitatorsEditItem.addSelectionListener(new FacilitatorEditItemPage());
-		btnFacilitatorsEditItem.setText("Edit Item");
+		btnFacilitatorsEditItem.setText("Edit");
 		btnFacilitatorsEditItem.setBounds(445, 76, 80, 27);
 		toolkit.adapt(btnFacilitatorsEditItem, true, true);
 
@@ -244,19 +244,19 @@ public class EventPlanning_ActualEvent extends Composite {
 		btn_eventPlanning_actualEvent_participants_participants_add.addSelectionListener(new ParticipantAddItemPage());
 		btn_eventPlanning_actualEvent_participants_participants_add.setBounds(424, 10, 101, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_participants_participants_add, true, true);
-		btn_eventPlanning_actualEvent_participants_participants_add.setText("Add Item");
+		btn_eventPlanning_actualEvent_participants_participants_add.setText("Add");
 
 		Button btn_eventPlanning_actualEvent_participants_participants_del = new Button(composite_eventPlanning_actualEvent_participants, SWT.NONE);
 		btn_eventPlanning_actualEvent_participants_participants_del.addSelectionListener(new ParticipantDeleteItem());
 		btn_eventPlanning_actualEvent_participants_participants_del.setBounds(424, 43, 101, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_participants_participants_del, true, true);
-		btn_eventPlanning_actualEvent_participants_participants_del.setText("Delete Item");
+		btn_eventPlanning_actualEvent_participants_participants_del.setText("Delete ");
 
 		Button btn_eventPlanning_actualEvent_participants_participants_edit = new Button(composite_eventPlanning_actualEvent_participants, SWT.NONE);
 		btn_eventPlanning_actualEvent_participants_participants_edit.addSelectionListener(new ParticipantEditItemPage());
 		btn_eventPlanning_actualEvent_participants_participants_edit.setBounds(424, 76, 101, 27);
 		toolkit.adapt(btn_eventPlanning_actualEvent_participants_participants_edit, true, true);
-		btn_eventPlanning_actualEvent_participants_participants_edit.setText("Edit Item");
+		btn_eventPlanning_actualEvent_participants_participants_edit.setText("Edit ");
 		
 		importItineraryData();
 		importManpowerAllocationData();
