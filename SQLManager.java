@@ -387,6 +387,21 @@ public static Connection createDatabase(){
 		}
 		return rs;
 	}
+	public static ResultSet getVenueBookingDetails(Connection connection, int venueID){
+		String getVenueBookingDetails = 
+				"SELECT * FROM VenueBookingDetails " +
+				"WHERE VenueID=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getVenueBookingDetails);
+			prep.setInt(1, venueID);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
 	
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
 	public static int insertEventDetails(Connection connection, String eventName, String eventDescription){
@@ -760,7 +775,31 @@ public static Connection createDatabase(){
 		}
 		return memberID;
 	}
-
+	public static int insertVenueBookingDetails(Connection connection, int venueID, int memberID, String date, String timeStart, String timeEnd){
+		String insertVenueBookingDetails = 
+				"INSERT INTO VenueBookingDetails (VenueID, MemberID, Date, TimeStart, TimeEnd) " +
+				"VALUES (?,?,?,?,?)";
+		int bookingID = 0;
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(insertVenueBookingDetails,Statement.RETURN_GENERATED_KEYS);
+			prep.setInt(1, venueID);
+			prep.setInt(2, memberID);
+			prep.setString(3, date);
+			prep.setString(4, timeStart);
+			prep.setString(5, timeEnd);
+			prep.execute();
+			rs = prep.getGeneratedKeys();
+			while(rs.next()){
+				bookingID = rs.getInt(1);
+			}
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return bookingID;
+	}
+	
 	/*-------------------------------------------------------DELETE----------------------------------------------------------------------------------*/
 	public static void deleteEventDetails(Connection connection, int eventID){
 		String deleteEvent = 
@@ -918,7 +957,18 @@ public static Connection createDatabase(){
 			e.printStackTrace();
 		}
 	}
-
+	public static void deleteVenueBookingDetails(Connection connection, int bookingID){
+		String deletePackingDetails = 
+				"DELETE FROM VenueBookingDetails " +
+				"WHERE BookingID=?";
+		try {
+			PreparedStatement prep = connection.prepareStatement(deletePackingDetails);
+			prep.setInt(1, bookingID);
+			prep.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	/*------------------------------------------------------UPDATE--------------------------------------------------------------*/
 	public static void updateTaskDetails(Connection connection, int taskID, String taskDescription, String assignedTo, String date, boolean done){
 		String updateTaskDetails =
@@ -1148,7 +1198,23 @@ public static Connection createDatabase(){
 					sqle.printStackTrace();
 				}
 	}
-	
+	public static void updateVenueBookingDetails(Connection connection, int bookingID, int memberID, String date, String timeStart, String timeEnd){
+		String updateVenueBookingDetails =
+				"UPDATE VenueBookingDetails SET MemberID=?,Date=?,TimeStart=?,TimeEnd=? " +
+				"WHERE BookingID=?";
+		PreparedStatement prep = null;
+		try{
+			prep = connection.prepareStatement(updateVenueBookingDetails);
+			prep.setInt(1, memberID);
+			prep.setString(2, date);
+			prep.setString(3, timeStart);
+			prep.setString(4, timeEnd);
+			prep.setInt(5, bookingID);
+			prep.execute();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+	}
 	public static void main(String[] args){
 		/*Connection con = ConnectionManager.getConnection();
 		insertFeedbackDetails(con, 1, "I am here!!!!!","2011-12-11", "12:11:11");*/

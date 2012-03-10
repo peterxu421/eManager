@@ -404,7 +404,20 @@ public class DatabaseReader{
 		SQLManager.deleteMemberDetails(connection, member.getID());
 	}
 	
-	public static void main(String[] args){
-
+	/*VenueBookingInfo*/
+	public ArrayList<VenueBookingInfo> getVenueBookingInfo(Venue venue){
+		ArrayList<VenueBookingInfo> bookings = new ArrayList<VenueBookingInfo>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getVenueBookingDetails(connection, venue.getVenueId());
+			while(rs.next()){
+				
+				bookings participant = new Participant(rs.getInt("MemberID"), rs.getString("Name"), rs.getString("MatricNo"), rs.getString("Faculty"), rs.getInt("SchoolYear"), rs.getInt("Contact"), rs.getString("Email"), rs.getString("FoodType"), rs.getString("Allergy"));
+				participants.add(participant);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return participants;
 	}
 }
