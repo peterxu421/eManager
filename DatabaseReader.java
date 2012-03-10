@@ -26,7 +26,6 @@ public class DatabaseReader {
 		}
 		return events;
 	}
-
 	public void insertEvent(Event event) {
 		String eventName = event.getEventName();
 		String eventDescription = event.getEventDescription();
@@ -35,11 +34,10 @@ public class DatabaseReader {
 		event.setEventID(eventID);
 		return;
 	}
-
 	public void deleteEvent(Event event) {
 		SQLManager.deleteEventDetails(connection, event.getEventID());
 	}
-
+	
 	/* TaskDetails */
 	public ArrayList<Task> getTasks(Event event) {
 		ResultSet rs = SQLManager
@@ -57,8 +55,7 @@ public class DatabaseReader {
 			e.printStackTrace();
 		}
 		return tasks;
-	}// check
-
+	}
 	public void insertTask(Event event, Task task) {
 		int taskID = SQLManager.insertTaskDetails(connection,
 				event.getEventID(), task.getTaskDesciption(),
@@ -66,17 +63,14 @@ public class DatabaseReader {
 				task.isDone());
 		task.setTaskID(taskID);
 	}
-
 	public void deleteTask(Task task) {
 		SQLManager.deleteTaskDetails(connection, task.getTaskID());
 	}
-
 	public void updateTask(Task task) {
-		SQLManager.updateTaskDetails(connection, task.getTaskID(), task
-				.getTaskDesciption(), task.getAssignedTo(), task.getDateDue()
+		SQLManager.updateTaskDetails(connection, task.getTaskID(), task.getTaskDesciption(), task.getAssignedTo(), task.getDateDue()
 				.toString(), task.isDone());
 	}
-
+	
 	/* BudgetAllocationDetails */
 	public ArrayList<BudgetAllocation> getBudgetAllocation(Event event) {
 		ArrayList<BudgetAllocation> budgets = new ArrayList<BudgetAllocation>();
@@ -94,18 +88,15 @@ public class DatabaseReader {
 		}
 		return budgets;
 	}
-
 	public void insertBudgetAllocation(Event event, BudgetAllocation budget) {
 		int budgetID = SQLManager.insertBudgetDetails(connection, event
 				.getEventID(), budget.getItem(), budget.getPersonInCharge(),
 				budget.getCost(), budget.getDate().toString());
 		budget.setBudgetID(budgetID);
 	}
-
 	public void deleteBudgetAllocation(BudgetAllocation budget) {
 		SQLManager.deleteBudgetDetails(connection, budget.getBudgetID());
 	}
-
 	public void updateBudgetAllocation(BudgetAllocation budget) {
 		SQLManager.updateBudgetDetails(connection, budget.getBudgetID(),
 				budget.getItem(), budget.getPersonInCharge(), budget.getCost(),
@@ -129,24 +120,21 @@ public class DatabaseReader {
 		}
 		return inflows;
 	}
-
 	public void insertInflow(Event event, Inflow inflow) {
 		int inflowID = SQLManager.insertInflowDetails(connection,
 				event.getEventID(), inflow.getSponsor(), inflow.getAmount(),
 				inflow.getDate().toString(), inflow.getRemarks());
 		inflow.setInflowID(inflowID);
 	}
-
 	public void deleteInflow(Inflow inflow) {
 		SQLManager.deleteInflowDetails(connection, inflow.getInflowID());
 	}
-
 	public void updateInflow(Inflow inflow) {
 		SQLManager.updateInflowDetails(connection, inflow.getInflowID(), inflow
 				.getSponsor(), inflow.getAmount(), inflow.getDate().toString(),
 				inflow.getRemarks());
 	}
-
+	
 	/* Meeting */
 	public ArrayList<Meeting> getMeetings(Event event) {
 		ArrayList<Meeting> meetings = new ArrayList<Meeting>();
@@ -166,24 +154,21 @@ public class DatabaseReader {
 		}
 		return meetings;
 	}
-
 	public void insertMeeting(Event event, Meeting meeting) {
 		int meetingID = SQLManager.insertMeetingDetails(connection, event
 				.getEventID(), meeting.getMeetingDetails(), meeting.getDate()
 				.toString(), meeting.getTime().toString(), meeting.isDone());
 		meeting.setMeetingID(meetingID);
 	}
-
 	public void deleteMeeting(Meeting meeting) {
 		SQLManager.deleteMeetingDetails(connection, meeting.getMeetingID());
 	}
-
 	public void updateMeeting(Meeting meeting) {
 		SQLManager.updateMeetingDetails(connection, meeting.getMeetingID(),
 				meeting.getMeetingDetails(), meeting.getDate().toString(),
 				meeting.getTime().toString(), meeting.isDone());
 	}
-
+	
 	/* Outflow */
 	public ArrayList<Outflow> getOutflow(Event event) {
 		ArrayList<Outflow> outflows = new ArrayList<Outflow>();
@@ -201,7 +186,6 @@ public class DatabaseReader {
 		}
 		return outflows;
 	}
-
 	public void insertOutflow(Event event, Outflow outflow) {
 		int outflowID = SQLManager.insertOutflowDetails(connection,
 				event.getEventID(), outflow.getItem(), outflow.getQuantity(),
@@ -209,11 +193,9 @@ public class DatabaseReader {
 				outflow.getCost());
 		outflow.setOutflowID(outflowID);
 	}
-
 	public void deleteOutflow(Outflow outflow) {
 		SQLManager.deleteOutflowDetails(connection, outflow.getOutflowID());
 	}
-
 	public void updateOutflow(Outflow outflow) {
 		SQLManager.updateOutflowDetails(connection, outflow.getOutflowID(),
 				outflow.getItem(), outflow.getQuantity(), outflow.getType(),
@@ -238,24 +220,21 @@ public class DatabaseReader {
 		}
 		return feedbacks;
 	}
-
 	public void insertFeedback(Event event, Feedback feedback) {
 		int feedbackID = SQLManager.insertFeedbackDetails(connection, event
 				.getEventID(), feedback.getFeedbackDetails(), feedback
 				.getDate().toString(), feedback.getTime().toString());
 		feedback.setFeedbackID(feedbackID);
 	}
-
 	public void deleteFeedback(Feedback feedback) {
 		SQLManager.deleteFeedbackDetails(connection, feedback.getFeedbackID());
 	}
-
 	public void updateFeedback(Feedback feedback) {
 		SQLManager.updateFeedbackDetails(connection, feedback.getFeedbackID(),
 				feedback.getFeedbackDetails(), feedback.getDate().toString(),
 				feedback.getTime().toString());
 	}
-
+	
 	/* Itinerary */
 	public ArrayList<Itinerary> getItinerary(Event event) {
 		ArrayList<Itinerary> itineraries = new ArrayList<Itinerary>();
@@ -274,7 +253,6 @@ public class DatabaseReader {
 		}
 		return itineraries;
 	}
-
 	public void insertItinerary(Event event, Itinerary itinerary) {
 		int itineraryID = SQLManager.insertItineraryDetails(connection, event
 				.getEventID(), itinerary.getItineraryDetails(), itinerary
@@ -282,12 +260,10 @@ public class DatabaseReader {
 				itinerary.isDone());
 		itinerary.setItineraryID(itineraryID);
 	}
-
 	public void deleteItinerary(Itinerary itinerary) {
 		SQLManager.deleteItineraryDetails(connection,
 				itinerary.getItineraryID());
 	}
-
 	public void updateItinerary(Itinerary itinerary) {
 		SQLManager.updateItineraryDetails(connection,
 				itinerary.getItineraryID(), itinerary.getItineraryDetails(),
@@ -314,7 +290,6 @@ public class DatabaseReader {
 		}
 		return manpowerAllocations;
 	}
-
 	public void insertManpowerAllocation(Event event,
 			ManpowerAllocation manpowerAllocation) {
 		int id = SQLManager.insertAllocationDetails(connection, event
@@ -323,12 +298,10 @@ public class DatabaseReader {
 						.getDate().toString(), manpowerAllocation.isDone());
 		manpowerAllocation.setTaskID(id);
 	}
-
 	public void deleteManpowerAllocation(ManpowerAllocation manpowerAllocation) {
 		SQLManager.deleteAllocationDetails(connection,
 				manpowerAllocation.getTaskID());
 	}
-
 	public void updateManpowerAllocation(ManpowerAllocation manpowerAllocation) {
 		SQLManager.updateAllocationDetails(connection, manpowerAllocation
 				.getTaskID(), manpowerAllocation.getTaskDescription(),
@@ -352,18 +325,15 @@ public class DatabaseReader {
 		}
 		return files;
 	}
-
 	public void insertFile(Event event, EventFile eventFile) {
 		int id = SQLManager.insertFileDetails(connection, event.getEventID(),
 				eventFile.getFileName(), eventFile.getFileDirectory(),
 				eventFile.getFileDescription());
 		eventFile.setFileID(id);
 	}
-
 	public void deleteFile(EventFile file) {
 		SQLManager.deleteFileDetails(connection, file.getFileID());
 	}
-
 	public void updateFile(EventFile file) {
 		SQLManager.updateFileDetails(connection, file.getFileID(),
 				file.getFileName(), file.getFileDirectory(),
@@ -387,18 +357,15 @@ public class DatabaseReader {
 		}
 		return packings;
 	}
-
 	public void insertPackingItem(Event event, PackingItem packing) {
 		int id = SQLManager.insertPackingDetails(connection,
 				event.getEventID(), packing.getCategory(), packing.getName(),
 				packing.getQuantity(), packing.getRemarks());
 		packing.setItemID(id);
 	}
-
 	public void deletePackingItem(PackingItem packing) {
 		SQLManager.deletePackingDetails(connection, packing.getItemID());
 	}
-
 	public void updatePackingItem(PackingItem packing) {
 		SQLManager.updatePackingDetails(connection, packing.getItemID(),
 				packing.getCategory(), packing.getName(),
@@ -421,22 +388,32 @@ public class DatabaseReader {
 		}
 		return venues;
 	}
-
 	public void insertVenue(Venue venue) {
 		int venueID = SQLManager.insertVenueDetails(connection,
 				venue.getName(), venue.getLocation(), venue.getType());
 		venue.setVenueId(venueID);
 	}
-
 	public void deleteVenue(Venue venue) {
 		SQLManager.deleteVenueDetails(connection, venue.getVenueId());
 	}
-
 	public void updateVenue(Venue venue) {
 		SQLManager.updateVenueDetails(connection, venue.getVenueId(),
 				venue.getName(), venue.getLocation(), venue.getType());
 	}
-
+	public Venue getVenueByID(int venueID){
+		ResultSet rs = null;
+		Venue venue = null;
+		try {
+			rs = SQLManager.getVenueByID(connection, venueID);
+			while (rs.next()) {
+				venue = new Venue(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return venue;
+	}
+	
 	/* MemberDetails */
 	public ArrayList<Organizer> getOrganizers(Event event) {
 		ArrayList<Organizer> organizers = new ArrayList<Organizer>();
@@ -444,12 +421,7 @@ public class DatabaseReader {
 		try {
 			rs = SQLManager.getOrganizerDetails(connection, event.getEventID());
 			while (rs.next()) {
-				Organizer organizer = new Organizer(rs.getInt("MemberID"),
-						rs.getString("Name"), rs.getString("MatricNo"),
-						rs.getString("Faculty"), rs.getInt("SchoolYear"),
-						rs.getInt("Contact"), rs.getString("Email"),
-						rs.getString("FoodType"), rs.getString("Allergy"),
-						rs.getString("Position"));
+				Organizer organizer = new Organizer(rs.getInt("MemberID"),rs.getString("Name"), rs.getString("MatricNo"),rs.getString("Faculty"), rs.getInt("SchoolYear"),rs.getString("Contact"), rs.getString("Email"),rs.getString("FoodType"), rs.getString("Allergy"),rs.getString("Position"));
 				organizers.add(organizer);
 			}
 		} catch (SQLException e) {
@@ -457,7 +429,6 @@ public class DatabaseReader {
 		}
 		return organizers;
 	}
-
 	public ArrayList<Facilitator> getFacilitators(Event event) {
 		ArrayList<Facilitator> facilitators = new ArrayList<Facilitator>();
 		ResultSet rs = null;
@@ -468,7 +439,7 @@ public class DatabaseReader {
 				Facilitator facilitator = new Facilitator(
 						rs.getInt("MemberID"), rs.getString("Name"),
 						rs.getString("MatricNo"), rs.getString("Faculty"),
-						rs.getInt("SchoolYear"), rs.getInt("Contact"),
+						rs.getInt("SchoolYear"), rs.getString("Contact"),
 						rs.getString("Email"), rs.getString("FoodType"),
 						rs.getString("Allergy"), rs.getString("Position"));
 				facilitators.add(facilitator);
@@ -478,7 +449,6 @@ public class DatabaseReader {
 		}
 		return facilitators;
 	}
-
 	public ArrayList<Participant> getParticipants(Event event) {
 		ArrayList<Participant> participants = new ArrayList<Participant>();
 		ResultSet rs = null;
@@ -489,7 +459,7 @@ public class DatabaseReader {
 				Participant participant = new Participant(
 						rs.getInt("MemberID"), rs.getString("Name"),
 						rs.getString("MatricNo"), rs.getString("Faculty"),
-						rs.getInt("SchoolYear"), rs.getInt("Contact"),
+						rs.getInt("SchoolYear"), rs.getString("Contact"),
 						rs.getString("Email"), rs.getString("FoodType"),
 						rs.getString("Allergy"));
 				participants.add(participant);
@@ -499,7 +469,6 @@ public class DatabaseReader {
 		}
 		return participants;
 	}
-
 	public void insertOrganizer(Event event, Organizer organizer) {
 		int organizerID = SQLManager.insertOrganizerDetails(connection,
 				event.getEventID(), organizer.getName(),
@@ -509,7 +478,6 @@ public class DatabaseReader {
 				organizer.getAllergy(), organizer.getPosition());
 		organizer.setID(organizerID);
 	}
-
 	public void insertFacilitator(Event event, Facilitator facilitator) {
 		int facilitatorID = SQLManager.insertFacilitatorDetails(connection,
 				event.getEventID(), facilitator.getName(),
@@ -519,7 +487,6 @@ public class DatabaseReader {
 				facilitator.getAllergy(), facilitator.getPosition());
 		facilitator.setID(facilitatorID);
 	}
-
 	public void insertParticipant(Event event, Participant participant) {
 		int participantID = SQLManager.insertParticipantDetails(connection,
 				event.getEventID(), participant.getName(),
@@ -529,7 +496,6 @@ public class DatabaseReader {
 				participant.getAllergy());
 		participant.setID(participantID);
 	}
-
 	public void updateOrganizer(Organizer member) {
 		SQLManager.updateOrganizerFacilitatorDetails(connection,
 				member.getID(), member.getName(), member.getMatricNo(),
@@ -537,7 +503,6 @@ public class DatabaseReader {
 				member.getEmail(), member.getFoodType(), member.getAllergy(),
 				member.getPosition());
 	}
-
 	public void updateFacilitator(Facilitator member) {
 		SQLManager.updateOrganizerFacilitatorDetails(connection,
 				member.getID(), member.getName(), member.getMatricNo(),
@@ -545,19 +510,57 @@ public class DatabaseReader {
 				member.getEmail(), member.getFoodType(), member.getAllergy(),
 				member.getPosition());
 	}
-
 	public void updateParticipant(Participant member) {
 		SQLManager.updateParticipantDetails(connection, member.getID(),
 				member.getName(), member.getMatricNo(), member.getFaculty(),
 				member.getYear(), member.getContact(), member.getEmail(),
 				member.getFoodType(), member.getAllergy());
 	}
-
 	public void deleteMember(Member member) {
 		SQLManager.deleteMemberDetails(connection, member.getID());
 	}
-
-	public static void main(String[] args) {
-
+	public VenueApplicant getVenueApplicantByID(int applicantID){
+		ResultSet rs = null;
+		VenueApplicant applicant = null;
+		try {
+			rs = SQLManager.getVenueApplicantByID(connection, applicantID);
+			while (rs.next()) {
+				applicant = new VenueApplicant(applicantID, rs.getString("Name") , 
+						rs.getString("MatricNo"), rs.getString("Faculty"), rs.getInt("SchoolYear"), 
+						rs.getString("contact"), rs.getString("email"), rs.getString("foodType"), 
+						rs.getString("allergy"), rs.getString("organization"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return applicant;
+	}
+	
+	/*VenueBookingInfo*/
+	public ArrayList<VenueBookingInfo> getVenueBookingInfo(Venue venue){
+		ArrayList<VenueBookingInfo> bookings = new ArrayList<VenueBookingInfo>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getVenueBookingDetails(connection, venue.getVenueId());
+			while(rs.next()){
+				VenueApplicant applicant = getVenueApplicantByID(rs.getInt("MemberID"));
+				BookingDateTime time = new BookingDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
+						Time.parseTime(rs.getString("TimeEnd")));
+				VenueBookingInfo booking = new VenueBookingInfo(rs.getInt("BookingID"), venue, applicant, time );
+				bookings.add(booking);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return bookings;
+	}
+	public void insertVenueBookingInfo(VenueBookingInfo booking){
+		int id = SQLManager.insertVenueBookingDetails(connection, booking.getVenue().getVenueId(), 
+				booking.getApplicant().getID(), booking.getDateTime().getDate().toString(), 
+				booking.getDateTime().getTimeStart().toString(), booking.getDateTime().getTimeEnd().toString());
+		booking.setVenueBookingInfoID(id);
+	}
+	public void deleteVenueBookingInfo(VenueBookingInfo booking){
+		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
 	}
 }

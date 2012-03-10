@@ -111,6 +111,6 @@ public abstract class AddItemSkeleton extends Composite {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
-	}*
+	}*/
 
 }

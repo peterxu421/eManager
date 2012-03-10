@@ -84,7 +84,7 @@ public class AddInflowPage extends Composite {
 					.getText(1));
 
 		Label lblDate = new Label(composite, SWT.NONE);
-		lblDate.setText("Date:");
+		lblDate.setText("Date");
 		lblDate.setBounds(209, 168, 27, 15);
 		toolkit.adapt(lblDate, true, true);
 
@@ -105,7 +105,6 @@ public class AddInflowPage extends Composite {
 		lblRemarks.setBounds(188, 203, 48, 15);
 		toolkit.adapt(lblRemarks, true, true);
 		lblRemarks.setText("Remarks:");
-
 		remarks = new Text(composite, SWT.BORDER);
 		remarks.setBounds(265, 200, 127, 21);
 		toolkit.adapt(remarks, true, true);

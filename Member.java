@@ -8,7 +8,6 @@ public abstract class Member {
 	protected String email;
 	protected String foodType;
 	protected String allergy;
-	protected int role;
 	public int getID() {
 		return ID;
 	}
@@ -62,11 +61,5 @@ public abstract class Member {
 	}
 	public void setAllergy(String allergy) {
 		this.allergy = allergy;
-	}
-	public int getRole() {
-		return role;
-	}
-	public void setRole(int role) {
-		this.role = role;
 	}
 }

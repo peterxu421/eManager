@@ -48,21 +48,25 @@ public class eP_actual_participants_edit extends Composite {
 		toolkit.paintBordersFor(comp_eP_actual_participants_edit);
 		
 		Label lbl_eP_actual_participants_name = new Label(comp_eP_actual_participants_edit, SWT.NONE);
+		lbl_eP_actual_participants_name.setAlignment(SWT.RIGHT);
 		lbl_eP_actual_participants_name.setText("Name");
-		lbl_eP_actual_participants_name.setBounds(35, 34, 54, 17);
+		lbl_eP_actual_participants_name.setBounds(51, 34, 54, 17);
 		toolkit.adapt(lbl_eP_actual_participants_name, true, true);
 		
 		Label lbl_eP_actual_participants_faculty = new Label(comp_eP_actual_participants_edit, SWT.NONE);
+		lbl_eP_actual_participants_faculty.setAlignment(SWT.RIGHT);
 		lbl_eP_actual_participants_faculty.setText("Year");
 		lbl_eP_actual_participants_faculty.setBounds(33, 72, 72, 17);
 		toolkit.adapt(lbl_eP_actual_participants_faculty, true, true);
 		
 		Label lbl_eP_actual_participants_date = new Label(comp_eP_actual_participants_edit, SWT.NONE);
+		lbl_eP_actual_participants_date.setAlignment(SWT.RIGHT);
 		lbl_eP_actual_participants_date.setText("Faculty");
-		lbl_eP_actual_participants_date.setBounds(35, 111, 54, 17);
+		lbl_eP_actual_participants_date.setBounds(51, 111, 54, 17);
 		toolkit.adapt(lbl_eP_actual_participants_date, true, true);
 		
 		Label lbl_eP_actual_participants_foodType = new Label(comp_eP_actual_participants_edit, SWT.NONE);
+		lbl_eP_actual_participants_foodType.setAlignment(SWT.RIGHT);
 		lbl_eP_actual_participants_foodType.setText("Food Type");
 		lbl_eP_actual_participants_foodType.setBounds(35, 150, 70, 17);
 		toolkit.adapt(lbl_eP_actual_participants_foodType, true, true);

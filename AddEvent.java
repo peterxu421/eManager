@@ -84,11 +84,11 @@ public class AddEvent extends Composite {
 		toolkit.adapt(list, true, true);
 
 		Button btnSelect = new Button(this, SWT.NONE);
-		fd_list.right = new FormAttachment(btnSelect, -21);
+		fd_list.right = new FormAttachment(100, -205);
 		FormData fd_btnSelect = new FormData();
 		btnSelect.setLayoutData(fd_btnSelect);
 		toolkit.adapt(btnSelect, true, true);
-		btnSelect.setText("Select Event");
+		btnSelect.setText("Select");
 		btnSelect.addSelectionListener(new SelectProjectHandler());
 
 		List list_1 = new List(this, SWT.BORDER);
@@ -123,7 +123,6 @@ public class AddEvent extends Composite {
 		lblNewLabel.setText("Welcome to Event Planner!");
 
 		Label lblSelectProject = new Label(this, SWT.NONE);
-		lblSelectProject.setAlignment(SWT.CENTER);
 		FormData fd_lblSelectProject = new FormData();
 		fd_lblSelectProject.right = new FormAttachment(btnCreateNewProject, 0,
 				SWT.RIGHT);
@@ -135,13 +134,15 @@ public class AddEvent extends Composite {
 		lblSelectProject.setText("Select Event");
 
 		Button btnDeleteEvent = new Button(this, SWT.NONE);
+		fd_btnSelect.right = new FormAttachment(btnDeleteEvent, 0, SWT.RIGHT);
 		btnDeleteEvent.addSelectionListener(new DeleteProjectHandler());
 		FormData fd_btnDeleteEvent = new FormData();
 		fd_btnDeleteEvent.top = new FormAttachment(btnSelect, 6);
-		fd_btnDeleteEvent.left = new FormAttachment(btnSelect, 0, SWT.LEFT);
+		fd_btnDeleteEvent.right = new FormAttachment(list, 86, SWT.RIGHT);
+		fd_btnDeleteEvent.left = new FormAttachment(0, 236);
 		btnDeleteEvent.setLayoutData(fd_btnDeleteEvent);
 		toolkit.adapt(btnDeleteEvent, true, true);
-		btnDeleteEvent.setText("Delete Event");
+		btnDeleteEvent.setText("Delete");
 	}
 
 	class Cancel extends SelectionAdapter {

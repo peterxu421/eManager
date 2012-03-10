@@ -32,7 +32,7 @@ public class SQLManager {
 			"MatricNo VARCHAR(10)," +
 			"Faculty VARCHAR(50)," +
 			"Year INTEGER," +
-			"Contact INTEGER," +
+			"Contact VARCHAR(20)," +
 			"Email VARCHAR(20)," +
 			"FoodType VARCHAR(10)," +
 			"Allergy VARCHAR(20)," +
@@ -124,7 +124,7 @@ public class SQLManager {
 			"Date DATE," +
 			"TimeStart Time," +
 			"TimeEnd Time)";
-public static Connection createDatabase(){
+	public static Connection createDatabase(){
 		Connection connection = null;
 		PreparedStatement statement = null;
 		try{
@@ -154,6 +154,8 @@ public static Connection createDatabase(){
 			statement = connection.prepareStatement(createPackingDetailsTable);
 			statement.execute();
 			statement = connection.prepareStatement(createVenueDetailsTable);
+			statement.execute();
+			statement = connection.prepareStatement(createVenueBookingDetailsTable);
 			statement.execute();
 		}catch(SQLException sqle){
 			sqle.printStackTrace();
@@ -387,6 +389,39 @@ public static Connection createDatabase(){
 		}
 		return rs;
 	}
+	public static ResultSet getVenueApplicantDetails(Connection connection, int venueID){
+		String getVenueApplicantDetails =
+				"SELECT * FROM MemberDetails " +
+				"WHERE EventID=? AND Role=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getVenueApplicantDetails);
+			prep.setInt(1, venueID);
+			prep.setInt(2, MACRO.APPLICANT);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
+	
+	public static ResultSet getVenueBookingDetails(Connection connection, int venueID){
+		String getVenueBookingDetails = 
+				"SELECT * FROM VenueBookingDetails " +
+				"WHERE VenueID=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getVenueBookingDetails);
+			prep.setInt(1, venueID);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
+
 	
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
 	public static int insertEventDetails(Connection connection, String eventName, String eventDescription){
@@ -671,7 +706,7 @@ public static Connection createDatabase(){
 		}
 		return venueID;
 	}
-	public static int insertOrganizerDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy, String position){
+	public static int insertOrganizerDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, String contact, String email, String foodType, String allergy, String position){
 		String insertOrganizerDetails = 
 				"INSERT INTO MemberDetails (EventID, Name, MatricNo, Faculty, SchoolYear, Contact, Email, FoodType, Allergy, Role, Position) " +
 				"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -685,7 +720,7 @@ public static Connection createDatabase(){
 			prep.setString(3, matricNo);
 			prep.setString(4, faculty);
 			prep.setInt(5, schoolYear);
-			prep.setInt(6, contact);
+			prep.setString(6, contact);
 			prep.setString(7, email);
 			prep.setString(8, foodType);
 			prep.setString(9, allergy);
@@ -701,7 +736,7 @@ public static Connection createDatabase(){
 		}
 		return memberID;
 	}
-	public static int insertFacilitatorDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy, String position){
+	public static int insertFacilitatorDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, String contact, String email, String foodType, String allergy, String position){
 		String insertFacilitatorDetails = 
 				"INSERT INTO MemberDetails (EventID, Name, MatricNo, Faculty, SchoolYear, Contact, Email, FoodType, Allergy, Role, Position) " +
 				"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -715,7 +750,7 @@ public static Connection createDatabase(){
 			prep.setString(3, matricNo);
 			prep.setString(4, faculty);
 			prep.setInt(5, schoolYear);
-			prep.setInt(6, contact);
+			prep.setString(6, contact);
 			prep.setString(7,email);
 			prep.setString(8, foodType);
 			prep.setString(9, allergy);
@@ -731,7 +766,7 @@ public static Connection createDatabase(){
 		}
 		return memberID;
 	}
-	public static int insertParticipantDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy){
+	public static int insertParticipantDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, String contact, String email, String foodType, String allergy){
 		String insertParticipantDetails = 
 				"INSERT INTO MemberDetails (EventID, Name, MatricNo, Faculty, SchoolYear, Contact, Email, FoodType, Allergy, Role) " +
 				"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -745,7 +780,7 @@ public static Connection createDatabase(){
 			prep.setString(3, matricNo);
 			prep.setString(4, faculty);
 			prep.setInt(5, schoolYear);
-			prep.setInt(6, contact);
+			prep.setString(6, contact);
 			prep.setString(7,email);
 			prep.setString(8, foodType);
 			prep.setString(9, allergy);
@@ -760,7 +795,31 @@ public static Connection createDatabase(){
 		}
 		return memberID;
 	}
-
+	public static int insertVenueBookingDetails(Connection connection, int venueID, int memberID, String date, String timeStart, String timeEnd){
+		String insertVenueBookingDetails = 
+				"INSERT INTO VenueBookingDetails (VenueID, MemberID, Date, TimeStart, TimeEnd) " +
+				"VALUES (?,?,?,?,?)";
+		int bookingID = 0;
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(insertVenueBookingDetails,Statement.RETURN_GENERATED_KEYS);
+			prep.setInt(1, venueID);
+			prep.setInt(2, memberID);
+			prep.setString(3, date);
+			prep.setString(4, timeStart);
+			prep.setString(5, timeEnd);
+			prep.execute();
+			rs = prep.getGeneratedKeys();
+			while(rs.next()){
+				bookingID = rs.getInt(1);
+			}
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return bookingID;
+	}
+	
 	/*-------------------------------------------------------DELETE----------------------------------------------------------------------------------*/
 	public static void deleteEventDetails(Connection connection, int eventID){
 		String deleteEvent = 
@@ -918,7 +977,19 @@ public static Connection createDatabase(){
 			e.printStackTrace();
 		}
 	}
-
+	public static void deleteVenueBookingDetails(Connection connection, int bookingID){
+		String deletePackingDetails = 
+				"DELETE FROM VenueBookingDetails " +
+				"WHERE BookingID=?";
+		try {
+			PreparedStatement prep = connection.prepareStatement(deletePackingDetails);
+			prep.setInt(1, bookingID);
+			prep.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/*------------------------------------------------------UPDATE--------------------------------------------------------------*/
 	public static void updateTaskDetails(Connection connection, int taskID, String taskDescription, String assignedTo, String date, boolean done){
 		String updateTaskDetails =
@@ -1105,7 +1176,7 @@ public static Connection createDatabase(){
 			sqle.printStackTrace();
 		}
 	}
-	public static void updateOrganizerFacilitatorDetails(Connection connection, int memberID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy, String position){
+	public static void updateOrganizerFacilitatorDetails(Connection connection, int memberID, String name, String matricNo, String faculty, int schoolYear, String contact, String email, String foodType, String allergy, String position){
 		String updateOrganizerFacilitatorDetails =
 				"UPDATE MemberDetails SET Name=?,MatricNo=?,Faculty=?,SchoolYear=?,Contact=?,Email=?,FoodType=?,Allergy=?,Position=? " +
 						"WHERE MemberID=?";
@@ -1116,7 +1187,7 @@ public static Connection createDatabase(){
 					prep.setString(2, matricNo);
 					prep.setString(3, faculty);
 					prep.setInt(4, schoolYear);
-					prep.setInt(5, contact);
+					prep.setString(5, contact);
 					prep.setString(6, email);
 					prep.setString(7, foodType);
 					prep.setString(8, allergy);
@@ -1127,7 +1198,7 @@ public static Connection createDatabase(){
 					sqle.printStackTrace();
 				}
 	}
-	public static void updateParticipantDetails(Connection connection, int memberID, String name, String matricNo, String faculty, int schoolYear, int contact, String email, String foodType, String allergy){
+	public static void updateParticipantDetails(Connection connection, int memberID, String name, String matricNo, String faculty, int schoolYear, String contact, String email, String foodType, String allergy){
 		String updateFacilitatorDetails =
 				"UPDATE MemberDetails SET Name=?,MatricNo=?,Faculty=?,SchoolYear=?,Contact=?,Email=?,FoodType=?,Allergy=?" +
 						"WHERE MemberID=?";
@@ -1138,7 +1209,7 @@ public static Connection createDatabase(){
 					prep.setString(2, matricNo);
 					prep.setString(3, faculty);
 					prep.setInt(4, schoolYear);
-					prep.setInt(5, contact);
+					prep.setString(5, contact);
 					prep.setString(6, email);
 					prep.setString(7, foodType);
 					prep.setString(8, allergy);
@@ -1147,6 +1218,55 @@ public static Connection createDatabase(){
 				}catch(SQLException sqle){
 					sqle.printStackTrace();
 				}
+	}
+	public static void updateVenueBookingDetails(Connection connection, int bookingID, int memberID, String date, String timeStart, String timeEnd){
+		String updateVenueBookingDetails =
+				"UPDATE VenueBookingDetails SET MemberID=?,Date=?,TimeStart=?,TimeEnd=? " +
+				"WHERE BookingID=?";
+		PreparedStatement prep = null;
+		try{
+			prep = connection.prepareStatement(updateVenueBookingDetails);
+			prep.setInt(1, memberID);
+			prep.setString(2, date);
+			prep.setString(3, timeStart);
+			prep.setString(4, timeEnd);
+			prep.setInt(5, bookingID);
+			prep.execute();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+	}
+	
+	/*Get Object By ID*/
+	public static ResultSet getVenueByID(Connection connection, int venueID){
+		String query = 
+				"SELECT * FROM VenueDetails " +
+				"WHERE VenueID=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(query);
+			prep.setInt(1, venueID);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
+	public static ResultSet getVenueApplicantByID(Connection connection, int memberID){
+		String query = 
+				"SELECT * FROM MemberDetails " +
+				"WHERE MemberID=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(query);
+			prep.setInt(1, memberID);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
 	}
 	
 	public static void main(String[] args){

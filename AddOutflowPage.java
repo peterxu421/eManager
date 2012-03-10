@@ -26,7 +26,7 @@ public class AddOutflowPage extends Composite {
 	private Event event;
 	private DecimalFormat df = new DecimalFormat("#.00"); // to format a double
 															// to two decimal
-															// palces
+															// places
 
 	/**
 	 * Create the composite.
@@ -61,17 +61,16 @@ public class AddOutflowPage extends Composite {
 		lblItem.setAlignment(SWT.RIGHT);
 		lblItem.setBounds(175, 78, 61, 15);
 		toolkit.adapt(lblItem, true, true);
-		lblItem.setText("Item:");
 
+		lblItem.setText("Item:");
 		Label lblQuantity = new Label(composite, SWT.NONE);
 		lblQuantity.setAlignment(SWT.RIGHT);
 		lblQuantity.setBounds(175, 111, 61, 15);
 		toolkit.adapt(lblQuantity, true, true);
 		lblQuantity.setText("Quantity:");
-
 		Label lblType = new Label(composite, SWT.NONE);
 		lblType.setAlignment(SWT.RIGHT);
-		lblType.setText("Type:");
+		lblType.setText("Type");
 		lblType.setBounds(135, 146, 101, 15);
 		toolkit.adapt(lblType, true, true);
 
@@ -79,11 +78,12 @@ public class AddOutflowPage extends Composite {
 		lblDate.setAlignment(SWT.RIGHT);
 		lblDate.setBounds(135, 181, 101, 15);
 		toolkit.adapt(lblDate, true, true);
+
 		lblDate.setText("Date of Purchase:");
 
 		Label lblCost = new Label(composite, SWT.NONE);
 		lblCost.setAlignment(SWT.RIGHT);
-		lblCost.setText("Cost($):");
+		lblCost.setText("Cost($)");
 		lblCost.setBounds(180, 211, 56, 15);
 		toolkit.adapt(lblCost, true, true);
 
