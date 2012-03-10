@@ -17,8 +17,8 @@ public class TaskAssignEditMember extends Composite {
 	private Text textName;
 	private Text textYear;
 	private Text textFaculty;
-	private Text textCell;
 	private Text textPosition;
+	private Organizer member;
 
 	/**
 	 * Create the composite.
@@ -27,7 +27,7 @@ public class TaskAssignEditMember extends Composite {
 	 * @param style
 	 */
 	public TaskAssignEditMember(Composite parent, int style, Table table,
-			int index) {
+			int index, Organizer member) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -36,7 +36,8 @@ public class TaskAssignEditMember extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
-
+		this.member = member;
+		
 		Composite compositeCommitteeEdit = new Composite(this, SWT.NONE);
 		compositeCommitteeEdit.setLayout(null);
 		compositeCommitteeEdit.setBounds(10, 10, 397, 313);
@@ -58,14 +59,9 @@ public class TaskAssignEditMember extends Composite {
 		lblFaculty.setBounds(35, 117, 54, 17);
 		toolkit.adapt(lblFaculty, true, true);
 
-		Label lblCell = new Label(compositeCommitteeEdit, SWT.NONE);
-		lblCell.setText("Cell");
-		lblCell.setBounds(35, 162, 54, 17);
-		toolkit.adapt(lblCell, true, true);
-
 		Label lblPosition = new Label(compositeCommitteeEdit, SWT.NONE);
 		lblPosition.setText("Position");
-		lblPosition.setBounds(35, 209, 54, 17);
+		lblPosition.setBounds(35, 161, 54, 17);
 		toolkit.adapt(lblPosition, true, true);
 
 		textName = new Text(compositeCommitteeEdit, SWT.BORDER);
@@ -83,13 +79,8 @@ public class TaskAssignEditMember extends Composite {
 		toolkit.adapt(textFaculty, true, true);
 		textFaculty.setText(table.getItem(index).getText(0));
 
-		textCell = new Text(compositeCommitteeEdit, SWT.BORDER);
-		textCell.setBounds(152, 159, 125, 23);
-		toolkit.adapt(textCell, true, true);
-		textCell.setText(table.getItem(index).getText(0));
-
 		textPosition = new Text(compositeCommitteeEdit, SWT.BORDER);
-		textPosition.setBounds(152, 206, 125, 23);
+		textPosition.setBounds(152, 158, 125, 23);
 		toolkit.adapt(textPosition, true, true);
 		textPosition.setText(table.getItem(index).getText(0));
 
@@ -97,13 +88,13 @@ public class TaskAssignEditMember extends Composite {
 		btnEditMember.addSelectionListener(new TaskAssignEditOldMember(table,
 				index));
 		btnEditMember.setText("Edit Member");
-		btnEditMember.setBounds(91, 253, 90, 27);
+		btnEditMember.setBounds(91, 205, 90, 27);
 		toolkit.adapt(btnEditMember, true, true);
 
 		Button btnCancel = new Button(compositeCommitteeEdit, SWT.NONE);
 		btnCancel.addSelectionListener(new TaskAssignCancel2());
 		btnCancel.setText("Cancel");
-		btnCancel.setBounds(230, 253, 66, 27);
+		btnCancel.setBounds(230, 205, 66, 27);
 		toolkit.adapt(btnCancel, true, true);
 		
 	}
@@ -118,31 +109,32 @@ public class TaskAssignEditMember extends Composite {
 		}
 
 		public void widgetSelected(SelectionEvent e) {
-			String[] taskAssignArray = new String[5];
+			String[] memberArray = new String[5];
 			if (!textName.getText().isEmpty()) {
-				taskAssignArray[0] = textName.getText();
-				table.getItem(index).setText(0, taskAssignArray[0]);
+				memberArray[0] = textName.getText();
+				table.getItem(index).setText(0, memberArray[0]);
 			}
 			if (!textYear.getText().isEmpty()) {
-				taskAssignArray[1] = textYear.getText();
-				table.getItem(index).setText(1, taskAssignArray[1]);
+				memberArray[1] = textYear.getText();
+				table.getItem(index).setText(1, memberArray[1]);
 			}
 			if (!textFaculty.getText().isEmpty()) {
-				taskAssignArray[2] = textFaculty.getText();
-				table.getItem(index).setText(2, taskAssignArray[2]);
-			}
-			if (!textCell.getText().isEmpty()) {
-				taskAssignArray[3] = textCell.getText();
-				table.getItem(index).setText(3, taskAssignArray[3]);
+				memberArray[2] = textFaculty.getText();
+				table.getItem(index).setText(2, memberArray[2]);
 			}
 			if (!textPosition.getText().isEmpty()) {
-				taskAssignArray[4] = textPosition.getText();
-				table.getItem(index).setText(4, taskAssignArray[4]);
+				memberArray[3] = textPosition.getText();
+				table.getItem(index).setText(4, memberArray[4]);
 			}
 			if (!textName.getText().isEmpty() && !textYear.getText().isEmpty()
 					&& !textFaculty.getText().isEmpty()
-					&& !textCell.getText().isEmpty()
 					&& !textPosition.getText().isEmpty()) {
+				member.setName(memberArray[0]);
+				member.setYear(Integer.parseInt(memberArray[1]));
+				member.setFaculty(memberArray[2]);
+				member.setPosition(memberArray[3]);
+				DatabaseReader db = new DatabaseReader();
+				db.updateOrganizer(member);
 				getParent().dispose();
 			}
 		}

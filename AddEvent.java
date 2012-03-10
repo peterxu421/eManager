@@ -27,8 +27,10 @@ public class AddEvent extends Composite {
 	ArrayList<Event> events;
 	DatabaseReader databaseReader;
 	List list;
+
 	/**
 	 * Create the composite.
+	 * 
 	 * @param parent
 	 * @param style
 	 */
@@ -45,10 +47,10 @@ public class AddEvent extends Composite {
 		formLayout.marginBottom = 30;
 		formLayout.marginRight = 30;
 		setLayout(formLayout);
-		
+
 		databaseReader = new DatabaseReader();
 		events = databaseReader.getEvents();
-		
+
 		Button btnCreateNewProject = new Button(this, SWT.NONE);
 		FormData fd_btnCreateNewProject = new FormData();
 		fd_btnCreateNewProject.top = new FormAttachment(0, 40);
@@ -70,17 +72,17 @@ public class AddEvent extends Composite {
 		label_1.setLayoutData(fd_label_1);
 		toolkit.adapt(label_1, true, true);
 		btnCreateNewProject.addSelectionListener(new AddEventHandler());
-		
+
 		list = new List(this, SWT.BORDER);
 		FormData fd_list = new FormData();
 		fd_list.left = new FormAttachment(0, 48);
 		fd_list.top = new FormAttachment(label_1, 25);
 		list.setLayoutData(fd_list);
-		for(int i=0; i<events.size(); i++){
+		for (int i = 0; i < events.size(); i++) {
 			list.add(events.get(i).getEventName());
 		}
 		toolkit.adapt(list, true, true);
-		
+
 		Button btnSelect = new Button(this, SWT.NONE);
 		fd_list.right = new FormAttachment(100, -205);
 		FormData fd_btnSelect = new FormData();
@@ -88,7 +90,7 @@ public class AddEvent extends Composite {
 		toolkit.adapt(btnSelect, true, true);
 		btnSelect.setText("Select");
 		btnSelect.addSelectionListener(new SelectProjectHandler());
-		
+
 		List list_1 = new List(this, SWT.BORDER);
 		fd_list.bottom = new FormAttachment(list_1, -6);
 		FormData fd_list_1 = new FormData();
@@ -97,7 +99,7 @@ public class AddEvent extends Composite {
 		fd_list_1.bottom = new FormAttachment(0, 254);
 		list_1.setLayoutData(fd_list_1);
 		toolkit.adapt(list_1, true, true);
-		
+
 		Button btnCancel = new Button(this, SWT.NONE);
 		fd_btnSelect.bottom = new FormAttachment(btnCancel, -43);
 		fd_btnSelect.left = new FormAttachment(btnCancel, 0, SWT.LEFT);
@@ -110,7 +112,7 @@ public class AddEvent extends Composite {
 		toolkit.adapt(btnCancel, true, true);
 		btnCancel.setText("Cancel");
 		btnCancel.addSelectionListener(new Cancel());
-		
+
 		Label lblNewLabel = new Label(this, SWT.NONE);
 		FormData fd_lblNewLabel = new FormData();
 		fd_lblNewLabel.right = new FormAttachment(list, 0, SWT.RIGHT);
@@ -119,16 +121,18 @@ public class AddEvent extends Composite {
 		lblNewLabel.setLayoutData(fd_lblNewLabel);
 		toolkit.adapt(lblNewLabel, true, true);
 		lblNewLabel.setText("Welcome to Event Planner!");
-		
+
 		Label lblSelectProject = new Label(this, SWT.NONE);
 		FormData fd_lblSelectProject = new FormData();
-		fd_lblSelectProject.right = new FormAttachment(btnCreateNewProject, 0, SWT.RIGHT);
+		fd_lblSelectProject.right = new FormAttachment(btnCreateNewProject, 0,
+				SWT.RIGHT);
 		fd_lblSelectProject.top = new FormAttachment(label_1, 2);
-		fd_lblSelectProject.left = new FormAttachment(btnCreateNewProject, 0, SWT.LEFT);
+		fd_lblSelectProject.left = new FormAttachment(btnCreateNewProject, 0,
+				SWT.LEFT);
 		lblSelectProject.setLayoutData(fd_lblSelectProject);
 		toolkit.adapt(lblSelectProject, true, true);
 		lblSelectProject.setText("Select Event");
-		
+
 		Button btnDeleteEvent = new Button(this, SWT.NONE);
 		fd_btnSelect.right = new FormAttachment(btnDeleteEvent, 0, SWT.RIGHT);
 		btnDeleteEvent.addSelectionListener(new DeleteProjectHandler());
@@ -140,55 +144,66 @@ public class AddEvent extends Composite {
 		toolkit.adapt(btnDeleteEvent, true, true);
 		btnDeleteEvent.setText("Delete");
 	}
+
 	class Cancel extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			getParent().dispose();
 		}
 	}
-	class DeleteProjectHandler extends SelectionAdapter{
-		public void widgetSelected(SelectionEvent e){
-			int index=list.getSelectionIndex();
-			if(index >0 && index <= list.getItemCount()){
+
+	class DeleteProjectHandler extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
+			int index = list.getSelectionIndex();
+			if (index > 0 && index <= list.getItemCount()) {
 				list.remove(index);
-			    databaseReader.deleteEvent(events.get(index));
+				databaseReader.deleteEvent(events.get(index));
 			}
 		}
 	}
+
 	class SelectProjectHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell shell = new Shell(getDisplay());
-			shell.setLocation(200,100);
-			int index=list.getSelectionIndex();
-			if(index!=-1){
-				Event existEvent=events.get(index);
+			shell.setLocation(200, 100);
+			int index = list.getSelectionIndex();
+			if (index != -1) {
+				Event existEvent = events.get(index);
 				Workspace workspace = new Workspace(shell, SWT.None, existEvent);
 				workspace.pack();
 				shell.pack();
 				shell.open();
 				getParent().dispose();
-			}	
+			}
 		}
 	}
+
 	class AddEventHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell  add_newEvent_shell = new Shell(getDisplay(),SWT.NO_TRIM|SWT.ON_TOP);
+			Shell add_newEvent_shell = new Shell(getDisplay(), SWT.NO_TRIM
+					| SWT.ON_TOP);
 			add_newEvent_shell.setLocation(400, 300);
-			CreatNewEventPage add_newEvent_page = new CreatNewEventPage(add_newEvent_shell, SWT.None);
+			CreatNewEventPage add_newEvent_page = new CreatNewEventPage(
+					add_newEvent_shell, SWT.None);
 			add_newEvent_page.pack();
 			add_newEvent_shell.pack();
 			add_newEvent_shell.open();
 		}
 	}
-	public void disposeShell(){
+
+	public void disposeShell() {
 		getParent().dispose();
 	}
+
 	public class CreatNewEventPage extends Composite {
 
-		private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
+		private final FormToolkit toolkit = new FormToolkit(
+				Display.getCurrent());
 		private Text text;
 		private Text text_1;
+
 		/**
 		 * Create the composite.
+		 * 
 		 * @param parent
 		 * @param style
 		 */
@@ -201,50 +216,51 @@ public class AddEvent extends Composite {
 			});
 			toolkit.adapt(this);
 			toolkit.paintBordersFor(this);
-			
+
 			Composite composite = new Composite(this, SWT.NONE);
 			composite.setBounds(38, 25, 233, 159);
 			toolkit.adapt(composite);
 			toolkit.paintBordersFor(composite);
-			
+
 			Label lblNewLabel = new Label(composite, SWT.NONE);
 			lblNewLabel.setBounds(10, 24, 72, 14);
 			toolkit.adapt(lblNewLabel, true, true);
 			lblNewLabel.setText("Event Name:");
-			
+
 			text = new Text(composite, SWT.BORDER);
 			text.setBounds(88, 21, 93, 19);
 			toolkit.adapt(text, true, true);
-			
+
 			Label lblDescription = new Label(composite, SWT.NONE);
 			lblDescription.setBounds(10, 78, 72, 14);
 			toolkit.adapt(lblDescription, true, true);
 			lblDescription.setText("Description:");
-			
+
 			text_1 = new Text(composite, SWT.BORDER);
 			text_1.setBounds(88, 78, 93, 19);
 			toolkit.adapt(text_1, true, true);
-			
+
 			Button btnCreateEvent = new Button(composite, SWT.NONE);
 			btnCreateEvent.setBounds(10, 121, 94, 28);
 			toolkit.adapt(btnCreateEvent, true, true);
 			btnCreateEvent.setText("Create Event");
 			btnCreateEvent.addSelectionListener(new CreateEventHandler());
-			
+
 			Button btnCancel = new Button(composite, SWT.NONE);
 			btnCancel.setBounds(133, 121, 94, 28);
 			toolkit.adapt(btnCancel, true, true);
 			btnCancel.setText("Cancel");
-			btnCancel.addSelectionListener(new SelectionAdapter(){
-				public void widgetSelected(SelectionEvent e){
+			btnCancel.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
 					getParent().dispose();
 				}
 			});
 		}
+
 		class CreateEventHandler extends SelectionAdapter {
 			public void widgetSelected(SelectionEvent e) {
 				Shell shell = new Shell(getDisplay());
-				shell.setLocation(100,150);
+				shell.setLocation(100, 150);
 				Event newEvent = new Event(text.getText(), text_1.getText());
 				DatabaseReader dbReader = new DatabaseReader();
 				dbReader.insertEvent(newEvent);
@@ -254,7 +270,7 @@ public class AddEvent extends Composite {
 				shell.open();
 				getParent().dispose();
 				disposeShell();
-				
+
 			}
 		}
 	}

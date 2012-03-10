@@ -116,7 +116,15 @@ public class SQLManager {
 			"Name VARCHAR(20)," +
 			"Location VARCHAR(50)," +
 			"Type VARCHAR(20))";
-	public static Connection createDatabase(){
+	private static String createVenueBookingDetailsTable = 
+			"CREATE TABLE VenueBookingDetails(" +
+			"BookingID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
+			"VenueID INTEGER NOT NULL REFERENCES VenueDetails(VenueID)," +
+			"MemberID INTEGER NOT NULL REFERENCES MemberDetails(MemberID)," +
+			"Date DATE," +
+			"TimeStart Time," +
+			"TimeEnd Time)";
+public static Connection createDatabase(){
 		Connection connection = null;
 		PreparedStatement statement = null;
 		try{
@@ -678,7 +686,7 @@ public class SQLManager {
 			prep.setString(4, faculty);
 			prep.setInt(5, schoolYear);
 			prep.setInt(6, contact);
-			prep.setString(7,email);
+			prep.setString(7, email);
 			prep.setString(8, foodType);
 			prep.setString(9, allergy);
 			prep.setInt(10, MACRO.ORGANIZER);

@@ -128,7 +128,7 @@ public class FacilitatorAddItem extends Composite {
 				//update facilitatorList;
 				TableItem item = new TableItem(table_1, SWT.NULL);
 				DatabaseReader db = new DatabaseReader();
-				Facilitator facilitator = new Facilitator(facilitatorArray[0],Integer.parseInt(facilitatorArray[1]),facilitatorArray[2],facilitatorArray[3],facilitatorArray[4]);
+				Facilitator facilitator = new Facilitator(facilitatorArray[0],Integer.parseInt(facilitatorArray[1]),facilitatorArray[2],facilitatorArray[3]);
 				db.insertFacilitator(event, facilitator);
 				for (int i = 0; i < 4; i++) {
 					item.setText(i, facilitatorArray[i]);
