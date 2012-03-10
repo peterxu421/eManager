@@ -158,10 +158,6 @@ public class EventPlanning_PreEvent extends Composite {
 		tblclmnFaculty.setWidth(80);
 		tblclmnFaculty.setText("Faculty");
 
-		TableColumn tblclmnCell = new TableColumn(tableCommittee, SWT.NONE);
-		tblclmnCell.setWidth(68);
-		tblclmnCell.setText("Cell");
-
 		TableColumn tblclmnPosition = new TableColumn(tableCommittee, SWT.NONE);
 		tblclmnPosition.setWidth(118);
 		tblclmnPosition.setText("Position");
@@ -203,15 +199,15 @@ public class EventPlanning_PreEvent extends Composite {
 			item.setText(2, taskList.get(i).getDateDue().toString());
 			item.setText(3, taskList.get(i).isDone() ? "Done" : "Undone");
 		}
-		/*
-		 * for (int i = 0; i < memberList.size(); i++) { item = new
-		 * TableItem(tableCommittee, SWT.NONE); item.setText(0,
-		 * memberList.get(i).getName()); item.setText(1,
-		 * Integer.toString(memberList.get(i).getYear())); item.setText(2,
-		 * memberList.get(i).getFaculty()); item.setText(3,
-		 * memberList.get(i).getCell()); item.setText(4,
-		 * memberList.get(i).getPosition()); }
-		 */
+
+		for (int i = 0; i < memberList.size(); i++) {
+			item = new TableItem(tableCommittee, SWT.NONE);
+			item.setText(0, memberList.get(i).getName());
+			item.setText(1, Integer.toString(memberList.get(i).getYear()));
+			item.setText(2, memberList.get(i).getFaculty());
+			item.setText(3, memberList.get(i).getPosition());
+		}
+
 	}
 
 	public class TaskAssignAddItemPage extends SelectionAdapter {
