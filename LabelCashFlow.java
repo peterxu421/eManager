@@ -3,7 +3,7 @@ import com.ibm.icu.text.DecimalFormat;
 
 public class LabelCashFlow {
 	
-	private DecimalFormat df = new DecimalFormat("#.00"); // to format a double to two decimal palces 
+	private DecimalFormat df = new DecimalFormat("#.00"); // to format a double to two decimal places 
 	
 	public void label(){
 		double currentBudget = Double.parseDouble(EventPlanning_Budget.lblRemainingAmount.getText());

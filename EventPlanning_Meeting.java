@@ -135,6 +135,7 @@ public class EventPlanning_Meeting extends Composite {
 						Meeting meeting = new Meeting(textList[0].getText(),
 								date, time, done.isDone());
 						db.insertMeeting(event, meeting);
+						meetingList.add(meeting);
 						// update the table
 						TableItem item = new TableItem(table, SWT.NULL);
 						for(int i=0; i<stringArray.length; i++){

@@ -54,9 +54,9 @@ public class TaskChart extends Composite {
 			}
 		}
 		//for checking
-		for(int i=0;i<listOfPeople.size(); i++){
+		/*for(int i=0;i<listOfPeople.size(); i++){
 			System.out.println(listOfPeople.get(i).getName());
-		}
+		}*/
 
 		// create a chart
 		Chart chart = new Chart(parent, SWT.LEFT);
@@ -103,7 +103,7 @@ public class TaskChart extends Composite {
 		barSeries.setBarColor(color);
 
 		// adjust the axis range
-		chart.getAxisSet().adjustRange();
+		//chart.getAxisSet().adjustRange();
 
 	}
 

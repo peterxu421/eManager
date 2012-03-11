@@ -120,6 +120,7 @@ public class EventPlanning_FeedBack extends Composite {
 					Feedback feedback = new Feedback(textList[0].getText(),
 							date, time);
 					db.insertFeedback(event, feedback);
+					feedbackList.add(feedback);
 					// update the table
 					TableItem item = new TableItem(tableFeedBack, SWT.NULL);
 					for(int i=0; i<stringArray.length; i++){

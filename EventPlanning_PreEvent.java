@@ -226,6 +226,7 @@ public class EventPlanning_PreEvent extends Composite {
 					Task task = new Task(textList[0].getText(),
 							textList[1].getText(), date, done.isDone());
 					db.insertTask(event, task);
+					taskList.add(task);
 					// update the table
 					TableItem item = new TableItem(tableTaskAssign, SWT.NULL);
 					for (int i = 0; i < stringArrayItem.length; i++) {
@@ -247,10 +248,11 @@ public class EventPlanning_PreEvent extends Composite {
 					taskAssignAddMemberPage, SWT.None, stringArrayItem) {
 				public void onSubmit() {
 					// insert to database
-					Organizer organizer = new Organizer(textList[0].getText(),
+					Organizer member = new Organizer(textList[0].getText(),
 							Integer.parseInt(textList[1].getText()),
 							textList[0].getText(), textList[0].getText());
-					db.insertOrganizer(event, organizer);
+					db.insertOrganizer(event, member);
+					memberList.add(member);
 					// update the table
 					TableItem item = new TableItem(tableCommittee, SWT.NULL);
 					for (int i = 0; i < stringArrayMember.length; i++) {

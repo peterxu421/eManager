@@ -1,4 +1,5 @@
-
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -22,14 +23,11 @@ import org.eclipse.swt.SWT;
 
 public class imageCreator extends Composite {
 
-<<<<<<< HEAD
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	String[] stringArray;
 	Composite composite;
-=======
-	String[] stringArray;
-	Composite composite = this;
->>>>>>> a9f7575681fed5d8dab73b555cb409a751d021a8
+	String[] stringArray1;
+	Composite composite1 = this;
 	Image initialImage;
 	Label imageLabel;
 	final Image scaled;
@@ -62,7 +60,6 @@ public class imageCreator extends Composite {
 		// loading image
 		initialImage = new Image(getDisplay(), "resources/girls.jpg");
 
-
 		// setting String[] to all 0
 		stringArray = new String[3];
 		for (int i = 0; i < 3; i++) {
@@ -86,7 +83,6 @@ public class imageCreator extends Composite {
 		gc.drawText(stringArray[2], 10, 200, true);
 
 		gc.dispose();
-		
 
 		Button btnImageCreatorImport = new Button(composite, SWT.NONE);
 		// btnImageCreatorImport.addSelectionListener(new
@@ -124,13 +120,13 @@ public class imageCreator extends Composite {
 		imageLabel = new Label(composite, SWT.None);
 		imageLabel.setBounds(50, 25, 382, 331);
 		imageLabel.setImage(scaled);
-	    Canvas canvas = new Canvas(composite,SWT.NO_REDRAW_RESIZE);
-	    canvas.addPaintListener(new PaintListener() {
-	        public void paintControl(PaintEvent e) {
-	         e.gc.drawImage(scaled,0,0);
-	         imageLabel.redraw();
-	        }
-	    });
+		Canvas canvas = new Canvas(composite, SWT.NO_REDRAW_RESIZE);
+		canvas.addPaintListener(new PaintListener() {
+			public void paintControl(PaintEvent e) {
+				e.gc.drawImage(scaled, 0, 0);
+				imageLabel.redraw();
+			}
+		});
 	}
 
 	public static void main(String[] args) {
@@ -197,7 +193,7 @@ public class imageCreator extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell imageCreatorEditPage = new Shell(getDisplay());
 			ImageCreatorEditPage imageCreatorEdit = new ImageCreatorEditPage(
-					imageCreatorEditPage, SWT.None, gc, stringArray,imageLabel);
+					imageCreatorEditPage, SWT.None, gc, stringArray, imageLabel);
 			imageCreatorEdit.pack();
 			imageCreatorEditPage.pack();
 			imageCreatorEditPage.open();

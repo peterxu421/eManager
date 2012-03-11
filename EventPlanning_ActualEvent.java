@@ -444,6 +444,7 @@ public class EventPlanning_ActualEvent extends Composite {
 					Itinerary itinerary = new Itinerary(textList[0].getText(),
 							date, time, done.isDone());
 					db.insertItinerary(event, itinerary);
+					itineraryList.add(itinerary);
 					// update the table
 					TableItem item = new TableItem(
 							table_eventPlanning_actualEvent_tableItinerary,
@@ -487,25 +488,31 @@ public class EventPlanning_ActualEvent extends Composite {
 			if (index < table_eventPlanning_actualEvent_tableItinerary
 					.getItemCount() && index >= 0) {
 				Shell itineraryEditItemPage = new Shell(getDisplay());
-				SkeletonEditItem itineraryEditItem = new SkeletonEditItem(itineraryEditItemPage, SWT.None,stringArrayItinerary){
-					//setText
-					public void onLoad(){
-						for(int i=0; i<stringArrayItinerary.length; i++){
-							textList[i].setText(table_eventPlanning_actualEvent_tableItinerary.getItem(index).getText(i));
+				SkeletonEditItem itineraryEditItem = new SkeletonEditItem(
+						itineraryEditItemPage, SWT.None, stringArrayItinerary) {
+					// setText
+					public void onLoad() {
+						for (int i = 0; i < stringArrayItinerary.length; i++) {
+							textList[i]
+									.setText(table_eventPlanning_actualEvent_tableItinerary
+											.getItem(index).getText(i));
 						}
 					}
-					public void onSubmit(){
+
+					public void onSubmit() {
 						Itinerary itinerary = itineraryList.get(index);
 						itinerary.setItineraryDetails(textList[0].getText());
 						itinerary.setDate(new Date(textList[1].getText()));
 						itinerary.setTime(new Time(textList[2].getText()));
 						Done done = new Done(textList[3].getText());
 						itinerary.setDone(done.isDone());
-						//update database
+						// update database
 						db.updateItinerary(itinerary);
-						//update the table
-						for(int i=0; i<stringArrayItinerary.length; i++){
-							table_eventPlanning_actualEvent_tableItinerary.getItem(index).setText(i,textList[i].getText());
+						// update the table
+						for (int i = 0; i < stringArrayItinerary.length; i++) {
+							table_eventPlanning_actualEvent_tableItinerary
+									.getItem(index).setText(i,
+											textList[i].getText());
 						}
 					}
 				};
@@ -529,11 +536,12 @@ public class EventPlanning_ActualEvent extends Composite {
 				public void onSubmit() {
 					// insert to database
 					Date date = new Date(textList[2].getText());
-					Done done= new Done(textList[3].getText());
+					Done done = new Done(textList[3].getText());
 					ManpowerAllocation manpowerAllocation = new ManpowerAllocation(
 							textList[0].getText(), textList[1].getText(), date,
 							done.isDone());
 					db.insertManpowerAllocation(event, manpowerAllocation);
+					manpowerList.add(manpowerAllocation);
 					// update the table
 					TableItem item = new TableItem(
 							table_eventPlanning_actualEvents_allocOfManpower,
@@ -578,25 +586,35 @@ public class EventPlanning_ActualEvent extends Composite {
 			if (index < table_eventPlanning_actualEvents_allocOfManpower
 					.getItemCount() && index >= 0) {
 				Shell allocOfManpowerEditItemPage = new Shell(getDisplay());
-				SkeletonEditItem allocOfManpowerEditItem = new SkeletonEditItem(allocOfManpowerEditItemPage, SWT.None,stringArrayAllocationOfManpower){
-					//setText
-					public void onLoad(){
-						for(int i=0; i<stringArrayAllocationOfManpower.length; i++){
-							textList[i].setText(table_eventPlanning_actualEvents_allocOfManpower.getItem(index).getText(i));
+				SkeletonEditItem allocOfManpowerEditItem = new SkeletonEditItem(
+						allocOfManpowerEditItemPage, SWT.None,
+						stringArrayAllocationOfManpower) {
+					// setText
+					public void onLoad() {
+						for (int i = 0; i < stringArrayAllocationOfManpower.length; i++) {
+							textList[i]
+									.setText(table_eventPlanning_actualEvents_allocOfManpower
+											.getItem(index).getText(i));
 						}
 					}
-					public void onSubmit(){
-						ManpowerAllocation manpowerAllocation = manpowerList.get(index);
-						manpowerAllocation.setTaskDescription(textList[0].getText());
+
+					public void onSubmit() {
+						ManpowerAllocation manpowerAllocation = manpowerList
+								.get(index);
+						manpowerAllocation.setTaskDescription(textList[0]
+								.getText());
 						manpowerAllocation.setAssignedTo(textList[1].getText());
-						manpowerAllocation.setDate(new Date(textList[2].getText()));
-						Done done= new Done(textList[3].getText());
+						manpowerAllocation.setDate(new Date(textList[2]
+								.getText()));
+						Done done = new Done(textList[3].getText());
 						manpowerAllocation.setDone(done.isDone());
-						//update database
+						// update database
 						db.updateManpowerAllocation(manpowerAllocation);
-						//update the table
-						for(int i=0; i<stringArrayAllocationOfManpower.length; i++){
-							table_eventPlanning_actualEvents_allocOfManpower.getItem(index).setText(i,textList[i].getText());
+						// update the table
+						for (int i = 0; i < stringArrayAllocationOfManpower.length; i++) {
+							table_eventPlanning_actualEvents_allocOfManpower
+									.getItem(index).setText(i,
+											textList[i].getText());
 						}
 					}
 				};
@@ -623,6 +641,7 @@ public class EventPlanning_ActualEvent extends Composite {
 									.getText()), textList[2].getText(),
 							textList[3].getText());
 					db.insertFacilitator(event, facilitator);
+					facilitatorList.add(facilitator);
 					// update the table
 					TableItem item = new TableItem(
 							table_eventPlanning_actualEvents_facilitators,
@@ -663,24 +682,32 @@ public class EventPlanning_ActualEvent extends Composite {
 			if (index < table_eventPlanning_actualEvents_facilitators
 					.getItemCount() && index >= 0) {
 				Shell facilitatorEditItemPage = new Shell(getDisplay());
-				SkeletonEditItem facilitatorEditItem = new SkeletonEditItem(facilitatorEditItemPage, SWT.None,stringArrayFacilitator){
-					//setText
-					public void onLoad(){
-						for(int i=0; i<stringArrayFacilitator.length; i++){
-							textList[i].setText(table_eventPlanning_actualEvents_facilitators.getItem(index).getText(i));
+				SkeletonEditItem facilitatorEditItem = new SkeletonEditItem(
+						facilitatorEditItemPage, SWT.None,
+						stringArrayFacilitator) {
+					// setText
+					public void onLoad() {
+						for (int i = 0; i < stringArrayFacilitator.length; i++) {
+							textList[i]
+									.setText(table_eventPlanning_actualEvents_facilitators
+											.getItem(index).getText(i));
 						}
 					}
-					public void onSubmit(){
+
+					public void onSubmit() {
 						Facilitator facilitator = facilitatorList.get(index);
 						facilitator.setName(textList[0].getText());
-						facilitator.setYear(Integer.parseInt(textList[1].getText()));
+						facilitator.setYear(Integer.parseInt(textList[1]
+								.getText()));
 						facilitator.setFaculty(textList[2].getText());
 						facilitator.setPosition(textList[3].getText());
-						//update database
+						// update database
 						db.updateFacilitator(facilitator);
-						//update the table
-						for(int i=0; i<stringArrayFacilitator.length; i++){
-							table_eventPlanning_actualEvents_facilitators.getItem(index).setText(i,textList[i].getText());
+						// update the table
+						for (int i = 0; i < stringArrayFacilitator.length; i++) {
+							table_eventPlanning_actualEvents_facilitators
+									.getItem(index).setText(i,
+											textList[i].getText());
 						}
 					}
 				};
@@ -707,6 +734,7 @@ public class EventPlanning_ActualEvent extends Composite {
 									.getText()), textList[2].getText(),
 							textList[3].getText());
 					db.insertParticipant(event, participant);
+					participantList.add(participant);
 					// update the table
 					TableItem item = new TableItem(
 							table_eventPlanning_actualEvent_participants,
@@ -733,7 +761,7 @@ public class EventPlanning_ActualEvent extends Composite {
 					// Do nothing.
 				} else {
 					table_eventPlanning_actualEvent_participants.remove(index);
-     				DatabaseReader db = new DatabaseReader();
+					DatabaseReader db = new DatabaseReader();
 					db.deleteMember(participantList.get(index));
 				}
 			}
@@ -747,24 +775,32 @@ public class EventPlanning_ActualEvent extends Composite {
 			if (index < table_eventPlanning_actualEvent_participants
 					.getItemCount() && index >= 0) {
 				Shell participantEditItemPage = new Shell(getDisplay());
-				SkeletonEditItem participantEditItem = new SkeletonEditItem(participantEditItemPage, SWT.None,stringArrayParticipant){
-					//setText
-					public void onLoad(){
-						for(int i=0; i<stringArrayParticipant.length; i++){
-							textList[i].setText(table_eventPlanning_actualEvent_participants.getItem(index).getText(i));
+				SkeletonEditItem participantEditItem = new SkeletonEditItem(
+						participantEditItemPage, SWT.None,
+						stringArrayParticipant) {
+					// setText
+					public void onLoad() {
+						for (int i = 0; i < stringArrayParticipant.length; i++) {
+							textList[i]
+									.setText(table_eventPlanning_actualEvent_participants
+											.getItem(index).getText(i));
 						}
 					}
-					public void onSubmit(){
+
+					public void onSubmit() {
 						Participant participant = participantList.get(index);
 						participant.setName(textList[0].getText());
-						participant.setYear(Integer.parseInt(textList[1].getText()));
+						participant.setYear(Integer.parseInt(textList[1]
+								.getText()));
 						participant.setFaculty(textList[2].getText());
 						participant.setFoodType(textList[3].getText());
-						//update database
+						// update database
 						db.updateParticipant(participant);
-						//update the table
-						for(int i=0; i<stringArrayParticipant.length; i++){
-							table_eventPlanning_actualEvent_participants.getItem(index).setText(i,textList[i].getText());
+						// update the table
+						for (int i = 0; i < stringArrayParticipant.length; i++) {
+							table_eventPlanning_actualEvent_participants
+									.getItem(index).setText(i,
+											textList[i].getText());
 						}
 					}
 				};
