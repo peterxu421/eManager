@@ -44,6 +44,10 @@ public class EventPlanning_Budget extends Composite {
 	private ArrayList<BudgetAllocation> budgetAllocationList;
 	private ArrayList<Inflow> inflowList;
 	private ArrayList<Outflow> outflowList;
+	private String[] stringArrayBudget={"Item","Person in Charge","Cost($)","Date"};
+	private String[] stringArrayInflow={"Sponsor","Amount($)","Date","Remarks"};
+	private String[] stringArrayOutflow={"Item","Quantity","Type","Purchase Date","Cost"};
+	private int index;
 
 	/**
 	 * Create the composite.
@@ -123,7 +127,7 @@ public class EventPlanning_Budget extends Composite {
 		lblYouStillHave.setAlignment(SWT.RIGHT);
 		lblYouStillHave.setBounds(10, 256, 87, 15);
 		toolkit.adapt(lblYouStillHave, true, true);
-		lblYouStillHave.setText("You still have($):");
+		lblYouStillHave.setText("Spent($):");
 		
 		lblYouStillHave_Amount = new Label(AllocationComposite, SWT.BORDER);
 		lblYouStillHave_Amount.setAlignment(SWT.CENTER);
@@ -191,7 +195,7 @@ public class EventPlanning_Budget extends Composite {
 		btnInflowDelete.setText("Delete");
 		
 		Label lblTotalMoneyReceived = new Label(InflowComposite, SWT.NONE);
-		lblTotalMoneyReceived.setText("Total Money Received($):");
+		lblTotalMoneyReceived.setText("Money Received($):");
 		lblTotalMoneyReceived.setAlignment(SWT.CENTER);
 		lblTotalMoneyReceived.setBounds(10, 223, 139, 15);
 		toolkit.adapt(lblTotalMoneyReceived, true, true);
@@ -278,7 +282,7 @@ public class EventPlanning_Budget extends Composite {
 		btnOutflowDelete.setText("Delete");
 		
 		Label lblTotalMoneySpent = new Label(OutflowComposite, SWT.NONE);
-		lblTotalMoneySpent.setText("Total Money Spent($):");
+		lblTotalMoneySpent.setText("Money Spent($):");
 		FormData fd_lblTotalMoneySpent = new FormData();
 		fd_lblTotalMoneySpent.right = new FormAttachment(OutflowTable, 128);
 		fd_lblTotalMoneySpent.top = new FormAttachment(OutflowTable, 6);
@@ -460,7 +464,20 @@ public class EventPlanning_Budget extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			if(AllocationTable.getSelectionCount()==0){
 				Shell add_allocation_shell = new Shell(getDisplay());
-				AddBudgetAllocationPage add_allocation_page = new AddBudgetAllocationPage(add_allocation_shell, SWT.None, event);
+				SkeletonAddItem add_allocation_page = new SkeletonAddItem(
+						add_allocation_shell, SWT.None, stringArrayBudget) {
+					public void onSubmit() {
+						//insert to database
+						Date date = new Date(textList[3].getText());
+						BudgetAllocation budgetAllocation = new BudgetAllocation(textList[0].getText(), textList[1].getText(), Double.parseDouble(textList[2].getText()), date);
+						db.insertBudgetAllocation(event, budgetAllocation);
+						// update the table
+						TableItem item = new TableItem(AllocationTable, SWT.NULL);
+						for(int i=0; i<stringArrayBudget.length; i++){
+							item.setText(i,textList[i].getText());
+						}
+					}
+				};
 				add_allocation_page.pack();
 				add_allocation_shell.pack();
 				add_allocation_shell.open();	
@@ -492,9 +509,30 @@ public class EventPlanning_Budget extends Composite {
 	}
 	class EditAllocation extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
+			index = AllocationTable.getSelectionIndex();
 			if(AllocationTable.getSelectionCount()!=0){
 				Shell edit_allocation_shell = new Shell(getDisplay());
-				AddBudgetAllocationPage edit_allocation_page = new AddBudgetAllocationPage(edit_allocation_shell, SWT.None, event);
+				SkeletonEditItem edit_allocation_page = new SkeletonEditItem(edit_allocation_shell, SWT.None,stringArrayBudget){
+					//setText
+					public void onLoad(){
+						for(int i=0; i<stringArrayBudget.length; i++){
+							textList[i].setText(AllocationTable.getItem(index).getText(i));
+						}
+					}
+					public void onSubmit(){
+						BudgetAllocation budgetAllocation = budgetAllocationList.get(index);
+						budgetAllocation.setItem(textList[0].getText());
+						budgetAllocation.setPersonInCharge(textList[1].getText());
+						budgetAllocation.setCost(Double.parseDouble(textList[2].getText()));
+						budgetAllocation.setDate(new Date(textList[3].getText()));
+						//update database
+						db.updateBudgetAllocation(budgetAllocation);
+						//update the table
+						for(int i=0; i<stringArrayBudget.length; i++){
+							AllocationTable.getItem(index).setText(i,textList[i].getText());
+						}
+					}
+				};
 				edit_allocation_page.pack();
 				edit_allocation_shell.pack();
 				edit_allocation_shell.open();
@@ -508,7 +546,21 @@ public class EventPlanning_Budget extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			if(InflowTable.getSelectionCount()==0){
 				Shell add_inflow_shell = new Shell(getDisplay());
-				AddInflowPage add_inflow_page = new AddInflowPage(add_inflow_shell, SWT.None, event);
+				SkeletonAddItem add_inflow_page = new SkeletonAddItem(
+						add_inflow_shell, SWT.None, stringArrayInflow) {
+					public void onSubmit() {
+						//insert to database
+						Date date = new Date(textList[2].getText());
+						Inflow inflow = new Inflow(textList[0].getText(),
+								Double.parseDouble(textList[0].getText()), date,textList[3].getText());
+						db.insertInflow(event, inflow);
+						// update the table
+						TableItem item = new TableItem(InflowTable, SWT.NULL);
+						for(int i=0; i<stringArrayInflow.length; i++){
+							item.setText(i,textList[i].getText());
+						}
+					}
+				};
 				add_inflow_page.pack();
 				add_inflow_shell.pack();
 				add_inflow_shell.open();	
@@ -540,9 +592,30 @@ public class EventPlanning_Budget extends Composite {
 	}
 	class EditInflow extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
+			index = InflowTable.getSelectionIndex();
 			if(InflowTable.getSelectionCount()!=0){
 				Shell edit_inflow_shell = new Shell(getDisplay());
-				AddInflowPage edit_inflow_page = new AddInflowPage(edit_inflow_shell, SWT.None, event);
+				SkeletonEditItem edit_inflow_page = new SkeletonEditItem(edit_inflow_shell, SWT.None,stringArrayInflow){
+					//setText
+					public void onLoad(){
+						for(int i=0; i<stringArrayInflow.length; i++){
+							textList[i].setText(InflowTable.getItem(index).getText(i));
+						}
+					}
+					public void onSubmit(){
+						Inflow inflow = inflowList.get(index);
+						inflow.setSponsor(textList[0].getText());
+						inflow.setAmount(Double.parseDouble(textList[1].getText()));
+						inflow.setDate(new Date(textList[2].getText()));
+						inflow.setRemarks(textList[3].getText());
+						//update database
+						db.updateInflow(inflow);
+						//update the table
+						for(int i=0; i<stringArrayInflow.length; i++){
+							InflowTable.getItem(index).setText(i,textList[i].getText());
+						}
+					}
+				};
 				edit_inflow_page.pack();
 				edit_inflow_shell.pack();
 				edit_inflow_shell.open();
@@ -554,7 +627,20 @@ public class EventPlanning_Budget extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			if(OutflowTable.getSelectionCount()==0){
 				Shell add_outflow_shell = new Shell(getDisplay());
-				AddOutflowPage add_outflow_page = new AddOutflowPage(add_outflow_shell, SWT.None,event);
+				SkeletonAddItem add_outflow_page = new SkeletonAddItem(
+						add_outflow_shell, SWT.None, stringArrayOutflow) {
+					public void onSubmit() {
+						//insert to database
+						Date date = new Date(textList[3].getText());
+						Outflow outflow = new Outflow(textList[0].getText(),Integer.parseInt(textList[1].getText()),textList[2].getText(),date, Double.parseDouble(textList[4].getText()));
+						db.insertOutflow(event, outflow);
+						// update the table
+						TableItem item = new TableItem(OutflowTable, SWT.NULL);
+						for(int i=0; i<stringArrayOutflow.length; i++){
+							item.setText(i,textList[i].getText());
+						}
+					}
+				};
 				add_outflow_page.pack();
 				add_outflow_shell.pack();
 				add_outflow_shell.open();	
@@ -588,7 +674,28 @@ public class EventPlanning_Budget extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			if(OutflowTable.getSelectionCount()!=0){
 				Shell edit_outflow_shell = new Shell(getDisplay());
-				AddOutflowPage edit_outflow_page = new AddOutflowPage(edit_outflow_shell, SWT.None,event);
+				SkeletonEditItem edit_outflow_page = new SkeletonEditItem(edit_outflow_shell, SWT.None,stringArrayOutflow){
+					//setText
+					public void onLoad(){
+						for(int i=0; i<stringArrayOutflow.length; i++){
+							textList[i].setText(InflowTable.getItem(index).getText(i));
+						}
+					}
+					public void onSubmit(){
+						Outflow outflow = outflowList.get(index);
+						outflow.setItem(textList[0].getText());
+						outflow.setQuantity(Integer.parseInt(textList[1].getText()));
+						outflow.setType(textList[2].getText());
+						outflow.setDate(new Date(textList[3].getText()));
+						outflow.setCost(Double.parseDouble(textList[4].getText()));
+						//update database
+						db.updateOutflow(outflow);
+						//update the table
+						for(int i=0; i<stringArrayOutflow.length; i++){
+							InflowTable.getItem(index).setText(i,textList[i].getText());
+						}
+					}
+				};
 				edit_outflow_page.pack();
 				edit_outflow_shell.pack();
 				edit_outflow_shell.open();
