@@ -317,7 +317,7 @@ public class EventPlanning_ActualEvent extends Composite {
 			temp.setText(0, participantList.get(i).getName());
 			temp.setText(1, Integer.toString(participantList.get(i).getYear()));
 			temp.setText(2, participantList.get(i).getFaculty());
-			//temp.setText(3, participantList.get(i).getFoodType());
+			temp.setText(3, participantList.get(i).getFoodType());
 		}
 	}
 	//Itinerary start

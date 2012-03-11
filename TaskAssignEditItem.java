@@ -80,7 +80,7 @@ public class TaskAssignEditItem extends Composite {
 		toolkit.adapt(btnEdit, true, true);
 		
 		Button btnCancel = new Button(compositeCommitteeEdit, SWT.NONE);
-		btnCancel.addSelectionListener(new TaskAssignCancel2());
+		btnCancel.addSelectionListener(new TaskAssignCancel());
 		btnCancel.setText("Cancel");
 		btnCancel.setBounds(211, 183, 66, 27);
 		toolkit.adapt(btnCancel, true, true);
@@ -91,12 +91,10 @@ public class TaskAssignEditItem extends Composite {
 	public class TaskAssignEditOldItem extends SelectionAdapter{
 		Table table;
 		int index;
-
 		public TaskAssignEditOldItem(Table table, int index) {
 			this.table = table;
 			this.index=index;
 		}
-
 		public void widgetSelected(SelectionEvent e) {
 			String[] taskAssignArray = new String[4];
 			if (!textTask.getText().isEmpty()) {
@@ -120,7 +118,7 @@ public class TaskAssignEditItem extends Composite {
 		}
 	}
 	
-	public class TaskAssignCancel2 extends SelectionAdapter{
+	public class TaskAssignCancel extends SelectionAdapter{
 		public void widgetSelected(SelectionEvent e) {
 			getParent().dispose();
 		}

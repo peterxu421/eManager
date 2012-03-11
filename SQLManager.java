@@ -405,7 +405,6 @@ public class SQLManager {
 		}
 		return rs;
 	}
-	
 	public static ResultSet getVenueBookingDetails(Connection connection, int venueID){
 		String getVenueBookingDetails = 
 				"SELECT * FROM VenueBookingDetails " +

@@ -36,14 +36,26 @@ public class VenueManagement_BookingApplications extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 915, 350);
+		composite.setBounds(473, 0, 108, 316);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
-		applicationTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		Button btnReject = new Button(composite, SWT.NONE);
+		btnReject.setText("Reject");
+		btnReject.setBounds(10, 10, 89, 27);
+		toolkit.adapt(btnReject, true, true);
+		btnReject.addSelectionListener(new reject());
+		
+		Button btnAccept = new Button(composite, SWT.NONE);
+		btnAccept.setBounds(10, 41, 89, 27);
+		toolkit.adapt(btnAccept, true, true);
+		btnAccept.setText("Accept");
+		
+		applicationTable = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
+		applicationTable.setLocation(0, 0);
+		applicationTable.setSize(468, 324);
 		applicationTable.setLinesVisible(true);
 		applicationTable.setHeaderVisible(true);
-		applicationTable.setBounds(10, 10, 792, 324);
 		toolkit.adapt(applicationTable);
 		toolkit.paintBordersFor(applicationTable);
 		
@@ -78,17 +90,6 @@ public class VenueManagement_BookingApplications extends Composite {
 		TableColumn tblclmnApproval = new TableColumn(applicationTable, SWT.CENTER);
 		tblclmnApproval.setWidth(100);
 		tblclmnApproval.setText("Approval");
-		
-		Button btnReject = new Button(composite, SWT.NONE);
-		btnReject.setText("Reject");
-		btnReject.setBounds(440, 10, 89, 27);
-		toolkit.adapt(btnReject, true, true);
-		btnReject.addSelectionListener(new reject());
-		
-		Button btnAccept = new Button(composite, SWT.NONE);
-		btnAccept.setBounds(440, 43, 89, 27);
-		toolkit.adapt(btnAccept, true, true);
-		btnAccept.setText("Accept");
 		btnAccept.addSelectionListener(new accept());
 		
 		

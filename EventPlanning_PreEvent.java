@@ -114,7 +114,6 @@ public class EventPlanning_PreEvent extends Composite {
 		TabItem tbtmTaskChart = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskChart.setText("Task Chart");
 
-		/*
 		Composite composite_2 = new Composite(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskChart.setControl(composite_2);
 		toolkit.paintBordersFor(composite_2);
@@ -125,7 +124,7 @@ public class EventPlanning_PreEvent extends Composite {
         taskChart.setSize(300, 300);
 		taskChart.pack();
 		composite_2.pack();
-		*/
+		
 		TabItem tbtmPublicity = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmPublicity.setText("Publicity");
 

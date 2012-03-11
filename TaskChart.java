@@ -106,8 +106,4 @@ public class TaskChart extends Composite {
 		
 
 	}
-
-	public static void main (String arg[]) {
-
-	}
 }
