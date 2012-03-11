@@ -28,7 +28,6 @@ public class VenueViewBookingInfo extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
-		this.index = index;
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(37, 26, 462, 410);

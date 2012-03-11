@@ -125,6 +125,7 @@ public class SQLManager {
 			"TimeStart Time," +
 			"TimeEnd Time," +
 			"Status SMALLINT)";
+	
 	public static Connection createDatabase(){
 		Connection connection = null;
 		PreparedStatement statement = null;
