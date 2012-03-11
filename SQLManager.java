@@ -123,7 +123,9 @@ public class SQLManager {
 			"MemberID INTEGER NOT NULL REFERENCES MemberDetails(MemberID)," +
 			"Date DATE," +
 			"TimeStart Time," +
-			"TimeEnd Time)";
+			"TimeEnd Time," +
+			"Status SMALLINT)";
+	
 	public static Connection createDatabase(){
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -420,7 +422,19 @@ public class SQLManager {
 		}
 		return rs;
 	}
-
+	public static ResultSet getVenueBookingDetailsAll(Connection connection){
+		String getVenueBookingDetails = 
+				"SELECT * FROM VenueBookingDetails";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getVenueBookingDetails);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
 	
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
 	public static int insertEventDetails(Connection connection, String eventName, String eventDescription){
@@ -768,7 +782,7 @@ public class SQLManager {
 	public static int insertParticipantDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, String contact, String email, String foodType, String allergy){
 		String insertParticipantDetails = 
 				"INSERT INTO MemberDetails (EventID, Name, MatricNo, Faculty, SchoolYear, Contact, Email, FoodType, Allergy, Role) " +
-				"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+				"VALUES (?,?,?,?,?,?,?,?,?,?)";
 		int memberID = 0;
 		PreparedStatement prep = null;
 		ResultSet rs = null;
@@ -794,10 +808,10 @@ public class SQLManager {
 		}
 		return memberID;
 	}
-	public static int insertVenueBookingDetails(Connection connection, int venueID, int memberID, String date, String timeStart, String timeEnd){
+	public static int insertVenueBookingDetails(Connection connection, int venueID, int memberID, String date, String timeStart, String timeEnd, int status){
 		String insertVenueBookingDetails = 
-				"INSERT INTO VenueBookingDetails (VenueID, MemberID, Date, TimeStart, TimeEnd) " +
-				"VALUES (?,?,?,?,?)";
+				"INSERT INTO VenueBookingDetails (VenueID, MemberID, Date, TimeStart, TimeEnd, Status) " +
+				"VALUES (?,?,?,?,?,?)";
 		int bookingID = 0;
 		PreparedStatement prep = null;
 		ResultSet rs = null;
@@ -808,6 +822,7 @@ public class SQLManager {
 			prep.setString(3, date);
 			prep.setString(4, timeStart);
 			prep.setString(5, timeEnd);
+			prep.setInt(6, status);
 			prep.execute();
 			rs = prep.getGeneratedKeys();
 			while(rs.next()){
@@ -971,18 +986,6 @@ public class SQLManager {
 		try {
 			PreparedStatement prep = connection.prepareStatement(deletePackingDetails);
 			prep.setInt(1, memberID);
-			prep.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	public static void deleteVenueBookingDetails(Connection connection, int bookingID){
-		String deletePackingDetails = 
-				"DELETE FROM VenueBookingDetails " +
-				"WHERE BookingID=?";
-		try {
-			PreparedStatement prep = connection.prepareStatement(deletePackingDetails);
-			prep.setInt(1, bookingID);
 			prep.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1218,9 +1221,9 @@ public class SQLManager {
 					sqle.printStackTrace();
 				}
 	}
-	public static void updateVenueBookingDetails(Connection connection, int bookingID, int memberID, String date, String timeStart, String timeEnd){
+	public static void updateVenueBookingDetails(Connection connection, int bookingID, int memberID, String date, String timeStart, String timeEnd, int status){
 		String updateVenueBookingDetails =
-				"UPDATE VenueBookingDetails SET MemberID=?,Date=?,TimeStart=?,TimeEnd=? " +
+				"UPDATE VenueBookingDetails SET MemberID=?,Date=?,TimeStart=?,TimeEnd=?,Status=? " +
 				"WHERE BookingID=?";
 		PreparedStatement prep = null;
 		try{
@@ -1229,7 +1232,8 @@ public class SQLManager {
 			prep.setString(2, date);
 			prep.setString(3, timeStart);
 			prep.setString(4, timeEnd);
-			prep.setInt(5, bookingID);
+			prep.setInt(5, status);
+			prep.setInt(6, bookingID);
 			prep.execute();
 		}catch(SQLException sqle){
 			sqle.printStackTrace();
@@ -1267,6 +1271,7 @@ public class SQLManager {
 		}
 		return rs;
 	}
+	
 	
 	public static void main(String[] args){
 		/*Connection con = ConnectionManager.getConnection();

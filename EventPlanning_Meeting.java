@@ -142,6 +142,7 @@ public class EventPlanning_Meeting extends Composite {
 						}
 					}
 				};
+
 				add_meeting_page.pack();
 				add_meeting_shell.pack();
 				add_meeting_shell.open();
@@ -158,6 +159,7 @@ public class EventPlanning_Meeting extends Composite {
 					/* update the database */
 					DatabaseReader db = new DatabaseReader();
 					db.deleteMeeting(meetingList.get(index));
+					meetingList.remove(index);
 					/* update the meeting table */
 					table.remove(index);
 				}
@@ -191,6 +193,7 @@ public class EventPlanning_Meeting extends Composite {
 						}
 					}
 				};
+
 				edit_meeting_page.pack();
 				edit_meeting_shell.pack();
 				edit_meeting_shell.open();

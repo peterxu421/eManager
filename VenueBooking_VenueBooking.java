@@ -224,6 +224,7 @@ public class VenueBooking_VenueBooking extends Composite {
 				VenueApplicant newApplicant = new VenueApplicant(_name, _matricNo, _contact, _email, _organization);
 				VenueBookingInfo newBookingInfo = new VenueBookingInfo(selected, newApplicant, _listDateTime.get(i));
 			    db.insertVenueBookingInfo(newBookingInfo);
+			    System.out.println("Hello"+newBookingInfo.getApplicant().getName());
 			}
 			getParent().dispose();
 		}

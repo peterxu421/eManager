@@ -1,5 +1,4 @@
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
+
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -23,9 +22,14 @@ import org.eclipse.swt.SWT;
 
 public class imageCreator extends Composite {
 
+<<<<<<< HEAD
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	String[] stringArray;
 	Composite composite;
+=======
+	String[] stringArray;
+	Composite composite = this;
+>>>>>>> a9f7575681fed5d8dab73b555cb409a751d021a8
 	Image initialImage;
 	Label imageLabel;
 	final Image scaled;
@@ -39,6 +43,7 @@ public class imageCreator extends Composite {
 	 */
 	public imageCreator(Composite parent, int style) {
 		super(parent, style);
+
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				toolkit.dispose();
@@ -53,6 +58,10 @@ public class imageCreator extends Composite {
 
 		// loading image
 		initialImage = new Image(getDisplay(), "C:/Users/xu/Desktop/girls.jpg");
+
+		// loading image
+		initialImage = new Image(getDisplay(), "resources/girls.jpg");
+
 
 		// setting String[] to all 0
 		stringArray = new String[3];
@@ -76,29 +85,32 @@ public class imageCreator extends Composite {
 		gc.setForeground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		gc.drawText(stringArray[2], 10, 200, true);
 
-		/*
-		 * ImageLoader imageLoader = new ImageLoader(); imageLoader.data = new
-		 * ImageData[] { scaled.getImageData() };
-		 * imageLoader.save("/Users/niwde/Desktop/SavedPicture.jpg",
-		 * SWT.IMAGE_JPEG);
-		 */
+		gc.dispose();
+		
+
 		Button btnImageCreatorImport = new Button(composite, SWT.NONE);
 		// btnImageCreatorImport.addSelectionListener(new
 		// imageCreatorOpenPage());
 		btnImageCreatorImport.setBounds(574, 25, 94, 28);
+
 		toolkit.adapt(btnImageCreatorImport, true, true);
+
 		btnImageCreatorImport.setText("Import..");
 
 		Button btnImageCreatorEdit = new Button(composite, SWT.NONE);
 		btnImageCreatorEdit.addSelectionListener(new imageCreatorEditPage());
 		btnImageCreatorEdit.setBounds(574, 58, 94, 28);
+
 		toolkit.adapt(btnImageCreatorEdit, true, true);
+
 		btnImageCreatorEdit.setText("Edit");
 
 		Button btnImageCreatorSave = new Button(composite, SWT.NONE);
 		// btnImageCreatorSave.addSelectionListener(new imageCreatorSavePage());
 		btnImageCreatorSave.setBounds(574, 92, 94, 28);
+
 		toolkit.adapt(btnImageCreatorSave, true, true);
+
 		btnImageCreatorSave.setText("Save");
 
 		Button btnImageCreatorClear = new Button(composite, SWT.NONE);
