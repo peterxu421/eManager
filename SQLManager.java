@@ -174,6 +174,10 @@ public class SQLManager {
 		return connection;
 	}
 	
+	public static Connection getConnection(){
+		return ConnectionManager.getConnection();
+	}
+	
 	/*--------------------------------------------GET---------------------------------------------------------*/
 	public static ResultSet getEventDetails(Connection connection){
 		String getEventDetails =

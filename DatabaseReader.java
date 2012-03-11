@@ -7,7 +7,7 @@ public class DatabaseReader {
 	private Connection connection = null;
 
 	public DatabaseReader() {
-		connection = ConnectionManager.getConnection();
+		connection = SQLManager.getConnection();
 	}
 
 	/* EventDetails */
