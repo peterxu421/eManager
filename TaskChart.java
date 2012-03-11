@@ -33,16 +33,17 @@ public class TaskChart extends Composite {
 		listOfTasks = db.getTasks(event);
 		listOfTotalIndividualTask = new ArrayList<Integer>();
 		listOfTasksDone = new ArrayList<Integer>();
-		for(int i=0; i<listOfPeople.size(); i++){
+		// initialize
+		for (int i = 0; i < listOfPeople.size(); i++) {
 			listOfTotalIndividualTask.add(0);
 			listOfTasksDone.add(0);
 		}
 
 		String[] stringOfPeople = new String[listOfPeople.size()];
-		
+
 		for (int i = 0; i < listOfPeople.size(); i++) {
 			// populating the stringOfPeople
-			stringOfPeople[i] = listOfPeople.get(i).getName(); 
+			stringOfPeople[i] = listOfPeople.get(i).getName();
 			for (int j = 0; j < listOfTasks.size(); j++) {
 				if (listOfPeople.get(i).getName()
 						.equals(listOfTasks.get(j).getAssignedTo())) {
@@ -57,6 +58,10 @@ public class TaskChart extends Composite {
 				}
 			}
 		}
+		//for checking
+		for(int i=0;i<listOfPeople.size(); i++){
+			System.out.println(listOfPeople.get(i).getName());
+		}
 
 		// create a chart
 		Chart chart = new Chart(parent, SWT.LEFT);
@@ -67,7 +72,7 @@ public class TaskChart extends Composite {
 		chart.getAxisSet().getYAxis(0).getTitle().setText("% of work done");
 		chart.setLocation(0, 0);
 		chart.setBounds(0, 0, 400, 400);
-		
+
 		// set xAxis
 		IAxisSet axisSet = chart.getAxisSet();
 		IAxis xAxis = axisSet.getXAxis(0);
@@ -75,23 +80,24 @@ public class TaskChart extends Composite {
 		xAxis.enableCategory(true);
 
 		// set yAxis
-				ySeries=new double[listOfPeople.size()];
-				for(int i = 0; i < listOfPeople.size(); i++) {
-					//populating the y-series
-					if(listOfTasksDone.get(i) == 0) {
-						ySeries[i] = 0;
-						break;
-					}
-					if(listOfTotalIndividualTask.get(i) == 0) {
-						ySeries[i] = 100;
-						break;
-					}
-					ySeries[i] = listOfTasksDone.get(i)/listOfTotalIndividualTask.get(i);
-				}
+		ySeries = new double[listOfPeople.size()];
+		for (int i = 0; i < listOfPeople.size(); i++) {
+			// populating the y-series
+			if (listOfTasksDone.get(i) == 0) {
+				ySeries[i] = 0;
+				break;
+			}
+			if (listOfTotalIndividualTask.get(i) == 0) {
+				ySeries[i] = 100;
+				break;
+			}
+			ySeries[i] = listOfTasksDone.get(i)
+					/ listOfTotalIndividualTask.get(i);
+		}
 
 		// set Horizontal
 		chart.setOrientation(SWT.VERTICAL);
-		
+
 		// create bar series
 		IBarSeries barSeries = (IBarSeries) chart.getSeriesSet().createSeries(
 				SeriesType.BAR, "bar series");
@@ -103,11 +109,10 @@ public class TaskChart extends Composite {
 
 		// adjust the axis range
 		chart.getAxisSet().adjustRange();
-		
 
 	}
 
-	public static void main (String arg[]) {
+	public static void main(String arg[]) {
 
 	}
 }
