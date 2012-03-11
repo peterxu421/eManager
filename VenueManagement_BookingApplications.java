@@ -97,7 +97,7 @@ public class VenueManagement_BookingApplications extends Composite {
 		importApplicationData();
 
 	}
-	
+
 	public void importApplicationData() {
 		DatabaseReader db = new DatabaseReader();
 		
