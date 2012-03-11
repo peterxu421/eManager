@@ -13,6 +13,7 @@ public class VenueBookingInfo {
 		this.venue = venue;
 		this.applicant = applicant;
 		this.dateTime = dateTime;
+		this.status = status;
 	}
 
 	public VenueBookingInfo(Venue venue, VenueApplicant applicant,
