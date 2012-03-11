@@ -32,17 +32,17 @@ public class VenueViewBookingInfo extends Composite {
 		this.index = index;
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(37, 26, 340, 410);
+		composite.setBounds(37, 26, 462, 410);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		Label lblVenueBookingStatus = new Label(composite, SWT.NONE);
-		lblVenueBookingStatus.setBounds(110, 20, 128, 15);
+		lblVenueBookingStatus.setBounds(175, 20, 128, 15);
 		toolkit.adapt(lblVenueBookingStatus, true, true);
 		lblVenueBookingStatus.setText("Venue Booking Status");
 		
 		List listBookingStatus = new List(composite, SWT.BORDER);
-		listBookingStatus.setBounds(32, 54, 275, 346);
+		listBookingStatus.setBounds(32, 54, 401, 346);
 		toolkit.adapt(listBookingStatus, true, true);
 		
 		/* show the booking info from database */
@@ -57,7 +57,7 @@ public class VenueViewBookingInfo extends Composite {
 			    BookingDateTime dateTime = bookingInfoList.get(i).getDateTime();
 			    
 			    String bookingInfo = name + "  " + organization + " " + dateTime.toString();
-			    listBookingStatus.setItem(i, bookingInfo);
+			    listBookingStatus.add(bookingInfo, i);
 			    }
 		}
 		
