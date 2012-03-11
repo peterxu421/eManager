@@ -782,7 +782,7 @@ public class SQLManager {
 	public static int insertParticipantDetails(Connection connection, int eventID, String name, String matricNo, String faculty, int schoolYear, String contact, String email, String foodType, String allergy){
 		String insertParticipantDetails = 
 				"INSERT INTO MemberDetails (EventID, Name, MatricNo, Faculty, SchoolYear, Contact, Email, FoodType, Allergy, Role) " +
-				"VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+				"VALUES (?,?,?,?,?,?,?,?,?,?)";
 		int memberID = 0;
 		PreparedStatement prep = null;
 		ResultSet rs = null;
