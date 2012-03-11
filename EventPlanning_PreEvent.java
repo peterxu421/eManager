@@ -245,7 +245,7 @@ public class EventPlanning_PreEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddMemberPage = new Shell(getDisplay());
 			SkeletonAddItem taskAssignAddMember = new SkeletonAddItem(
-					taskAssignAddMemberPage, SWT.None, stringArrayItem) {
+					taskAssignAddMemberPage, SWT.None, stringArrayMember) {
 				public void onSubmit() {
 					// insert to database
 					Organizer member = new Organizer(textList[0].getText(),
