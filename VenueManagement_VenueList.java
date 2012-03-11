@@ -99,8 +99,6 @@ public class VenueManagement_VenueList extends Composite {
 			temp.setText(2, venueList.get(i).getType());
 		}
 		
-/*		ArrayList<VenueBookingInfo> bookingInfoList = db.getVenueBookingInfo(venueList.get(0));
-		System.out.println(bookingInfoList.get(0).getApplicant().getName());*/
 	}
 	
 	public class add extends SelectionAdapter {

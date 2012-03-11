@@ -120,12 +120,19 @@ public class SQLManager {
 			"CREATE TABLE VenueBookingDetails(" +
 			"BookingID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
 			"VenueID INTEGER NOT NULL REFERENCES VenueDetails(VenueID)," +
-			"MemberID INTEGER NOT NULL REFERENCES MemberDetails(MemberID)," +
+			"ApplicantID INTEGER NOT NULL REFERENCES ApplicantDetails(ApplicantID)," +
 			"Date DATE," +
 			"TimeStart Time," +
 			"TimeEnd Time," +
 			"Status SMALLINT)";
-	
+	private static String createApplicantDetailsTable =
+			"CREATE TABLE ApplicantDetails(" +
+			"ApplicantID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
+			"Name VARCHAR(20)," +
+			"MatricNo VARCHAR(20)," +
+			"Contact VARCHAR(20)," +
+			"Email VARCHAR(20)," +
+			"Organization VARCHAR(30))";
 	public static Connection createDatabase(){
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -159,10 +166,11 @@ public class SQLManager {
 			statement.execute();
 			statement = connection.prepareStatement(createVenueBookingDetailsTable);
 			statement.execute();
+			statement = connection.prepareStatement(createApplicantDetailsTable);
+			statement.execute();
 		}catch(SQLException sqle){
 			sqle.printStackTrace();
 		}
-		
 		return connection;
 	}
 	
@@ -391,22 +399,6 @@ public class SQLManager {
 		}
 		return rs;
 	}
-	public static ResultSet getVenueApplicantDetails(Connection connection, int venueID){
-		String getVenueApplicantDetails =
-				"SELECT * FROM MemberDetails " +
-				"WHERE EventID=? AND Role=?";
-		PreparedStatement prep = null;
-		ResultSet rs = null;
-		try{
-			prep = connection.prepareStatement(getVenueApplicantDetails);
-			prep.setInt(1, venueID);
-			prep.setInt(2, MACRO.APPLICANT);
-			rs = prep.executeQuery();
-		}catch(SQLException sqle){
-			sqle.printStackTrace();
-		}
-		return rs;
-	}
 	public static ResultSet getVenueBookingDetails(Connection connection, int venueID){
 		String getVenueBookingDetails = 
 				"SELECT * FROM VenueBookingDetails " +
@@ -435,6 +427,7 @@ public class SQLManager {
 		}
 		return rs;
 	}
+
 	
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
 	public static int insertEventDetails(Connection connection, String eventName, String eventDescription){
@@ -808,9 +801,9 @@ public class SQLManager {
 		}
 		return memberID;
 	}
-	public static int insertVenueBookingDetails(Connection connection, int venueID, int memberID, String date, String timeStart, String timeEnd, int status){
+	public static int insertVenueBookingDetails(Connection connection, int venueID, int applicantID, String date, String timeStart, String timeEnd, int status){
 		String insertVenueBookingDetails = 
-				"INSERT INTO VenueBookingDetails (VenueID, MemberID, Date, TimeStart, TimeEnd, Status) " +
+				"INSERT INTO VenueBookingDetails (VenueID, ApplicantID, Date, TimeStart, TimeEnd, Status) " +
 				"VALUES (?,?,?,?,?,?)";
 		int bookingID = 0;
 		PreparedStatement prep = null;
@@ -818,7 +811,7 @@ public class SQLManager {
 		try{
 			prep = connection.prepareStatement(insertVenueBookingDetails,Statement.RETURN_GENERATED_KEYS);
 			prep.setInt(1, venueID);
-			prep.setInt(2, memberID);
+			prep.setInt(2, applicantID);
 			prep.setString(3, date);
 			prep.setString(4, timeStart);
 			prep.setString(5, timeEnd);
@@ -832,6 +825,30 @@ public class SQLManager {
 			sqle.printStackTrace();
 		}
 		return bookingID;
+	}
+	public static int insertVenueApplicant(Connection connection, String name, String matricNo, String contact, String email, String organization ){
+		String insertFacilitatorDetails = 
+				"INSERT INTO ApplicantDetails (Name, MatricNo, Contact, Email, Organization) " +
+				"VALUES (?,?,?,?,?)";
+		int memberID = 0;
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(insertFacilitatorDetails,Statement.RETURN_GENERATED_KEYS);
+			prep.setString(1, name);
+			prep.setString(2, matricNo);
+			prep.setString(3, contact);
+			prep.setString(4, email);
+			prep.setString(5, organization);
+			prep.execute();
+			rs=prep.getGeneratedKeys();
+			while(rs.next()){
+				memberID = rs.getInt(1);
+			}
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return memberID;
 	}
 	
 	/*-------------------------------------------------------DELETE----------------------------------------------------------------------------------*/
@@ -1221,14 +1238,14 @@ public class SQLManager {
 					sqle.printStackTrace();
 				}
 	}
-	public static void updateVenueBookingDetails(Connection connection, int bookingID, int memberID, String date, String timeStart, String timeEnd, int status){
+	public static void updateVenueBookingDetails(Connection connection, int bookingID, int applicantID, String date, String timeStart, String timeEnd, int status){
 		String updateVenueBookingDetails =
-				"UPDATE VenueBookingDetails SET MemberID=?,Date=?,TimeStart=?,TimeEnd=?,Status=? " +
+				"UPDATE VenueBookingDetails SET ApplicantID=?,Date=?,TimeStart=?,TimeEnd=?,Status=? " +
 				"WHERE BookingID=?";
 		PreparedStatement prep = null;
 		try{
 			prep = connection.prepareStatement(updateVenueBookingDetails);
-			prep.setInt(1, memberID);
+			prep.setInt(1, applicantID);
 			prep.setString(2, date);
 			prep.setString(3, timeStart);
 			prep.setString(4, timeEnd);
@@ -1258,8 +1275,8 @@ public class SQLManager {
 	}
 	public static ResultSet getVenueApplicantByID(Connection connection, int memberID){
 		String query = 
-				"SELECT * FROM MemberDetails " +
-				"WHERE MemberID=?";
+				"SELECT * FROM ApplicantDetails " +
+				"WHERE ApplicantID=?";
 		PreparedStatement prep = null;
 		ResultSet rs = null;
 		try{
