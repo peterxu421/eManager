@@ -545,7 +545,25 @@ public class DatabaseReader {
 				VenueApplicant applicant = getVenueApplicantByID(rs.getInt("MemberID"));
 				BookingDateTime time = new BookingDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
 						Time.parseTime(rs.getString("TimeEnd")));
-				VenueBookingInfo booking = new VenueBookingInfo(rs.getInt("BookingID"), venue, applicant, time );
+				VenueBookingInfo booking = new VenueBookingInfo(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
+				bookings.add(booking);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return bookings;
+	}
+	public ArrayList<VenueBookingInfo> getVenueBookingInfo(){
+		ArrayList<VenueBookingInfo> bookings = new ArrayList<VenueBookingInfo>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getVenueBookingDetailsAll(connection);
+			while(rs.next()){
+				Venue venue = getVenueByID(rs.getInt("VenueID"));
+				VenueApplicant applicant = getVenueApplicantByID(rs.getInt("MemberID"));
+				BookingDateTime time = new BookingDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
+						Time.parseTime(rs.getString("TimeEnd")));
+				VenueBookingInfo booking = new VenueBookingInfo(rs.getInt("BookingID"), venue , applicant, time, rs.getInt("Status"));
 				bookings.add(booking);
 			}
 		}catch (SQLException e) {
@@ -556,11 +574,14 @@ public class DatabaseReader {
 	public void insertVenueBookingInfo(VenueBookingInfo booking){
 		int id = SQLManager.insertVenueBookingDetails(connection, booking.getVenue().getVenueId(), 
 				booking.getApplicant().getID(), booking.getDateTime().getDate().toString(), 
-				booking.getDateTime().getTimeStart().toString(), booking.getDateTime().getTimeEnd().toString());
+				booking.getDateTime().getTimeStart().toString(), booking.getDateTime().getTimeEnd().toString(), booking.getStatus());
 		booking.setVenueBookingInfoID(id);
 	}
-	public void deleteVenueBookingInfo(VenueBookingInfo booking){
-		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
+	public void updateVenueBookingInfo(VenueBookingInfo booking){
+		SQLManager.updateVenueBookingDetails(connection, booking.getVenueBookingInfoID(), 
+				booking.getApplicant().getID(), booking.getDateTime().getDate().toString(),
+				booking.getDateTime().getTimeStart().toString(),
+				booking.getDateTime().getTimeEnd().toString(), booking.getStatus());
 	}
 
 	public static void main(String[] args){

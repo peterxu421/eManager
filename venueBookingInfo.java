@@ -7,13 +7,12 @@ public class VenueBookingInfo {
 	private int status;
 	
 	public VenueBookingInfo(int venueBookingInfoID, Venue venue,
-			VenueApplicant applicant, BookingDateTime dateTime) {
+			VenueApplicant applicant, BookingDateTime dateTime, int status) {
 		super();
 		this.venueBookingInfoID = venueBookingInfoID;
 		this.venue = venue;
 		this.applicant = applicant;
 		this.dateTime = dateTime;
-		this.status = MACRO.PENDING;
 	}
 
 	public VenueBookingInfo(Venue venue, VenueApplicant applicant,
