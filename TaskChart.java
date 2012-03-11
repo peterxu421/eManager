@@ -28,29 +28,22 @@ public class TaskChart extends Composite {
 		listOfTasks = db.getTasks(event);
 		listOfTotalIndividualTask = new ArrayList<Integer>();
 		listOfTasksDone = new ArrayList<Integer>();
-		for(int i=0; i<listOfPeople.size(); i++){
-			listOfTotalIndividualTask.add(0);
-			listOfTasksDone.add(0);
-		}
-
-		String[] stringOfPeople = new String[listOfPeople.size()];
 		
+		String[] stringOfPeople = new String[listOfPeople.size()];
+		int countTotal;
+		int countDone;
 		for (int i = 0; i < listOfPeople.size(); i++) {
-			// populating the stringOfPeople
-			stringOfPeople[i] = listOfPeople.get(i).getName(); 
+			countTotal = 0;
+			countDone = 0;
+			stringOfPeople[i] ="abc";	//listOfPeople.get(i).getName(); 
 			for (int j = 0; j < listOfTasks.size(); j++) {
-				if (listOfPeople.get(i).getName()
-						.equals(listOfTasks.get(j).getAssignedTo())) {
-					int temp = listOfTotalIndividualTask.get(i);
-					temp++;
-					listOfTotalIndividualTask.set(i, temp);
-				}
-				if (listOfTasks.get(j).isDone()) {
-					int temp = listOfTasksDone.get(i);
-					temp++;
-					listOfTasksDone.set(i, temp);
+				if (listOfPeople.get(i).getName().equals(listOfTasks.get(j).getAssignedTo())){
+					countTotal++;
+					if(listOfTasks.get(j).isDone()) countDone++;
 				}
 			}
+			listOfTotalIndividualTask.add(countTotal);
+			listOfTasksDone.add(countDone);
 		}
 
 		// create a chart
@@ -58,7 +51,7 @@ public class TaskChart extends Composite {
 
 		// set titles
 		chart.getTitle().setText("Task Chart");
-		chart.getAxisSet().getXAxis(0).getTitle().setText("");
+		chart.getAxisSet().getXAxis(0).getTitle().setText("abc");
 		chart.getAxisSet().getYAxis(0).getTitle().setText("% of work done");
 		chart.setLocation(0, 0);
 		chart.setBounds(0, 0, 400, 400);
@@ -70,19 +63,15 @@ public class TaskChart extends Composite {
 		xAxis.enableCategory(true);
 
 		// set yAxis
-				ySeries=new double[listOfPeople.size()];
-				for(int i = 0; i < listOfPeople.size(); i++) {
-					//populating the y-series
-					if(listOfTasksDone.get(i) == 0) {
-						ySeries[i] = 0;
-						break;
-					}
-					if(listOfTotalIndividualTask.get(i) == 0) {
-						ySeries[i] = 100;
-						break;
-					}
-					ySeries[i] = listOfTasksDone.get(i)/listOfTotalIndividualTask.get(i);
-				}
+		ySeries=new double[listOfPeople.size()];
+		for(int i = 0; i < listOfPeople.size(); i++) {
+			//populating the y-series
+			if(listOfTotalIndividualTask.get(i) == 0) {
+				ySeries[i] = 100;
+				break;
+			}
+			ySeries[i] = listOfTasksDone.get(i)*1.0/listOfTotalIndividualTask.get(i)*100;
+		}
 
 		// set Horizontal
 		chart.setOrientation(SWT.VERTICAL);

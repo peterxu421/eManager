@@ -65,29 +65,14 @@ public class PreEvent_Publicity extends Composite{
 				Shell open = new Shell(getDisplay());
 				FileDialog browser = new FileDialog(open, SWT.OPEN);
 				String path = browser.open();
-				System.out.println(path);
 				if(path != null){
 					addImage(path);
 				}
 			}
 		});
-		Button edit = new Button(right, SWT.PUSH);
 		
 	}
 	public void addImage(final String path){
-		for(int i=0; i<1; i++){
-			Canvas canvas = new Canvas(left, SWT.None);
-			GridData imageGridData = new GridData(250,250);
-			canvas.setLayoutData(imageGridData);
-			canvas.addPaintListener(new PaintListener() {
-				public void paintControl(PaintEvent e) {
-					Image image = new Image(getDisplay(), new ImageData("resources/girls.jpg").scaledTo(250, 250)); 
-					e.gc.drawImage(image, 0,0);
-					image.dispose();
-				}
-			});
-		}
-		
 		Canvas canvas = new Canvas(left, SWT.None);
 		GridData imageGridData = new GridData(250,250);
 		canvas.setLayoutData(imageGridData);

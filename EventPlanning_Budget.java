@@ -402,8 +402,8 @@ public class EventPlanning_Budget extends Composite {
 		    
 		    totalCost += budgetAllocationList.get(i).getCost();
 		}
-		double currentAmount = Double.parseDouble(EventPlanning_Budget.lblYouStillHave_Amount.getText());
-		EventPlanning_Budget.lblYouStillHave_Amount.setText(String.valueOf(df.format(currentAmount - totalCost))); // update the notification box
+		double currentAmount = Double.parseDouble(lblYouStillHave_Amount.getText());
+		lblYouStillHave_Amount.setText(String.valueOf(df.format(currentAmount - totalCost))); // update the notification box
 		
 		/* update budget overview section */
 		LabelCashFlow lbl = new LabelCashFlow();

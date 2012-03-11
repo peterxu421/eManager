@@ -137,7 +137,7 @@ public class ItineraryEditItem extends Composite {
 
 		public ItineraryEditOldItem(Table table, int index) {
 			this.table = table;
-			this.index=index;
+			this.index = index;
 		}
 
 		public void widgetSelected(SelectionEvent e) {
