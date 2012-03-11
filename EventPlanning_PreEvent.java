@@ -217,7 +217,7 @@ public class EventPlanning_PreEvent extends Composite {
 
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddItemPage = new Shell(getDisplay());
-			SkeletonAddItem taskAssignAddItem = new SkeletonAddItem(
+			AbstractAdd taskAssignAddItem = new AbstractAdd(
 					taskAssignAddItemPage, SWT.None, stringArrayItem) {
 				public void onSubmit() {
 					// insert to database
@@ -244,7 +244,7 @@ public class EventPlanning_PreEvent extends Composite {
 
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddMemberPage = new Shell(getDisplay());
-			SkeletonAddItem taskAssignAddMember = new SkeletonAddItem(
+			AbstractAdd taskAssignAddMember = new AbstractAdd(
 					taskAssignAddMemberPage, SWT.None, stringArrayMember) {
 				public void onSubmit() {
 					// insert to database
@@ -302,7 +302,7 @@ public class EventPlanning_PreEvent extends Composite {
 			index = tableTaskAssign.getSelectionIndex();
 			if (index < tableTaskAssign.getItemCount() && index >= 0) {
 				Shell taskAssignEditItemPage = new Shell(getDisplay());
-				SkeletonEditItem taskAssignEditItem = new SkeletonEditItem(taskAssignEditItemPage, SWT.None,stringArrayItem){
+				AbstractEdit taskAssignEditItem = new AbstractEdit(taskAssignEditItemPage, SWT.None,stringArrayItem){
 					public void onLoad(){
 						for(int i=0; i<stringArrayItem.length; i++){
 							textList[i].setText(tableTaskAssign.getItem(index).getText(i));
@@ -335,7 +335,7 @@ public class EventPlanning_PreEvent extends Composite {
 			index = tableCommittee.getSelectionIndex();
 			if (index < tableCommittee.getItemCount() && index >= 0) {
 				Shell taskAssignEditMemberPage = new Shell(getDisplay());
-				SkeletonEditItem taskAssignEditMember = new SkeletonEditItem(taskAssignEditMemberPage, SWT.None,stringArrayMember){
+				AbstractEdit taskAssignEditMember = new AbstractEdit(taskAssignEditMemberPage, SWT.None,stringArrayMember){
 					public void onLoad(){
 						for(int i=0; i<stringArrayMember.length; i++){
 							textList[i].setText(tableCommittee.getItem(index).getText(i));

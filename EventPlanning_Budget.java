@@ -501,7 +501,7 @@ public class EventPlanning_Budget extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			if (AllocationTable.getSelectionCount() == 0) {
 				Shell add_allocation_shell = new Shell(getDisplay());
-				SkeletonAddItem add_allocation_page = new SkeletonAddItem(
+				AbstractAdd add_allocation_page = new AbstractAdd(
 						add_allocation_shell, SWT.None, stringArrayBudget) {
 					public void onSubmit() {
 						// insert to database
@@ -572,7 +572,7 @@ public class EventPlanning_Budget extends Composite {
 			index = AllocationTable.getSelectionIndex();
 			if (AllocationTable.getSelectionCount() != 0) {
 				Shell edit_allocation_shell = new Shell(getDisplay());
-				SkeletonEditItem edit_allocation_page = new SkeletonEditItem(
+				AbstractEdit edit_allocation_page = new AbstractEdit(
 						edit_allocation_shell, SWT.None, stringArrayBudget) {
 					// setText
 					public void onLoad() {
@@ -630,7 +630,7 @@ public class EventPlanning_Budget extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			if (InflowTable.getSelectionCount() == 0) {
 				Shell add_inflow_shell = new Shell(getDisplay());
-				SkeletonAddItem add_inflow_page = new SkeletonAddItem(
+				AbstractAdd add_inflow_page = new AbstractAdd(
 						add_inflow_shell, SWT.None, stringArrayInflow) {
 					public void onSubmit() {
 						// insert to database
@@ -696,7 +696,7 @@ public class EventPlanning_Budget extends Composite {
 			index = InflowTable.getSelectionIndex();
 			if (InflowTable.getSelectionCount() != 0) {
 				Shell edit_inflow_shell = new Shell(getDisplay());
-				SkeletonEditItem edit_inflow_page = new SkeletonEditItem(
+				AbstractEdit edit_inflow_page = new AbstractEdit(
 						edit_inflow_shell, SWT.None, stringArrayInflow) {
 					// setText
 					public void onLoad() {
@@ -749,7 +749,7 @@ public class EventPlanning_Budget extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			if (OutflowTable.getSelectionCount() == 0) {
 				Shell add_outflow_shell = new Shell(getDisplay());
-				SkeletonAddItem add_outflow_page = new SkeletonAddItem(
+				AbstractAdd add_outflow_page = new AbstractAdd(
 						add_outflow_shell, SWT.None, stringArrayOutflow) {
 					public void onSubmit() {
 						// insert to database
@@ -820,7 +820,7 @@ public class EventPlanning_Budget extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			if (OutflowTable.getSelectionCount() != 0) {
 				Shell edit_outflow_shell = new Shell(getDisplay());
-				SkeletonEditItem edit_outflow_page = new SkeletonEditItem(
+				AbstractEdit edit_outflow_page = new AbstractEdit(
 						edit_outflow_shell, SWT.None, stringArrayOutflow) {
 					// setText
 					public void onLoad() {

@@ -133,6 +133,7 @@ public class SQLManager {
 			"Contact VARCHAR(20)," +
 			"Email VARCHAR(20)," +
 			"Organization VARCHAR(30))";
+	
 	public static Connection createDatabase(){
 		Connection connection = null;
 		PreparedStatement statement = null;

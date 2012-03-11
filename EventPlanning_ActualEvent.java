@@ -434,7 +434,7 @@ public class EventPlanning_ActualEvent extends Composite {
 
 		public void widgetSelected(SelectionEvent e) {
 			Shell itineraryAddItemPage = new Shell(getDisplay());
-			SkeletonAddItem itineraryAddItem = new SkeletonAddItem(
+			AbstractAdd itineraryAddItem = new AbstractAdd(
 					itineraryAddItemPage, SWT.None, stringArrayItinerary) {
 				public void onSubmit() {
 					// insert to database
@@ -489,7 +489,7 @@ public class EventPlanning_ActualEvent extends Composite {
 			if (index < table_eventPlanning_actualEvent_tableItinerary
 					.getItemCount() && index >= 0) {
 				Shell itineraryEditItemPage = new Shell(getDisplay());
-				SkeletonEditItem itineraryEditItem = new SkeletonEditItem(
+				AbstractEdit itineraryEditItem = new AbstractEdit(
 						itineraryEditItemPage, SWT.None, stringArrayItinerary) {
 					// setText
 					public void onLoad() {
@@ -531,7 +531,7 @@ public class EventPlanning_ActualEvent extends Composite {
 
 		public void widgetSelected(SelectionEvent e) {
 			Shell allocOfManpowerAddItemPage = new Shell(getDisplay());
-			SkeletonAddItem allocOfManpowerAddItem = new SkeletonAddItem(
+			AbstractAdd allocOfManpowerAddItem = new AbstractAdd(
 					allocOfManpowerAddItemPage, SWT.None,
 					stringArrayAllocationOfManpower) {
 				public void onSubmit() {
@@ -588,7 +588,7 @@ public class EventPlanning_ActualEvent extends Composite {
 			if (index < table_eventPlanning_actualEvents_allocOfManpower
 					.getItemCount() && index >= 0) {
 				Shell allocOfManpowerEditItemPage = new Shell(getDisplay());
-				SkeletonEditItem allocOfManpowerEditItem = new SkeletonEditItem(
+				AbstractEdit allocOfManpowerEditItem = new AbstractEdit(
 						allocOfManpowerEditItemPage, SWT.None,
 						stringArrayAllocationOfManpower) {
 					// setText
@@ -634,7 +634,7 @@ public class EventPlanning_ActualEvent extends Composite {
 
 		public void widgetSelected(SelectionEvent e) {
 			Shell facilitatorAddItemPage = new Shell(getDisplay());
-			SkeletonAddItem facilitatorAddItem = new SkeletonAddItem(
+			AbstractAdd facilitatorAddItem = new AbstractAdd(
 					facilitatorAddItemPage, SWT.None, stringArrayFacilitator) {
 				public void onSubmit() {
 					// insert to database
@@ -685,7 +685,7 @@ public class EventPlanning_ActualEvent extends Composite {
 			if (index < table_eventPlanning_actualEvents_facilitators
 					.getItemCount() && index >= 0) {
 				Shell facilitatorEditItemPage = new Shell(getDisplay());
-				SkeletonEditItem facilitatorEditItem = new SkeletonEditItem(
+				AbstractEdit facilitatorEditItem = new AbstractEdit(
 						facilitatorEditItemPage, SWT.None,
 						stringArrayFacilitator) {
 					// setText
@@ -728,7 +728,7 @@ public class EventPlanning_ActualEvent extends Composite {
 
 		public void widgetSelected(SelectionEvent e) {
 			Shell participantAddItemPage = new Shell(getDisplay());
-			SkeletonAddItem participantAddItem = new SkeletonAddItem(
+			AbstractAdd participantAddItem = new AbstractAdd(
 					participantAddItemPage, SWT.None, stringArrayParticipant) {
 				public void onSubmit() {
 					// insert to database
@@ -779,7 +779,7 @@ public class EventPlanning_ActualEvent extends Composite {
 			if (index < table_eventPlanning_actualEvent_participants
 					.getItemCount() && index >= 0) {
 				Shell participantEditItemPage = new Shell(getDisplay());
-				SkeletonEditItem participantEditItem = new SkeletonEditItem(
+				AbstractEdit participantEditItem = new AbstractEdit(
 						participantEditItemPage, SWT.None,
 						stringArrayParticipant) {
 					// setText
