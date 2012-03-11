@@ -50,6 +50,7 @@ public class VenueManagement_BookingApplications extends Composite {
 		btnAccept.setBounds(10, 41, 89, 27);
 		toolkit.adapt(btnAccept, true, true);
 		btnAccept.setText("Accept");
+		btnAccept.addSelectionListener(new accept());
 		
 		applicationTable = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
 		applicationTable.setLocation(0, 0);
@@ -99,25 +100,6 @@ public class VenueManagement_BookingApplications extends Composite {
 	
 	public void importApplicationData() {
 		DatabaseReader db = new DatabaseReader();
-/*		ArrayList<Venue> venueList = db.getVenues();
-		
-		for(int i=0; i<venueList.size(); i++){
-		    Venue venue = venueList.get(i);
-		    ArrayList<VenueBookingInfo> bookingInfoList = db.getVenueBookingInfo(venue);
-			if(!bookingInfoList.isEmpty()){ //  booked
-				for(int j=0; j<bookingInfoList.size(); j++){
-					TableItem item = new TableItem(applicationTable, SWT.NULL);
-					item.setText(0, venue.getName() + " at " + venue.getLocation());
-					item.setText(1, bookingInfoList.get(j).getApplicant().getName());
-					item.setText(2, bookingInfoList.get(j).getApplicant().getMatricNo());
-					item.setText(3, bookingInfoList.get(j).getApplicant().getOrganization());
-					item.setText(4, bookingInfoList.get(j).getApplicant().getContact());
-					item.setText(5, bookingInfoList.get(j).getApplicant().getEmail());
-					item.setText(6, bookingInfoList.get(j).getDateTime().toString());
-					item.setText(7, "Pending");
-				}
-			}	
-		}*/
 		
 		bookingInfoList = db.getVenueBookingInfo();
 		if(!bookingInfoList.isEmpty()){ //  booked
@@ -144,7 +126,7 @@ public class VenueManagement_BookingApplications extends Composite {
 	public class reject extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			int index = applicationTable.getSelectionIndex();
-			if(index>0 && index <= applicationTable.getItemCount()){
+			if(index>=0 && index <= applicationTable.getItemCount()){
 				/* update the application table */
 				TableItem item = applicationTable.getItem(index);
 				item.setText(7,"Rejected");
@@ -161,7 +143,7 @@ public class VenueManagement_BookingApplications extends Composite {
 	public class accept extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			int index = applicationTable.getSelectionIndex();
-			if(index>0 && index <= applicationTable.getItemCount()){
+			if(index>=0 && index <= applicationTable.getItemCount()){
 				/* update the application table */
 				TableItem item = applicationTable.getItem(index);
 				item.setText(7,"Accepted");
