@@ -150,8 +150,10 @@ public class VenueManagement_BookingApplications extends Composite {
 				item.setText(7,"Rejected");
 				
 				/* update the database */
-				
-				
+				DatabaseReader db = new DatabaseReader();
+				VenueBookingInfo bookingInfo = bookingInfoList.get(index);
+				bookingInfo.setStatus(MACRO.REJECTED);
+				db.updateVenueBookingInfo(bookingInfo);
 			}
 		}
 	}
@@ -165,6 +167,10 @@ public class VenueManagement_BookingApplications extends Composite {
 				item.setText(7,"Accepted");
 				
 				/* update the database */
+				DatabaseReader db = new DatabaseReader();
+				VenueBookingInfo bookingInfo = bookingInfoList.get(index);
+				bookingInfo.setStatus(MACRO.APPROVED);
+				db.updateVenueBookingInfo(bookingInfo);
 
 			}
 		}
