@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;

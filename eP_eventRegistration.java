@@ -10,8 +10,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.jface.viewers.ListViewer;
 
 public class eP_eventRegistration extends Composite {
 

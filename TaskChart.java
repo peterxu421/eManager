@@ -1,18 +1,13 @@
 import java.util.ArrayList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.swtchart.Chart;
 import org.swtchart.IAxis;
 import org.swtchart.IAxisSet;
 import org.swtchart.IBarSeries;
-import org.swtchart.ISeries;
 import org.swtchart.ISeries.SeriesType;
-import org.swtchart.ISeriesLabel;
-import org.swtchart.ISeriesSet;
 
 public class TaskChart extends Composite {
 

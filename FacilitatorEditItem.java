@@ -4,7 +4,6 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 
