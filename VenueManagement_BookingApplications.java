@@ -17,6 +17,8 @@ public class VenueManagement_BookingApplications extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Table applicationTable;
+	
+	private ArrayList<VenueBookingInfo> bookingInfoList;
 
 	/**
 	 * Create the composite.
@@ -97,7 +99,7 @@ public class VenueManagement_BookingApplications extends Composite {
 	
 	public void importApplicationData() {
 		DatabaseReader db = new DatabaseReader();
-		ArrayList<Venue> venueList = db.getVenues();
+/*		ArrayList<Venue> venueList = db.getVenues();
 		
 		for(int i=0; i<venueList.size(); i++){
 		    Venue venue = venueList.get(i);
@@ -115,6 +117,27 @@ public class VenueManagement_BookingApplications extends Composite {
 					item.setText(7, "Pending");
 				}
 			}	
+		}*/
+		
+		bookingInfoList = db.getVenueBookingInfo();
+		if(!bookingInfoList.isEmpty()){ //  booked
+			for(int j=0; j<bookingInfoList.size(); j++){
+				TableItem item = new TableItem(applicationTable, SWT.NULL);
+				item.setText(0, bookingInfoList.get(j).getVenue().getName() + " at " + bookingInfoList.get(j).getVenue().getLocation() );
+				item.setText(1, bookingInfoList.get(j).getApplicant().getName());
+				item.setText(2, bookingInfoList.get(j).getApplicant().getMatricNo());
+				item.setText(3, bookingInfoList.get(j).getApplicant().getOrganization());
+				item.setText(4, bookingInfoList.get(j).getApplicant().getContact());
+				item.setText(5, bookingInfoList.get(j).getApplicant().getEmail());
+				item.setText(6, bookingInfoList.get(j).getDateTime().toString());
+				if(bookingInfoList.get(j).getStatus()== MACRO.PENDING){
+					item.setText(7,"Pending");
+				}
+				else if (bookingInfoList.get(j).getStatus()== MACRO.APPROVED){
+					item.setText(7,"Approved");
+				}
+				else item.setText(7, "Rejected");
+			}
 		}
 	}
 	
@@ -127,14 +150,7 @@ public class VenueManagement_BookingApplications extends Composite {
 				item.setText(7,"Rejected");
 				
 				/* update the database */
-				//DatabaseReader db = new DatabaseReader();
-				/* ----------------------
-				 * -------------------------
-				 * -----------------
-				 * ---------------------
-				 * ------------
-				 */
-
+				
 				
 			}
 		}
@@ -149,13 +165,7 @@ public class VenueManagement_BookingApplications extends Composite {
 				item.setText(7,"Accepted");
 				
 				/* update the database */
-				//DatabaseReader db = new DatabaseReader();
-				/* ----------------------
-				 * -------------------------
-				 * -----------------
-				 * ---------------------
-				 * ------------
-				 */
+
 			}
 		}
 	}
