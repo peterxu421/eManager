@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.List;
 public class VenueViewBookingInfo extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
+	private int index;
 
 	/**
 	 * Create the composite.
@@ -59,6 +60,6 @@ public class VenueViewBookingInfo extends Composite {
 			    }
 		}
 		
-		else listBookingStatus.setItem(0, "Not booked");
+		else listBookingStatus.add("Not Booked",0);
 	}
 }
