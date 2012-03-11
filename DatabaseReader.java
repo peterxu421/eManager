@@ -1,4 +1,3 @@
-import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -453,7 +452,7 @@ public class DatabaseReader {
 		ArrayList<Participant> participants = new ArrayList<Participant>();
 		ResultSet rs = null;
 		try {
-			rs = SQLManager.getFacilitatorDetails(connection,
+			rs = SQLManager.getParticipantDetails(connection,
 					event.getEventID());
 			while (rs.next()) {
 				Participant participant = new Participant(
@@ -562,5 +561,12 @@ public class DatabaseReader {
 	}
 	public void deleteVenueBookingInfo(VenueBookingInfo booking){
 		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
+	}
+
+	public static void main(String[] args){
+		DatabaseReader db = new DatabaseReader();
+		Event event = db.getEvents().get(0);
+		int size = db.getFacilitators(event).size();
+		System.out.println(size);
 	}
 }

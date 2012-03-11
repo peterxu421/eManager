@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -11,7 +10,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -21,6 +19,9 @@ public class EventPlanning_FeedBack extends Composite {
 	private Table tableFeedBack;
 	private ArrayList<Feedback> feedbackList;
 	private Event event;
+	private Composite compositeFeedBack;
+	private String[] stringArray = { "Issue", "Date", "Time" };
+	private int index;
 
 	/**
 	 * Create the composite.
@@ -41,7 +42,7 @@ public class EventPlanning_FeedBack extends Composite {
 		DatabaseReader db = new DatabaseReader();
 		this.feedbackList = db.getFeedback(event);
 
-		Composite compositeFeedBack = new Composite(this, SWT.NONE);
+		compositeFeedBack = new Composite(this, SWT.NONE);
 		compositeFeedBack.setBounds(0, 0, 488, 318);
 		toolkit.adapt(compositeFeedBack);
 		toolkit.paintBordersFor(compositeFeedBack);
@@ -73,8 +74,7 @@ public class EventPlanning_FeedBack extends Composite {
 		btnFeedBackAddItem.setText("Add");
 
 		Button btnFeedBackDeleteItem = new Button(compositeFeedBack, SWT.NONE);
-		btnFeedBackDeleteItem.addSelectionListener(new FeedBackDeleteItem(
-				tableFeedBack));
+		btnFeedBackDeleteItem.addSelectionListener(new FeedBackDeleteItem());
 		btnFeedBackDeleteItem.setBounds(398, 73, 80, 27);
 		toolkit.adapt(btnFeedBackDeleteItem, true, true);
 		btnFeedBackDeleteItem.setText("Delete ");
@@ -111,8 +111,22 @@ public class EventPlanning_FeedBack extends Composite {
 	public class FeedBackAddItemPage extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell feedbackAddItemPage = new Shell(getDisplay());
-			FeedBackAddItem feedbackAddItem = new FeedBackAddItem(
-					feedbackAddItemPage, SWT.None, tableFeedBack, event);
+			SkeletonAddItem feedbackAddItem = new SkeletonAddItem(
+					feedbackAddItemPage, SWT.None, stringArray) {
+				public void onSubmit() {
+					//insert to database
+					Date date = new Date(textList[1].getText());
+					Time time = new Time(textList[2].getText());
+					Feedback feedback = new Feedback(textList[0].getText(),
+							date, time);
+					db.insertFeedback(event, feedback);
+					// update the table
+					TableItem item = new TableItem(tableFeedBack, SWT.NULL);
+					for(int i=0; i<stringArray.length; i++){
+						item.setText(i,textList[i].getText());
+					}
+				}
+			};
 			feedbackAddItem.pack();
 			feedbackAddItemPage.pack();
 			feedbackAddItemPage.open();
@@ -120,19 +134,13 @@ public class EventPlanning_FeedBack extends Composite {
 	}
 
 	public class FeedBackDeleteItem extends SelectionAdapter {
-		Table table;
-
-		public FeedBackDeleteItem(Table table) {
-			this.table = table;
-		}
-
 		public void widgetSelected(SelectionEvent e) {
-			if (table.getColumnCount() != 0) {
-				int index = table.getSelectionIndex();
-				if (index < 0 || index >= table.getItemCount()) {
+			if (tableFeedBack.getColumnCount() != 0) {
+				int index = tableFeedBack.getSelectionIndex();
+				if (index < 0 || index >= tableFeedBack.getItemCount()) {
 					// Do nothing.
 				} else {
-					table.remove(index);
+					tableFeedBack.remove(index);
 					DatabaseReader db = new DatabaseReader();
 					db.deleteFeedback(feedbackList.get(index));
 				}
@@ -142,11 +150,29 @@ public class EventPlanning_FeedBack extends Composite {
 
 	public class FeedBackEditItemPage extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			int index = tableFeedBack.getSelectionIndex();
+			index = tableFeedBack.getSelectionIndex();
 			if (index < tableFeedBack.getItemCount() && index >= 0) {
 				Shell feedbackEditItemPage = new Shell(getDisplay());
-				FeedBackEditItem feedbackEditItem = new FeedBackEditItem(
-						feedbackEditItemPage, SWT.None, tableFeedBack, index, feedbackList.get(index));
+				SkeletonEditItem feedbackEditItem = new SkeletonEditItem(feedbackEditItemPage, SWT.None,stringArray){
+					//setText
+					public void onLoad(){
+						for(int i=0; i<stringArray.length; i++){
+							textList[i].setText(tableFeedBack.getItem(index).getText(i));
+						}
+					}
+					public void onSubmit(){
+						Feedback feedback = feedbackList.get(index);
+						feedback.setFeedbackDetails(textList[0].getText());
+						feedback.setDate(new Date(textList[1].getText()));
+						feedback.setTime(new Time(textList[2].getText()));
+						//update database
+						db.updateFeedback(feedback);
+						//update the table
+						for(int i=0; i<stringArray.length; i++){
+							tableFeedBack.getItem(index).setText(i,textList[i].getText());
+						}
+					}
+				};
 				feedbackEditItem.pack();
 				feedbackEditItemPage.pack();
 				feedbackEditItemPage.open();

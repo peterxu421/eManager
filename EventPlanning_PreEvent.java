@@ -13,7 +13,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -27,6 +26,10 @@ public class EventPlanning_PreEvent extends Composite {
 	private Event event;
 	private ArrayList<Task> taskList;
 	private ArrayList<Organizer> memberList;
+	private String[] stringArrayItem = { "Task", "Assigned To", "Date", "Done" };
+	private String[] stringArrayMember = { "Name", "Year", "Faculty",
+			"Position" };
+	private int index;
 
 	/**
 	 * Create the composite.
@@ -118,10 +121,10 @@ public class EventPlanning_PreEvent extends Composite {
 		tbtmTaskChart.setControl(composite_2);
 		toolkit.paintBordersFor(composite_2);
 		FillLayout fillLayout = new FillLayout();
-		fillLayout.marginWidth =0;
+		fillLayout.marginWidth = 0;
 		composite_2.setLayout(fillLayout);
 		TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
-        taskChart.setSize(300, 300);
+		taskChart.setSize(300, 300);
 		taskChart.pack();
 		composite_2.pack();
 
@@ -214,8 +217,22 @@ public class EventPlanning_PreEvent extends Composite {
 
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddItemPage = new Shell(getDisplay());
-			TaskAssignAddItem taskAssignAddItem = new TaskAssignAddItem(
-					taskAssignAddItemPage, SWT.None, tableTaskAssign, event);
+			SkeletonAddItem taskAssignAddItem = new SkeletonAddItem(
+					taskAssignAddItemPage, SWT.None, stringArrayItem) {
+				public void onSubmit() {
+					// insert to database
+					Date date = new Date(textList[2].getText());
+					Done done = new Done(textList[3].getText());
+					Task task = new Task(textList[0].getText(),
+							textList[1].getText(), date, done.isDone());
+					db.insertTask(event, task);
+					// update the table
+					TableItem item = new TableItem(tableTaskAssign, SWT.NULL);
+					for (int i = 0; i < stringArrayItem.length; i++) {
+						item.setText(i, textList[i].getText());
+					}
+				}
+			};
 			taskAssignAddItem.pack();
 			taskAssignAddItemPage.pack();
 			taskAssignAddItemPage.open();
@@ -226,8 +243,21 @@ public class EventPlanning_PreEvent extends Composite {
 
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddMemberPage = new Shell(getDisplay());
-			TaskAssignAddMember taskAssignAddMember = new TaskAssignAddMember(
-					taskAssignAddMemberPage, SWT.None, tableCommittee, event);
+			SkeletonAddItem taskAssignAddMember = new SkeletonAddItem(
+					taskAssignAddMemberPage, SWT.None, stringArrayItem) {
+				public void onSubmit() {
+					// insert to database
+					Organizer organizer = new Organizer(textList[0].getText(),
+							Integer.parseInt(textList[1].getText()),
+							textList[0].getText(), textList[0].getText());
+					db.insertOrganizer(event, organizer);
+					// update the table
+					TableItem item = new TableItem(tableCommittee, SWT.NULL);
+					for (int i = 0; i < stringArrayMember.length; i++) {
+						item.setText(i, textList[i].getText());
+					}
+				}
+			};
 			taskAssignAddMember.pack();
 			taskAssignAddMemberPage.pack();
 			taskAssignAddMemberPage.open();
@@ -267,12 +297,30 @@ public class EventPlanning_PreEvent extends Composite {
 
 	public class TaskAssignEditItemPage extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			int index = tableTaskAssign.getSelectionIndex();
+			index = tableTaskAssign.getSelectionIndex();
 			if (index < tableTaskAssign.getItemCount() && index >= 0) {
 				Shell taskAssignEditItemPage = new Shell(getDisplay());
-				TaskAssignEditItem taskAssignEditItem = new TaskAssignEditItem(
-						taskAssignEditItemPage, SWT.None, tableTaskAssign,
-						index, taskList.get(index));
+				SkeletonEditItem taskAssignEditItem = new SkeletonEditItem(taskAssignEditItemPage, SWT.None,stringArrayItem){
+					public void onLoad(){
+						for(int i=0; i<stringArrayItem.length; i++){
+							textList[i].setText(tableTaskAssign.getItem(index).getText(i));
+						}
+					}
+					public void onSubmit(){
+						Task task = taskList.get(index);
+						task.setTaskDesciption(textList[0].getText());
+						task.setAssignedTo(textList[1].getText());
+						task.setDateDue(new Date(textList[2].getText()));
+						Done done = new Done(textList[3].getText());
+						task.setDone(done.isDone());
+						//update database
+						db.updateTask(task);
+						//update the table
+						for(int i=0; i<stringArrayItem.length; i++){
+							tableTaskAssign.getItem(index).setText(i,textList[i].getText());
+						}
+					}
+				};
 				taskAssignEditItem.pack();
 				taskAssignEditItemPage.pack();
 				taskAssignEditItemPage.open();
@@ -282,12 +330,30 @@ public class EventPlanning_PreEvent extends Composite {
 
 	public class TaskAssignEditMemberPage extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			int index = tableCommittee.getSelectionIndex();
+			index = tableCommittee.getSelectionIndex();
 			if (index < tableCommittee.getItemCount() && index >= 0) {
 				Shell taskAssignEditMemberPage = new Shell(getDisplay());
-				TaskAssignEditMember taskAssignEditMember = new TaskAssignEditMember(
-						taskAssignEditMemberPage, SWT.None, tableCommittee,
-						index, memberList.get(index));
+				SkeletonEditItem taskAssignEditMember = new SkeletonEditItem(taskAssignEditMemberPage, SWT.None,stringArrayMember){
+					public void onLoad(){
+						for(int i=0; i<stringArrayMember.length; i++){
+							textList[i].setText(tableCommittee.getItem(index).getText(i));
+						}
+					}
+					public void onSubmit(){
+						//reset
+						Organizer member = memberList.get(index);
+						member.setName(textList[0].getText());
+						member.setYear(Integer.parseInt(textList[1].getText()));
+						member.setFaculty(textList[2].getText());
+						member.setPosition(textList[3].getText());
+						//update database
+						db.updateOrganizer(member);
+						//update the table
+						for(int i=0; i<stringArrayMember.length; i++){
+							tableCommittee.getItem(index).setText(i,textList[i].getText());
+						}
+					}
+				};
 				taskAssignEditMember.pack();
 				taskAssignEditMemberPage.pack();
 				taskAssignEditMemberPage.open();

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -5,12 +7,11 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Button;
-
 
 public class VenueManagement_BookingApplications extends Composite {
 
@@ -33,14 +34,26 @@ public class VenueManagement_BookingApplications extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 541, 350);
+		composite.setBounds(473, 0, 108, 316);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
-		applicationTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		Button btnReject = new Button(composite, SWT.NONE);
+		btnReject.setText("Reject");
+		btnReject.setBounds(10, 10, 89, 27);
+		toolkit.adapt(btnReject, true, true);
+		btnReject.addSelectionListener(new reject());
+		
+		Button btnAccept = new Button(composite, SWT.NONE);
+		btnAccept.setBounds(10, 41, 89, 27);
+		toolkit.adapt(btnAccept, true, true);
+		btnAccept.setText("Accept");
+		
+		applicationTable = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
+		applicationTable.setLocation(0, 0);
+		applicationTable.setSize(468, 324);
 		applicationTable.setLinesVisible(true);
 		applicationTable.setHeaderVisible(true);
-		applicationTable.setBounds(10, 10, 424, 324);
 		toolkit.adapt(applicationTable);
 		toolkit.paintBordersFor(applicationTable);
 		
@@ -72,29 +85,78 @@ public class VenueManagement_BookingApplications extends Composite {
 		tblclmnDateAndTime.setWidth(181);
 		tblclmnDateAndTime.setText("Date and Time");
 		
-		Button btnAccept = new Button(composite, SWT.NONE);
-		btnAccept.setText("Accept");
-		btnAccept.setBounds(440, 10, 89, 27);
-		toolkit.adapt(btnAccept, true, true);
+		TableColumn tblclmnApproval = new TableColumn(applicationTable, SWT.CENTER);
+		tblclmnApproval.setWidth(100);
+		tblclmnApproval.setText("Approval");
+		btnAccept.addSelectionListener(new accept());
 		
-		Button btnReject = new Button(composite, SWT.NONE);
-		btnReject.setText("Reject");
-		btnReject.setBounds(440, 43, 89, 27);
-		toolkit.adapt(btnReject, true, true);
+		
+		importApplicationData();
 
 	}
-	public static void main(String[] args) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		VenueManagement_BookingApplications calc = new VenueManagement_BookingApplications(shell,
-				SWT.NONE);
-		calc.pack();
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
+	
+	public void importApplicationData() {
+		DatabaseReader db = new DatabaseReader();
+		ArrayList<Venue> venueList = db.getVenues();
+		
+		for(int i=0; i<venueList.size(); i++){
+		    Venue venue = venueList.get(i);
+		    ArrayList<VenueBookingInfo> bookingInfoList = db.getVenueBookingInfo(venue);
+			if(!bookingInfoList.isEmpty()){ //  booked
+				for(int j=0; j<bookingInfoList.size(); j++){
+					TableItem item = new TableItem(applicationTable, SWT.NULL);
+					item.setText(0, venue.getName() + " at " + venue.getLocation());
+					item.setText(1, bookingInfoList.get(j).getApplicant().getName());
+					item.setText(2, bookingInfoList.get(j).getApplicant().getMatricNo());
+					item.setText(3, bookingInfoList.get(j).getApplicant().getOrganization());
+					item.setText(4, bookingInfoList.get(j).getApplicant().getContact());
+					item.setText(5, bookingInfoList.get(j).getApplicant().getEmail());
+					item.setText(6, bookingInfoList.get(j).getDateTime().toString());
+					item.setText(7, "Pending");
+				}
+			}	
 		}
 	}
 	
+	public class reject extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
+			int index = applicationTable.getSelectionIndex();
+			if(index>0 && index <= applicationTable.getItemCount()){
+				/* update the application table */
+				TableItem item = applicationTable.getItem(index);
+				item.setText(7,"Rejected");
+				
+				/* update the database */
+				//DatabaseReader db = new DatabaseReader();
+				/* ----------------------
+				 * -------------------------
+				 * -----------------
+				 * ---------------------
+				 * ------------
+				 */
+
+				
+			}
+		}
+	}
+	
+	public class accept extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
+			int index = applicationTable.getSelectionIndex();
+			if(index>0 && index <= applicationTable.getItemCount()){
+				/* update the application table */
+				TableItem item = applicationTable.getItem(index);
+				item.setText(7,"Accepted");
+				
+				/* update the database */
+				//DatabaseReader db = new DatabaseReader();
+				/* ----------------------
+				 * -------------------------
+				 * -----------------
+				 * ---------------------
+				 * ------------
+				 */
+			}
+		}
+	}
 }

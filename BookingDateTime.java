@@ -43,11 +43,10 @@ public class BookingDateTime {
 
 	public static BookingDateTime parseBookingDateTime(String dateTimeStr) {
 		StringTokenizer st = new StringTokenizer(dateTimeStr);
-		String dummy;
 		String _date = st.nextToken(); // get date
-		dummy = st.nextToken(); // skip 'From'
+		st.nextToken(); // skip 'From'
 		String _timeStart = st.nextToken(); // get timeStart
-		dummy = st.nextToken(); // skip 'to'
+		st.nextToken(); // skip 'to'
 		String _timeEnd = st.nextToken();
 		BookingDateTime dateTime = new BookingDateTime(Date.parseDate(_date),
 				Time.parseTime(_timeStart), Time.parseTime(_timeEnd));

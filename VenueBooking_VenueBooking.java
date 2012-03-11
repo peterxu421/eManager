@@ -5,31 +5,15 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.custom.CBanner;
-import org.eclipse.swt.custom.ViewForm;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.custom.CCombo;
-import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.widgets.List;
-import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.custom.StyledText;
-
 
 public class VenueBooking_VenueBooking extends Composite {
 
@@ -208,7 +192,7 @@ public class VenueBooking_VenueBooking extends Composite {
 			String _organization = "";
 			String _contact = "";
 			String _email = "";
-			ArrayList<BookingDateTime> _listDateTime = null;
+			ArrayList<BookingDateTime> _listDateTime = new ArrayList<BookingDateTime>();
 			
 			if(!name.getText().isEmpty()){
 				_name = name.getText();
@@ -227,7 +211,8 @@ public class VenueBooking_VenueBooking extends Composite {
 			}
 			if(listDateTime.getItemCount()!=0){
 				for (int i=0; i<listDateTime.getItemCount(); i++){
-					_listDateTime.set(i, BookingDateTime.parseBookingDateTime(listDateTime.getItem(i)));
+					BookingDateTime dateTime = BookingDateTime.parseBookingDateTime(listDateTime.getItem(i));
+					_listDateTime.add(dateTime);
 				}
 			}
 			
@@ -238,7 +223,7 @@ public class VenueBooking_VenueBooking extends Composite {
 			for(int i=0; i<_listDateTime.size(); i++){
 				VenueApplicant newApplicant = new VenueApplicant(_name, _matricNo, _contact, _email, _organization);
 				VenueBookingInfo newBookingInfo = new VenueBookingInfo(selected, newApplicant, _listDateTime.get(i));
-				//db.insertVenueBookingInfo(newBookingInfo);
+			    db.insertVenueBookingInfo(newBookingInfo);
 			}
 			getParent().dispose();
 		}

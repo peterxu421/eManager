@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -51,7 +49,7 @@ public class VenueListAddItem extends Composite {
 		Label lblEditVenue = new Label(composite, SWT.NONE);
 		lblEditVenue.setBounds(152, 27, 75, 15);
 		toolkit.adapt(lblEditVenue, true, true);
-		lblEditVenue.setText("Edit Venue");
+		lblEditVenue.setText("Add Venue");
 
 		Label lblName = new Label(composite, SWT.NONE);
 		lblName.setAlignment(SWT.RIGHT);

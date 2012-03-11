@@ -37,7 +37,7 @@ public class VenueBooking_VenueList extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 417, 330);
+		composite.setBounds(10, 10, 453, 330);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
@@ -61,10 +61,16 @@ public class VenueBooking_VenueList extends Composite {
 		tableColumn_2.setText("Type");
 		
 		Button btnBook = new Button(composite, SWT.NONE);
-		btnBook.setBounds(332, 10, 75, 25);
+		btnBook.setBounds(350, 10, 75, 25);
 		toolkit.adapt(btnBook, true, true);
 		btnBook.setText("Book");
+		
+		Button btnCheckAvailability = new Button(composite, SWT.NONE);
+		btnCheckAvailability.setBounds(336, 54, 106, 25);
+		toolkit.adapt(btnCheckAvailability, true, true);
+		btnCheckAvailability.setText("Check Availability");
 		btnBook.addSelectionListener(new bookVenue());
+		btnCheckAvailability.addSelectionListener(new check());
 		
 		importVenueListData();
 	}
@@ -91,6 +97,19 @@ public class VenueBooking_VenueList extends Composite {
 				vBookingPage.pack();
 				vBookingShell.pack();
 				vBookingShell.open();
+			}
+		}
+	}
+	
+	public class check extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e){
+			int index = venueTable.getSelectionIndex();
+			if(index >=0 && index < venueTable.getItemCount()){
+				Shell viewBookingInfoShell = new Shell(getDisplay());
+				VenueViewBookingInfo viewBookingInfoPage = new VenueViewBookingInfo(viewBookingInfoShell, SWT.None, index);
+				viewBookingInfoPage.pack();
+				viewBookingInfoShell.pack();
+				viewBookingInfoShell.open();
 			}
 		}
 	}

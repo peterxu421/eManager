@@ -10,8 +10,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.custom.TableCursor;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -27,7 +25,8 @@ public class EventPlanning_Meeting extends Composite {
 	private Event event;
 	private ArrayList<Meeting> meetingList;
 	private Table table;
-
+	private String[] stringArray={""};
+	private int index;
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -126,7 +125,23 @@ public class EventPlanning_Meeting extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			if(table.getSelectionCount()==0){
 				Shell add_meeting_shell = new Shell(getDisplay());
-				AddMeetingPage add_meeting_page = new AddMeetingPage(add_meeting_shell, SWT.None, table, event);
+				SkeletonAddItem add_meeting_page = new SkeletonAddItem(
+						add_meeting_shell, SWT.None, stringArray) {
+					public void onSubmit() {
+						//insert to database
+						Date date = new Date(textList[1].getText());
+						Time time = new Time(textList[2].getText());
+						Done done = new Done(textList[3].getText());
+						Meeting meeting = new Meeting(textList[0].getText(),
+								date, time, done.isDone());
+						db.insertMeeting(event, meeting);
+						// update the table
+						TableItem item = new TableItem(table, SWT.NULL);
+						for(int i=0; i<stringArray.length; i++){
+							item.setText(i,textList[i].getText());
+						}
+					}
+				};
 				add_meeting_page.pack();
 				add_meeting_shell.pack();
 				add_meeting_shell.open();
@@ -138,23 +153,44 @@ public class EventPlanning_Meeting extends Composite {
 	class Delete extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
 			if (table.getItemCount() != 0){
-				/* update the meeting table */
 				int index = table.getSelectionIndex();
 				if(index >=0 && index < table.getItemCount()){
+					/* update the database */
+					DatabaseReader db = new DatabaseReader();
+					db.deleteMeeting(meetingList.get(index));
+					/* update the meeting table */
 					table.remove(index);
-					
-				/* update the database */
-				DatabaseReader db = new DatabaseReader();
-				db.deleteMeeting(meetingList.get(index));
 				}
 			}
 		}
 	}
 	class Edit extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
+			index = table.getSelectionIndex();
 			if(table.getSelectionCount()!=0){
 				Shell edit_meeting_shell = new Shell(getDisplay());
-				AddMeetingPage edit_meeting_page = new AddMeetingPage(edit_meeting_shell, SWT.None, table, event);
+				SkeletonEditItem edit_meeting_page = new SkeletonEditItem(edit_meeting_shell, SWT.None,stringArray){
+					//setText
+					public void onLoad(){
+						for(int i=0; i<stringArray.length; i++){
+							textList[i].setText(table.getItem(index).getText(i));
+						}
+					}
+					public void onSubmit(){
+						Meeting meeting = meetingList.get(index);
+						meeting.setMeetingDetails(textList[0].getText());
+						meeting.setDate(new Date(textList[1].getText()));
+						meeting.setTime(new Time(textList[2].getText()));
+						Done done = new Done(textList[3].getText());
+						meeting.setDone(done.isDone());
+						//update database
+						db.updateMeeting(meeting);
+						//update the table
+						for(int i=0; i<stringArray.length; i++){
+							table.getItem(index).setText(i,textList[i].getText());
+						}
+					}
+				};
 				edit_meeting_page.pack();
 				edit_meeting_shell.pack();
 				edit_meeting_shell.open();

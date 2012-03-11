@@ -31,17 +31,4 @@ public class ConnectionManager {
 		return;
 	}
 
-	// currently not used, it seems the driver can automatically be loaded
-	// through DriverManager
-	private static boolean loadDriver() {
-		boolean isLoaded = true;
-		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-		} catch (ClassNotFoundException e) {
-			isLoaded = false;
-			e.printStackTrace();
-		}
-		return isLoaded;
-	}
-
 }
