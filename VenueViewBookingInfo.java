@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.List;
 public class VenueViewBookingInfo extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	private int index;
 
 	/**
 	 * Create the composite.
@@ -29,7 +28,6 @@ public class VenueViewBookingInfo extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
-		this.index = index;
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(37, 26, 462, 410);
