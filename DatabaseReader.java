@@ -563,7 +563,7 @@ public class DatabaseReader {
 				VenueApplicant applicant = getVenueApplicantByID(rs.getInt("MemberID"));
 				BookingDateTime time = new BookingDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
 						Time.parseTime(rs.getString("TimeEnd")));
-				VenueBookingInfo booking = new VenueBookingInfo(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
+				VenueBookingInfo booking = new VenueBookingInfo(rs.getInt("BookingID"), venue , applicant, time, rs.getInt("Status"));
 				bookings.add(booking);
 			}
 		}catch (SQLException e) {

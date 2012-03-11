@@ -476,6 +476,7 @@ public class EventPlanning_ActualEvent extends Composite {
 					/* update the database */
 					DatabaseReader db = new DatabaseReader();
 					db.deleteItinerary(itineraryList.get(index));
+					itineraryList.remove(index);
 				}
 			}
 		}
@@ -574,6 +575,7 @@ public class EventPlanning_ActualEvent extends Composite {
 					/* update the database */
 					DatabaseReader db = new DatabaseReader();
 					db.deleteManpowerAllocation(manpowerList.get(index));
+					manpowerList.remove(index);
 				}
 			}
 		}
@@ -670,6 +672,7 @@ public class EventPlanning_ActualEvent extends Composite {
 					table_eventPlanning_actualEvents_facilitators.remove(index);
 					DatabaseReader db = new DatabaseReader();
 					db.deleteMember(facilitatorList.get(index));
+					facilitatorList.remove(index);
 				}
 			}
 		}
@@ -763,6 +766,7 @@ public class EventPlanning_ActualEvent extends Composite {
 					table_eventPlanning_actualEvent_participants.remove(index);
 					DatabaseReader db = new DatabaseReader();
 					db.deleteMember(participantList.get(index));
+					participantList.remove(index);
 				}
 			}
 		}

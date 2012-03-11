@@ -160,7 +160,6 @@ public class EventPlanning_Meeting extends Composite {
 					/* update the database */
 					DatabaseReader db = new DatabaseReader();
 					db.deleteMeeting(meetingList.get(index));
-					meetingList.remove(index);
 					/* update the meeting table */
 					table.remove(index);
 				}
