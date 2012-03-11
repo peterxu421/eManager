@@ -218,13 +218,12 @@ public class VenueBooking_VenueBooking extends Composite {
 			
 			/* update the table of applications under venue management */
 			/* ---can be updated via database later on--- */
-			/* ---or can be updated by a reference to the applicationtable---*/
+			/* ---or can be updated by a reference to the application table---*/
 			DatabaseReader db = new DatabaseReader();
 			for(int i=0; i<_listDateTime.size(); i++){
 				VenueApplicant newApplicant = new VenueApplicant(_name, _matricNo, _contact, _email, _organization);
 				VenueBookingInfo newBookingInfo = new VenueBookingInfo(selected, newApplicant, _listDateTime.get(i));
 			    db.insertVenueBookingInfo(newBookingInfo);
-			    System.out.println("Hello"+newBookingInfo.getApplicant().getName());
 			}
 			getParent().dispose();
 		}
