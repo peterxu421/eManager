@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -25,6 +27,7 @@ public class AddMeetingPage extends Composite {
 	private final Button done;
 
 	private Event event;
+	private ArrayList<Meeting> meetingList;
 
 	/**
 	 * Create the composite.
@@ -32,7 +35,7 @@ public class AddMeetingPage extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public AddMeetingPage(Composite parent, int style, Table table, Event event) {
+	public AddMeetingPage(Composite parent, int style, Table table, Event event, ArrayList<Meeting> meetingList) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -42,6 +45,7 @@ public class AddMeetingPage extends Composite {
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
 		this.event = event;
+		this.meetingList= meetingList;
 		setLayout(new FormLayout());
 
 		Composite composite = new Composite(this, SWT.NONE);
@@ -177,6 +181,9 @@ public class AddMeetingPage extends Composite {
 							Date.parseDate(_date), Time.parseTime(_time),
 							_done == "Yes");
 					db.insertMeeting(event, newMeeting);
+					
+					/* update the ArrayList */
+					meetingList.add(newMeeting);
 
 					getParent().dispose();
 				} else {
@@ -195,6 +202,9 @@ public class AddMeetingPage extends Composite {
 					newMeeting.setTime(Time.parseTime(_time));
 					newMeeting.setDone(_done == "Yes");
 					db.updateMeeting(newMeeting);
+					
+					/* update the ArrayList */
+					meetingList.add(newMeeting);
 
 					getParent().dispose();
 				}
