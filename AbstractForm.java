@@ -80,19 +80,27 @@ public abstract class AbstractForm extends Composite {
 	}
 	
 	protected boolean check(){
+		boolean isValid = true;
 		//I think do error checking here is more convenient
 		for(int i=0; i<labelList.length; i++){
 			if(signature[i] == MACRO.TEXT){
 				Text text = (Text)get(labelList[i]);
-				return !text.getText().isEmpty();
+				isValid = !text.getText().isEmpty();
 			}
+//			and etc....
 		}
 	}
 	private class SubmitHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if(check())	
+			if(check()){
 				onSubmit();
-			getParent().dispose();
+				getParent().dispose();
+			}
+			else{
+				//Do something i.e.
+				//Dialog dialog = new Dialog()
+			}
+				
 		}
 	}
 
