@@ -19,12 +19,12 @@ public abstract class AbstractAdd extends AbstractForm {
 		// TODO Auto-generated constructor stub
 		// Set buttons
 		btnAdd = new Button(this, SWT.None);
-		btnAdd.addSelectionListener(new SubmitNewItem());
+		btnAdd.addSelectionListener(new SubmitHandler());
 		btnAdd.setText("Add");
 		btnAdd.setLayoutData(new GridData(60, 30));
 
 		Button btnCancel = new Button(this, SWT.None);
-		btnCancel.addSelectionListener(new CancelNewItem());
+		btnCancel.addSelectionListener(new CancelHandler());
 		btnCancel.setText("Cancel");
 		btnCancel.setLayoutData(new GridData(60, 30));
 	}	

@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -7,37 +9,32 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.forms.widgets.FormToolkit;
 
-abstract class AbstractForm extends Composite {
-
-	protected final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	protected String[] stringList;
-	protected Text[] textList;
+public abstract class AbstractForm extends Composite {
+	
+	protected String[] labelList;
+	protected int[] signature;
+	protected int[] sizeList;
 	protected DatabaseReader db;
 	protected Button btnAdd;
-
+	private HashMap<String, Object> map;
+	
 	public abstract void onLoad();
-
 	public abstract void onSubmit();
 
-	public AbstractForm(Composite parent, int style, String[] stringList) {
+	public AbstractForm(Composite parent, int style, String[] labelList, int[] signature){
 		super(parent, style);
-		addDisposeListener(new DisposeListener() {
-			public void widgetDisposed(DisposeEvent e) {
-				toolkit.dispose();
-			}
-		});
-		toolkit.adapt(this);
-		toolkit.paintBordersFor(this);
-
-		this.stringList = stringList;
+		
+		this.labelList = labelList;
+		this.signature = signature;
 		this.db = new DatabaseReader();
-
-		// Set the boundary
+		this.map = new HashMap<String, Object>();
+		
+		/*Layout*/
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginLeft = 20;
 		gridLayout.marginRight = 20;
@@ -46,44 +43,44 @@ abstract class AbstractForm extends Composite {
 		gridLayout.marginWidth = 20;
 		gridLayout.marginHeight = 10;
 		gridLayout.numColumns = 2;
-
 		this.setLayout(gridLayout);
 
-		// Set the input
-		textList = new Text[stringList.length];
-		Label label;
-		for (int i = 0; i < stringList.length; i++) {
-			label = new Label(this, SWT.NONE);
-			setLabelText(label, stringList[i]);
-			label.setLayoutData(new GridData(130, 20));
-
-			Text text = new Text(this, SWT.BORDER);
-			text.setLayoutData(new GridData(100, 20));
-			textList[i] = text;
+		/*Content*/
+		for(int i=0; i<labelList.length; i++){
+			Label label = new Label(this, SWT.None);
+			label.setText(labelList[i]);
+			map.put(labelList[i], createInput(this, signature[i]));
 		}
 		onLoad();
-
 	}
-
-	public void setLabelText(Label label, String string) {
-		if (string.contains("Date")) {
-			label.setText("Date (yyyy-mm-dd)");
-		} else if (string.equals("Time")) {
-			label.setText("Time (hh:mm:ss)");
-		} else if (string.equals("Done")) {
-			label.setText("Done (Done/Undone)");
-		} else
-			label.setText(string);
+	public AbstractForm(Composite parent, int style, String[] labelList, int[] signature, int[] sizeList){
+		super(parent, style);
+		//use this constructor when size of each box is specified
 	}
-
-	class SubmitNewItem extends SelectionAdapter {
+	
+	private Object createInput(Composite parent, int signature){
+		Object input;
+		if(signature == MACRO.TEXT){
+			input = new Text(parent, SWT.NONE);
+		}
+		else if(signature == MACRO.DATE){
+			input = new DateTime(parent, SWT.None);
+		}
+//		... and so on
+		return input;
+	}
+	
+	protected Object get(String label){
+		return map.get(label);
+	}
+	private class SubmitHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			onSubmit();
 			getParent().dispose();
 		}
 	}
 
-	class CancelNewItem extends SelectionAdapter {
+	private class CancelHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			getParent().dispose();
 		}
