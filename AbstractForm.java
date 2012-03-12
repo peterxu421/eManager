@@ -51,6 +51,11 @@ public abstract class AbstractForm extends Composite {
 			label.setText(labelList[i]);
 			map.put(labelList[i], createInput(this, signature[i]));
 		}
+		
+		/*Buttons
+		 * 
+		 * 
+		 */
 		onLoad();
 	}
 	public AbstractForm(Composite parent, int style, String[] labelList, int[] signature, int[] sizeList){
@@ -73,9 +78,20 @@ public abstract class AbstractForm extends Composite {
 	protected Object get(String label){
 		return map.get(label);
 	}
+	
+	protected boolean check(){
+		//I think do error checking here is more convenient
+		for(int i=0; i<labelList.length; i++){
+			if(signature[i] == MACRO.TEXT){
+				Text text = (Text)get(labelList[i]);
+				return !text.getText().isEmpty();
+			}
+		}
+	}
 	private class SubmitHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			onSubmit();
+			if(check())	
+				onSubmit();
 			getParent().dispose();
 		}
 	}
