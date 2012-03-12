@@ -16,14 +16,17 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class SelectEventPage extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	ArrayList<Event> events;
-	DatabaseReader databaseReader;
-	List list;
-
+	private ArrayList<Event> events;
+	private DatabaseReader databaseReader;
+	private List list;
+	private Button btnSelect;
+	
 	/**
 	 * Create the composite.
 	 * 
@@ -70,40 +73,36 @@ public class SelectEventPage extends Composite {
 		btnCreateNewProject.addSelectionListener(new AddEventHandler());
 
 		list = new List(this, SWT.BORDER);
+		list.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				btnSelect.notifyListeners(SWT.Selection, null);
+			}
+		});
+
 		FormData fd_list = new FormData();
+		fd_list.bottom = new FormAttachment(100);
 		fd_list.left = new FormAttachment(0, 48);
-		fd_list.top = new FormAttachment(label_1, 25);
 		list.setLayoutData(fd_list);
 		for (int i = 0; i < events.size(); i++) {
 			list.add(events.get(i).getEventName());
 		}
 		toolkit.adapt(list, true, true);
 
-		Button btnSelect = new Button(this, SWT.NONE);
+		btnSelect = new Button(this, SWT.NONE);
 		fd_list.right = new FormAttachment(100, -205);
 		FormData fd_btnSelect = new FormData();
+		fd_btnSelect.right = new FormAttachment(100, -101);
+		fd_btnSelect.left = new FormAttachment(list, 21);
 		btnSelect.setLayoutData(fd_btnSelect);
 		toolkit.adapt(btnSelect, true, true);
 		btnSelect.setText("Select");
 		btnSelect.addSelectionListener(new SelectProjectHandler());
 
-		List list_1 = new List(this, SWT.BORDER);
-		fd_list.bottom = new FormAttachment(list_1, -6);
-		FormData fd_list_1 = new FormData();
-		fd_list_1.left = new FormAttachment(0, 48);
-		fd_list_1.top = new FormAttachment(0, 229);
-		fd_list_1.bottom = new FormAttachment(0, 254);
-		list_1.setLayoutData(fd_list_1);
-		toolkit.adapt(list_1, true, true);
-
 		Button btnCancel = new Button(this, SWT.NONE);
-		fd_btnSelect.bottom = new FormAttachment(btnCancel, -43);
-		fd_btnSelect.left = new FormAttachment(btnCancel, 0, SWT.LEFT);
-		fd_list_1.right = new FormAttachment(btnCancel, -21);
 		FormData fd_btnCancel = new FormData();
-		fd_btnCancel.top = new FormAttachment(list_1, -1, SWT.TOP);
-		fd_btnCancel.left = new FormAttachment(0, 236);
-		fd_btnCancel.right = new FormAttachment(0, 319);
+		fd_btnCancel.right = new FormAttachment(btnSelect, 0, SWT.RIGHT);
+		fd_btnCancel.left = new FormAttachment(btnSelect, 0, SWT.LEFT);
 		btnCancel.setLayoutData(fd_btnCancel);
 		toolkit.adapt(btnCancel, true, true);
 		btnCancel.setText("Cancel");
@@ -111,14 +110,15 @@ public class SelectEventPage extends Composite {
 
 		Label lblNewLabel = new Label(this, SWT.NONE);
 		FormData fd_lblNewLabel = new FormData();
-		fd_lblNewLabel.right = new FormAttachment(list, 0, SWT.RIGHT);
-		fd_lblNewLabel.bottom = new FormAttachment(label, -5);
+		fd_lblNewLabel.right = new FormAttachment(100, -205);
 		fd_lblNewLabel.left = new FormAttachment(0, 48);
+		fd_lblNewLabel.bottom = new FormAttachment(label, -5);
 		lblNewLabel.setLayoutData(fd_lblNewLabel);
 		toolkit.adapt(lblNewLabel, true, true);
 		lblNewLabel.setText("Welcome to Event Planner!");
 
 		Label lblSelectProject = new Label(this, SWT.NONE);
+		fd_list.top = new FormAttachment(lblSelectProject, 8);
 		FormData fd_lblSelectProject = new FormData();
 		fd_lblSelectProject.right = new FormAttachment(btnCreateNewProject, 0,
 				SWT.RIGHT);
@@ -130,12 +130,13 @@ public class SelectEventPage extends Composite {
 		lblSelectProject.setText("Select Event");
 
 		Button btnDeleteEvent = new Button(this, SWT.NONE);
-		fd_btnSelect.right = new FormAttachment(btnDeleteEvent, 0, SWT.RIGHT);
+		fd_btnCancel.top = new FormAttachment(btnDeleteEvent, 6);
+		fd_btnSelect.bottom = new FormAttachment(btnDeleteEvent, -6);
 		btnDeleteEvent.addSelectionListener(new DeleteProjectHandler());
 		FormData fd_btnDeleteEvent = new FormData();
-		fd_btnDeleteEvent.top = new FormAttachment(btnSelect, 6);
-		fd_btnDeleteEvent.right = new FormAttachment(list, 86, SWT.RIGHT);
-		fd_btnDeleteEvent.left = new FormAttachment(0, 236);
+		fd_btnDeleteEvent.right = new FormAttachment(100, -101);
+		fd_btnDeleteEvent.left = new FormAttachment(list, 21);
+		fd_btnDeleteEvent.top = new FormAttachment(0, 191);
 		btnDeleteEvent.setLayoutData(fd_btnDeleteEvent);
 		toolkit.adapt(btnDeleteEvent, true, true);
 		btnDeleteEvent.setText("Delete");
@@ -150,7 +151,7 @@ public class SelectEventPage extends Composite {
 	class DeleteProjectHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			int index = list.getSelectionIndex();
-			if (index > 0 && index <= list.getItemCount()) {
+			if (index >= 0 && index <= list.getItemCount()) {
 				list.remove(index);
 				databaseReader.deleteEvent(events.get(index));
 			}

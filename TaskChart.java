@@ -78,16 +78,11 @@ public class TaskChart extends Composite {
 		ySeries = new double[listOfPeople.size()];
 		for (int i = 0; i < listOfPeople.size(); i++) {
 			// populating the y-series
-			if (listOfTasksDone.get(i) == 0) {
-				ySeries[i] = 0;
-				break;
-			}
 			if (listOfTotalIndividualTask.get(i) == 0) {
-				ySeries[i] = 100;
+				ySeries[i] = 50;
 				break;
 			}
-			ySeries[i] = listOfTasksDone.get(i)
-					/ listOfTotalIndividualTask.get(i);
+			ySeries[i] = ((double)listOfTasksDone.get(i))/listOfTotalIndividualTask.get(i)*100;
 		}
 
 		// set Horizontal
