@@ -115,7 +115,8 @@ public class SQLManager {
 			"VenueID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
 			"Name VARCHAR(20)," +
 			"Location VARCHAR(50)," +
-			"Type VARCHAR(20))";
+			"Type VARCHAR(20)," +
+			"Capacity INTEGER)";
 	private static String createVenueBookingDetailsTable = 
 			"CREATE TABLE VenueBookingDetails(" +
 			"BookingID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
@@ -695,9 +696,9 @@ public class SQLManager {
 		}
 		return packingID;
 	}
-	public static int insertVenueDetails(Connection connection, String name, String location, String type){
+	public static int insertVenueDetails(Connection connection, String name, String location, String type, int capacity){
 		String insertVenueDetails = 
-				"INSERT INTO VenueDetails (Name, Location, Type) " +
+				"INSERT INTO VenueDetails (Name, Location, Type, Capacity) " +
 				"VALUES (?,?,?)";
 		int venueID = 0;
 		PreparedStatement prep = null;
@@ -707,6 +708,7 @@ public class SQLManager {
 			prep.setString(1, name);
 			prep.setString(2, location);
 			prep.setString(3, type);
+			prep.setInt(4, capacity);
 			prep.execute();
 			rs = prep.getGeneratedKeys();
 			while(rs.next()){
@@ -1184,7 +1186,7 @@ public class SQLManager {
 			sqle.printStackTrace();
 		}
 	}
-	public static void updateVenueDetails(Connection connection, int venueID, String name, String location, String type){
+	public static void updateVenueDetails(Connection connection, int venueID, String name, String location, String type, int capacity){
 		String updateVenueDetails =
 				"UPDATE VenueDetails SET Name=?,Location=?,Type=? " +
 				"WHERE VenueID=?";
@@ -1194,7 +1196,8 @@ public class SQLManager {
 			prep.setString(1, name);
 			prep.setString(2, location);
 			prep.setString(3, type);
-			prep.setInt(4, venueID);
+			prep.setInt(4, capacity);
+			prep.setInt(5, venueID);
 			prep.execute();
 		}catch(SQLException sqle){
 			sqle.printStackTrace();
