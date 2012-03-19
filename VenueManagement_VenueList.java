@@ -37,14 +37,14 @@ public class VenueManagement_VenueList extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 500, 350);
+		composite.setBounds(10, 10, 600, 350);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		venueTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		venueTable.setLinesVisible(true);
 		venueTable.setHeaderVisible(true);
-		venueTable.setBounds(10, 10, 307, 314);
+		venueTable.setBounds(10, 10, 408, 314);
 		toolkit.adapt(venueTable);
 		toolkit.paintBordersFor(venueTable);
 		
@@ -60,26 +60,30 @@ public class VenueManagement_VenueList extends Composite {
 		tableColumn_2.setWidth(103);
 		tableColumn_2.setText("Type");
 		
+		TableColumn tblclmnCapacity = new TableColumn(venueTable, SWT.CENTER);
+		tblclmnCapacity.setWidth(100);
+		tblclmnCapacity.setText("Capacity");
+		
 		Button btnAdd = new Button(composite, SWT.NONE);
 		btnAdd.setText("Add");
-		btnAdd.setBounds(348, 10, 89, 27);
+		btnAdd.setBounds(466, 10, 89, 27);
 		toolkit.adapt(btnAdd, true, true);
 		btnAdd.addSelectionListener(new add());
 		
 		Button btnDelete = new Button(composite, SWT.NONE);
 		btnDelete.setText("Delete");
-		btnDelete.setBounds(348, 43, 89, 27);
+		btnDelete.setBounds(466, 43, 89, 27);
 		toolkit.adapt(btnDelete, true, true);
 		btnDelete.addSelectionListener(new delete());
 		
 		Button btnEdit = new Button(composite, SWT.NONE);
 		btnEdit.setText("Edit");
-		btnEdit.setBounds(348, 76, 89, 27);
+		btnEdit.setBounds(466, 76, 89, 27);
 		toolkit.adapt(btnEdit, true, true);
 		
 		Button btnView = new Button(composite, SWT.NONE);
 		btnView.setText("View Booking Status");
-		btnView.setBounds(335, 109, 119, 27);
+		btnView.setBounds(451, 109, 119, 27);
 		toolkit.adapt(btnView, true, true);
 	    btnEdit.addSelectionListener(new edit());
 	    btnView.addSelectionListener(new viewBookingInfo());
@@ -97,6 +101,7 @@ public class VenueManagement_VenueList extends Composite {
 			temp.setText(0, venueList.get(i).getName());
 			temp.setText(1, venueList.get(i).getLocation());
 			temp.setText(2, venueList.get(i).getType());
+			temp.setText(3, venueList.get(i).getCapacity()+"");
 		}
 		
 	}
