@@ -4,18 +4,21 @@ public class Venue {
 	private String name;
 	private String location;
 	private String type;
+	private int capacity;
 	
-	public Venue(int venueId, String name, String location, String type) {
+	public Venue(int venueId, String name, String location, String type, int capacity) {
 		this.venueId = venueId;
 		this.name = name;
 		this.location = location;
 		this.type = type;
+		this.capacity = capacity;
 	}
 	
-	public Venue(String name, String location, String type) {
+	public Venue(String name, String location, String type, int capacity) {
 		this.name = name;
 		this.location = location;
 		this.type = type;
+		this.capacity = capacity;
 	}
 	public int getVenueId() {
 		return venueId;
@@ -44,6 +47,13 @@ public class Venue {
 		this.type = type;
 	}
 
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
 }
 	
 

@@ -22,6 +22,7 @@ public class eP_eventRegistration extends Composite {
 	private Text textAllergy;
 	private Text textMatriculation;
 	private Event event;
+	private Button btnClear;
 	/**
 	 * Create the composite.
 	 * 
@@ -123,7 +124,7 @@ public class eP_eventRegistration extends Composite {
 		btnSubmit.setBounds(10, 374, 80, 27);
 		toolkit.adapt(btnSubmit, true, true);
 		
-		Button btnClear = new Button(compositeRegistration, SWT.NONE);
+		btnClear = new Button(compositeRegistration, SWT.NONE);
 		btnClear.addSelectionListener(new RegistrationClear());
 		btnClear.setBounds(95, 374, 80, 27);
 		toolkit.adapt(btnClear, true, true);
@@ -143,6 +144,7 @@ public class eP_eventRegistration extends Composite {
 			participant.setFoodType(textFoodType.getText());
 			participant.setMatricNo(textMatriculation.getText());
 			db.insertParticipant(event, participant);
+			btnClear.notifyListeners(SWT.Selection, null);
 		}		
 	}
 
@@ -151,10 +153,10 @@ public class eP_eventRegistration extends Composite {
 			textName.setText("");
 			textYearOfStudy.setText("");
 			textFaculty.setText("");
-			textEvent.setText("");
 			textFoodType.setText("");
 			textAllergy.setText("");
 			textMatriculation.setText("");
+
 		}
 	}
 }

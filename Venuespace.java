@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-class Workspace2 extends Composite{
+class Venuespace extends Composite{
 	
 	Composite body;
 	Composite left;
@@ -30,7 +30,7 @@ class Workspace2 extends Composite{
 	};
 
 	//Constructor
-	public Workspace2(Composite parent, int style){
+	public Venuespace(Composite parent, int style){
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 1;

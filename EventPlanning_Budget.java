@@ -22,12 +22,10 @@ import org.eclipse.swt.events.SelectionEvent;
 
 import com.ibm.icu.text.DecimalFormat;
 
-
-
 public class EventPlanning_Budget extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	
+
 	public static Table OutflowTable;
 	public static Table InflowTable;
 	public static Table AllocationTable;
@@ -37,16 +35,26 @@ public class EventPlanning_Budget extends Composite {
 	public static Label lblSpentAmount1;
 	public static Label lblRemainingAmount;
 	public static Label lblYouStillHave_Amount;
-	
-	private DecimalFormat df = new DecimalFormat("#.00"); // to format a double to two decimal palces 
-	
+
+	private DecimalFormat df = new DecimalFormat("#.00"); // to format a double
+															// to two decimal
+															// palces
+
 	private Event event;
 	private ArrayList<BudgetAllocation> budgetAllocationList;
 	private ArrayList<Inflow> inflowList;
 	private ArrayList<Outflow> outflowList;
+	private String[] stringArrayBudget = { "Item", "Person in Charge",
+			"Cost($)", "Date" };
+	private String[] stringArrayInflow = { "Sponsor", "Amount($)", "Date",
+			"Remarks" };
+	private String[] stringArrayOutflow = { "Item", "Quantity", "Type",
+			"Purchase Date", "Cost" };
+	private int index;
 
 	/**
 	 * Create the composite.
+	 * 
 	 * @param parent
 	 * @param style
 	 */
@@ -60,158 +68,169 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
 		this.event = event; // access current event
-		
+
 		Composite BudgetComposite = new Composite(this, SWT.NONE);
 		BudgetComposite.setBounds(0, 0, 689, 430);
 		toolkit.adapt(BudgetComposite);
 		toolkit.paintBordersFor(BudgetComposite);
-		
+
 		TabFolder tabFolder = new TabFolder(BudgetComposite, SWT.NONE);
 		tabFolder.setBounds(0, 0, 689, 320);
 		toolkit.adapt(tabFolder);
 		toolkit.paintBordersFor(tabFolder);
-		
+
 		TabItem tbtmBudgetAllocation = new TabItem(tabFolder, SWT.NONE);
 		tbtmBudgetAllocation.setText("Budget Allocation");
-		
+
 		Composite AllocationComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmBudgetAllocation.setControl(AllocationComposite);
 		toolkit.paintBordersFor(AllocationComposite);
-		
-		AllocationTable = new Table(AllocationComposite, SWT.BORDER | SWT.FULL_SELECTION);
+
+		AllocationTable = new Table(AllocationComposite, SWT.BORDER
+				| SWT.FULL_SELECTION);
 		AllocationTable.setLinesVisible(true);
 		AllocationTable.setHeaderVisible(true);
 		AllocationTable.setBounds(10, 10, 542, 240);
 		toolkit.adapt(AllocationTable);
 		toolkit.paintBordersFor(AllocationTable);
-		
-		TableColumn AllocationTableItemColumn = new TableColumn(AllocationTable, SWT.NONE);
+
+		TableColumn AllocationTableItemColumn = new TableColumn(
+				AllocationTable, SWT.NONE);
 		AllocationTableItemColumn.setWidth(211);
 		AllocationTableItemColumn.setText("Item");
-		
-		TableColumn AllocationTablePersonInChargeColumn = new TableColumn(AllocationTable, SWT.CENTER);
+
+		TableColumn AllocationTablePersonInChargeColumn = new TableColumn(
+				AllocationTable, SWT.CENTER);
 		AllocationTablePersonInChargeColumn.setWidth(123);
 		AllocationTablePersonInChargeColumn.setText("Person in Charge");
-		
-		TableColumn AllocationTableCostColumn = new TableColumn(AllocationTable, SWT.CENTER);
+
+		TableColumn AllocationTableCostColumn = new TableColumn(
+				AllocationTable, SWT.CENTER);
 		AllocationTableCostColumn.setWidth(100);
 		AllocationTableCostColumn.setText("Cost($)");
-		
-		TableColumn AllocationTableDateColumn = new TableColumn(AllocationTable, SWT.CENTER);
+
+		TableColumn AllocationTableDateColumn = new TableColumn(
+				AllocationTable, SWT.CENTER);
 		AllocationTableDateColumn.setWidth(117);
 		AllocationTableDateColumn.setText("Date");
-		
+
 		Button btnAllocationAdd = new Button(AllocationComposite, SWT.NONE);
 		btnAllocationAdd.setBounds(575, 49, 75, 25);
 		toolkit.adapt(btnAllocationAdd, true, true);
 		btnAllocationAdd.setText("Add");
 		btnAllocationAdd.addSelectionListener(new AddAllocation());
-		
+
 		Button btnAllocationEdit = new Button(AllocationComposite, SWT.NONE);
 		btnAllocationEdit.setBounds(575, 95, 75, 25);
 		toolkit.adapt(btnAllocationEdit, true, true);
 		btnAllocationEdit.setText("Edit");
 		btnAllocationEdit.addSelectionListener(new EditAllocation());
-		
+
 		Button btnAllocationDelete = new Button(AllocationComposite, SWT.NONE);
 		btnAllocationDelete.setBounds(575, 138, 75, 25);
 		toolkit.adapt(btnAllocationDelete, true, true);
 		btnAllocationDelete.setText("Delete");
 		btnAllocationDelete.addSelectionListener(new DeleteAllocation());
-		
+
 		Label lblYouStillHave = new Label(AllocationComposite, SWT.NONE);
-		lblYouStillHave.setAlignment(SWT.RIGHT);
-		lblYouStillHave.setBounds(10, 256, 87, 15);
+		lblYouStillHave.setAlignment(SWT.CENTER);
+		lblYouStillHave.setBounds(10, 256, 98, 15);
 		toolkit.adapt(lblYouStillHave, true, true);
-		lblYouStillHave.setText("You still have($):");
-		
+		lblYouStillHave.setText("Money Left ($)");
+
 		lblYouStillHave_Amount = new Label(AllocationComposite, SWT.BORDER);
 		lblYouStillHave_Amount.setAlignment(SWT.CENTER);
-		lblYouStillHave_Amount.setBounds(103, 255, 55, 15);
+		lblYouStillHave_Amount.setBounds(114, 256, 108, 15);
 		toolkit.adapt(lblYouStillHave_Amount, true, true);
 		lblYouStillHave_Amount.setText("0.0");
-		
+
 		TabItem tbtmCashFlow = new TabItem(tabFolder, SWT.NONE);
 		tbtmCashFlow.setText("Cash Flow");
-		
+
 		Composite CashFlowComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmCashFlow.setControl(CashFlowComposite);
 		toolkit.paintBordersFor(CashFlowComposite);
-		
+
 		TabFolder tabFolder_1 = new TabFolder(CashFlowComposite, SWT.NONE);
 		tabFolder_1.setBounds(0, 0, 736, 287);
 		toolkit.adapt(tabFolder_1);
 		toolkit.paintBordersFor(tabFolder_1);
-		
+
 		TabItem tbtmInflow = new TabItem(tabFolder_1, SWT.NONE);
 		tbtmInflow.setText("Inflow");
-		
+
 		Composite InflowComposite = new Composite(tabFolder_1, SWT.NONE);
 		tbtmInflow.setControl(InflowComposite);
 		toolkit.paintBordersFor(InflowComposite);
-		
-		InflowTable = new Table(InflowComposite, SWT.BORDER | SWT.FULL_SELECTION);
+
+		InflowTable = new Table(InflowComposite, SWT.BORDER
+				| SWT.FULL_SELECTION);
 		InflowTable.setLinesVisible(true);
 		InflowTable.setHeaderVisible(true);
 		InflowTable.setBounds(10, 10, 551, 207);
 		toolkit.adapt(InflowTable);
 		toolkit.paintBordersFor(InflowTable);
-		
-		TableColumn InflowTableSponsorColumn = new TableColumn(InflowTable, SWT.CENTER);
+
+		TableColumn InflowTableSponsorColumn = new TableColumn(InflowTable,
+				SWT.CENTER);
 		InflowTableSponsorColumn.setWidth(150);
 		InflowTableSponsorColumn.setText("Sponsor");
-		
-		TableColumn InflowTableAmountColumn = new TableColumn(InflowTable, SWT.CENTER);
+
+		TableColumn InflowTableAmountColumn = new TableColumn(InflowTable,
+				SWT.CENTER);
 		InflowTableAmountColumn.setWidth(72);
 		InflowTableAmountColumn.setText("Amount($)");
-		
-		TableColumn InflowTableDateColumn = new TableColumn(InflowTable, SWT.CENTER);
+
+		TableColumn InflowTableDateColumn = new TableColumn(InflowTable,
+				SWT.CENTER);
 		InflowTableDateColumn.setWidth(100);
 		InflowTableDateColumn.setText("Date");
-		
-		TableColumn InflowTableRemarksColumn = new TableColumn(InflowTable, SWT.CENTER);
+
+		TableColumn InflowTableRemarksColumn = new TableColumn(InflowTable,
+				SWT.CENTER);
 		InflowTableRemarksColumn.setWidth(261);
 		InflowTableRemarksColumn.setText("Remarks");
-		
+
 		Button btnInflowAdd = new Button(InflowComposite, SWT.NONE);
 		btnInflowAdd.setBounds(585, 28, 75, 25);
 		toolkit.adapt(btnInflowAdd, true, true);
 		btnInflowAdd.setText("Add");
 		btnInflowAdd.addSelectionListener(new AddInflow());
-		
+
 		Button btnInflowEdit = new Button(InflowComposite, SWT.NONE);
 		btnInflowEdit.setBounds(585, 77, 75, 25);
 		toolkit.adapt(btnInflowEdit, true, true);
 		btnInflowEdit.setText("Edit");
 		btnInflowEdit.addSelectionListener(new EditInflow());
-		
+
 		Button btnInflowDelete = new Button(InflowComposite, SWT.NONE);
 		btnInflowDelete.setBounds(585, 128, 75, 25);
 		toolkit.adapt(btnInflowDelete, true, true);
 		btnInflowDelete.setText("Delete");
-		
+
 		Label lblTotalMoneyReceived = new Label(InflowComposite, SWT.NONE);
-		lblTotalMoneyReceived.setText("Total Money Received($):");
+		lblTotalMoneyReceived.setText("Money Received($):");
 		lblTotalMoneyReceived.setAlignment(SWT.CENTER);
 		lblTotalMoneyReceived.setBounds(10, 223, 139, 15);
 		toolkit.adapt(lblTotalMoneyReceived, true, true);
-		
+
 		lblReceivedAmount = new Label(InflowComposite, SWT.BORDER);
 		lblReceivedAmount.setText("0.0");
 		lblReceivedAmount.setAlignment(SWT.CENTER);
-		lblReceivedAmount.setBounds(168, 223, 72, 15);
+		lblReceivedAmount.setBounds(168, 223, 85, 15);
 		toolkit.adapt(lblReceivedAmount, true, true);
 		btnInflowDelete.addSelectionListener(new DeleteInflow());
-		
+
 		TabItem tbtmOutflow = new TabItem(tabFolder_1, SWT.NONE);
 		tbtmOutflow.setText("Outflow");
-		
+
 		Composite OutflowComposite = new Composite(tabFolder_1, SWT.NONE);
 		tbtmOutflow.setControl(OutflowComposite);
 		toolkit.paintBordersFor(OutflowComposite);
 		OutflowComposite.setLayout(new FormLayout());
-		
-		OutflowTable = new Table(OutflowComposite, SWT.BORDER | SWT.FULL_SELECTION);
+
+		OutflowTable = new Table(OutflowComposite, SWT.BORDER
+				| SWT.FULL_SELECTION);
 		OutflowTable.setToolTipText("(dd/mm/yyyy)\r\n");
 		OutflowTable.setLinesVisible(true);
 		OutflowTable.setHeaderVisible(true);
@@ -223,28 +242,33 @@ public class EventPlanning_Budget extends Composite {
 		OutflowTable.setLayoutData(fd_OutflowTable);
 		toolkit.adapt(OutflowTable);
 		toolkit.paintBordersFor(OutflowTable);
-		
-		TableColumn OutflowTableItemColumn = new TableColumn(OutflowTable, SWT.CENTER);
+
+		TableColumn OutflowTableItemColumn = new TableColumn(OutflowTable,
+				SWT.CENTER);
 		OutflowTableItemColumn.setWidth(236);
 		OutflowTableItemColumn.setText("Item");
-		
-		TableColumn OutflowTableQuantityColumn = new TableColumn(OutflowTable, SWT.CENTER);
+
+		TableColumn OutflowTableQuantityColumn = new TableColumn(OutflowTable,
+				SWT.CENTER);
 		OutflowTableQuantityColumn.setWidth(90);
 		OutflowTableQuantityColumn.setText("Quantity");
-		
-		TableColumn OutflowTableTypeColumn = new TableColumn(OutflowTable, SWT.CENTER);
+
+		TableColumn OutflowTableTypeColumn = new TableColumn(OutflowTable,
+				SWT.CENTER);
 		OutflowTableTypeColumn.setWidth(77);
 		OutflowTableTypeColumn.setText("Type");
-		
-		TableColumn OutflowTableDateColumn = new TableColumn(OutflowTable, SWT.CENTER);
+
+		TableColumn OutflowTableDateColumn = new TableColumn(OutflowTable,
+				SWT.CENTER);
 		OutflowTableDateColumn.setWidth(96);
 		OutflowTableDateColumn.setToolTipText("(dd/mm/yyyy)");
 		OutflowTableDateColumn.setText("Purchase Date");
-		
-		TableColumn OutflowTableCostColumn = new TableColumn(OutflowTable, SWT.CENTER);
+
+		TableColumn OutflowTableCostColumn = new TableColumn(OutflowTable,
+				SWT.CENTER);
 		OutflowTableCostColumn.setWidth(86);
 		OutflowTableCostColumn.setText("Cost($)");
-		
+
 		Button btnOutflowAdd = new Button(OutflowComposite, SWT.NONE);
 		FormData fd_btnOutflowAdd = new FormData();
 		fd_btnOutflowAdd.bottom = new FormAttachment(0, 57);
@@ -255,7 +279,7 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.adapt(btnOutflowAdd, true, true);
 		btnOutflowAdd.setText("Add");
 		btnOutflowAdd.addSelectionListener(new AddOutflow());
-		
+
 		Button btnOutflowEdit = new Button(OutflowComposite, SWT.NONE);
 		FormData fd_btnOutflowEdit = new FormData();
 		fd_btnOutflowEdit.top = new FormAttachment(btnOutflowAdd, 12);
@@ -265,7 +289,7 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.adapt(btnOutflowEdit, true, true);
 		btnOutflowEdit.setText("Edit");
 		btnOutflowEdit.addSelectionListener(new EditOutflow());
-		
+
 		Button btnOutflowDelete = new Button(OutflowComposite, SWT.NONE);
 		fd_btnOutflowEdit.bottom = new FormAttachment(btnOutflowDelete, -13);
 		FormData fd_btnOutflowDelete = new FormData();
@@ -276,37 +300,39 @@ public class EventPlanning_Budget extends Composite {
 		btnOutflowDelete.setLayoutData(fd_btnOutflowDelete);
 		toolkit.adapt(btnOutflowDelete, true, true);
 		btnOutflowDelete.setText("Delete");
-		
+
 		Label lblTotalMoneySpent = new Label(OutflowComposite, SWT.NONE);
-		lblTotalMoneySpent.setText("Total Money Spent($):");
+		lblTotalMoneySpent.setAlignment(SWT.CENTER);
+		lblTotalMoneySpent.setText("Money Spent($):");
 		FormData fd_lblTotalMoneySpent = new FormData();
 		fd_lblTotalMoneySpent.right = new FormAttachment(OutflowTable, 128);
 		fd_lblTotalMoneySpent.top = new FormAttachment(OutflowTable, 6);
-		fd_lblTotalMoneySpent.left = new FormAttachment(OutflowTable, 0, SWT.LEFT);
+		fd_lblTotalMoneySpent.left = new FormAttachment(OutflowTable, 0,
+				SWT.LEFT);
 		lblTotalMoneySpent.setLayoutData(fd_lblTotalMoneySpent);
 		toolkit.adapt(lblTotalMoneySpent, true, true);
-		
+
 		lblSpentAmount = new Label(OutflowComposite, SWT.BORDER);
 		lblSpentAmount.setText("0.0");
 		lblSpentAmount.setAlignment(SWT.CENTER);
 		FormData fd_lblSpentAmount = new FormData();
 		fd_lblSpentAmount.top = new FormAttachment(OutflowTable, 6);
 		fd_lblSpentAmount.left = new FormAttachment(lblTotalMoneySpent, 6);
-		fd_lblSpentAmount.right = new FormAttachment(100, -528);
+		fd_lblSpentAmount.right = new FormAttachment(100, -496);
 		lblSpentAmount.setLayoutData(fd_lblSpentAmount);
 		toolkit.adapt(lblSpentAmount, true, true);
 		btnOutflowDelete.addSelectionListener(new DeleteOutflow());
-		
-		
+
 		TabItem tbtmBudgetOverview = new TabItem(tabFolder, SWT.NONE);
 		tbtmBudgetOverview.setText("Budget Overview");
-		
+
 		Composite BudgetOverviewComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmBudgetOverview.setControl(BudgetOverviewComposite);
 		toolkit.paintBordersFor(BudgetOverviewComposite);
 		BudgetOverviewComposite.setLayout(new FormLayout());
-		
-		Composite OverviewComposite = new Composite(BudgetOverviewComposite, SWT.NONE);
+
+		Composite OverviewComposite = new Composite(BudgetOverviewComposite,
+				SWT.NONE);
 		FormData fd_OverviewComposite = new FormData();
 		fd_OverviewComposite.top = new FormAttachment(0, 10);
 		fd_OverviewComposite.bottom = new FormAttachment(100, -10);
@@ -314,7 +340,7 @@ public class EventPlanning_Budget extends Composite {
 		OverviewComposite.setLayoutData(fd_OverviewComposite);
 		toolkit.adapt(OverviewComposite);
 		toolkit.paintBordersFor(OverviewComposite);
-		
+
 		Label lblTotalMoneySpent1 = new Label(BudgetOverviewComposite, SWT.NONE);
 		fd_OverviewComposite.right = new FormAttachment(lblTotalMoneySpent1, -6);
 		lblTotalMoneySpent1.setAlignment(SWT.CENTER);
@@ -324,7 +350,7 @@ public class EventPlanning_Budget extends Composite {
 		lblTotalMoneySpent1.setLayoutData(fd_lblTotalMoneySpent1);
 		toolkit.adapt(lblTotalMoneySpent1, true, true);
 		lblTotalMoneySpent1.setText(" Total Money Spent($):");
-		
+
 		lblSpentAmount1 = new Label(BudgetOverviewComposite, SWT.BORDER);
 		lblSpentAmount1.setAlignment(SWT.CENTER);
 		lblSpentAmount1.setText("0.0");
@@ -334,7 +360,7 @@ public class EventPlanning_Budget extends Composite {
 		fd_lblSpentAmount1.top = new FormAttachment(lblTotalMoneySpent1, 6);
 		lblSpentAmount1.setLayoutData(fd_lblSpentAmount1);
 		toolkit.adapt(lblSpentAmount1, true, true);
-		
+
 		Label lblRemainingBudget = new Label(BudgetOverviewComposite, SWT.NONE);
 		lblRemainingBudget.setAlignment(SWT.CENTER);
 		lblRemainingBudget.setText("Remaining Budget($):");
@@ -344,7 +370,7 @@ public class EventPlanning_Budget extends Composite {
 		fd_lblRemainingBudget.top = new FormAttachment(lblSpentAmount1, 36);
 		lblRemainingBudget.setLayoutData(fd_lblRemainingBudget);
 		toolkit.adapt(lblRemainingBudget, true, true);
-		
+
 		lblRemainingAmount = new Label(BudgetOverviewComposite, SWT.BORDER);
 		lblRemainingAmount.setAlignment(SWT.CENTER);
 		lblRemainingAmount.setText("0.0");
@@ -354,13 +380,15 @@ public class EventPlanning_Budget extends Composite {
 		fd_lblRemainingAmount.top = new FormAttachment(lblRemainingBudget, 6);
 		lblRemainingAmount.setLayoutData(fd_lblRemainingAmount);
 		toolkit.adapt(lblRemainingAmount, true, true);
-		
-		Label lblTotalMoneyReceived1 = new Label(BudgetOverviewComposite, SWT.NONE);
+
+		Label lblTotalMoneyReceived1 = new Label(BudgetOverviewComposite,
+				SWT.NONE);
 		lblTotalMoneyReceived1.setText("Total Money Received($):");
 		lblTotalMoneyReceived1.setAlignment(SWT.CENTER);
 		FormData fd_lblTotalMoneyReceived1 = new FormData();
-		fd_lblTotalMoneyReceived1.left = new FormAttachment(OverviewComposite, 7);
-		
+		fd_lblTotalMoneyReceived1.left = new FormAttachment(OverviewComposite,
+				7);
+
 		Label lblNewLabel = new Label(OverviewComposite, SWT.NONE);
 		lblNewLabel.setAlignment(SWT.CENTER);
 		lblNewLabel.setBounds(163, 113, 106, 15);
@@ -370,7 +398,7 @@ public class EventPlanning_Budget extends Composite {
 		fd_lblTotalMoneyReceived1.top = new FormAttachment(0, 43);
 		lblTotalMoneyReceived1.setLayoutData(fd_lblTotalMoneyReceived1);
 		toolkit.adapt(lblTotalMoneyReceived1, true, true);
-		
+
 		lblReceivedAmount1 = new Label(BudgetOverviewComposite, SWT.BORDER);
 		fd_lblTotalMoneySpent1.top = new FormAttachment(lblReceivedAmount1, 39);
 		lblReceivedAmount1.setText("0.0");
@@ -381,214 +409,463 @@ public class EventPlanning_Budget extends Composite {
 		fd_label.right = new FormAttachment(100, -32);
 		lblReceivedAmount1.setLayoutData(fd_label);
 		toolkit.adapt(lblReceivedAmount1, true, true);
-		
+
 		importBudgetAllocationData();
 		importBudgetInflowData();
 		importBudgetOutflowData();
 	}
-	
-	public void importBudgetAllocationData(){
+
+	public void importBudgetAllocationData() {
 		DatabaseReader db = new DatabaseReader();
 		budgetAllocationList = db.getBudgetAllocation(event);
-        double totalCost = 0;
-		
+		double totalCost = 0;
+
 		/* update the budget allocation table */
-		for(int i=0; i<budgetAllocationList.size(); i++){
+		for (int i = 0; i < budgetAllocationList.size(); i++) {
 			TableItem temp = new TableItem(AllocationTable, SWT.NULL);
 			temp.setText(0, budgetAllocationList.get(i).getItem());
 			temp.setText(1, budgetAllocationList.get(i).getPersonInCharge());
-			temp.setText(2, String.valueOf(budgetAllocationList.get(i).getCost()));
-		    temp.setText(3, budgetAllocationList.get(i).getDate().toString());
-		    
-		    totalCost += budgetAllocationList.get(i).getCost();
+			temp.setText(2,
+					String.valueOf(budgetAllocationList.get(i).getCost()));
+			temp.setText(3, budgetAllocationList.get(i).getDate().toString());
+
+			totalCost += budgetAllocationList.get(i).getCost();
 		}
-		double currentAmount = Double.parseDouble(lblYouStillHave_Amount.getText());
-		lblYouStillHave_Amount.setText(String.valueOf(df.format(currentAmount - totalCost))); // update the notification box
-		
+
+		double currentAmount = Double
+				.parseDouble(EventPlanning_Budget.lblYouStillHave_Amount
+						.getText());
+		EventPlanning_Budget.lblYouStillHave_Amount.setText(String.valueOf(df
+				.format(currentAmount - totalCost))); // update the notification
+														// box
+
 		/* update budget overview section */
 		LabelCashFlow lbl = new LabelCashFlow();
-        lbl.label(); 
+		lbl.label();
 	}
-	
-	public void importBudgetInflowData(){
+
+	public void importBudgetInflowData() {
 		DatabaseReader db = new DatabaseReader();
 		inflowList = db.getInflow(event);
 		double totalInflow = 0;
-		
-		for(int i=0; i<inflowList.size(); i++){
+
+		for (int i = 0; i < inflowList.size(); i++) {
 			TableItem temp = new TableItem(InflowTable, SWT.NULL);
 			temp.setText(0, inflowList.get(i).getSponsor());
 			temp.setText(1, String.valueOf(inflowList.get(i).getAmount()));
 			temp.setText(2, inflowList.get(i).getDate().toString());
 			temp.setText(3, inflowList.get(i).getRemarks());
-			
-		    totalInflow += inflowList.get(i).getAmount();
-		}	
-		double currentAmount = Double.parseDouble(EventPlanning_Budget.lblReceivedAmount.getText());
-		EventPlanning_Budget.lblReceivedAmount.setText(String.valueOf(df.format(currentAmount + totalInflow)));  // the double value is formated to two decimal palces before being converted to a string
-	
+
+			totalInflow += inflowList.get(i).getAmount();
+		}
+		double currentAmount = Double
+				.parseDouble(EventPlanning_Budget.lblReceivedAmount.getText());
+		EventPlanning_Budget.lblReceivedAmount.setText(String.valueOf(df
+				.format(currentAmount + totalInflow))); // the double value is
+														// formated to two
+														// decimal palces before
+														// being converted to a
+														// string
+
 		/* update budget overview section */
 		LabelCashFlow lbl = new LabelCashFlow();
-        lbl.label(); 
+		lbl.label();
 	}
-	
-	public void importBudgetOutflowData(){
+
+	public void importBudgetOutflowData() {
 		DatabaseReader db = new DatabaseReader();
 		outflowList = db.getOutflow(event);
-	    double totalOutflow = 0;
-		
-		for(int i=0; i<outflowList.size(); i++){
+		double totalOutflow = 0;
+
+		for (int i = 0; i < outflowList.size(); i++) {
 			TableItem temp = new TableItem(OutflowTable, SWT.NULL);
 			temp.setText(0, outflowList.get(i).getItem());
 			temp.setText(1, String.valueOf(outflowList.get(i).getQuantity()));
 			temp.setText(2, outflowList.get(i).getType());
 			temp.setText(3, outflowList.get(i).getDate().toString());
 			temp.setText(4, String.valueOf(outflowList.get(i).getCost()));
-			
-			totalOutflow += outflowList.get(i).getCost();
-		}	
-		double currentAmount = Double.parseDouble(EventPlanning_Budget.lblSpentAmount.getText());
-		EventPlanning_Budget.lblSpentAmount.setText(String.valueOf(df.format(currentAmount + totalOutflow)));
-		
+
+			totalOutflow += outflowList.get(i).getCost()*outflowList.get(i).getQuantity();
+		}
+		double currentAmount = Double
+				.parseDouble(EventPlanning_Budget.lblSpentAmount.getText());
+		EventPlanning_Budget.lblSpentAmount.setText(String.valueOf(df
+				.format(currentAmount + totalOutflow)));
+
 		/* update budget overview section */
 		LabelCashFlow lbl = new LabelCashFlow();
-        lbl.label(); 
+		lbl.label();
 	}
 
 	// Budget Allocation
 	class AddAllocation extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if(AllocationTable.getSelectionCount()==0){
+			if (AllocationTable.getSelectionCount() == 0) {
 				Shell add_allocation_shell = new Shell(getDisplay());
-				AddBudgetAllocationPage add_allocation_page = new AddBudgetAllocationPage(add_allocation_shell, SWT.None, event);
+				AbstractAdd add_allocation_page = new AbstractAdd(
+						add_allocation_shell, SWT.None, stringArrayBudget) {
+					public void onSubmit() {
+						// insert to database
+						Date date = new Date(textList[3].getText());
+						BudgetAllocation budgetAllocation = new BudgetAllocation(
+								textList[0].getText(), textList[1].getText(),
+								Double.parseDouble(textList[2].getText()), date);
+						db.insertBudgetAllocation(event, budgetAllocation);
+						budgetAllocationList.add(budgetAllocation);
+						// update the table
+						TableItem item = new TableItem(AllocationTable,
+								SWT.NULL);
+						for (int i = 0; i < stringArrayBudget.length; i++) {
+							item.setText(i, textList[i].getText());
+						}
+
+						/* update budget allocation table */
+						double addition = Double.parseDouble(textList[2]
+								.getText());
+						double currentAmount = Double
+								.parseDouble(lblYouStillHave_Amount.getText());
+						lblYouStillHave_Amount.setText(String.valueOf(df
+								.format(currentAmount - addition)));
+
+						/* update budget overview section */
+						LabelCashFlow lbl = new LabelCashFlow();
+						lbl.label();
+					}
+				};
+
 				add_allocation_page.pack();
 				add_allocation_shell.pack();
-				add_allocation_shell.open();	
-			}
-			else AllocationTable.deselectAll(); // clear selection for add function
+				add_allocation_shell.open();
+			} else
+				AllocationTable.deselectAll(); // clear selection for add
+												// function
 		}
 	}
+
 	class DeleteAllocation extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e){
-			if (AllocationTable.getItemCount() != 0){
+		public void widgetSelected(SelectionEvent e) {
+			if (AllocationTable.getItemCount() != 0) {
 				int index = AllocationTable.getSelectionIndex();
-				if(index >=0 && index < AllocationTable.getItemCount()){
+				if (index >= 0 && index < AllocationTable.getItemCount()) {
 					/* update budget allocation table */
-					double currentAmount = Double.parseDouble(lblYouStillHave_Amount.getText());
-					double addition = Double.parseDouble(AllocationTable.getItem(index).getText(2));
-					lblYouStillHave_Amount.setText(String.valueOf(df.format(currentAmount + addition)));
+					double currentAmount = Double
+							.parseDouble(lblYouStillHave_Amount.getText());
+					double addition = Double.parseDouble(AllocationTable
+							.getItem(index).getText(2));
+					lblYouStillHave_Amount.setText(String.valueOf(df
+							.format(currentAmount + addition)));
 					AllocationTable.remove(index);
-					
+
 					/* update database */
 					DatabaseReader db = new DatabaseReader();
 					db.deleteBudgetAllocation(budgetAllocationList.get(index));
-					
+
 					/* update budget overview section */
 					LabelCashFlow lbl = new LabelCashFlow();
-                    lbl.label(); 
+					lbl.label();
 				}
 			}
 		}
 	}
+
 	class EditAllocation extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if(AllocationTable.getSelectionCount()!=0){
+			index = AllocationTable.getSelectionIndex();
+			if (AllocationTable.getSelectionCount() != 0) {
 				Shell edit_allocation_shell = new Shell(getDisplay());
-				AddBudgetAllocationPage edit_allocation_page = new AddBudgetAllocationPage(edit_allocation_shell, SWT.None, event);
+				AbstractEdit edit_allocation_page = new AbstractEdit(
+						edit_allocation_shell, SWT.None, stringArrayBudget) {
+					// setText
+					public void onLoad() {
+						for (int i = 0; i < stringArrayBudget.length; i++) {
+							textList[i].setText(AllocationTable.getItem(index)
+									.getText(i));
+						}
+					}
+
+					public void onSubmit() {
+						BudgetAllocation budgetAllocation = budgetAllocationList
+								.get(index);
+						budgetAllocation.setItem(textList[0].getText());
+						budgetAllocation.setPersonInCharge(textList[1]
+								.getText());
+						budgetAllocation.setCost(Double.parseDouble(textList[2]
+								.getText()));
+						budgetAllocation
+								.setDate(new Date(textList[3].getText()));
+
+						/* update budget allocation table */
+						double previous = Double.parseDouble(AllocationTable
+								.getItem(index).getText(2));
+						double addition = Double.parseDouble(textList[2]
+								.getText());
+						double currentAmount = Double
+								.parseDouble(lblYouStillHave_Amount.getText());
+						lblYouStillHave_Amount.setText(String.valueOf(df
+								.format(currentAmount - addition + previous)));
+
+						// update database
+						db.updateBudgetAllocation(budgetAllocation);
+						// update the table
+						for (int i = 0; i < stringArrayBudget.length; i++) {
+							AllocationTable.getItem(index).setText(i,
+									textList[i].getText());
+						}
+						/* update budget overview section */
+						LabelCashFlow lbl = new LabelCashFlow();
+						lbl.label();
+
+					}
+				};
+
 				edit_allocation_page.pack();
 				edit_allocation_shell.pack();
 				edit_allocation_shell.open();
 			}
 		}
 	}
-	
-	//Cash Flow
-	  //Inflow
+
+	// Cash Flow
+	// Inflow
 	class AddInflow extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if(InflowTable.getSelectionCount()==0){
+			if (InflowTable.getSelectionCount() == 0) {
 				Shell add_inflow_shell = new Shell(getDisplay());
-				AddInflowPage add_inflow_page = new AddInflowPage(add_inflow_shell, SWT.None, event);
+				AbstractAdd add_inflow_page = new AbstractAdd(
+						add_inflow_shell, SWT.None, stringArrayInflow) {
+					public void onSubmit() {
+						// insert to database
+						Date date = new Date(textList[2].getText());
+						Inflow inflow = new Inflow(textList[0].getText(),
+								Double.parseDouble(textList[1].getText()),
+								date, textList[3].getText());
+						db.insertInflow(event, inflow);
+						inflowList.add(inflow);
+						// update the table
+						TableItem item = new TableItem(InflowTable, SWT.NULL);
+						for (int i = 0; i < stringArrayInflow.length; i++) {
+							item.setText(i, textList[i].getText());
+						}
+						/* update budget inflow table */
+						double currentAmount = Double
+								.parseDouble(lblReceivedAmount.getText());
+						double addition = Double.parseDouble(textList[1].getText());
+						lblReceivedAmount.setText(String.valueOf(df
+								.format(currentAmount + addition)));
+						/* update budget overview section */
+						LabelCashFlow lbl = new LabelCashFlow();
+						lbl.label();
+					}
+				};
+
 				add_inflow_page.pack();
 				add_inflow_shell.pack();
-				add_inflow_shell.open();	
-			}
-			else InflowTable.deselectAll();
+				add_inflow_shell.open();
+			} else
+				InflowTable.deselectAll();
 		}
 	}
+
 	class DeleteInflow extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e){
-			if (InflowTable.getItemCount() != 0){
+		public void widgetSelected(SelectionEvent e) {
+			if (InflowTable.getItemCount() != 0) {
 				int index = InflowTable.getSelectionIndex();
-				if(index >=0 && index < InflowTable.getItemCount()){
+				if (index >= 0 && index < InflowTable.getItemCount()) {
 					/* update budget inflow table */
-					double currentAmount = Double.parseDouble(lblReceivedAmount.getText());
-					double deduction = Double.parseDouble(InflowTable.getItem(index).getText(1));
-					lblReceivedAmount.setText(String.valueOf(df.format(currentAmount - deduction)));
+					double currentAmount = Double.parseDouble(lblReceivedAmount
+							.getText());
+					double deduction = Double.parseDouble(InflowTable.getItem(
+							index).getText(1));
+					lblReceivedAmount.setText(String.valueOf(df
+							.format(currentAmount - deduction)));
 					InflowTable.remove(index);
-					
+
 					/* update database */
 					DatabaseReader db = new DatabaseReader();
 					db.deleteInflow(inflowList.get(index));
-					
+
 					/* update budget overview section */
 					LabelCashFlow lbl = new LabelCashFlow();
-                    lbl.label(); 
+					lbl.label();
 				}
 			}
 		}
 	}
+
 	class EditInflow extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if(InflowTable.getSelectionCount()!=0){
+			index = InflowTable.getSelectionIndex();
+			if (InflowTable.getSelectionCount() != 0) {
 				Shell edit_inflow_shell = new Shell(getDisplay());
-				AddInflowPage edit_inflow_page = new AddInflowPage(edit_inflow_shell, SWT.None, event);
+				AbstractEdit edit_inflow_page = new AbstractEdit(
+						edit_inflow_shell, SWT.None, stringArrayInflow) {
+					// setText
+					public void onLoad() {
+						for (int i = 0; i < stringArrayInflow.length; i++) {
+							textList[i].setText(InflowTable.getItem(index)
+									.getText(i));
+						}
+					}
+
+					public void onSubmit() {
+						Inflow inflow = inflowList.get(index);
+						inflow.setSponsor(textList[0].getText());
+						inflow.setAmount(Double.parseDouble(textList[1]
+								.getText()));
+						inflow.setDate(new Date(textList[2].getText()));
+						inflow.setRemarks(textList[3].getText());
+						// update database
+						db.updateInflow(inflow);
+
+						/* update budget inflow table */
+						double currentAmount = Double
+								.parseDouble(lblReceivedAmount.getText());
+						double deduction = Double.parseDouble(InflowTable
+								.getItem(index).getText(1));
+						double addition = Double.parseDouble(textList[1]
+								.getText());
+						lblReceivedAmount.setText(String.valueOf(df
+								.format(currentAmount - deduction + addition)));
+
+						// update the table
+						for (int i = 0; i < stringArrayInflow.length; i++) {
+							InflowTable.getItem(index).setText(i,
+									textList[i].getText());
+						}
+						/* update budget overview section */
+						LabelCashFlow lbl = new LabelCashFlow();
+						lbl.label();
+					}
+				};
+
 				edit_inflow_page.pack();
 				edit_inflow_shell.pack();
 				edit_inflow_shell.open();
 			}
 		}
 	}
-	  //Outflow
+
+	// Outflow
 	class AddOutflow extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if(OutflowTable.getSelectionCount()==0){
+			if (OutflowTable.getSelectionCount() == 0) {
 				Shell add_outflow_shell = new Shell(getDisplay());
-				AddOutflowPage add_outflow_page = new AddOutflowPage(add_outflow_shell, SWT.None,event);
+				AbstractAdd add_outflow_page = new AbstractAdd(
+						add_outflow_shell, SWT.None, stringArrayOutflow) {
+					public void onSubmit() {
+						// insert to database
+						Date date = new Date(textList[3].getText());
+						double amount = Double.parseDouble(textList[4].getText());
+						int quan=Integer.parseInt(textList[1].getText());
+						Outflow outflow = new Outflow(textList[0].getText(),
+								quan,
+								textList[2].getText(), date,
+								amount);
+						db.insertOutflow(event, outflow);
+						outflowList.add(outflow);
+						// update the table
+						TableItem item = new TableItem(OutflowTable, SWT.NULL);
+						for (int i = 0; i < stringArrayOutflow.length; i++) {
+							item.setText(i, textList[i].getText());
+						}
+
+						/* update budget outflow table */
+						double currentAmount = Double
+								.parseDouble(lblSpentAmount.getText());
+						double addition = amount*quan;
+						lblSpentAmount.setText(String.valueOf(df
+								.format(currentAmount + addition)));
+						
+						/* update budget overview section */
+						LabelCashFlow lbl = new LabelCashFlow();
+						lbl.label();
+					}
+				};
+
 				add_outflow_page.pack();
 				add_outflow_shell.pack();
-				add_outflow_shell.open();	
-			}
-			else OutflowTable.deselectAll();
+				add_outflow_shell.open();
+			} else
+				OutflowTable.deselectAll();
 		}
 	}
+
 	class DeleteOutflow extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e){
-			if (OutflowTable.getItemCount() != 0){
+		public void widgetSelected(SelectionEvent e) {
+			if (OutflowTable.getItemCount() != 0) {
 				int index = OutflowTable.getSelectionIndex();
-				if(index >=0 && index < OutflowTable.getItemCount()){
+				if (index >= 0 && index < OutflowTable.getItemCount()) {
 					/* update budget outflow table */
-					double currentAmount = Double.parseDouble(lblSpentAmount.getText());
-					double deduction = Double.parseDouble(OutflowTable.getItem(index).getText(4));
-					lblSpentAmount.setText(String.valueOf(df.format(currentAmount - deduction)));
+					double amount = Double.parseDouble(OutflowTable.getItem(index).getText(4));
+					int quan = Integer.parseInt(OutflowTable.getItem(index).getText(1));
+					double currentAmount = Double.parseDouble(lblSpentAmount
+							.getText());
+					double deduction = amount * quan;
+					lblSpentAmount.setText(String.valueOf(df
+							.format(currentAmount - deduction)));
 					OutflowTable.remove(index);
-					
+
 					/* update database */
 					DatabaseReader db = new DatabaseReader();
 					db.deleteOutflow(outflowList.get(index));
-					
+
 					/* update budget overview section */
 					LabelCashFlow lbl = new LabelCashFlow();
-                    lbl.label(); 
+					lbl.label();
 				}
 			}
 		}
 	}
+
 	class EditOutflow extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if(OutflowTable.getSelectionCount()!=0){
+			if (OutflowTable.getSelectionCount() != 0) {
 				Shell edit_outflow_shell = new Shell(getDisplay());
-				AddOutflowPage edit_outflow_page = new AddOutflowPage(edit_outflow_shell, SWT.None,event);
+				AbstractEdit edit_outflow_page = new AbstractEdit(
+						edit_outflow_shell, SWT.None, stringArrayOutflow) {
+					// setText
+					public void onLoad() {
+						for (int i = 0; i < stringArrayOutflow.length; i++) {
+							textList[i].setText(InflowTable.getItem(index)
+									.getText(i));
+						}
+					}
+
+					public void onSubmit() {
+						Outflow outflow = outflowList.get(index);
+						int quan = Integer.parseInt(textList[1]
+								.getText());
+						double amount = Double.parseDouble(textList[4]
+								.getText());
+						outflow.setItem(textList[0].getText());
+						outflow.setQuantity(quan);
+						outflow.setType(textList[2].getText());
+						outflow.setDate(new Date(textList[3].getText()));
+						outflow.setCost(amount);
+						// update database
+						db.updateOutflow(outflow);
+
+						/* update budget outflow table */
+						int quanPrev = Integer.parseInt(OutflowTable.getItem(index).getText(1));
+						double amountPrev = Double.parseDouble(OutflowTable.getItem(index).getText(4));
+						double currentAmount = Double
+								.parseDouble(lblSpentAmount.getText());
+						double deduction = amountPrev * quanPrev;
+						double addition = quan* amount;
+						lblSpentAmount.setText(String.valueOf(df
+								.format(currentAmount - deduction + addition)));
+
+						// update the table
+						for (int i = 0; i < stringArrayOutflow.length; i++) {
+							InflowTable.getItem(index).setText(i,
+									textList[i].getText());
+						}
+						/* update budget overview section */
+						LabelCashFlow lbl = new LabelCashFlow();
+						lbl.label();
+					}
+				};
+
 				edit_outflow_page.pack();
 				edit_outflow_shell.pack();
 				edit_outflow_shell.open();

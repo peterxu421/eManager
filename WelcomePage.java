@@ -70,7 +70,7 @@ public class WelcomePage extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM | SWT.ON_TOP);
 			add_item_shell.setLocation(400,250);
-			AddEvent add_new_item_page = new AddEvent(add_item_shell,
+			SelectEventPage add_new_item_page = new SelectEventPage(add_item_shell,
 					SWT.None);
 			add_new_item_page.pack();
 			add_item_shell.pack();
@@ -81,7 +81,7 @@ public class WelcomePage extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell shell = new Shell(getDisplay());
 			shell.setLocation(200,100);
-			Workspace2 ws2 = new Workspace2(shell, SWT.None);
+			Venuespace ws2 = new Venuespace(shell, SWT.None);
 				ws2.pack();
 				shell.pack();
 				shell.open();

@@ -7,4 +7,5 @@ public class MACRO {
 	public static int PENDING = 1; 
 	public static int APPROVED = 2;
 	public static int REJECTED = 3;
+
 }
