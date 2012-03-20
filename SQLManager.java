@@ -699,7 +699,7 @@ public class SQLManager {
 	public static int insertVenueDetails(Connection connection, String name, String location, String type, int capacity){
 		String insertVenueDetails = 
 				"INSERT INTO VenueDetails (Name, Location, Type, Capacity) " +
-				"VALUES (?,?,?)";
+				"VALUES (?,?,?,?)";
 		int venueID = 0;
 		PreparedStatement prep = null;
 		ResultSet rs = null;
@@ -1188,7 +1188,7 @@ public class SQLManager {
 	}
 	public static void updateVenueDetails(Connection connection, int venueID, String name, String location, String type, int capacity){
 		String updateVenueDetails =
-				"UPDATE VenueDetails SET Name=?,Location=?,Type=? " +
+				"UPDATE VenueDetails SET Name=?,Location=?,Type=?,Capacity=? " +
 				"WHERE VenueID=?";
 		PreparedStatement prep = null;
 		try{

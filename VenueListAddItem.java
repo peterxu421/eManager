@@ -19,7 +19,6 @@ public class VenueListAddItem extends Composite {
 	private Text location;
 	private Text type;
 	private Text capacity;
-	
 	private Table table;
 	//private ArrayList<Venue> venueList; //  from database 
 
