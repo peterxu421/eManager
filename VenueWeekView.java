@@ -83,7 +83,9 @@ public class VenueWeekView extends Composite {
 		
 		
 		weekViewTable.addListener(SWT.MouseDoubleClick, new chooseTime());
-		
+
+//		weekViewTable.addMouseMoveListener(new mouseHighlight());
+
 		cellColor = weekViewTable.getDisplay().getSystemColor(SWT.COLOR_LIST_SELECTION);
 
 		Label lblEnterPreferredEvent = new Label(composite, SWT.NONE);
@@ -195,7 +197,7 @@ public class VenueWeekView extends Composite {
 			}
 		}
 	}
-	public class mouseHighlight extends MouseMotionAdapter{
+/*	public class mouseHighlight extends MouseMotionAdapter{
 		public void mouseMoved(MouseEvent event) {
 			  Point pt = new Point(event.x, event.y);
 			  TableItem item = weekViewTable.getItem(pt);
@@ -208,11 +210,9 @@ public class VenueWeekView extends Composite {
 			    	  weekViewTable.deselectAll();
 			          System.out.println(weekViewTable.getItem(rowIndex).getText(i));
 			      }
-			  }
-			
+			  }	
 		}
-
-	}
+	}*/
 }
 
 
