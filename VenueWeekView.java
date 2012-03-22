@@ -1,10 +1,8 @@
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -60,7 +58,7 @@ public class VenueWeekView extends Composite {
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
-		weekViewTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		weekViewTable = new Table(composite, SWT.BORDER);
 		weekViewTable.setBounds(10, 53, 630, 410);
 		toolkit.adapt(weekViewTable);
 		toolkit.paintBordersFor(weekViewTable);
@@ -85,7 +83,7 @@ public class VenueWeekView extends Composite {
 		
 		
 		weekViewTable.addListener(SWT.MouseDoubleClick, new chooseTime());
-		weekViewTable.addMouseMoveListener(new mouseHighlight());
+		
 		cellColor = weekViewTable.getDisplay().getSystemColor(SWT.COLOR_LIST_SELECTION);
 
 		Label lblEnterPreferredEvent = new Label(composite, SWT.NONE);
