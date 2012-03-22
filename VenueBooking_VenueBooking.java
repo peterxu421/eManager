@@ -180,7 +180,7 @@ public class VenueBooking_VenueBooking extends Composite {
 	public class deleteDateTime extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
 			int index = listDateTime.getSelectionIndex();
-			if(index >0 && index <= listDateTime.getItemCount()){
+			if(index >=0 && index < listDateTime.getItemCount()){
 				listDateTime.remove(index);
 			}	
 		}	

@@ -51,4 +51,13 @@ public class Date {
 				Integer.parseInt(dates[1]), Integer.parseInt(dates[2]));
 		return date;
 	}
+	
+	boolean isEqualTo(Date date){
+		if(this.day == date.getDay() &&
+		        this.month == date.getMonth() &&
+				this.year == date.getYear()){
+			return true;	
+		}
+		else return false;	
+	}
 }

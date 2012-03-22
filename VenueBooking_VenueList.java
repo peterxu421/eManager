@@ -110,11 +110,11 @@ public class VenueBooking_VenueList extends Composite {
 		public void widgetSelected(SelectionEvent e){
 			int index = venueTable.getSelectionIndex();
 			if(index >=0 && index < venueTable.getItemCount()){
-				Shell viewBookingInfoShell = new Shell(getDisplay());
-				VenueViewBookingInfo viewBookingInfoPage = new VenueViewBookingInfo(viewBookingInfoShell, SWT.None, index);
-				viewBookingInfoPage.pack();
-				viewBookingInfoShell.pack();
-				viewBookingInfoShell.open();
+				Shell venueWeekViewShell = new Shell(getDisplay());
+				VenueWeekView venueWeekViewPage = new VenueWeekView(venueWeekViewShell, SWT.None, index);
+				venueWeekViewPage.pack();
+				venueWeekViewShell.pack();
+				venueWeekViewShell.open();
 			}
 		}
 	}

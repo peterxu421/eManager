@@ -127,7 +127,7 @@ public class VenueManagement_VenueList extends Composite {
 					venueTable.remove(index);
 					/* update the database */
 					DatabaseReader db = new DatabaseReader();
-					db.deleteVenue(venueList.get(index));
+					db.deleteVenue(db.getVenues().get(index));
 				}
 			}
 		}

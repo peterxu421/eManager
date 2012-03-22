@@ -50,4 +50,10 @@ public class Time {
 		Time time = new Time(Integer.parseInt(contents[0]), Integer.parseInt(contents[1]), Integer.parseInt(contents[2]));
 		return time;
 	}
+	
+	public static int parseHour(String timeString){
+		String[] contents = timeString.split(":");
+		int hour = Integer.parseInt(contents[0]);
+		return hour;
+	}
 }
