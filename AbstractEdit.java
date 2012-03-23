@@ -5,8 +5,8 @@ import org.eclipse.swt.widgets.Composite;
 
 public abstract class AbstractEdit extends AbstractForm {
 
-	public AbstractEdit(Composite parent, int style, String[] stringList) {
-		super(parent, style, stringList);
+	public AbstractEdit(Composite parent, int style, String[] stringList, int[] signature) {
+		super(parent, style, stringList, signature);
 		// TODO Auto-generated constructor stub
 		// Set buttons
 		btnAdd = new Button(this, SWT.None);
