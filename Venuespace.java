@@ -42,7 +42,7 @@ class Venuespace extends Composite{
 	    
 	    //optionBar->
 	    GridLayout optionBarLayout = new GridLayout();
-	    optionBarLayout.marginLeft = 150;
+	    optionBarLayout.marginLeft = 155;
 	    optionBarLayout.numColumns = 4;
 	    optionBar.setLayout(optionBarLayout);
 	    

@@ -6,6 +6,10 @@ public class Venue {
 	private String type;
 	private int capacity;
 	
+	public Venue() {
+		super();
+	}
+
 	public Venue(int venueId, String name, String location, String type, int capacity) {
 		this.venueId = venueId;
 		this.name = name;

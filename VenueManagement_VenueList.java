@@ -82,8 +82,8 @@ public class VenueManagement_VenueList extends Composite {
 		toolkit.adapt(btnEdit, true, true);
 		
 		Button btnView = new Button(composite, SWT.NONE);
-		btnView.setText("View Booking Status");
-		btnView.setBounds(451, 109, 119, 27);
+		btnView.setText("View Booking Applications");
+		btnView.setBounds(437, 109, 153, 27);
 		toolkit.adapt(btnView, true, true);
 	    btnEdit.addSelectionListener(new edit());
 	    btnView.addSelectionListener(new viewBookingInfo());
@@ -108,6 +108,7 @@ public class VenueManagement_VenueList extends Composite {
 	
 	public class add extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
+			venueTable.deselectAll();
 			Shell addVenueShell = new Shell(getDisplay());
 			VenueListAddItem addVenuePage = new VenueListAddItem(addVenueShell, SWT.None, venueTable);
 			addVenuePage.pack();
@@ -150,11 +151,11 @@ public class VenueManagement_VenueList extends Composite {
 		public void widgetSelected(SelectionEvent e){
 			int index = venueTable.getSelectionIndex();
 			if(index >=0 && index < venueTable.getItemCount()){
-				Shell viewBookingInfoShell = new Shell(getDisplay());
-				VenueViewBookingInfo viewBookingInfoPage = new VenueViewBookingInfo(viewBookingInfoShell, SWT.None, index);
-				viewBookingInfoPage.pack();
-				viewBookingInfoShell.pack();
-				viewBookingInfoShell.open();
+				Shell venueWeekViewShell = new Shell(getDisplay());
+				VenueManagement_VenueWeekView venueWeekViewPage = new VenueManagement_VenueWeekView(venueWeekViewShell, SWT.None, index);
+				venueWeekViewPage.pack();
+				venueWeekViewShell.pack();
+				venueWeekViewShell.open();
 			}
 		}
 	}

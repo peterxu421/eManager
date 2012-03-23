@@ -64,16 +64,10 @@ public class VenueBooking_VenueList extends Composite {
 		tblclmnCapacity.setWidth(100);
 		tblclmnCapacity.setText("Capacity");
 		
-		Button btnBook = new Button(composite, SWT.NONE);
-		btnBook.setBounds(447, 10, 75, 25);
-		toolkit.adapt(btnBook, true, true);
-		btnBook.setText("Book");
-		
 		Button btnCheckAvailability = new Button(composite, SWT.NONE);
-		btnCheckAvailability.setBounds(429, 54, 106, 25);
+		btnCheckAvailability.setBounds(422, 10, 106, 25);
 		toolkit.adapt(btnCheckAvailability, true, true);
 		btnCheckAvailability.setText("Check Availability");
-		btnBook.addSelectionListener(new bookVenue());
 		btnCheckAvailability.addSelectionListener(new check());
 		
 		importVenueListData();
@@ -92,26 +86,12 @@ public class VenueBooking_VenueList extends Composite {
 		}
 	}
 	
-	public class bookVenue extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e){
-			int index = venueTable.getSelectionIndex();
-			if(index >=0 && index < venueTable.getItemCount()){
-				Venue selected = venueList.get(index);
-				Shell vBookingShell = new Shell(getDisplay());
-				VenueBooking_VenueBooking vBookingPage  = new VenueBooking_VenueBooking(vBookingShell, SWT.None, selected);
-				vBookingPage.pack();
-				vBookingShell.pack();
-				vBookingShell.open();
-			}
-		}
-	}
-	
 	public class check extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
 			int index = venueTable.getSelectionIndex();
 			if(index >=0 && index < venueTable.getItemCount()){
 				Shell venueWeekViewShell = new Shell(getDisplay());
-				VenueWeekView venueWeekViewPage = new VenueWeekView(venueWeekViewShell, SWT.None, index);
+				VenueBooking_VenueWeekView venueWeekViewPage = new VenueBooking_VenueWeekView(venueWeekViewShell, SWT.None, index);
 				venueWeekViewPage.pack();
 				venueWeekViewShell.pack();
 				venueWeekViewShell.open();
