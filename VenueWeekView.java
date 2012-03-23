@@ -73,14 +73,14 @@ public class VenueWeekView extends Composite {
 			tblclmn[i].setWidth(75);	
 		}
 		
-		weekViewTable.addListener(SWT.EraseItem, new Listener()
-		{
-			public void handleEvent(Event event)
-			{
-				event.detail &= ~SWT.SELECTED;
-			}			
-		}); // Disable the default table selection
-		
+//		weekViewTable.addListener(SWT.EraseItem, new Listener()
+//		{
+//			public void handleEvent(Event event)
+//			{
+//				event.detail &= ~SWT.SELECTED;
+//			}			
+//		}); // Disable the default table selection
+//		
 		
 		weekViewTable.addListener(SWT.MouseDoubleClick, new chooseTime());
 
@@ -117,7 +117,7 @@ public class VenueWeekView extends Composite {
 			      if (rect.contains(pt)) {
 			    	  int rowIndex = weekViewTable.indexOf(item);
 			    	  weekViewTable.getItem(rowIndex).setBackground(i, cellColor);
-			    	  weekViewTable.deselectAll();
+			    	  //weekViewTable.deselectAll();
 			          System.out.println(weekViewTable.getItem(rowIndex).getText(i));
 			      }
 			  }
