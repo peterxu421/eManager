@@ -3,7 +3,10 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+<<<<<<< HEAD
 import org.eclipse.swt.graphics.Image;
+=======
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -82,9 +85,12 @@ public class WelcomePage extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell shell = new Shell(getDisplay());
 			shell.setLocation(200,100);
+<<<<<<< HEAD
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			shell.setText("eManager");
 			shell.setImage(icon);
+=======
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 			Venuespace ws2 = new Venuespace(shell, SWT.None);
 				ws2.pack();
 				shell.pack();

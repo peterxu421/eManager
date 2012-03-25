@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -14,7 +17,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+<<<<<<< HEAD
 import org.eclipse.swt.graphics.Image;
+=======
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 
 
 public class VenueManagement_VenueList extends Composite {
@@ -39,14 +45,22 @@ public class VenueManagement_VenueList extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
+<<<<<<< HEAD
 		composite.setBounds(0, 0, 587, 351);
+=======
+		composite.setBounds(10, 10, 600, 350);
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		venueTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		venueTable.setLinesVisible(true);
 		venueTable.setHeaderVisible(true);
+<<<<<<< HEAD
 		venueTable.setBounds(0, 0, 408, 314);
+=======
+		venueTable.setBounds(10, 10, 408, 314);
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		toolkit.adapt(venueTable);
 		toolkit.paintBordersFor(venueTable);
 		
@@ -68,24 +82,40 @@ public class VenueManagement_VenueList extends Composite {
 		
 		Button btnAdd = new Button(composite, SWT.NONE);
 		btnAdd.setText("Add");
+<<<<<<< HEAD
 		btnAdd.setBounds(454, 10, 89, 27);
+=======
+		btnAdd.setBounds(466, 10, 89, 27);
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		toolkit.adapt(btnAdd, true, true);
 		btnAdd.addSelectionListener(new add());
 		
 		Button btnDelete = new Button(composite, SWT.NONE);
 		btnDelete.setText("Delete");
+<<<<<<< HEAD
 		btnDelete.setBounds(454, 43, 89, 27);
+=======
+		btnDelete.setBounds(466, 43, 89, 27);
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		toolkit.adapt(btnDelete, true, true);
 		btnDelete.addSelectionListener(new delete());
 		
 		Button btnEdit = new Button(composite, SWT.NONE);
 		btnEdit.setText("Edit");
+<<<<<<< HEAD
 		btnEdit.setBounds(454, 76, 89, 27);
+=======
+		btnEdit.setBounds(466, 76, 89, 27);
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		toolkit.adapt(btnEdit, true, true);
 		
 		Button btnView = new Button(composite, SWT.NONE);
 		btnView.setText("View Booking Applications");
+<<<<<<< HEAD
 		btnView.setBounds(423, 109, 153, 27);
+=======
+		btnView.setBounds(437, 109, 153, 27);
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		toolkit.adapt(btnView, true, true);
 	    btnEdit.addSelectionListener(new edit());
 	    btnView.addSelectionListener(new viewBookingInfo());
@@ -154,9 +184,12 @@ public class VenueManagement_VenueList extends Composite {
 			int index = venueTable.getSelectionIndex();
 			if(index >=0 && index < venueTable.getItemCount()){
 				Shell venueWeekViewShell = new Shell(getDisplay());
+<<<<<<< HEAD
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
 				venueWeekViewShell.setText("eManager");
 				venueWeekViewShell.setImage(icon);
+=======
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 				VenueManagement_VenueWeekView venueWeekViewPage = new VenueManagement_VenueWeekView(venueWeekViewShell, SWT.None, index);
 				venueWeekViewPage.pack();
 				venueWeekViewShell.pack();

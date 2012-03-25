@@ -13,6 +13,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+<<<<<<< HEAD
+=======
+import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.wb.swt.SWTResourceManager;
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 
 public class VenueBooking_VenueBooking extends Composite {
 
@@ -25,6 +30,11 @@ public class VenueBooking_VenueBooking extends Composite {
 	private Text email;
 	
 	private Venue selected;
+<<<<<<< HEAD
+=======
+	private ArrayList<BookedDateTime> bookedDateTimeList = new ArrayList<BookedDateTime>();
+               // an arrayList storing the booked date and time in the format of BookedDateTime
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
     private ArrayList<BookedDateTime> bookedDateTimeIntervalList = new ArrayList<BookedDateTime>();
 	/**
 	 * Create the composite.
@@ -41,6 +51,10 @@ public class VenueBooking_VenueBooking extends Composite {
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
 		this.selected = selected; 
+<<<<<<< HEAD
+=======
+		this.bookedDateTimeList = bookedDateTimeList;
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(10, 10, 450, 436);
@@ -137,6 +151,10 @@ public class VenueBooking_VenueBooking extends Composite {
 			String _organization = "";
 			String _contact = "";
 			String _email = "";
+<<<<<<< HEAD
+=======
+			ArrayList<BookedDateTime> _listDateTime = new ArrayList<BookedDateTime>();
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 			
 			if(!name.getText().isEmpty()){
 				_name = name.getText();
@@ -153,6 +171,7 @@ public class VenueBooking_VenueBooking extends Composite {
 			if(!email.getText().isEmpty()){
 				_email = email.getText();
 			}
+<<<<<<< HEAD
 
 			/* Update the database with the booking application */
 			if(!name.getText().isEmpty() &&
@@ -168,6 +187,23 @@ public class VenueBooking_VenueBooking extends Composite {
 				}
 				getParent().dispose();
 			}
+=======
+/*			if(listDateTime.getItemCount()!=0){
+				for (int i=0; i<listDateTime.getItemCount(); i++){
+					BookedDateTime dateTime = BookedDateTime.parseBookingDateTime(listDateTime.getItem(i));
+					_listDateTime.add(dateTime);
+				}
+			}*/
+
+			/* Update the database with the booking application */
+			DatabaseReader db = new DatabaseReader();
+			for(int i=0; i<bookedDateTimeIntervalList.size(); i++){
+				VenueApplicant newApplicant = new VenueApplicant(_name, _matricNo, _contact, _email, _organization);
+				VenueBookingInfo newBookingInfo = new VenueBookingInfo(selected, newApplicant, bookedDateTimeIntervalList.get(i));
+			    db.insertVenueBookingInfo(newBookingInfo);
+			}
+			getParent().dispose();
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		}
 	}
 	public class reset extends SelectionAdapter{
