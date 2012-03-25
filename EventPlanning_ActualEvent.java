@@ -448,14 +448,11 @@ public class EventPlanning_ActualEvent extends Composite {
 					itineraryAddItemPage, SWT.None, stringArrayItinerary, signatureItinerary) {
 				public void onSubmit() {
 					// insert to database
-					Text tempText=(Text)get(stringArrayItinerary[0]);
-					DateTime tempDate=(DateTime)get(stringArrayItinerary[1]);
-					Date date = new Date(tempDate.getYear(),tempDate.getMonth(),tempDate.getDay());
-					DateTime tempTime=(DateTime)get(stringArrayItinerary[2]);
-					Time time = new Time(tempDate.getHours(),tempDate.getMinutes(),tempDate.getSeconds());
-					Button tempDone=(Button)get(stringArrayItinerary[3]);
-					Itinerary itinerary = new Itinerary(tempText.getText(),
-							date, time, tempDone.getSelection());
+					String[] tempList=get();
+					Date date=new Date(tempList[1]);
+					Time time=new Time(tempList[2]);
+					Done done=new Done(tempList[3]);
+					Itinerary itinerary = new Itinerary(tempList[0], date, time, done.isDone());
 					db.insertItinerary(event, itinerary);
 					itineraryList.add(itinerary);
 					// update the table
@@ -463,7 +460,7 @@ public class EventPlanning_ActualEvent extends Composite {
 							table_eventPlanning_actualEvent_tableItinerary,
 							SWT.NULL);
 					for (int i = 0; i < stringArrayItinerary.length; i++) {
-						item.setText(i, textList[i].getText());
+						item.setText(i, tempList[i]);
 					}
 				}
 			};
