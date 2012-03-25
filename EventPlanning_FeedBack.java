@@ -21,6 +21,7 @@ public class EventPlanning_FeedBack extends Composite {
 	private Event event;
 	private Composite compositeFeedBack;
 	private String[] stringArray = { "Issue", "Date", "Time" };
+	private int[] signatureArray = { MACRO.TEXT, MACRO.DATE, MACRO.TIME };
 	private int index;
 
 	/**
@@ -111,20 +112,21 @@ public class EventPlanning_FeedBack extends Composite {
 	public class FeedBackAddItemPage extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell feedbackAddItemPage = new Shell(getDisplay());
-			AbstractAdd feedbackAddItem = new AbstractAdd(
-					feedbackAddItemPage, SWT.None, stringArray) {
+			AbstractAdd feedbackAddItem = new AbstractAdd(feedbackAddItemPage,
+					SWT.None, stringArray,signatureArray) {
 				public void onSubmit() {
-					//insert to database
-					Date date = new Date(textList[1].getText());
-					Time time = new Time(textList[2].getText());
-					Feedback feedback = new Feedback(textList[0].getText(),
+					// insert to database
+					String[] tempList=getStringList();
+					Date date = new Date(tempList[1]);
+					Time time = new Time(tempList[2]);
+					Feedback feedback = new Feedback(tempList[0],
 							date, time);
 					db.insertFeedback(event, feedback);
 					feedbackList.add(feedback);
 					// update the table
 					TableItem item = new TableItem(tableFeedBack, SWT.NULL);
-					for(int i=0; i<stringArray.length; i++){
-						item.setText(i,textList[i].getText());
+					for (int i = 0; i < stringArray.length; i++) {
+						item.setText(i, tempList[i]);
 					}
 				}
 			};
@@ -154,23 +156,28 @@ public class EventPlanning_FeedBack extends Composite {
 			index = tableFeedBack.getSelectionIndex();
 			if (index < tableFeedBack.getItemCount() && index >= 0) {
 				Shell feedbackEditItemPage = new Shell(getDisplay());
-				AbstractEdit feedbackEditItem = new AbstractEdit(feedbackEditItemPage, SWT.None,stringArray){
-					//setText
-					public void onLoad(){
-						for(int i=0; i<stringArray.length; i++){
-							textList[i].setText(tableFeedBack.getItem(index).getText(i));
+				AbstractEdit feedbackEditItem = new AbstractEdit(
+						feedbackEditItemPage, SWT.None, stringArray,signatureArray) {
+					// setText
+					public void onLoad() {
+						for (int i = 0; i < stringArray.length; i++) {
+							setData(tableFeedBack.getItem(index)
+									.getText(i),signatureArray[i],i);
 						}
 					}
-					public void onSubmit(){
+
+					public void onSubmit() {
+						String[] tempList=getStringList();
 						Feedback feedback = feedbackList.get(index);
-						feedback.setFeedbackDetails(textList[0].getText());
-						feedback.setDate(new Date(textList[1].getText()));
-						feedback.setTime(new Time(textList[2].getText()));
-						//update database
+						feedback.setFeedbackDetails(tempList[0]);
+						feedback.setDate(new Date(tempList[1]));
+						feedback.setTime(new Time(tempList[2]));
+						// update database
 						db.updateFeedback(feedback);
-						//update the table
-						for(int i=0; i<stringArray.length; i++){
-							tableFeedBack.getItem(index).setText(i,textList[i].getText());
+						// update the table
+						for (int i = 0; i < stringArray.length; i++) {
+							tableFeedBack.getItem(index).setText(i,
+									tempList[i]);
 						}
 					}
 				};

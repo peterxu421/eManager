@@ -1,4 +1,8 @@
 
+import org.eclipse.nebula.widgets.gallery.DefaultGalleryGroupRenderer;
+import org.eclipse.nebula.widgets.gallery.DefaultGalleryItemRenderer;
+import org.eclipse.nebula.widgets.gallery.Gallery;
+import org.eclipse.nebula.widgets.gallery.GalleryItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -21,6 +25,7 @@ public class PreEvent_Publicity extends Composite{
 	protected Composite right;
 	public PreEvent_Publicity(Composite parent, int style) {
 		super(parent, style);
+		Image image = new Image(getDisplay(), "resources/me.jpg");
 		//Background
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2;
@@ -38,17 +43,44 @@ public class PreEvent_Publicity extends Composite{
 		GridLayout leftLayout = new GridLayout();
 		leftLayout.numColumns = 3;
 		left.setLayout(leftLayout);
-		for(int i=0; i<3; i++){
-			Canvas canvas = new Canvas(left, SWT.None);
-			GridData imageGridData = new GridData(250,250);
-			canvas.setLayoutData(imageGridData);
-			canvas.addPaintListener(new PaintListener() {
-				public void paintControl(PaintEvent e) {
-					Image image = new Image(getDisplay(), new ImageData("resources/girls.jpg").scaledTo(250, 250)); 
-					e.gc.drawImage(image, 0,0);
-					image.dispose();
+//		for(int i=0; i<3; i++){
+//			Canvas canvas = new Canvas(left, SWT.None);
+//			GridData imageGridData = new GridData(250,250);
+//			canvas.setLayoutData(imageGridData);
+//			canvas.addPaintListener(new PaintListener() {
+//				public void paintControl(PaintEvent e) {
+//					Image image = new Image(getDisplay(), new ImageData("resources/me.jpg").scaledTo(250, 250)); 
+//					e.gc.drawImage(image, 0,0);
+//					image.dispose();
+//				}
+//			});
+//		}
+		Gallery gallery = new Gallery(left, SWT.V_SCROLL | SWT.MULTI);
+		GridData galleryData = new GridData();
+		gallery.setLayoutData(galleryData);
+		
+		DefaultGalleryGroupRenderer gr = new DefaultGalleryGroupRenderer();
+		gr.setMinMargin(2);
+		gr.setItemHeight(56);
+		gr.setItemWidth(72);
+		gr.setAutoMargin(true);
+		gallery.setGroupRenderer(gr);
+		
+		DefaultGalleryItemRenderer ir = new DefaultGalleryItemRenderer();
+		gallery.setItemRenderer(ir);
+		
+		for (int g = 0; g < 2; g++) {
+			GalleryItem group = new GalleryItem(gallery, SWT.NONE);
+			group.setText("Group " + g); //$NON-NLS-1$
+			group.setExpanded(true);
+
+			for (int i = 0; i < 50; i++) {
+				GalleryItem item = new GalleryItem(group, SWT.NONE);
+				if (image != null) {
+					item.setImage(image);
 				}
-			});
+				item.setText("Item " + i); //$NON-NLS-1$
+			}
 		}
 		
 		//right->

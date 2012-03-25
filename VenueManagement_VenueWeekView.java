@@ -1,5 +1,7 @@
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -20,9 +22,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Button;
-
-import com.ibm.icu.util.Calendar;
-import com.ibm.icu.util.GregorianCalendar;
+import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 
 public class VenueManagement_VenueWeekView extends Composite {
 
@@ -30,11 +30,10 @@ public class VenueManagement_VenueWeekView extends Composite {
 	private Table weekViewTable;
 	private TableColumn tblclmnTimeSlot;
 	private TableColumn[] tblclmn = new TableColumn[7];
-	private DateTime preferredEventDate;
+	private CalendarCombo calendarCombo; 
 	
 	private DatabaseReader db = new DatabaseReader();
 	private Venue selectedVenue = new Venue();
-	
 	private ArrayList<Date> dateInAWeekList = new ArrayList<Date>();  
 	private Button btnViewAllApplications;
 	                // an arrayList containing the the dates of the seven days in the week shown at the top row of the table
@@ -97,11 +96,6 @@ public class VenueManagement_VenueWeekView extends Composite {
 		lblEnterPreferredEvent.setBounds(10, 24, 109, 23);
 		toolkit.adapt(lblEnterPreferredEvent, true, true);
 		
-		preferredEventDate = new DateTime(composite, SWT.NONE);
-		preferredEventDate.setBounds(125, 24, 80, 24);
-		toolkit.adapt(preferredEventDate);
-		toolkit.paintBordersFor(preferredEventDate);
-		
 		Button btnCheck = new Button(composite, SWT.NONE);
 		btnCheck.setBounds(240, 22, 75, 25);
 		toolkit.adapt(btnCheck, true, true);
@@ -113,6 +107,13 @@ public class VenueManagement_VenueWeekView extends Composite {
 		toolkit.adapt(btnViewAllApplications, true, true);
 		btnViewAllApplications.setText("View all applications");
 		btnViewAllApplications.addSelectionListener(new viewAllApplications());
+		
+		calendarCombo = new CalendarCombo(composite, SWT.NONE);
+		calendarCombo.setBounds(128, 24, 88, 23);
+		toolkit.adapt(calendarCombo);
+		toolkit.paintBordersFor(calendarCombo);
+		calendarCombo.setDate(Calendar.getInstance());
+		
 	}
 	
 	/* Button selection adapters */
@@ -131,11 +132,11 @@ public class VenueManagement_VenueWeekView extends Composite {
 			/* Get the preferred event date */
 			Calendar calendar = new GregorianCalendar();
 			calendar.clear();
-			calendar.set(preferredEventDate.getYear(), preferredEventDate.getMonth(), preferredEventDate.getDay());
+			calendar = calendarCombo.getDate();
 			
 			/* Arrange the week view table */
 			int day_of_week;
-			tblclmn[3].setToolTipText("Prefered date");
+			tblclmn[3].setToolTipText("Chosen date");
 			for(int i=0; i<7; i++){
 				dateInAWeekList.add(new Date(0,0,0)); // initialize the arraylist
 			}
@@ -157,7 +158,7 @@ public class VenueManagement_VenueWeekView extends Composite {
 			
 			
 			/* Get bookingInfo of the venue from database */
-			ArrayList<VenueBookingInfo> bookingInfoList = db.getVenueBookingInfo(selectedVenue);
+			ArrayList<VenueBookingApplication> bookingInfoList = db.getVenueBookingInfo(selectedVenue);
 			if (!bookingInfoList.isEmpty()){
 				for (int i=0; i<bookingInfoList.size(); i++){
 					if(bookingInfoList.get(i).getStatus() == MACRO.PENDING || bookingInfoList.get(i).getStatus() == MACRO.APPROVED){
@@ -181,13 +182,13 @@ public class VenueManagement_VenueWeekView extends Composite {
 		
 		public void tblclmnTextFill(int day_of_week, Calendar calendar, TableColumn tblclmn){
 			switch (day_of_week){
-			case 1: tblclmn.setText("Sun " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
-			case 2: tblclmn.setText("Mon " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
-			case 3: tblclmn.setText("Tue " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
-			case 4: tblclmn.setText("Wed " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
-			case 5: tblclmn.setText("Thu " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
-			case 6: tblclmn.setText("Fri " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
-			case 7: tblclmn.setText("Sat " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
+			case 1: tblclmn.setText("Sun " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 2: tblclmn.setText("Mon " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 3: tblclmn.setText("Tue " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 4: tblclmn.setText("Wed " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 5: tblclmn.setText("Thu " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 6: tblclmn.setText("Fri " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 7: tblclmn.setText("Sat " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
 			}
 		}
 	}
@@ -199,7 +200,7 @@ public class VenueManagement_VenueWeekView extends Composite {
 			viewBookingInfoShell.setText("eManager");
 			viewBookingInfoShell.setImage(icon);
 			
-			VenueViewBookingInfo viewBookingInfoPage = new VenueViewBookingInfo(viewBookingInfoShell, SWT.None, selectedVenue);
+			VenueViewBookingInfo viewBookingInfoPage = new VenueViewBookingInfo(viewBookingInfoShell, SWT.None, selectedVenue, weekViewTable);
 			viewBookingInfoPage.pack();
 			viewBookingInfoShell.pack();
 			viewBookingInfoShell.open();

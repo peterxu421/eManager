@@ -70,19 +70,26 @@ public abstract class AbstractForm extends Composite {
 	// Set the input format given the key: labelList.
 	private Object createInput(Composite parent, int signature) {
 		Object input = null;
-		if (signature == MACRO.TEXT || signature == MACRO.INT) {
+		if (signature == MACRO.TEXT || signature == MACRO.INT||signature==MACRO.DOUBLE) {
 			input = new Text(parent, SWT.BORDER);
-			((Text) input).setLayoutData(new GridData(100, 20));
+			((Text) input).setLayoutData(new GridData(120, 20));
 		} else if (signature == MACRO.DATE) {
 			input = new CalendarCombo(this, SWT.READ_ONLY);
 			((CalendarCombo) input).setDate(Calendar.getInstance());
-			((CalendarCombo) input).setLayoutData(new GridData(100,30));
+			((CalendarCombo) input).setLayoutData(new GridData(120,30));
 		} else if (signature == MACRO.TIME) {
 			input = new DateTime(parent, SWT.TIME);
-			((DateTime) input).setLayoutData(new GridData(100,30));
+			((DateTime) input).setLayoutData(new GridData(120,30));
 		} else if (signature == MACRO.CHECK) {
 			input = new Button(parent, SWT.CHECK);
 		} 
+		// Make Text bigger.
+		else if (signature==MACRO.TEXTBIG){
+			input = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+			((Text) input).setLayoutData(new GridData(120, 50));
+		}
+		//Make a drop down list for names, positions, faculties, etc.
+		
 		return input;
 	}
 
@@ -123,7 +130,7 @@ public abstract class AbstractForm extends Composite {
 		boolean isValid = true;
 		int index = -1;
 		for (int i = 0; i < labelList.length; i++) {
-			if (signature[i] == MACRO.TEXT) {
+			if (signature[i] == MACRO.TEXT||signature[i]==MACRO.TEXTBIG) {
 				Text text = (Text) map.get(labelList[i]);
 				isValid = !text.getText().isEmpty();
 			} else if (signature[i] == MACRO.INT) {
@@ -132,6 +139,16 @@ public abstract class AbstractForm extends Composite {
 				// Catch the exception if string is not integer.
 				try {
 					Integer.parseInt(tempInt);
+					isValid = true;
+				} catch (NumberFormatException e) {
+					isValid = false;
+				}
+			} else if(signature[i]==MACRO.DOUBLE){
+				Text text = (Text) map.get(labelList[i]);
+				String tempDouble = text.getText();
+				// Catch the exception if string is not double.
+				try {
+					Double.parseDouble(tempDouble);
 					isValid = true;
 				} catch (NumberFormatException e) {
 					isValid = false;

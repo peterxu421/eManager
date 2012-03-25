@@ -27,6 +27,7 @@ class Venuespace extends Composite{
 			{	
 				"Regulations and Rules",
 				"Select and Book",
+				"Check My Applications"
 			}
 	};
 
@@ -132,6 +133,11 @@ class Venuespace extends Composite{
 			{
 			    VenueBooking_VenueList vList  = new VenueBooking_VenueList(right, SWT.NONE);
 			    vList.pack();
+			}
+			else if(name.equals("Check My Applications"))
+			{
+			    VenueBooking_CheckMyApplication vCheckMyApp  = new VenueBooking_CheckMyApplication(right, SWT.NONE);
+			    vCheckMyApp.pack();
 			}
 			right.pack();
 		}

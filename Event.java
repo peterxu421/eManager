@@ -2,8 +2,29 @@ public class Event {
 	private int eventID;
 	private String eventName;
 	private String eventDescription;
+	private String organizerPassword;
+	private String facilitatorPassword;
 	
+	public Event(int eventID, String eventName, String eventDescription,
+			String organizerPassword, String facilitatorPassword) {
+		super();
+		this.eventID = eventID;
+		this.eventName = eventName;
+		this.eventDescription = eventDescription;
+		this.organizerPassword = organizerPassword;
+		this.facilitatorPassword = facilitatorPassword;
+	}
+
 	
+	public Event(String eventName, String eventDescription,
+			String organizerPassword, String facilitatorPassword) {
+		super();
+		this.eventName = eventName;
+		this.eventDescription = eventDescription;
+		this.organizerPassword = organizerPassword;
+		this.facilitatorPassword = facilitatorPassword;
+	}
+
 	public Event(int eventID, String eventName, String eventDescription) {
 		super();
 		this.eventID = eventID;
@@ -15,7 +36,8 @@ public class Event {
 		this.eventName = eventName;
 		this.eventDescription = eventDescription;
 	}
-
+	
+	
 	public int getEventID() {
 		return eventID;
 	}
@@ -39,4 +61,24 @@ public class Event {
 	public void setEventDescription(String eventDescription) {
 		this.eventDescription = eventDescription;
 	}
+	
+	public String getOrganizerPassword() {
+		return organizerPassword;
+	}
+
+
+	public void setOrganizerPassword(String organizerPassword) {
+		this.organizerPassword = organizerPassword;
+	}
+
+
+	public String getFacilitatorPassword() {
+		return facilitatorPassword;
+	}
+
+
+	public void setFacilitatorPassword(String facilitatorPassword) {
+		this.facilitatorPassword = facilitatorPassword;
+	}
+
 }
