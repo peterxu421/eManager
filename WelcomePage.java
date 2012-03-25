@@ -81,7 +81,7 @@ public class WelcomePage extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell shell = new Shell(getDisplay());
 			shell.setLocation(200,100);
-			Venuespace ws2 = new Venuespace(shell, SWT.None);
+			Venuespace ws2 = new Venuespace(shell, SWT.None, MACRO.MANAGER);
 				ws2.pack();
 				shell.pack();
 				shell.open();

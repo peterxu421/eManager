@@ -30,7 +30,7 @@ class Venuespace extends Composite{
 	};
 
 	//Constructor
-	public Venuespace(Composite parent, int style){
+	public Venuespace(Composite parent, int style, boolean[] mode){
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 1;
@@ -51,6 +51,7 @@ class Venuespace extends Composite{
 	    Button[] buttons = new Button[num];
 	    for(int i=0; i<num; i++)
 	    {
+	    	buttons[i].getEnabled(mode[i]);
 	    	buttons[i] = new Button(optionBar, SWT.PUSH);
 	    	buttons[i].setText(optionMenu[i]);
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
