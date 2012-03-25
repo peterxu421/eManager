@@ -42,8 +42,8 @@ public abstract class AbstractEdit extends AbstractForm {
 			((DateTime) get(index)).setTime(time.getHour(), time.getMinute(),
 					time.getSecond());
 		} else if (signature == MACRO.CHECK) {
-			Done done = new Done(string);
-			if (done.isDone()) {
+			boolean isDone = Boolean.parseBoolean(string);
+			if (isDone) {
 				((Button) get(index)).setSelection(true);
 			} else {
 				((Button) get(index)).setSelection(false);

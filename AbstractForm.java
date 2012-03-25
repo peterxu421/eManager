@@ -45,6 +45,7 @@ public abstract class AbstractForm extends Composite {
 		gridLayout.marginWidth = 20;
 		gridLayout.marginHeight = 10;
 		gridLayout.numColumns = 2;
+		gridLayout.verticalSpacing = 15;
 		this.setLayout(gridLayout);
 
 		/* Content */
@@ -69,20 +70,19 @@ public abstract class AbstractForm extends Composite {
 	// Set the input format given the key: labelList.
 	private Object createInput(Composite parent, int signature) {
 		Object input = null;
-		GridData gridData = new GridData(100, 20);
 		if (signature == MACRO.TEXT || signature == MACRO.INT) {
 			input = new Text(parent, SWT.BORDER);
-			((Text) input).setLayoutData(gridData);
+			((Text) input).setLayoutData(new GridData(100, 20));
 		} else if (signature == MACRO.DATE) {
-			input = new CalendarCombo(this, SWT.None);
+			input = new CalendarCombo(this, SWT.READ_ONLY);
 			((CalendarCombo) input).setDate(Calendar.getInstance());
-			((CalendarCombo) input).setLayoutData(gridData);
+			((CalendarCombo) input).setLayoutData(new GridData(100,30));
 		} else if (signature == MACRO.TIME) {
 			input = new DateTime(parent, SWT.TIME);
-			((DateTime) input).setLayoutData(gridData);
+			((DateTime) input).setLayoutData(new GridData(100,30));
 		} else if (signature == MACRO.CHECK) {
 			input = new Button(parent, SWT.CHECK);
-		}
+		} 
 		return input;
 	}
 
@@ -106,10 +106,11 @@ public abstract class AbstractForm extends Composite {
 						tempTime.getMinutes(), tempTime.getSeconds());
 				stringList[i] = time.toString();
 			} else if (signature[i] == MACRO.CHECK) {
+				//If selected, change to true; else change to false.
 				if (((Button) get(i)).getSelection())
-					stringList[i] = "Done";
+					stringList[i] = "true";
 				else
-					stringList[i] = "UnDone";
+					stringList[i] = "false";
 			}
 		}
 		return stringList;

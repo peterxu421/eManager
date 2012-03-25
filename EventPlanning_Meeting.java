@@ -26,6 +26,7 @@ public class EventPlanning_Meeting extends Composite {
 	private ArrayList<Meeting> meetingList;
 	private Table table;
 	private String[] stringArray={"Meeting Detail","Date","Time","Done"};
+	private int[] signatureArray={};
 	private int index;
 	/**
 	 * Create the composite.
