@@ -14,7 +14,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Button;
 
 import com.ibm.icu.util.Calendar;
-import com.ibm.icu.util.GregorianCalendar;
 
 public class VenueManagement_BookingApplications extends Composite {
 

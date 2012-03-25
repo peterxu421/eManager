@@ -464,7 +464,21 @@ public class SQLManager {
 		}
 		return rs;
 	}
-	
+	public static ResultSet getVenueBookingDetailsByMatricNo(Connection connection, String matricNo){
+		String getVenueBookingDetailsByMatricNo = 
+				"SELECT * FROM VenueBookingDetails " +
+				"WHERE MatricNo=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getVenueBookingDetailsByMatricNo);
+			prep.setString(1, matricNo);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
 	public static int insertEventDetails(Connection connection, String eventName, String eventDescription){
 		int eventID = 0;
