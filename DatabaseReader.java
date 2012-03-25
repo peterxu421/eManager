@@ -590,6 +590,26 @@ public class DatabaseReader {
 		}
 		return bookings;
 	}
+	public ArrayList<VenueBookingApplication> getVenueBookingInfoFromToday(Date today){
+		ArrayList<VenueBookingApplication> bookings = new ArrayList<VenueBookingApplication>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getVenueBookingDetailsAll(connection);
+			while(rs.next()){
+				Venue venue = getVenueByID(rs.getInt("VenueID"));
+				VenueApplicant applicant = getVenueApplicantByID(rs.getInt("ApplicantID"));
+				BookedDateTime time = new BookedDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
+						Time.parseTime(rs.getString("TimeEnd")));
+				VenueBookingApplication booking = new VenueBookingApplication(rs.getInt("BookingID"), venue , applicant, time, rs.getInt("Status"));
+				if(booking.getDateTime().getDate().isNotLaterThan(today)){
+					bookings.add(booking);
+				}
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return bookings;
+	}
 	public void insertVenueBookingInfo(VenueBookingApplication booking){
 		insertVenueApplicant(booking.getApplicant());
 		int id = SQLManager.insertVenueBookingDetails(connection, booking.getVenue().getVenueId(), 

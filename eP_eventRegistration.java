@@ -21,8 +21,13 @@ public class eP_eventRegistration extends AbstractForm {
 	private Text textFoodType;
 	private Text textAllergy;
 	private Text textMatriculation;
+	private String[] stringArrayRegistration = { "Name", "Matriculation",
+			"Year", "Faculty", "Event", "Food Type", "Allergy" };
+	private int[] signatureArrayRegistration = { MACRO.TEXT, MACRO.INT,
+			MACRO.TEXT, MACRO.TEXT, MACRO.TEXT, MACRO.TEXT, MACRO.TEXT };
 	private Event event;
 	private Button btnClear;
+
 	/**
 	 * Create the composite.
 	 * 
@@ -117,13 +122,13 @@ public class eP_eventRegistration extends AbstractForm {
 		textAllergy = new Text(compositeRegistration, SWT.BORDER);
 		textAllergy.setBounds(10, 345, 165, 23);
 		toolkit.adapt(textAllergy, true, true);
-		
+
 		Button btnSubmit = new Button(compositeRegistration, SWT.NONE);
 		btnSubmit.addSelectionListener(new RegistrationSubmit());
 		btnSubmit.setText("Submit");
 		btnSubmit.setBounds(10, 374, 80, 27);
 		toolkit.adapt(btnSubmit, true, true);
-		
+
 		btnClear = new Button(compositeRegistration, SWT.NONE);
 		btnClear.addSelectionListener(new RegistrationClear());
 		btnClear.setBounds(95, 374, 80, 27);
@@ -134,7 +139,8 @@ public class eP_eventRegistration extends AbstractForm {
 		scrolledCompositeRegistration.setMinSize(compositeRegistration
 				.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
-	public class RegistrationSubmit extends SelectionAdapter{
+
+	public class RegistrationSubmit extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			DatabaseReader db = new DatabaseReader();
 			Participant participant = new Participant();
@@ -145,7 +151,7 @@ public class eP_eventRegistration extends AbstractForm {
 			participant.setMatricNo(textMatriculation.getText());
 			db.insertParticipant(event, participant);
 			btnClear.notifyListeners(SWT.Selection, null);
-		}		
+		}
 	}
 
 	public class RegistrationClear extends SelectionAdapter {

@@ -72,4 +72,11 @@ public class BookedDateTime implements Comparable<BookedDateTime> {
 		}
 		else return -1; // less than 
 	}
+	
+	public boolean isEqualTo(BookedDateTime dateTime){
+		if(date.isEqualTo(dateTime.getDate()) && timeStart.isEqualTo(dateTime.getTimeStart()) && timeEnd.isEqualTo(dateTime.getTimeEnd())){
+			return true;
+		}
+		else return false;
+	}
 }

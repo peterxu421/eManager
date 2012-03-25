@@ -36,7 +36,7 @@ public class EventPlanning_Budget extends Composite {
 	public static Label lblRemainingAmount;
 	public static Label lblYouStillHave_Amount;
 	// To format a double to two decimal places
-	private DecimalFormat df = new DecimalFormat("#.00"); 
+	private DecimalFormat df = new DecimalFormat("#.00");
 
 	private Event event;
 	private ArrayList<BudgetAllocation> budgetAllocationList;
@@ -44,13 +44,16 @@ public class EventPlanning_Budget extends Composite {
 	private ArrayList<Outflow> outflowList;
 	private String[] stringArrayBudget = { "Item", "Person in Charge",
 			"Cost($)", "Date" };
-	private int[] signatureArrayBudget={MACRO.TEXT,MACRO.TEXT,MACRO.DOUBLE,MACRO.DATE};
+	private int[] signatureArrayBudget = { MACRO.TEXT, MACRO.TEXT,
+			MACRO.DOUBLE, MACRO.DATE };
 	private String[] stringArrayInflow = { "Sponsor", "Amount($)", "Date",
 			"Remarks" };
-	private int[] signatureArrayInflow={MACRO.TEXT,MACRO.DOUBLE,MACRO.DATE,MACRO.TEXT};
+	private int[] signatureArrayInflow = { MACRO.TEXT, MACRO.DOUBLE,
+			MACRO.DATE, MACRO.TEXT };
 	private String[] stringArrayOutflow = { "Item", "Quantity", "Type",
 			"Purchase Date", "Cost" };
-	private int[] signatureArrayOutflow={MACRO.TEXT,MACRO.INT,MACRO.TEXT,MACRO.DATE,MACRO.DOUBLE};
+	private int[] signatureArrayOutflow = { MACRO.TEXT, MACRO.INT, MACRO.TEXT,
+			MACRO.DATE, MACRO.DOUBLE };
 	private int index;
 
 	/**
@@ -486,7 +489,8 @@ public class EventPlanning_Budget extends Composite {
 			temp.setText(3, outflowList.get(i).getDate().toString());
 			temp.setText(4, String.valueOf(outflowList.get(i).getCost()));
 
-			totalOutflow += outflowList.get(i).getCost()*outflowList.get(i).getQuantity();
+			totalOutflow += outflowList.get(i).getCost()
+					* outflowList.get(i).getQuantity();
 		}
 		double currentAmount = Double
 				.parseDouble(EventPlanning_Budget.lblSpentAmount.getText());
@@ -504,10 +508,11 @@ public class EventPlanning_Budget extends Composite {
 			if (AllocationTable.getSelectionCount() == 0) {
 				Shell add_allocation_shell = new Shell(getDisplay());
 				AbstractAdd add_allocation_page = new AbstractAdd(
-						add_allocation_shell, SWT.None, stringArrayBudget,signatureArrayBudget) {
+						add_allocation_shell, SWT.None, stringArrayBudget,
+						signatureArrayBudget) {
 					public void onSubmit() {
 						// insert to database
-						String[] tempList=getStringList();
+						String[] tempList = getStringList();
 						Date date = new Date(tempList[3]);
 						BudgetAllocation budgetAllocation = new BudgetAllocation(
 								tempList[0], tempList[1],
@@ -575,24 +580,25 @@ public class EventPlanning_Budget extends Composite {
 			if (AllocationTable.getSelectionCount() != 0) {
 				Shell edit_allocation_shell = new Shell(getDisplay());
 				AbstractEdit edit_allocation_page = new AbstractEdit(
-						edit_allocation_shell, SWT.None, stringArrayBudget,signatureArrayBudget) {
+						edit_allocation_shell, SWT.None, stringArrayBudget,
+						signatureArrayBudget) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayBudget.length; i++) {
-							setData(AllocationTable.getItem(index)
-									.getText(i),signatureArrayBudget[i],i);
+							setData(AllocationTable.getItem(index).getText(i),
+									signatureArrayBudget[i], i);
 						}
 					}
 
 					public void onSubmit() {
-						String[] tempList=getStringList();
+						String[] tempList = getStringList();
 						BudgetAllocation budgetAllocation = budgetAllocationList
 								.get(index);
 						budgetAllocation.setItem(tempList[0]);
 						budgetAllocation.setPersonInCharge(tempList[1]);
-						budgetAllocation.setCost(Double.parseDouble(tempList[2]));
-						budgetAllocation
-								.setDate(new Date(tempList[3]));
+						budgetAllocation.setCost(Double
+								.parseDouble(tempList[2]));
+						budgetAllocation.setDate(new Date(tempList[3]));
 
 						/* update budget allocation table */
 						double previous = Double.parseDouble(AllocationTable
@@ -630,15 +636,15 @@ public class EventPlanning_Budget extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			if (InflowTable.getSelectionCount() == 0) {
 				Shell add_inflow_shell = new Shell(getDisplay());
-				AbstractAdd add_inflow_page = new AbstractAdd(
-						add_inflow_shell, SWT.None, stringArrayInflow,signatureArrayInflow) {
+				AbstractAdd add_inflow_page = new AbstractAdd(add_inflow_shell,
+						SWT.None, stringArrayInflow, signatureArrayInflow) {
 					public void onSubmit() {
 						// insert to database
-						String[] tempList=getStringList();
+						String[] tempList = getStringList();
 						Date date = new Date(tempList[2]);
 						Inflow inflow = new Inflow(tempList[0],
-								Double.parseDouble(tempList[1]),
-								date, tempList[3]);
+								Double.parseDouble(tempList[1]), date,
+								tempList[3]);
 						db.insertInflow(event, inflow);
 						inflowList.add(inflow);
 						// update the table
@@ -698,17 +704,18 @@ public class EventPlanning_Budget extends Composite {
 			if (InflowTable.getSelectionCount() != 0) {
 				Shell edit_inflow_shell = new Shell(getDisplay());
 				AbstractEdit edit_inflow_page = new AbstractEdit(
-						edit_inflow_shell, SWT.None, stringArrayInflow,signatureArrayInflow) {
+						edit_inflow_shell, SWT.None, stringArrayInflow,
+						signatureArrayInflow) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayInflow.length; i++) {
-							setData(InflowTable.getItem(index)
-									.getText(i),signatureArrayInflow[i],i);
+							setData(InflowTable.getItem(index).getText(i),
+									signatureArrayInflow[i], i);
 						}
 					}
 
 					public void onSubmit() {
-						String[] tempList=getStringList();
+						String[] tempList = getStringList();
 						Inflow inflow = inflowList.get(index);
 						inflow.setSponsor(tempList[0]);
 						inflow.setAmount(Double.parseDouble(tempList[1]));
@@ -728,8 +735,7 @@ public class EventPlanning_Budget extends Composite {
 
 						// update the table
 						for (int i = 0; i < stringArrayInflow.length; i++) {
-							InflowTable.getItem(index).setText(i,
-									tempList[i]);
+							InflowTable.getItem(index).setText(i, tempList[i]);
 						}
 						/* update budget overview section */
 						LabelCashFlow lbl = new LabelCashFlow();
@@ -750,17 +756,16 @@ public class EventPlanning_Budget extends Composite {
 			if (OutflowTable.getSelectionCount() == 0) {
 				Shell add_outflow_shell = new Shell(getDisplay());
 				AbstractAdd add_outflow_page = new AbstractAdd(
-						add_outflow_shell, SWT.None, stringArrayOutflow,signatureArrayOutflow) {
+						add_outflow_shell, SWT.None, stringArrayOutflow,
+						signatureArrayOutflow) {
 					public void onSubmit() {
 						// insert to database
-						String[] tempList=getStringList();
+						String[] tempList = getStringList();
 						Date date = new Date(tempList[3]);
 						double amount = Double.parseDouble(tempList[4]);
-						int quan=Integer.parseInt(tempList[1]);
-						Outflow outflow = new Outflow(tempList[0],
-								quan,
-								tempList[2], date,
-								amount);
+						int quan = Integer.parseInt(tempList[1]);
+						Outflow outflow = new Outflow(tempList[0], quan,
+								tempList[2], date, amount);
 						db.insertOutflow(event, outflow);
 						outflowList.add(outflow);
 						// update the table
@@ -772,10 +777,10 @@ public class EventPlanning_Budget extends Composite {
 						/* update budget outflow table */
 						double currentAmount = Double
 								.parseDouble(lblSpentAmount.getText());
-						double addition = amount*quan;
+						double addition = amount * quan;
 						lblSpentAmount.setText(String.valueOf(df
 								.format(currentAmount + addition)));
-						
+
 						/* update budget overview section */
 						LabelCashFlow lbl = new LabelCashFlow();
 						lbl.label();
@@ -796,8 +801,10 @@ public class EventPlanning_Budget extends Composite {
 				int index = OutflowTable.getSelectionIndex();
 				if (index >= 0 && index < OutflowTable.getItemCount()) {
 					/* update budget outflow table */
-					double amount = Double.parseDouble(OutflowTable.getItem(index).getText(4));
-					int quan = Integer.parseInt(OutflowTable.getItem(index).getText(1));
+					double amount = Double.parseDouble(OutflowTable.getItem(
+							index).getText(4));
+					int quan = Integer.parseInt(OutflowTable.getItem(index)
+							.getText(1));
 					double currentAmount = Double.parseDouble(lblSpentAmount
 							.getText());
 					double deduction = amount * quan;
@@ -822,22 +829,21 @@ public class EventPlanning_Budget extends Composite {
 			if (OutflowTable.getSelectionCount() != 0) {
 				Shell edit_outflow_shell = new Shell(getDisplay());
 				AbstractEdit edit_outflow_page = new AbstractEdit(
-						edit_outflow_shell, SWT.None, stringArrayOutflow,signatureArrayOutflow) {
+						edit_outflow_shell, SWT.None, stringArrayOutflow,
+						signatureArrayOutflow) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayOutflow.length; i++) {
-							setData(InflowTable.getItem(index)
-									.getText(i),signatureArrayOutflow[i],i);
+							setData(InflowTable.getItem(index).getText(i),
+									signatureArrayOutflow[i], i);
 						}
 					}
 
 					public void onSubmit() {
-						String[] tempList=getStringList();
+						String[] tempList = getStringList();
 						Outflow outflow = outflowList.get(index);
-						int quan = Integer.parseInt(tempList[1]
-								);
-						double amount = Double.parseDouble(tempList[4]
-								);
+						int quan = Integer.parseInt(tempList[1]);
+						double amount = Double.parseDouble(tempList[4]);
 						outflow.setItem(tempList[0]);
 						outflow.setQuantity(quan);
 						outflow.setType(tempList[2]);
@@ -847,19 +853,20 @@ public class EventPlanning_Budget extends Composite {
 						db.updateOutflow(outflow);
 
 						/* update budget outflow table */
-						int quanPrev = Integer.parseInt(OutflowTable.getItem(index).getText(1));
-						double amountPrev = Double.parseDouble(OutflowTable.getItem(index).getText(4));
+						int quanPrev = Integer.parseInt(OutflowTable.getItem(
+								index).getText(1));
+						double amountPrev = Double.parseDouble(OutflowTable
+								.getItem(index).getText(4));
 						double currentAmount = Double
 								.parseDouble(lblSpentAmount.getText());
 						double deduction = amountPrev * quanPrev;
-						double addition = quan* amount;
+						double addition = quan * amount;
 						lblSpentAmount.setText(String.valueOf(df
 								.format(currentAmount - deduction + addition)));
 
 						// update the table
 						for (int i = 0; i < stringArrayOutflow.length; i++) {
-							InflowTable.getItem(index).setText(i,
-									tempList[i]);
+							InflowTable.getItem(index).setText(i, tempList[i]);
 						}
 						/* update budget overview section */
 						LabelCashFlow lbl = new LabelCashFlow();

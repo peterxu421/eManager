@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
@@ -17,19 +16,21 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormAttachment;
 
-
 public class EventPlanning_Meeting extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	
+
 	private Event event;
 	private ArrayList<Meeting> meetingList;
 	private Table table;
-	private String[] stringArray={"Meeting Detail","Date","Time","Done"};
-	private int[] signatureArray={MACRO.TEXT,MACRO.DATE,MACRO.TIME, MACRO.CHECK};
+	private String[] stringArray = { "Meeting Detail", "Date", "Time", "Done" };
+	private int[] signatureArray = { MACRO.TEXTBIG, MACRO.DATE, MACRO.TIME,
+			MACRO.CHECK };
 	private int index;
+
 	/**
 	 * Create the composite.
+	 * 
 	 * @param parent
 	 * @param style
 	 */
@@ -43,12 +44,12 @@ public class EventPlanning_Meeting extends Composite {
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
 		this.event = event;
-		
+
 		FormLayout formLayout = new FormLayout();
 		formLayout.marginRight = 30;
 		formLayout.marginBottom = 30;
 		setLayout(formLayout);
-		
+
 		Composite composite = new Composite(this, SWT.NONE);
 		FormData fd_composite = new FormData();
 		fd_composite.top = new FormAttachment(0);
@@ -58,91 +59,91 @@ public class EventPlanning_Meeting extends Composite {
 		composite.setLayoutData(fd_composite);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
-		
-		
+
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setBounds(10, 10, 521, 278);
 		toolkit.adapt(table);
 		toolkit.paintBordersFor(table);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		
+
 		TableColumn tblclmnMeetingDetails = new TableColumn(table, SWT.CENTER);
 		tblclmnMeetingDetails.setWidth(268);
 		tblclmnMeetingDetails.setText("Meeting Details");
-		
+
 		TableColumn tblclmnDate = new TableColumn(table, SWT.CENTER);
 		tblclmnDate.setWidth(103);
 		tblclmnDate.setText("Date");
-		
+
 		TableColumn tblclmnTime = new TableColumn(table, SWT.CENTER);
 		tblclmnTime.setWidth(103);
 		tblclmnTime.setText("Time");
-		
+
 		TableColumn tblclmnDone = new TableColumn(table, SWT.CENTER);
 		tblclmnDone.setWidth(48);
 		tblclmnDone.setText("Done");
-		
-		
+
 		Button Add = new Button(composite, SWT.NONE);
 		Add.setText("Add");
 		Add.setBounds(564, 31, 75, 25);
 		toolkit.adapt(Add, true, true);
 		Add.addSelectionListener(new Add());
-		
+
 		Button Delete = new Button(composite, SWT.NONE);
 		Delete.setText("Delete");
 		Delete.setBounds(564, 81, 75, 25);
 		toolkit.adapt(Delete, true, true);
 		Delete.addSelectionListener(new Delete());
-		
+
 		Button Edit = new Button(composite, SWT.NONE);
 		Edit.setText("Edit");
 		Edit.setBounds(564, 130, 75, 25);
 		toolkit.adapt(Edit, true, true);
 		Edit.addSelectionListener(new Edit());
-	
-		//Update the table.
-        importMeetingData();
+
+		// Update the table.
+		importMeetingData();
 	}
-	
-	public void importMeetingData(){
+
+	public void importMeetingData() {
 		DatabaseReader db = new DatabaseReader();
 		meetingList = db.getMeetings(event);
-		
+
 		/* update the meeting table */
-		for(int i=0; i<meetingList.size(); i++){
+		for (int i = 0; i < meetingList.size(); i++) {
 			TableItem temp = new TableItem(table, SWT.NULL);
+			System.out.println(meetingList.get(i).getMeetingDetails());
 			temp.setText(0, meetingList.get(i).getMeetingDetails());
 			temp.setText(1, meetingList.get(i).getDate().toString());
 			temp.setText(2, meetingList.get(i).getTime().toString());
-			if(meetingList.get(i).isDone() == true)
+			if (meetingList.get(i).isDone() == true)
 				temp.setText(3, "true");
-			else temp.setText(3, "false");
+			else
+				temp.setText(3, "false");
 		}
 	}
-	
 
 	class Add extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if(table.getSelectionCount()==0){
+			if (table.getSelectionCount() == 0) {
 				Shell add_meeting_shell = new Shell(getDisplay());
 				AbstractAdd add_meeting_page = new AbstractAdd(
-						add_meeting_shell, SWT.None, stringArray, signatureArray) {
+						add_meeting_shell, SWT.None, stringArray,
+						signatureArray) {
 					public void onSubmit() {
-						//insert to database
-						String[] tempList=getStringList();
+						// insert to database
+						String[] tempList = getStringList();
 						Date date = new Date(tempList[1]);
 						Time time = new Time(tempList[2]);
-						boolean isDone=Boolean.parseBoolean(tempList[3]);
-						Meeting meeting = new Meeting(tempList[0],
-								date, time, isDone);
+						boolean isDone = Boolean.parseBoolean(tempList[3]);
+						Meeting meeting = new Meeting(tempList[0], date, time,
+								isDone);
 						db.insertMeeting(event, meeting);
 						meetingList.add(meeting);
 						// update the table
-						TableItem item = new TableItem(table, SWT.NULL);
-						for(int i=0; i<stringArray.length; i++){
-							item.setText(i,tempList[i]);
+						TableItem item = new TableItem(table, SWT.None);
+						for (int i = 0; i < stringArray.length; i++) {
+							item.setText(i, tempList[i]);
 						}
 					}
 				};
@@ -150,16 +151,16 @@ public class EventPlanning_Meeting extends Composite {
 				add_meeting_page.pack();
 				add_meeting_shell.pack();
 				add_meeting_shell.open();
-			}
-			else table.deselectAll(); // get rid of redundant selection
+			} else
+				table.deselectAll(); // get rid of redundant selection
 		}
 	}
-	
+
 	class Delete extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e){
-			if (table.getItemCount() != 0){
+		public void widgetSelected(SelectionEvent e) {
+			if (table.getItemCount() != 0) {
 				int index = table.getSelectionIndex();
-				if(index >=0 && index < table.getItemCount()){
+				if (index >= 0 && index < table.getItemCount()) {
 					/* update the database */
 					DatabaseReader db = new DatabaseReader();
 					db.deleteMeeting(meetingList.get(index));
@@ -169,31 +170,36 @@ public class EventPlanning_Meeting extends Composite {
 			}
 		}
 	}
+
 	class Edit extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			index = table.getSelectionIndex();
-			if(table.getSelectionCount()!=0){
+			if (table.getSelectionCount() != 0) {
 				Shell edit_meeting_shell = new Shell(getDisplay());
-				AbstractEdit edit_meeting_page = new AbstractEdit(edit_meeting_shell, SWT.None,stringArray, signatureArray){
-					//setText
-					public void onLoad(){
-						for(int i=0; i<stringArray.length; i++){
-							setData(table.getItem(index).getText(i),signatureArray[i],i);
+				AbstractEdit edit_meeting_page = new AbstractEdit(
+						edit_meeting_shell, SWT.None, stringArray,
+						signatureArray) {
+					// setText
+					public void onLoad() {
+						for (int i = 0; i < stringArray.length; i++) {
+							setData(table.getItem(index).getText(i),
+									signatureArray[i], i);
 						}
 					}
-					public void onSubmit(){
-						String[] tempList=getStringList();
+
+					public void onSubmit() {
+						String[] tempList = getStringList();
 						Meeting meeting = meetingList.get(index);
 						meeting.setMeetingDetails(tempList[0]);
 						meeting.setDate(new Date(tempList[1]));
 						meeting.setTime(new Time(tempList[2]));
-						boolean isDone=Boolean.parseBoolean(tempList[3]);
+						boolean isDone = Boolean.parseBoolean(tempList[3]);
 						meeting.setDone(isDone);
-						//update database
+						// update database
 						db.updateMeeting(meeting);
-						//update the table
-						for(int i=0; i<stringArray.length; i++){
-							table.getItem(index).setText(i,tempList[i]);
+						// update the table
+						for (int i = 0; i < stringArray.length; i++) {
+							table.getItem(index).setText(i, tempList[i]);
 						}
 					}
 				};
