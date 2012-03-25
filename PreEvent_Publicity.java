@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
@@ -99,4 +103,27 @@ public class PreEvent_Publicity extends Composite{
 		display.dispose();
 	}
 	
+<<<<<<< HEAD
+=======
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+
+
+public class PreEvent_Publicity extends Composite{
+	public PreEvent_Publicity(Composite parent, int style) {
+		super(parent, style);
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 4;
+		this.setLayout(gridLayout);
+		
+		
+	}
+
+	public static void main(String[] args) {
+		
+	}
+
+>>>>>>> cdee70e3443876392d67c564a5d0bb7ea3b5d988
+=======
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 }

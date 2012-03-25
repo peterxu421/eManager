@@ -393,6 +393,7 @@ public class DatabaseReader {
 		venue.setVenueId(venueID);
 	}
 	public void deleteVenue(Venue venue) {
+		deleteVenueBookingInfo(venue);
 		SQLManager.deleteVenueDetails(connection, venue.getVenueId());
 	}
 	public void updateVenue(Venue venue) {
@@ -588,7 +589,10 @@ public class DatabaseReader {
 				booking.getDateTime().getTimeStart().toString(),
 				booking.getDateTime().getTimeEnd().toString(), booking.getStatus());
 	}
-
+	public void deleteVenueBookingInfo(Venue venue){
+		SQLManager.deleteVenueBookingDetailsByVenue(connection, venue.getVenueId());
+	}
+	
 	public static void main(String[] args){
 		DatabaseReader db = new DatabaseReader();
 		Event event = db.getEvents().get(0);
