@@ -96,12 +96,12 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		btnWithdrawAll.setText("Withdraw all");
 		btnWithdrawAll.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
-				MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.CANCEL | SWT.ICON_WARNING );
+				MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.CANCEL | SWT.ICON_WARNING );
 				warningPage.setText("Warning!");
 				warningPage.setMessage("Are you sure you want to withdraw from all your applications?");
 				int choice = warningPage.open(); // indicates the user's choice
 				switch(choice){
-				case SWT.OK:
+				case SWT.YES:
 					/* update the database */
 					for(int i=0; i<bookingApplicationList.size(); i++){
 						db.deleteVenueBookingInfo(bookingApplicationList.get(i));
@@ -168,13 +168,13 @@ public class VenueBooking_CheckMyApplication extends Composite {
 				noMatchWarning.open();
 			}
 			else{
-				fillApplicationList(venueApplicant);
+				applicationTable.removeAll(); // clear the table before loading new information
+				fillApplicationTable(venueApplicant);
 			}
 		}
 	}
 	
-	public void fillApplicationList(VenueApplicant venueApplicant){
-		/* show the booking info from database */
+	public void fillApplicationTable(VenueApplicant venueApplicant){
 	    bookingApplicationList = db.getVenueBookingInfo(venueApplicant);
 		for (int i=0; i<bookingApplicationList.size(); i++){
 			String name = bookingApplicationList.get(i).getApplicant().getName();
