@@ -1,5 +1,8 @@
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Arrays;
 
+import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -71,7 +74,8 @@ public abstract class AbstractForm extends Composite {
 		if (signature == MACRO.TEXT || signature == MACRO.INT) {
 			input = new Text(parent, SWT.NONE);
 		} else if (signature == MACRO.DATE) {
-			input = new DateTime(parent, SWT.CALENDAR);
+			input = new CalendarCombo(this, SWT.None);
+			((CalendarCombo)input).setDate(Calendar.getInstance());
 		} else if (signature == MACRO.TIME) {
 			input = new DateTime(parent, SWT.TIME);
 		} else if (signature == MACRO.CHECK) {
@@ -86,11 +90,14 @@ public abstract class AbstractForm extends Composite {
 		String[] stringList = new String[signature.length];
 		for (int i = 0; i < signature.length; i++) {
 			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT) {
-				stringList[i] = (String) map.get(labelList[i]);
+				stringList[i] = ((Text) map.get(labelList[i])).getText();
 			} else if (signature[i] == MACRO.DATE) {
-				stringList[i] = ((DateTime) map.get(labelList[i])).toString();
+				stringList[i] = ((CalendarCombo) map.get(labelList[i])).getDateAsString();
 			} else if (signature[i] == MACRO.TIME) {
-				stringList[i] = ((DateTime) map.get(labelList[i])).toString();
+				DateTime tempTime = (DateTime) map.get(labelList[i]);
+				Time time = new Time(tempTime.getHours(),
+						tempTime.getMinutes(), tempTime.getSeconds());
+				stringList[i] = time.toString();
 			} else if (signature[i] == MACRO.CHECK) {
 				if (((Button) map.get(labelList[i])).getSelection())
 					stringList[i] = "Done";
@@ -101,16 +108,23 @@ public abstract class AbstractForm extends Composite {
 		return stringList;
 	}
 
+	// Error checking.
 	protected boolean check() {
 		boolean isValid = true;
-		// I think do error checking here is more convenient
 		for (int i = 0; i < labelList.length; i++) {
 			if (signature[i] == MACRO.TEXT) {
 				Text text = (Text) map.get(labelList[i]);
 				isValid = !text.getText().isEmpty();
-			}
-			else if(signature[i]==MACRO.INT){
-				int tempInt=(Integer) map.get(labelList[i]);
+			} else if (signature[i] == MACRO.INT) {
+				Text text = (Text) map.get(labelList[i]);
+				String tempInt = text.getText();
+				// Catch the exception if string is not integer.
+				try {
+					Integer.parseInt(tempInt);
+					isValid = true;
+				} catch (NumberFormatException e) {
+					isValid = false;
+				}
 			}
 			// and etc....
 		}
