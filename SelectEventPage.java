@@ -165,8 +165,10 @@ public class SelectEventPage extends Composite {
 			int index = list.getSelectionIndex();
 			if (index != -1) {
 				Event existEvent = events.get(index);
-				Eventspace workspace = new Eventspace(shell, SWT.None, existEvent);
-				workspace.pack();
+				SessionManager.setCurrentEvent(existEvent);
+				//SessionManager.setCurrentMode(MACRO.)
+				SelectModePage mode = new SelectModePage(shell, SWT.None);
+				mode.pack();
 				shell.pack();
 				shell.open();
 				getParent().dispose();
@@ -333,7 +335,8 @@ public class SelectEventPage extends Composite {
 				Event newEvent = new Event(textEventName.getText(), textDescription.getText());
 				DatabaseReader dbReader = new DatabaseReader();
 				dbReader.insertEvent(newEvent);
-				Eventspace workspace = new Eventspace(shell, SWT.None, newEvent);
+				SessionManager.setCurrentEvent(newEvent);
+				Eventspace workspace = new Eventspace(shell, SWT.None, MACRO.ORGANIZER_MODE);
 				workspace.pack();
 				shell.pack();
 				shell.open();

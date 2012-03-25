@@ -31,7 +31,7 @@ class Venuespace extends Composite{
 	};
 
 	//Constructor
-	public Venuespace(Composite parent, int style, boolean[] mode){
+	public Venuespace(Composite parent, int style, boolean[] boolMode){
 		super(parent, style);
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		GridLayout gridLayout = new GridLayout();
@@ -55,7 +55,7 @@ class Venuespace extends Composite{
 	    Button[] buttons = new Button[num];
 	    for(int i=0; i<num; i++)
 	    {
-	    	//buttons[i].setEnabled(mode[i]);
+	    	//buttons[i].setEnabled(boolMode[i]);
 	    	buttons[i] = new Button(optionBar, SWT.PUSH);
 	    	buttons[i].setText(optionMenu[i]);
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
