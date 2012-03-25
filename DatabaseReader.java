@@ -588,7 +588,9 @@ public class DatabaseReader {
 				booking.getDateTime().getTimeStart().toString(),
 				booking.getDateTime().getTimeEnd().toString(), booking.getStatus());
 	}
-
+	public void deleteVenueBookingInfo(Venue venue){
+		SQLManager.deleteVenueBookingDetailsByVenue(connection, venue.getVenueId());
+	}
 	public static void main(String[] args){
 		DatabaseReader db = new DatabaseReader();
 		Event event = db.getEvents().get(0);
