@@ -166,7 +166,6 @@ public abstract class AbstractForm extends Composite {
 					break;
 				}
 			}
-
 		}
 	}
 

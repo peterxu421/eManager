@@ -432,7 +432,37 @@ public class SQLManager {
 		}
 		return rs;
 	}
-
+	public static ResultSet getVenueBookingDetailsByApplicant(Connection connection, int applicantID){
+		String getVenueBookingDetailsByApplicant = 
+				"SELECT * FROM VenueBookingDetails " +
+				"WHERE ApplicantID=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getVenueBookingDetailsByApplicant);
+			prep.setInt(1, applicantID);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
+	public static ResultSet getVenueApplicantByMatricNo(Connection connection, String matricNo){
+		String getVenueBookingDetailsByApplicant = 
+				"SELECT ApplicantID FROM ApplicantDetails " +
+				"WHERE MatricNo=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		int applicantID = 0;
+		try{
+			prep = connection.prepareStatement(getVenueBookingDetailsByApplicant);
+			prep.setString(1, matricNo);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
 	
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
 	public static int insertEventDetails(Connection connection, String eventName, String eventDescription){
@@ -1026,6 +1056,18 @@ public class SQLManager {
 			e.printStackTrace();
 		}
 	}
+	public static void deleteVenueBookingDetails(Connection connection, int bookingID){
+		String deleteVenueBookingDetailsByVenue = 
+				"DELETE FROM VenueBookingDetails " +
+				"WHERE BookingID=?";
+		try {
+			PreparedStatement prep = connection.prepareStatement(deleteVenueBookingDetailsByVenue);
+			prep.setInt(1, bookingID);
+			prep.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/*------------------------------------------------------UPDATE--------------------------------------------------------------*/
 	public static void updateTaskDetails(Connection connection, int taskID, String taskDescription, String assignedTo, String date, boolean done){
@@ -1307,7 +1349,7 @@ public class SQLManager {
 		}
 		return rs;
 	}
-	
+
 	
 	public static void main(String[] args){
 		/*Connection con = ConnectionManager.getConnection();
