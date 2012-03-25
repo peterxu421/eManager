@@ -125,7 +125,7 @@ public class EventPlanning_Meeting extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			if(table.getSelectionCount()==0){
 				Shell add_meeting_shell = new Shell(getDisplay());
-				SkeletonAddItem add_meeting_page = new SkeletonAddItem(
+				AbstractAdd add_meeting_page = new AbstractAdd(
 						add_meeting_shell, SWT.None, stringArray) {
 					public void onSubmit() {
 						//insert to database
@@ -171,7 +171,7 @@ public class EventPlanning_Meeting extends Composite {
 			index = table.getSelectionIndex();
 			if(table.getSelectionCount()!=0){
 				Shell edit_meeting_shell = new Shell(getDisplay());
-				SkeletonEditItem edit_meeting_page = new SkeletonEditItem(edit_meeting_shell, SWT.None,stringArray){
+				AbstractEdit edit_meeting_page = new AbstractEdit(edit_meeting_shell, SWT.None,stringArray){
 					//setText
 					public void onLoad(){
 						for(int i=0; i<stringArray.length; i++){

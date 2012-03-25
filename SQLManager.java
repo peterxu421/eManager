@@ -115,7 +115,8 @@ public class SQLManager {
 			"VenueID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
 			"Name VARCHAR(20)," +
 			"Location VARCHAR(50)," +
-			"Type VARCHAR(20))";
+			"Type VARCHAR(20)," +
+			"Capacity INTEGER)";
 	private static String createVenueBookingDetailsTable = 
 			"CREATE TABLE VenueBookingDetails(" +
 			"BookingID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
@@ -133,6 +134,7 @@ public class SQLManager {
 			"Contact VARCHAR(20)," +
 			"Email VARCHAR(20)," +
 			"Organization VARCHAR(30))";
+
 	public static Connection createDatabase(){
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -172,6 +174,10 @@ public class SQLManager {
 			sqle.printStackTrace();
 		}
 		return connection;
+	}
+	
+	public static Connection getConnection(){
+		return ConnectionManager.getConnection();
 	}
 	
 	/*--------------------------------------------GET---------------------------------------------------------*/
@@ -690,10 +696,10 @@ public class SQLManager {
 		}
 		return packingID;
 	}
-	public static int insertVenueDetails(Connection connection, String name, String location, String type){
+	public static int insertVenueDetails(Connection connection, String name, String location, String type, int capacity){
 		String insertVenueDetails = 
-				"INSERT INTO VenueDetails (Name, Location, Type) " +
-				"VALUES (?,?,?)";
+				"INSERT INTO VenueDetails (Name, Location, Type, Capacity) " +
+				"VALUES (?,?,?,?)";
 		int venueID = 0;
 		PreparedStatement prep = null;
 		ResultSet rs = null;
@@ -702,6 +708,7 @@ public class SQLManager {
 			prep.setString(1, name);
 			prep.setString(2, location);
 			prep.setString(3, type);
+			prep.setInt(4, capacity);
 			prep.execute();
 			rs = prep.getGeneratedKeys();
 			while(rs.next()){
@@ -1179,9 +1186,9 @@ public class SQLManager {
 			sqle.printStackTrace();
 		}
 	}
-	public static void updateVenueDetails(Connection connection, int venueID, String name, String location, String type){
+	public static void updateVenueDetails(Connection connection, int venueID, String name, String location, String type, int capacity){
 		String updateVenueDetails =
-				"UPDATE VenueDetails SET Name=?,Location=?,Type=? " +
+				"UPDATE VenueDetails SET Name=?,Location=?,Type=?,Capacity=? " +
 				"WHERE VenueID=?";
 		PreparedStatement prep = null;
 		try{
@@ -1189,7 +1196,8 @@ public class SQLManager {
 			prep.setString(1, name);
 			prep.setString(2, location);
 			prep.setString(3, type);
-			prep.setInt(4, venueID);
+			prep.setInt(4, capacity);
+			prep.setInt(5, venueID);
 			prep.execute();
 		}catch(SQLException sqle){
 			sqle.printStackTrace();

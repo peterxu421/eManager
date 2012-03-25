@@ -18,6 +18,7 @@ public class VenueListEditItem extends Composite {
 	private Text name;
 	private Text location;
 	private Text type;
+	private Text capacity;
 	
 	private Table table;
 	private int index;
@@ -68,6 +69,12 @@ public class VenueListEditItem extends Composite {
 		lblType.setText("Type");
 		lblType.setBounds(108, 157, 27, 17);
 		toolkit.adapt(lblType, true, true);
+		
+		Label lblCapacity = new Label(composite, SWT.NONE);
+		lblCapacity.setAlignment(SWT.RIGHT);
+		lblCapacity.setBounds(80, 199, 55, 15);
+		toolkit.adapt(lblCapacity, true, true);
+		lblCapacity.setText("Capacity");
 
 		name = new Text(composite, SWT.BORDER);
 		name.setBounds(152, 71, 125, 23);
@@ -91,14 +98,21 @@ public class VenueListEditItem extends Composite {
 			type.setText(table.getItem(index).getText(2));
 		}
 		
+		capacity = new Text(composite, SWT.BORDER);
+		capacity.setBounds(152, 199, 125, 21);
+		toolkit.adapt(capacity, true, true);
+		if (index >= 0 && index <table.getItemCount()){
+			capacity.setText(table.getItem(index).getText(3));
+		}
+		
 		Button btnEdit = new Button(composite, SWT.NONE);
-		btnEdit.setBounds(103, 209, 75, 25);
+		btnEdit.setBounds(108, 239, 75, 25);
 		toolkit.adapt(btnEdit, true, true);
 		btnEdit.setText("Edit");
 		btnEdit.addSelectionListener(new edit());
 		
 		Button btnCancel = new Button(composite, SWT.NONE);
-		btnCancel.setBounds(202, 209, 75, 25);
+		btnCancel.setBounds(202, 239, 75, 25);
 		toolkit.adapt(btnCancel, true, true);
 		btnCancel.setText("Cancel");
 		btnCancel.addSelectionListener(new cancel());
@@ -106,7 +120,7 @@ public class VenueListEditItem extends Composite {
 	
 	public class edit extends SelectionAdapter{
 		public void widgetSelected(SelectionEvent e){
-			String[] _venueList = new String[3];
+			String[] _venueList = new String[4];
 			
 			if (!name.getText().isEmpty()){
 				_venueList[0] = name.getText();
@@ -117,13 +131,18 @@ public class VenueListEditItem extends Composite {
 			if (!type.getText().isEmpty()){
 				_venueList[2] = type.getText();
 			}
+			if(!capacity.getText().isEmpty()){
+				_venueList[3] = capacity.getText();
+			}
+			
 			
 			if (!name.getText().isEmpty() &&
 				   !location.getText().isEmpty() &&
-				       !type.getText().isEmpty()){
+				       !type.getText().isEmpty() &&
+				       !capacity.getText().isEmpty()){
 				/* update the venue table */ 
 				TableItem temp = table.getItem(index);
-				for (int i=0; i<3; i++){
+				for (int i=0; i<4; i++){
 					temp.setText(i, _venueList[i]);
 				}
 				
@@ -133,6 +152,7 @@ public class VenueListEditItem extends Composite {
 				toBeEdited.setName(_venueList[0]);
 				toBeEdited.setLocation(_venueList[1]);
 				toBeEdited.setType(_venueList[2]);
+				toBeEdited.setCapacity(Integer.parseInt(_venueList[3]));
 				db.updateVenue(toBeEdited);
 				
 				getParent().dispose();

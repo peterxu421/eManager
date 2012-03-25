@@ -37,14 +37,14 @@ public class VenueBooking_VenueList extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 453, 330);
+		composite.setBounds(10, 10, 545, 330);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		venueTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		venueTable.setLinesVisible(true);
 		venueTable.setHeaderVisible(true);
-		venueTable.setBounds(10, 10, 307, 314);
+		venueTable.setBounds(10, 10, 406, 314);
 		toolkit.adapt(venueTable);
 		toolkit.paintBordersFor(venueTable);
 		
@@ -60,16 +60,14 @@ public class VenueBooking_VenueList extends Composite {
 		tableColumn_2.setWidth(100);
 		tableColumn_2.setText("Type");
 		
-		Button btnBook = new Button(composite, SWT.NONE);
-		btnBook.setBounds(350, 10, 75, 25);
-		toolkit.adapt(btnBook, true, true);
-		btnBook.setText("Book");
+		TableColumn tblclmnCapacity = new TableColumn(venueTable, SWT.CENTER);
+		tblclmnCapacity.setWidth(100);
+		tblclmnCapacity.setText("Capacity");
 		
 		Button btnCheckAvailability = new Button(composite, SWT.NONE);
-		btnCheckAvailability.setBounds(336, 54, 106, 25);
+		btnCheckAvailability.setBounds(422, 10, 106, 25);
 		toolkit.adapt(btnCheckAvailability, true, true);
 		btnCheckAvailability.setText("Check Availability");
-		btnBook.addSelectionListener(new bookVenue());
 		btnCheckAvailability.addSelectionListener(new check());
 		
 		importVenueListData();
@@ -84,20 +82,7 @@ public class VenueBooking_VenueList extends Composite {
 			temp.setText(0, venueList.get(i).getName());
 			temp.setText(1, venueList.get(i).getLocation());
 			temp.setText(2, venueList.get(i).getType());
-		}
-	}
-	
-	public class bookVenue extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e){
-			int index = venueTable.getSelectionIndex();
-			if(index >=0 && index < venueTable.getItemCount()){
-				Venue selected = venueList.get(index);
-				Shell vBookingShell = new Shell(getDisplay());
-				VenueBooking_VenueBooking vBookingPage  = new VenueBooking_VenueBooking(vBookingShell, SWT.None, selected);
-				vBookingPage.pack();
-				vBookingShell.pack();
-				vBookingShell.open();
-			}
+			temp.setText(3, venueList.get(i).getCapacity()+"");
 		}
 	}
 	
@@ -105,11 +90,11 @@ public class VenueBooking_VenueList extends Composite {
 		public void widgetSelected(SelectionEvent e){
 			int index = venueTable.getSelectionIndex();
 			if(index >=0 && index < venueTable.getItemCount()){
-				Shell viewBookingInfoShell = new Shell(getDisplay());
-				VenueViewBookingInfo viewBookingInfoPage = new VenueViewBookingInfo(viewBookingInfoShell, SWT.None, index);
-				viewBookingInfoPage.pack();
-				viewBookingInfoShell.pack();
-				viewBookingInfoShell.open();
+				Shell venueWeekViewShell = new Shell(getDisplay());
+				VenueBooking_VenueWeekView venueWeekViewPage = new VenueBooking_VenueWeekView(venueWeekViewShell, SWT.None, index);
+				venueWeekViewPage.pack();
+				venueWeekViewShell.pack();
+				venueWeekViewShell.open();
 			}
 		}
 	}

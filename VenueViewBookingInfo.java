@@ -19,7 +19,7 @@ public class VenueViewBookingInfo extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public VenueViewBookingInfo(Composite parent, int style, int index) {
+	public VenueViewBookingInfo(Composite parent, int style, Venue venue) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -30,31 +30,35 @@ public class VenueViewBookingInfo extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(37, 26, 462, 410);
+		composite.setBounds(37, 26, 468, 463);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		Label lblVenueBookingStatus = new Label(composite, SWT.NONE);
-		lblVenueBookingStatus.setBounds(175, 20, 128, 15);
+		lblVenueBookingStatus.setAlignment(SWT.CENTER);
+		lblVenueBookingStatus.setBounds(26, 21, 407, 15);
 		toolkit.adapt(lblVenueBookingStatus, true, true);
-		lblVenueBookingStatus.setText("Venue Booking Status");
 		
-		List listBookingStatus = new List(composite, SWT.BORDER);
-		listBookingStatus.setBounds(32, 54, 401, 346);
+		
+		List listBookingStatus = new List(composite, SWT.BORDER | SWT.V_SCROLL);
+		listBookingStatus.setBounds(32, 54, 401, 387);
 		toolkit.adapt(listBookingStatus, true, true);
 		
 		/* show the booking info from database */
 		DatabaseReader db = new DatabaseReader();
-		Venue selected = db.getVenues().get(index);
-		ArrayList<VenueBookingInfo> bookingInfoList = db.getVenueBookingInfo(selected);
+		lblVenueBookingStatus.setText("Booking Applications for <" + venue.getName()+ ">");
+		ArrayList<VenueBookingInfo> bookingInfoList = db.getVenueBookingInfo(venue);
 		
 		if (!bookingInfoList.isEmpty()){
 			for (int i=0; i<bookingInfoList.size(); i++){
 				String name = bookingInfoList.get(i).getApplicant().getName();
 			    String organization = bookingInfoList.get(i).getApplicant().getOrganization();
-			    BookingDateTime dateTime = bookingInfoList.get(i).getDateTime();
+			    BookedDateTime dateTime = bookingInfoList.get(i).getDateTime();
 			    
-			    String bookingInfo = name + "  " + organization + " " + dateTime.toString();
+			    String bookingInfo = name + "  " + organization + " " + 
+			                         dateTime.getDate().toString() + "    From " + 
+		                             dateTime.getTimeStart().toString() + " to " +
+				                     dateTime.getTimeEnd().toString();
 			    listBookingStatus.add(bookingInfo, i);
 			    }
 		}

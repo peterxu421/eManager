@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-class Workspace extends Composite{
+class Eventspace extends Composite{
 	
 	Composite body;
 	Composite left;
@@ -39,7 +39,7 @@ class Workspace extends Composite{
 	};
 
 	//Constructor
-	public Workspace(Composite parent, int style,Event event){
+	public Eventspace(Composite parent, int style,Event event){
 		super(parent, style);
 		this.event = event;
 		GridLayout gridLayout = new GridLayout();
