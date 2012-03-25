@@ -166,7 +166,6 @@ public class SelectEventPage extends Composite {
 			if (index != -1) {
 				Event existEvent = events.get(index);
 				SessionManager.setCurrentEvent(existEvent);
-				//SessionManager.setCurrentMode(MACRO.)
 				SelectModePage mode = new SelectModePage(shell, SWT.None);
 				mode.pack();
 				shell.pack();
@@ -336,6 +335,7 @@ public class SelectEventPage extends Composite {
 				DatabaseReader dbReader = new DatabaseReader();
 				dbReader.insertEvent(newEvent);
 				SessionManager.setCurrentEvent(newEvent);
+				SessionManager.setCurrentMode(MACRO.ORGANIZER);
 				Eventspace workspace = new Eventspace(shell, SWT.None, MACRO.ORGANIZER_MODE);
 				workspace.pack();
 				shell.pack();

@@ -21,6 +21,13 @@ class Eventspace extends Composite{
 		"Event Registration"
 	};
 	
+	private boolean[] booleanList = new boolean[]{
+			true,
+			true,
+			true,
+			true
+		};
+	
 	private String[][] tabList = new String[][]{
 			{	"Pre-Event",
 				"Actual-Event",
@@ -65,13 +72,13 @@ class Eventspace extends Composite{
 	    Button[] buttons = new Button[num];
 	    for(int i=0; i<num; i++)
 	    {
-	    	//System.out.println(num + " " + i);
-	    	//System.out.println("bool" + boolMode[0]);
-	    	//buttons[i].setEnabled(boolMode[i]);
+	    	System.out.println(num + " " + i);
 	    	System.out.println(num + " " + i);
 	    	buttons[i] = new Button(optionBar, SWT.PUSH);
 	    	buttons[i].setText(optionList[i]);
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
+	    	System.out.println("bool" + boolMode[0]);
+	    	buttons[i].setEnabled(boolMode[i]);
 	    }
 	    
 	    //body
