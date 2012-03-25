@@ -2,6 +2,8 @@
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -29,8 +31,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Button;
 
-import com.ibm.icu.util.Calendar;
-import com.ibm.icu.util.GregorianCalendar;
+import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 
 public class VenueBooking_VenueWeekView extends Composite {
 
@@ -38,9 +39,9 @@ public class VenueBooking_VenueWeekView extends Composite {
 	private Table weekViewTable;
 	private TableColumn tblclmnTimeSlot;
 	private TableColumn[] tblclmn = new TableColumn[7];
-	private DateTime preferredEventDate;
 	private Color cellColor;
 	private List selectedDateTimeList;
+	private CalendarCombo calendarCombo;
 	
 	private DatabaseReader db = new DatabaseReader();
 	private Venue selectedVenue = new Venue();
@@ -119,11 +120,6 @@ public class VenueBooking_VenueWeekView extends Composite {
 		lblEnterPreferredEvent.setBounds(10, 24, 144, 23);
 		toolkit.adapt(lblEnterPreferredEvent, true, true);
 		
-		preferredEventDate = new DateTime(composite, SWT.BORDER);
-		preferredEventDate.setBounds(160, 24, 80, 24);
-		toolkit.adapt(preferredEventDate);
-		toolkit.paintBordersFor(preferredEventDate);
-		
 		Button btnCheck = new Button(composite, SWT.NONE);
 		btnCheck.setBounds(259, 23, 75, 25);
 		toolkit.adapt(btnCheck, true, true);
@@ -150,6 +146,7 @@ public class VenueBooking_VenueWeekView extends Composite {
 		btnGoBooking.setBounds(727, 249, 151, 25);
 		toolkit.adapt(btnGoBooking, true, true);
 		btnGoBooking.setText("Go to the booking page");
+		btnGoBooking.addSelectionListener(new goBooking());
 		
 		Label lblNotePleaseSelect = new Label(composite, SWT.NONE);
 		lblNotePleaseSelect.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
@@ -158,7 +155,13 @@ public class VenueBooking_VenueWeekView extends Composite {
 		lblNotePleaseSelect.setText("Note: 1. Double click a cell to select the corresponding time slot.\n" +
 		                            "      2. Select more cells if you need to book more than 1 hour.\n" +
 				                    "      3. Double click a marked cell again to cancel the selection.");
-		btnGoBooking.addSelectionListener(new goBooking());
+		
+		calendarCombo = new CalendarCombo(composite, SWT.NONE);
+		calendarCombo.setBounds(160, 24, 88, 23);
+		toolkit.adapt(calendarCombo);
+		toolkit.paintBordersFor(calendarCombo);
+		calendarCombo.setDate(Calendar.getInstance());
+		
 	}
 	
 /*	public class mouseOver implements MouseMoveListener{
@@ -190,7 +193,8 @@ public class VenueBooking_VenueWeekView extends Composite {
 			/* Get the preferred event date */
 			Calendar calendar = new GregorianCalendar();
 			calendar.clear();
-			calendar.set(preferredEventDate.getYear(), preferredEventDate.getMonth(), preferredEventDate.getDay());
+			calendar = calendarCombo.getDate();
+			
 			
 			/* Arrange the week view table */
 			int day_of_week;
@@ -231,7 +235,7 @@ public class VenueBooking_VenueWeekView extends Composite {
 			
 			
 			/* Get bookingInfo of the venue from database */
-			ArrayList<VenueBookingInfo> bookingInfoList = db.getVenueBookingInfo(selectedVenue);
+			ArrayList<VenueBookingApplication> bookingInfoList = db.getVenueBookingInfo(selectedVenue);
 			if (!bookingInfoList.isEmpty()){
 				for (int i=0; i<bookingInfoList.size(); i++){
 					if(bookingInfoList.get(i).getStatus() == MACRO.PENDING || bookingInfoList.get(i).getStatus() == MACRO.APPROVED){
@@ -256,13 +260,13 @@ public class VenueBooking_VenueWeekView extends Composite {
 		
 		public void tblclmnTextFill(int day_of_week, Calendar calendar, TableColumn tblclmn){
 			switch (day_of_week){
-			case 1: tblclmn.setText("Sun " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
-			case 2: tblclmn.setText("Mon " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
-			case 3: tblclmn.setText("Tue " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
-			case 4: tblclmn.setText("Wed " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
-			case 5: tblclmn.setText("Thu " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
-			case 6: tblclmn.setText("Fri " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
-			case 7: tblclmn.setText("Sat " + calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH)+1)); break;
+			case 1: tblclmn.setText("Sun " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 2: tblclmn.setText("Mon " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 3: tblclmn.setText("Tue " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 4: tblclmn.setText("Wed " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 5: tblclmn.setText("Thu " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 6: tblclmn.setText("Fri " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 7: tblclmn.setText("Sat " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
 			}
 		}
 	}
