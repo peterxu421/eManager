@@ -127,9 +127,9 @@ public class EventPlanning_PreEvent extends Composite {
 		FillLayout fillLayout = new FillLayout();
 		fillLayout.marginWidth = 0;
 		composite_2.setLayout(fillLayout);
-		TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
-		taskChart.setSize(300, 300);
-		taskChart.pack();
+		//TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
+		//taskChart.setSize(300, 300);
+		//taskChart.pack();
 		composite_2.pack();
 
 		TabItem tbtmPublicity = new TabItem(tabFolderPreEvent, SWT.NONE);
@@ -204,7 +204,7 @@ public class EventPlanning_PreEvent extends Composite {
 			item.setText(0, taskList.get(i).getTaskDesciption());
 			item.setText(1, taskList.get(i).getAssignedTo());
 			item.setText(2, taskList.get(i).getDateDue().toString());
-			item.setText(3, taskList.get(i).isDone() ? "Done" : "Undone");
+			item.setText(3, taskList.get(i).isDone() ? "true" : "false");
 		}
 
 		for (int i = 0; i < memberList.size(); i++) {
@@ -227,9 +227,9 @@ public class EventPlanning_PreEvent extends Composite {
 					// insert to database
 					String[] tempList=getStringList();
 					Date date = new Date(tempList[2]);
-					Done done = new Done(tempList[3]);
+					boolean isDone = Boolean.parseBoolean(tempList[3]);
 					Task task = new Task(tempList[0],
-							tempList[1], date, done.isDone());
+							tempList[1], date, isDone);
 					db.insertTask(event, task);
 					taskList.add(task);
 					// update the table
@@ -323,8 +323,8 @@ public class EventPlanning_PreEvent extends Composite {
 						task.setTaskDesciption(tempList[0]);
 						task.setAssignedTo(tempList[1]);
 						task.setDateDue(new Date(tempList[2]));
-						Done done = new Done(tempList[3]);
-						task.setDone(done.isDone());
+						boolean isDone = Boolean.parseBoolean(tempList[3]);
+						task.setDone(isDone);
 						// update database
 						db.updateTask(task);
 						// update the table

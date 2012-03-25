@@ -388,9 +388,9 @@ public class EventPlanning_ActualEvent extends Composite {
 			temp.setText(1, itineraryList.get(i).getDate().toString());
 			temp.setText(2, itineraryList.get(i).getTime().toString());
 			if (itineraryList.get(i).isDone() == true)
-				temp.setText(3, "Done");
+				temp.setText(3, "true");
 			else
-				temp.setText(3, "Undone");
+				temp.setText(3, "false");
 		}
 	}
 
@@ -405,9 +405,9 @@ public class EventPlanning_ActualEvent extends Composite {
 			temp.setText(1, manpowerList.get(i).getAssignedTo());
 			temp.setText(2, manpowerList.get(i).getDate().toString());
 			if (manpowerList.get(i).isDone() == true)
-				temp.setText(3, "Done");
+				temp.setText(3, "true");
 			else
-				temp.setText(3, "Undone");
+				temp.setText(3, "false");
 		}
 	}
 

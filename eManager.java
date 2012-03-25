@@ -6,7 +6,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
+
 
 public class eManager{
 	Shell rootShell;
@@ -18,11 +18,11 @@ public class eManager{
 	public eManager() {
 		display = new Display();
 		rootShell = new Shell(display);
-		//menu
+		// menu
 		Menu menu = new Menu(rootShell, SWT.BAR);
 		rootShell.setMenuBar(menu);
 
-		//menu->
+		// menu->
 		MenuItem file = new MenuItem(menu, SWT.CASCADE);
 		file.setText("File");
 		MenuItem edit = new MenuItem(menu, SWT.CASCADE);
@@ -34,7 +34,7 @@ public class eManager{
 		MenuItem help = new MenuItem(menu, SWT.CASCADE);
 		help.setText("Help");
 
-		//menu->file
+		// menu->file
 		Menu fileMenu = new Menu(rootShell, SWT.DROP_DOWN);
 		file.setMenu(fileMenu);
 		MenuItem open = new MenuItem(fileMenu, SWT.PUSH);
@@ -46,6 +46,7 @@ public class eManager{
 
 		/*
 		//menu->edit
+>>>>>>> fd79da1fe5a497e07b205fe66f5914954192dce4
 		Menu editMenu = new Menu(rootShell, SWT.DROP_DOWN);
 		edit.setMenu(editMenu);
 		MenuItem undo = new MenuItem(editMenu, SWT.PUSH);
@@ -60,6 +61,7 @@ public class eManager{
 
 		/*
 		//menu->view
+>>>>>>> fd79da1fe5a497e07b205fe66f5914954192dce4
 		Menu viewMenu = new Menu(rootShell, SWT.DROP_DOWN);
 		view.setMenu(viewMenu);
 		MenuItem pref = new MenuItem(viewMenu, SWT.PUSH);
@@ -72,7 +74,7 @@ public class eManager{
 		osa.setText("OSA Venues");
 		 */
 
-		//menu-> mode
+		// menu-> mode
 		Menu modeMenu = new Menu(rootShell, SWT.DROP_DOWN);
 		mode.setMenu(modeMenu);
 		MenuItem manager = new MenuItem(modeMenu, SWT.PUSH);
@@ -82,7 +84,7 @@ public class eManager{
 		MenuItem participant = new MenuItem(modeMenu, SWT.PUSH);
 		participant.setText("Participant Mode");
 
-		//menu-> help
+		// menu-> help
 		Menu helpMenu = new Menu(rootShell, SWT.DROP_DOWN);
 		help.setMenu(helpMenu);
 		MenuItem readme = new MenuItem(helpMenu, SWT.PUSH);
@@ -90,7 +92,7 @@ public class eManager{
 		MenuItem version = new MenuItem(helpMenu, SWT.PUSH);
 		version.setText("Version");
 
-		//shell
+		// shell
 		Image image = new Image(display, "resources/bg.png");
 		rootShell.setMaximized(true);
 		rootShell.setText("eManagerV1.0");
@@ -121,16 +123,17 @@ public class eManager{
 		//readme.addSelectionListener(new MenuListener());
 		version.addSelectionListener(new MenuVersionListener());
 
-		//welcome page
-		welcome_shell = new Shell(display,SWT.NO_TRIM);
+		// welcome page
+		welcome_shell = new Shell(display, SWT.NO_TRIM);
 		welcome_shell.setLocation(400, 250);
 		welcome_page = new WelcomePage(welcome_shell, SWT.None);
 
 		welcome_page.pack();
 		welcome_shell.pack();
 		welcome_shell.open();
-		while(!rootShell.isDisposed()){
-			if(!display.readAndDispatch()) display.sleep();
+		while (!rootShell.isDisposed()) {
+			if (!display.readAndDispatch())
+				display.sleep();
 		}
 		display.dispose();
 	}
@@ -138,6 +141,7 @@ public class eManager{
 	//opens Welcome page
 	class MenuOpenListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
+
 			welcome_shell = new Shell(display,SWT.NONE);
 			welcome_shell.setLocation(400, 250);
 			welcome_page = new WelcomePage(welcome_shell, SWT.NONE);
@@ -154,6 +158,7 @@ public class eManager{
 			display.dispose();
 		}
 	}
+
 
 	//opens Version page
 	class MenuVersionListener extends SelectionAdapter {
@@ -202,8 +207,8 @@ public class eManager{
 		}
 	}
 
-	public static void main(String[] args)
-	{	
+	public static void main(String[] args) {
 		eManager eManager = new eManager();
 	}
+
 }

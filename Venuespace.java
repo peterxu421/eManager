@@ -55,7 +55,7 @@ class Venuespace extends Composite{
 	    Button[] buttons = new Button[num];
 	    for(int i=0; i<num; i++)
 	    {
-	    	buttons[i].setEnabled(mode[i]);
+	    	//buttons[i].setEnabled(mode[i]);
 	    	buttons[i] = new Button(optionBar, SWT.PUSH);
 	    	buttons[i].setText(optionMenu[i]);
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
