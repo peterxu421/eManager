@@ -1,6 +1,12 @@
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -93,23 +99,19 @@ public class VenueBooking_VenueWeekView extends Composite {
 		
 		
 		/* trials to remove row highlighting 
-		weekViewTable.addListener(SWT.MouseEnter, new Listener(){
-			@Override
-			public void handleEvent(Event event){
-				return; // do nothing;
-			}
-		});
-		
-		Listener[] listeners = weekViewTable.getListeners(SWT.MouseEnter);
-		for(int j=0; j<listeners.length; j++){
-			weekViewTable.removeListener(SWT.MouseEnter, listeners[j]);
-			System.out.println(listeners[j].toString());
-		} 
+ 		weekViewTable.addMouseMoveListener(new mouseOver());
 		*/
 		
 		weekViewTable.addListener(SWT.MouseDoubleClick, new chooseTime());
+
 		cellColor = weekViewTable.getDisplay().getSystemColor(SWT.COLOR_LIST_SELECTION);
 
+		weekViewTable.addListener(SWT.MouseDown, new Listener(){
+			public void handleEvent(Event event){
+				weekViewTable.deselectAll();
+			}
+		}); // disable table item selection
+		
 		Label lblEnterPreferredEvent = new Label(composite, SWT.NONE);
 		lblEnterPreferredEvent.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblEnterPreferredEvent.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
@@ -137,7 +139,8 @@ public class VenueBooking_VenueWeekView extends Composite {
 		selectedDateTimeList = new List(composite, SWT.BORDER | SWT.V_SCROLL);
 		selectedDateTimeList.setBounds(646, 82, 232, 153);
 		toolkit.adapt(selectedDateTimeList, true, true);
-				Button btnClearAll = new Button(composite, SWT.NONE);
+		
+		Button btnClearAll = new Button(composite, SWT.NONE);
 		btnClearAll.setBounds(646, 249, 75, 25);
 		toolkit.adapt(btnClearAll, true, true);
 		btnClearAll.setText("Clear all");

@@ -125,7 +125,6 @@ class Venuespace extends Composite{
 			}
 			else if(name.equals("Regulations and Rules")){
 				VenueBooking_InstructionPage vInstruc = new VenueBooking_InstructionPage (right, SWT.BORDER);
-
 	    		vInstruc.pack();
 			}
 			else if(name.equals("Select and Book"))

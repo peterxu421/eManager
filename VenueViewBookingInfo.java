@@ -15,13 +15,11 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 
-
 public class VenueViewBookingInfo extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private List listBookingStatus;
 	private String format =  "|%1$-15s|%2$-15s|%3$-40s|%4$-10s";
-
 
 	/**
 	 * Create the composite.

@@ -168,7 +168,6 @@ public class VenueBooking_VenueBooking extends Composite {
 				}
 				getParent().dispose();
 			}
-
 		}
 	}
 	public class reset extends SelectionAdapter{

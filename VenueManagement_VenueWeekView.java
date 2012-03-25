@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -58,6 +59,7 @@ public class VenueManagement_VenueWeekView extends Composite {
 		composite.setBounds(10, 0, 667, 496);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
+		
 		weekViewTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		weekViewTable.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		weekViewTable.setBounds(10, 53, 630, 370);
@@ -71,7 +73,7 @@ public class VenueManagement_VenueWeekView extends Composite {
 				weekViewTable.deselectAll();
 			}
 		}); // disable table item selection
-
+		
 		tblclmnTimeSlot = new TableColumn(weekViewTable, SWT.CENTER);
 		tblclmnTimeSlot.setWidth(100);
 
@@ -104,26 +106,6 @@ public class VenueManagement_VenueWeekView extends Composite {
 		btnCheck.setBounds(240, 22, 75, 25);
 		toolkit.adapt(btnCheck, true, true);
 		btnCheck.setText("Check");
-<<<<<<< HEAD:VenueWeekView.java
-		btnCheck.addSelectionListener(new checkBookingInfo(venueIndex));
-	}
-	
-	public class chooseTime implements Listener {
-		  public void handleEvent(Event event) {
-			  Point pt = new Point(event.x, event.y);
-			  TableItem item = weekViewTable.getItem(pt);
-			  if (item == null)    return;
-			  for (int i = 0; i < weekViewTable.getColumnCount(); i++) {
-				  Rectangle rect = item.getBounds(i);
-			      if (rect.contains(pt)) {
-			    	  int rowIndex = weekViewTable.indexOf(item);
-			    	  weekViewTable.getItem(rowIndex).setBackground(i, cellColor);
-			    	  //weekViewTable.deselectAll();
-			          System.out.println(weekViewTable.getItem(rowIndex).getText(i));
-			      }
-			  }
-		  }
-=======
 		btnCheck.addSelectionListener(new checkBookingInfo());
 		
 		btnViewAllApplications = new Button(composite, SWT.NONE);
@@ -131,7 +113,6 @@ public class VenueManagement_VenueWeekView extends Composite {
 		toolkit.adapt(btnViewAllApplications, true, true);
 		btnViewAllApplications.setText("View all applications");
 		btnViewAllApplications.addSelectionListener(new viewAllApplications());
->>>>>>> bfc2cda2001a1b81591d416b485c3be05e4863be:VenueManagement_VenueWeekView.java
 	}
 	
 	/* Button selection adapters */
@@ -214,7 +195,6 @@ public class VenueManagement_VenueWeekView extends Composite {
 	public class viewAllApplications extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
 			Shell viewBookingInfoShell = new Shell(getDisplay());
-
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			viewBookingInfoShell.setText("eManager");
 			viewBookingInfoShell.setImage(icon);

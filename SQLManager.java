@@ -1015,18 +1015,6 @@ public class SQLManager {
 			e.printStackTrace();
 		}
 	}
-	public static void deleteVenueBookingDetailsByVenue(Connection connection, int venueID){
-		String deleteVenueBookingDetailsByVenue = 
-				"DELETE FROM VenueBookingDetails " +
-				"WHERE VenueID=?";
-		try {
-			PreparedStatement prep = connection.prepareStatement(deleteVenueBookingDetailsByVenue);
-			prep.setInt(1, venueID);
-			prep.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	/*------------------------------------------------------UPDATE--------------------------------------------------------------*/
 	public static void updateTaskDetails(Connection connection, int taskID, String taskDescription, String assignedTo, String date, boolean done){
