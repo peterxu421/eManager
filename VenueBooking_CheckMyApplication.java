@@ -96,7 +96,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		btnWithdrawAll.setText("Withdraw all");
 		btnWithdrawAll.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
-				MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.CANCEL | SWT.ICON_WARNING );
+				MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.NO | SWT.ICON_WARNING );
 				warningPage.setText("Warning!");
 				warningPage.setMessage("Are you sure you want to withdraw from all your applications?");
 				int choice = warningPage.open(); // indicates the user's choice
@@ -109,7 +109,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 					/* update the table */
 					applicationTable.removeAll();
 					break;
-				case SWT.CANCEL:
+				case SWT.NO:
 					break;
 				}
 			}
@@ -123,7 +123,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 			public void widgetSelected(SelectionEvent e){
 				int index = applicationTable.getSelectionIndex();
 				if(index >= 0 && index < applicationTable.getItemCount()){
-					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.CANCEL | SWT.ICON_WARNING );
+					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.NO | SWT.ICON_WARNING );
 					warningPage.setText("Warning!");
 					warningPage.setMessage("Are you sure you want to withdraw this application?");
 					int choice = warningPage.open(); // indicates the user's choice
@@ -134,7 +134,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 						/* update the application table */
 						applicationTable.remove(index);
 						break;
-					case SWT.CANCEL:
+					case SWT.NO:
 						break;
 					}
 				}
