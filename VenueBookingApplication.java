@@ -1,12 +1,12 @@
 
-public class VenueBookingInfo {
+public class VenueBookingApplication {
 	private int venueBookingInfoID;
 	private Venue venue;
 	private VenueApplicant applicant;
 	private BookedDateTime dateTime;
 	private int status;
 	
-	public VenueBookingInfo(int venueBookingInfoID, Venue venue,
+	public VenueBookingApplication(int venueBookingInfoID, Venue venue,
 			VenueApplicant applicant, BookedDateTime dateTime, int status) {
 		super();
 		this.venueBookingInfoID = venueBookingInfoID;
@@ -16,7 +16,7 @@ public class VenueBookingInfo {
 		this.status = status;
 	}
 
-	public VenueBookingInfo(Venue venue, VenueApplicant applicant,
+	public VenueBookingApplication(Venue venue, VenueApplicant applicant,
 			BookedDateTime dateTime) {
 		super();
 		this.venue = venue;

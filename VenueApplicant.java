@@ -1,7 +1,7 @@
 
 public class VenueApplicant extends Member {
 	private String organization;
-	/* constructor for VenueBookingInfo */
+	/* constructor for VenueBookingApplication */
 	public VenueApplicant(String name, String matricNo,
 			String contact, String email, String organization) {
 		this.name = name;

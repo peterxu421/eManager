@@ -15,7 +15,9 @@ public class SQLManager {
 			"CREATE TABLE EventDetails(" +
 			"EventID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," + 
 			"EventName VARCHAR(50)," +
-			"EventDescription VARCHAR(255))";
+			"EventDescription VARCHAR(255)," +
+			"Organizer_Password VARCHAR(50)," +
+			"Facilitator_Password VARCHAR(50))";
 	private static String createTaskDetailsTable = 
 			"CREATE TABLE TaskDetails(" +
 			"TaskID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
@@ -448,14 +450,13 @@ public class SQLManager {
 		return rs;
 	}
 	public static ResultSet getVenueApplicantByMatricNo(Connection connection, String matricNo){
-		String getVenueBookingDetailsByApplicant = 
-				"SELECT ApplicantID FROM ApplicantDetails " +
+		String getVenueApplicantByMatricNo = 
+				"SELECT * FROM ApplicantDetails " +
 				"WHERE MatricNo=?";
 		PreparedStatement prep = null;
 		ResultSet rs = null;
-		int applicantID = 0;
 		try{
-			prep = connection.prepareStatement(getVenueBookingDetailsByApplicant);
+			prep = connection.prepareStatement(getVenueApplicantByMatricNo);
 			prep.setString(1, matricNo);
 			rs = prep.executeQuery();
 		}catch(SQLException sqle){
