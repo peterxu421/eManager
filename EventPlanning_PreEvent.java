@@ -221,6 +221,7 @@ public class EventPlanning_PreEvent extends Composite {
 
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddItemPage = new Shell(getDisplay());
+			taskAssignAddItemPage.setText("Task Assign Add Item Page");
 			AbstractAdd taskAssignAddItem = new AbstractAdd(
 					taskAssignAddItemPage, SWT.None, stringArrayItem, signatureArrayItem) {
 				public void onSubmit() {
@@ -249,6 +250,7 @@ public class EventPlanning_PreEvent extends Composite {
 
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddMemberPage = new Shell(getDisplay());
+			taskAssignAddMemberPage.setText("Task Assign Add Member Page");
 			AbstractAdd taskAssignAddMember = new AbstractAdd(
 					taskAssignAddMemberPage, SWT.None, stringArrayMember, signatureArrayMember) {
 				public void onSubmit() {
@@ -308,6 +310,7 @@ public class EventPlanning_PreEvent extends Composite {
 			index = tableTaskAssign.getSelectionIndex();
 			if (index < tableTaskAssign.getItemCount() && index >= 0) {
 				Shell taskAssignEditItemPage = new Shell(getDisplay());
+				taskAssignEditItemPage.setText("Task Assign Edit Item Page");
 				AbstractEdit taskAssignEditItem = new AbstractEdit(
 						taskAssignEditItemPage, SWT.None, stringArrayItem, signatureArrayItem) {
 					public void onLoad() {
@@ -346,6 +349,7 @@ public class EventPlanning_PreEvent extends Composite {
 			index = tableCommittee.getSelectionIndex();
 			if (index < tableCommittee.getItemCount() && index >= 0) {
 				Shell taskAssignEditMemberPage = new Shell(getDisplay());
+				taskAssignEditMemberPage.setText("Task Assign Edit Member Page");
 				AbstractEdit taskAssignEditMember = new AbstractEdit(
 						taskAssignEditMemberPage, SWT.None, stringArrayMember,signatureArrayMember) {
 					//get data from table
