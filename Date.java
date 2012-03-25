@@ -3,6 +3,13 @@ public class Date {
 	private int month;
 	private int day;
 
+<<<<<<< HEAD
+	public Date() {
+		super();
+	}
+
+=======
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 	public Date(int year, int month, int day) {
 		this.year = year;
 		this.month = month;
@@ -52,7 +59,11 @@ public class Date {
 		return date;
 	}
 	
+<<<<<<< HEAD
+	public boolean isEqualTo(Date date){
+=======
 	boolean isEqualTo(Date date){
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		if(this.day == date.getDay() &&
 		        this.month == date.getMonth() &&
 				this.year == date.getYear()){
@@ -60,4 +71,17 @@ public class Date {
 		}
 		else return false;	
 	}
+<<<<<<< HEAD
+	
+	public boolean isNotLaterThan(Date date) {
+		if (year > date.getYear() ||
+				year == date.getYear() && month > date.getMonth() ||
+				year == date.getYear() && month == date.getMonth() && day > date.getDay() ||
+				year == date.getYear() && month == date.getMonth() && day == date.getDay()){
+			return true;
+		}
+		else return false;
+	}
+=======
+>>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 }

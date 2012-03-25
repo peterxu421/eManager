@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -12,8 +13,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class VenueBooking_VenueBooking extends Composite {
 
@@ -22,20 +21,17 @@ public class VenueBooking_VenueBooking extends Composite {
 	private Text matricNo;
 	private Text organization;
 	private List listDateTime;
-	private DateTime date;
-	private DateTime timeStart;
-	private DateTime timeEnd;
 	private Text contact;
 	private Text email;
 	
 	private Venue selected;
-
+    private ArrayList<BookedDateTime> bookedDateTimeIntervalList = new ArrayList<BookedDateTime>();
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public VenueBooking_VenueBooking(Composite parent, int style, Venue selected) {
+	public VenueBooking_VenueBooking(Composite parent, int style, Venue selected, ArrayList<BookedDateTime> bookedDateTimeList) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -97,52 +93,30 @@ public class VenueBooking_VenueBooking extends Composite {
 		toolkit.adapt(email, true, true);
 		
 		Label lblDateTime = new Label(composite, SWT.NONE);
-		lblDateTime.setBounds(10, 262, 95, 17);
+		lblDateTime.setBounds(10, 262, 127, 17);
 		toolkit.adapt(lblDateTime, true, true);
-		lblDateTime.setText("Date and Time");
-		
-		date = new DateTime(composite, SWT.BORDER);
-		date.setBounds(10, 285, 80, 24);
-		toolkit.adapt(date);
-		toolkit.paintBordersFor(date);
-		
-		timeStart = new DateTime(composite, SWT.BORDER | SWT.TIME);
-		timeStart.setBounds(107, 285, 86, 24);
-		toolkit.adapt(timeStart);
-		toolkit.paintBordersFor(timeStart);
-		timeStart.setHours(0);
-		timeStart.setMinutes(0);
-		timeStart.setSeconds(0);
-		
-		Label lblTo = new Label(composite, SWT.CENTER);
-		lblTo.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		lblTo.setBounds(197, 285, 19, 24);
-		toolkit.adapt(lblTo, true, true);
-		lblTo.setText("to");
-		
-		timeEnd = new DateTime(composite, SWT.BORDER | SWT.TIME);
-		timeEnd.setBounds(222, 285, 86, 24);
-		toolkit.adapt(timeEnd);
-		toolkit.paintBordersFor(timeEnd);
-		timeEnd.setHours(0);
-		timeEnd.setMinutes(0);
-		timeEnd.setSeconds(0);
-		
-		Button btnAddDateTime = new Button(composite, SWT.NONE);
-		btnAddDateTime.setBounds(314, 285, 34, 25);
-		toolkit.adapt(btnAddDateTime, true, true);
-		btnAddDateTime.setText("Add");
-		btnAddDateTime.addSelectionListener(new addDateTime());
+		lblDateTime.setText("Date and Time Slot");
 		
 		listDateTime = new List(composite, SWT.BORDER | SWT.V_SCROLL);
-		listDateTime.setBounds(10, 315, 232, 68);
+		listDateTime.setBounds(10, 285, 232, 98);
 		toolkit.adapt(listDateTime, true, true);
-		
-		Button btnDeleteDateTime = new Button(composite, SWT.NONE);
-		btnDeleteDateTime.setBounds(248, 358, 45, 25);
-		toolkit.adapt(btnDeleteDateTime, true, true);
-		btnDeleteDateTime.setText("Delete");
-		btnDeleteDateTime.addSelectionListener(new deleteDateTime());
+		Collections.sort(bookedDateTimeList); // sort the list in the order of real date and time
+		for(int i=0; i<bookedDateTimeList.size(); i++){
+			Date date = bookedDateTimeList.get(i).getDate(); 
+			Time timeStart = bookedDateTimeList.get(i).getTimeStart(); // find the start of the time interval
+			while(i<bookedDateTimeList.size()-1 && bookedDateTimeList.get(i).getDate().isEqualTo(bookedDateTimeList.get(i+1).getDate())){
+				if(bookedDateTimeList.get(i).getTimeEnd().isEqualTo(bookedDateTimeList.get(i+1).getTimeStart())){
+					i++; // move forward in the list of consecutive time slots
+				}
+				else break;
+			}
+			Time timeEnd = bookedDateTimeList.get(i).getTimeEnd(); // find the end of the time interval
+			BookedDateTime timeInterval = new BookedDateTime(date, timeStart, timeEnd); //   a whole time interval which puts together consecutive time slots
+			bookedDateTimeIntervalList.add(timeInterval);
+			listDateTime.add(timeInterval.getDate().toString() + "    From " + 
+			                 timeInterval.getTimeStart().toString() + " to " +
+					         timeInterval.getTimeEnd().toString());
+		}
 		
 		Button btnSubmit = new Button(composite, SWT.NONE);
 		btnSubmit.setBounds(10, 389, 75, 25);
@@ -156,35 +130,6 @@ public class VenueBooking_VenueBooking extends Composite {
 		btnCancel.setText("Reset");
 		btnCancel.addSelectionListener(new reset());
 	}
-	
-	/* Button selection adapters*/
-	public class addDateTime extends SelectionAdapter{
-		public void widgetSelected(SelectionEvent e){
-			String dateStr;
-			String timeStartStr;
-			String timeEndStr;
-			
-			dateStr = String.format("%04d",date.getYear())  + "-"
-			        + String.format("%02d", date.getMonth()+1)  + "-" 
-					+ String.format("%02d",date.getDay()) ;  // getMonth() + 1 since getMonth() returns 0 to 11
-			timeStartStr = String.format("%02d",timeStart.getHours()) + ":"
-			        + String.format("%02d",timeStart.getMinutes())  + ":" 
-					+ String.format("%02d",timeStart.getSeconds()) ;
-			timeEndStr = String.format("%02d",timeEnd.getHours()) + ":"
-			        + String.format("%02d",timeEnd.getMinutes())  + ":" 
-					+ String.format("%02d",timeEnd.getSeconds()) ;
-			
-			listDateTime.add(dateStr + "  From " + timeStartStr + " to " + timeEndStr);	
-		}
-	}
-	public class deleteDateTime extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e){
-			int index = listDateTime.getSelectionIndex();
-			if(index >=0 && index < listDateTime.getItemCount()){
-				listDateTime.remove(index);
-			}	
-		}	
-	}
 	public class submit extends SelectionAdapter{
 		public void widgetSelected(SelectionEvent e){
 			String _name = "";
@@ -192,7 +137,6 @@ public class VenueBooking_VenueBooking extends Composite {
 			String _organization = "";
 			String _contact = "";
 			String _email = "";
-			ArrayList<BookingDateTime> _listDateTime = new ArrayList<BookingDateTime>();
 			
 			if(!name.getText().isEmpty()){
 				_name = name.getText();
@@ -209,23 +153,22 @@ public class VenueBooking_VenueBooking extends Composite {
 			if(!email.getText().isEmpty()){
 				_email = email.getText();
 			}
-			if(listDateTime.getItemCount()!=0){
-				for (int i=0; i<listDateTime.getItemCount(); i++){
-					BookingDateTime dateTime = BookingDateTime.parseBookingDateTime(listDateTime.getItem(i));
-					_listDateTime.add(dateTime);
+
+			/* Update the database with the booking application */
+			if(!name.getText().isEmpty() &&
+					!matricNo.getText().isEmpty() &&
+					!organization.getText().isEmpty() &&
+					!contact.getText().isEmpty() &&
+					!email.getText().isEmpty()){
+				DatabaseReader db = new DatabaseReader();
+				for(int i=0; i<bookedDateTimeIntervalList.size(); i++){
+					VenueApplicant newApplicant = new VenueApplicant(_name, _matricNo, _contact, _email, _organization);
+					VenueBookingInfo newBookingInfo = new VenueBookingInfo(selected, newApplicant, bookedDateTimeIntervalList.get(i));
+				    db.insertVenueBookingInfo(newBookingInfo);
 				}
+				getParent().dispose();
 			}
-			
-			/* update the table of applications under venue management */
-			/* ---can be updated via database later on--- */
-			/* ---or can be updated by a reference to the application table---*/
-			DatabaseReader db = new DatabaseReader();
-			for(int i=0; i<_listDateTime.size(); i++){
-				VenueApplicant newApplicant = new VenueApplicant(_name, _matricNo, _contact, _email, _organization);
-				VenueBookingInfo newBookingInfo = new VenueBookingInfo(selected, newApplicant, _listDateTime.get(i));
-			    db.insertVenueBookingInfo(newBookingInfo);
-			}
-			getParent().dispose();
+
 		}
 	}
 	public class reset extends SelectionAdapter{
@@ -235,7 +178,6 @@ public class VenueBooking_VenueBooking extends Composite {
 			organization.setText("");
 			contact.setText("");
 			email.setText("");
-			listDateTime.removeAll();
 		}
 	}
 }
