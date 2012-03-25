@@ -178,7 +178,7 @@ public class SQLManager {
 	}
 
 	public static Connection getConnection(){
-		return ConnectionManager.getConnection();
+		return SessionManager.getConnection();
 	}
 	
 	/*--------------------------------------------GET---------------------------------------------------------*/
