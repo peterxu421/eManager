@@ -535,7 +535,7 @@ public class DatabaseReader {
 		}
 		return applicant;
 	}
-	public VenueApplicant getVenueApplicantByID(String matricNo){
+	public VenueApplicant getVenueApplicantByMatricNo(String matricNo){
 		ResultSet rs = null;
 		VenueApplicant applicant = null;
 		try {
@@ -605,6 +605,9 @@ public class DatabaseReader {
 	}
 	public void deleteVenueBookingInfo(Venue venue){
 		SQLManager.deleteVenueBookingDetailsByVenue(connection, venue.getVenueId());
+	}
+	public void deleteVenueBookingInfo(VenueBookingInfo booking){
+		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
 	}
 	public ArrayList<VenueBookingInfo> getVenueBookingInfo(VenueApplicant applicant){
 		ArrayList<VenueBookingInfo> bookings = new ArrayList<VenueBookingInfo>();
