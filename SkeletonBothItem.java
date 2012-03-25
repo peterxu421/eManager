@@ -1,6 +1,8 @@
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -9,17 +11,20 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 
-public abstract class AddItemSkeleton extends Composite {
+abstract class SkeletonBothItem extends Composite {
 
 	protected final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	protected String[] stringList;
 	protected Text[] textList;
+	protected DatabaseReader db;
+	protected Button btnAdd;
 
-	public AddItemSkeleton(Composite parent, int style,
-			String[] stringList) {
+	public abstract void onLoad();
+
+	public abstract void onSubmit();
+
+	public SkeletonBothItem(Composite parent, int style, String[] stringList) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -28,8 +33,10 @@ public abstract class AddItemSkeleton extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+
 		this.stringList = stringList;
-		
+		this.db = new DatabaseReader();
+
 		// Set the boundary
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginLeft = 20;
@@ -39,44 +46,46 @@ public abstract class AddItemSkeleton extends Composite {
 		gridLayout.marginWidth = 20;
 		gridLayout.marginHeight = 10;
 		gridLayout.numColumns = 2;
-		
+
 		this.setLayout(gridLayout);
 
 		// Set the input
-		textList = new Text[stringList.length]; 
+		textList = new Text[stringList.length];
 		Label label;
 		for (int i = 0; i < stringList.length; i++) {
 			label = new Label(this, SWT.NONE);
-			label.setText(stringList[i]);
-			label.setLayoutData(new GridData(80, 20));
-			
+			setLabelText(label, stringList[i]);
+			label.setLayoutData(new GridData(130, 20));
+
 			Text text = new Text(this, SWT.BORDER);
-			text.setLayoutData(new GridData(80, 20));
+			text.setLayoutData(new GridData(100, 20));
 			textList[i] = text;
 		}
+		onLoad();
 
-		// Set buttons
-		Button btnAdd = new Button(this, SWT.None);
-		btnAdd.addSelectionListener(new AddNewItem());
-		btnAdd.setText("Add");
-		btnAdd.setLayoutData(new GridData(60, 30));
-
-		Button btnCancel = new Button(this, SWT.None);
-		btnCancel.addSelectionListener(new CancelNewItem());
-		btnCancel.setText("Cancel");
-		btnCancel.setLayoutData(new GridData(60, 30));
-		
 	}
-	class AddNewItem extends SelectionAdapter {
+
+	public void setLabelText(Label label, String string) {
+		if (string.contains("Date")) {
+			label.setText("Date (yyyy-mm-dd)");
+		} else if (string.equals("Time")) {
+			label.setText("Time (hh:mm:ss)");
+		} else if (string.equals("Done")) {
+			label.setText("Done (Done/Undone)");
+		} else
+			label.setText(string);
+	}
+
+	class SubmitNewItem extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			onSubmit();
 			getParent().dispose();
 		}
 	}
+
 	class CancelNewItem extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			getParent().dispose();
 		}
 	}
-	public abstract void onSubmit();
 }
