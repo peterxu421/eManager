@@ -26,7 +26,7 @@ public class EventPlanning_Meeting extends Composite {
 	private ArrayList<Meeting> meetingList;
 	private Table table;
 	private String[] stringArray={"Meeting Detail","Date","Time","Done"};
-	private int[] signatureArray={};
+	private int[] signatureArray={MACRO.TEXT,MACRO.DATE,MACRO.TIME, MACRO.CHECK};
 	private int index;
 	/**
 	 * Create the composite.
@@ -102,6 +102,7 @@ public class EventPlanning_Meeting extends Composite {
 		toolkit.adapt(Edit, true, true);
 		Edit.addSelectionListener(new Edit());
 	
+		//Update the table.
         importMeetingData();
 	}
 	
@@ -116,8 +117,8 @@ public class EventPlanning_Meeting extends Composite {
 			temp.setText(1, meetingList.get(i).getDate().toString());
 			temp.setText(2, meetingList.get(i).getTime().toString());
 			if(meetingList.get(i).isDone() == true)
-				temp.setText(3, "Yes");
-			else temp.setText(3, "No");
+				temp.setText(3, "true");
+			else temp.setText(3, "false");
 		}
 	}
 	
@@ -127,20 +128,21 @@ public class EventPlanning_Meeting extends Composite {
 			if(table.getSelectionCount()==0){
 				Shell add_meeting_shell = new Shell(getDisplay());
 				AbstractAdd add_meeting_page = new AbstractAdd(
-						add_meeting_shell, SWT.None, stringArray) {
+						add_meeting_shell, SWT.None, stringArray, signatureArray) {
 					public void onSubmit() {
 						//insert to database
-						Date date = new Date(textList[1].getText());
-						Time time = new Time(textList[2].getText());
-						Done done = new Done(textList[3].getText());
-						Meeting meeting = new Meeting(textList[0].getText(),
-								date, time, done.isDone());
+						String[] tempList=getStringList();
+						Date date = new Date(tempList[1]);
+						Time time = new Time(tempList[2]);
+						boolean isDone=Boolean.parseBoolean(tempList[3]);
+						Meeting meeting = new Meeting(tempList[0],
+								date, time, isDone);
 						db.insertMeeting(event, meeting);
 						meetingList.add(meeting);
 						// update the table
 						TableItem item = new TableItem(table, SWT.NULL);
 						for(int i=0; i<stringArray.length; i++){
-							item.setText(i,textList[i].getText());
+							item.setText(i,tempList[i]);
 						}
 					}
 				};
@@ -172,25 +174,26 @@ public class EventPlanning_Meeting extends Composite {
 			index = table.getSelectionIndex();
 			if(table.getSelectionCount()!=0){
 				Shell edit_meeting_shell = new Shell(getDisplay());
-				AbstractEdit edit_meeting_page = new AbstractEdit(edit_meeting_shell, SWT.None,stringArray){
+				AbstractEdit edit_meeting_page = new AbstractEdit(edit_meeting_shell, SWT.None,stringArray, signatureArray){
 					//setText
 					public void onLoad(){
 						for(int i=0; i<stringArray.length; i++){
-							textList[i].setText(table.getItem(index).getText(i));
+							setData(table.getItem(index).getText(i),signatureArray[i],i);
 						}
 					}
 					public void onSubmit(){
+						String[] tempList=getStringList();
 						Meeting meeting = meetingList.get(index);
-						meeting.setMeetingDetails(textList[0].getText());
-						meeting.setDate(new Date(textList[1].getText()));
-						meeting.setTime(new Time(textList[2].getText()));
-						Done done = new Done(textList[3].getText());
-						meeting.setDone(done.isDone());
+						meeting.setMeetingDetails(tempList[0]);
+						meeting.setDate(new Date(tempList[1]));
+						meeting.setTime(new Time(tempList[2]));
+						boolean isDone=Boolean.parseBoolean(tempList[3]);
+						meeting.setDone(isDone);
 						//update database
 						db.updateMeeting(meeting);
 						//update the table
 						for(int i=0; i<stringArray.length; i++){
-							table.getItem(index).setText(i,textList[i].getText());
+							table.getItem(index).setText(i,tempList[i]);
 						}
 					}
 				};

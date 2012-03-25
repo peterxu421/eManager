@@ -70,7 +70,7 @@ public abstract class AbstractForm extends Composite {
 	// Set the input format given the key: labelList.
 	private Object createInput(Composite parent, int signature) {
 		Object input = null;
-		if (signature == MACRO.TEXT || signature == MACRO.INT) {
+		if (signature == MACRO.TEXT || signature == MACRO.INT||signature==MACRO.DOUBLE) {
 			input = new Text(parent, SWT.BORDER);
 			((Text) input).setLayoutData(new GridData(100, 20));
 		} else if (signature == MACRO.DATE) {
@@ -132,6 +132,16 @@ public abstract class AbstractForm extends Composite {
 				// Catch the exception if string is not integer.
 				try {
 					Integer.parseInt(tempInt);
+					isValid = true;
+				} catch (NumberFormatException e) {
+					isValid = false;
+				}
+			} else if(signature[i]==MACRO.DOUBLE){
+				Text text = (Text) map.get(labelList[i]);
+				String tempDouble = text.getText();
+				// Catch the exception if string is not integer.
+				try {
+					Double.parseDouble(tempDouble);
 					isValid = true;
 				} catch (NumberFormatException e) {
 					isValid = false;
