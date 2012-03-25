@@ -1,21 +1,13 @@
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 
 public abstract class AbstractAdd extends AbstractForm {
 
 	public AbstractAdd(Composite parent, int style, String[] stringList,
 			int[] signature) {
+		// Inherit AbstractForm constructor.
 		super(parent, style, stringList, signature);
 		// TODO Auto-generated constructor stub
 		// Set buttons
@@ -30,7 +22,7 @@ public abstract class AbstractAdd extends AbstractForm {
 		btnCancel.setLayoutData(new GridData(60, 30));
 	}
 
-	// do nothing about the onLoad();
+	// Do nothing about the onLoad();
 	public void onLoad() {
 
 	}

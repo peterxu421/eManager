@@ -535,6 +535,20 @@ public class DatabaseReader {
 		}
 		return applicant;
 	}
+	public VenueApplicant getVenueApplicantByMatricNo(String matricNo){
+		ResultSet rs = null;
+		VenueApplicant applicant = null;
+		try {
+			rs = SQLManager.getVenueApplicantByMatricNo(connection, matricNo);
+			while (rs.next()) {
+				applicant = new VenueApplicant(rs.getInt("ApplicantID"), rs.getString("Name"),
+						matricNo,rs.getString("contact"), rs.getString("email"), rs.getString("organization"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return applicant;
+	}	
 	public void insertVenueApplicant(VenueApplicant applicant){
 		int ID = SQLManager.insertVenueApplicant(connection, applicant.getName(), applicant.getMatricNo(), applicant.getContact(), applicant.getEmail(), applicant.getOrganization());
 		applicant.setID(ID);
@@ -592,7 +606,26 @@ public class DatabaseReader {
 	public void deleteVenueBookingInfo(Venue venue){
 		SQLManager.deleteVenueBookingDetailsByVenue(connection, venue.getVenueId());
 	}
-	
+	public void deleteVenueBookingInfo(VenueBookingInfo booking){
+		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
+	}
+	public ArrayList<VenueBookingInfo> getVenueBookingInfo(VenueApplicant applicant){
+		ArrayList<VenueBookingInfo> bookings = new ArrayList<VenueBookingInfo>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getVenueBookingDetailsByApplicant(connection, applicant.getID());
+			while(rs.next()){
+				Venue venue = getVenueByID(rs.getInt("VenueID"));
+				BookedDateTime time = new BookedDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
+						Time.parseTime(rs.getString("TimeEnd")));
+				VenueBookingInfo booking = new VenueBookingInfo(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
+				bookings.add(booking);
+			}
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return bookings;
+	} 
 	public static void main(String[] args){
 		DatabaseReader db = new DatabaseReader();
 		Event event = db.getEvents().get(0);
