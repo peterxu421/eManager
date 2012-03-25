@@ -245,7 +245,7 @@ public class VenueBooking_VenueWeekView extends Composite {
 					    		for(int k=0; k<weekViewTable.getItemCount();k++){
 					    			if(Time.parseHour(weekViewTable.getItem(k).getText(0)) == dateTime.getTimeStart().getHour()){ // find the booked time
 					    				for (int t=0; t<(dateTime.getTimeEnd().getHour()-dateTime.getTimeStart().getHour()); t++){
-					    					weekViewTable.getItem(k).setText(j+1, bookingInfoList.get(i).getApplicant().getOrganization());
+					    					weekViewTable.getItem(k).setText(j+1, "Booked");
 					    					k++; // move to the next hour in the week view time table
 					    				}
 					    			}

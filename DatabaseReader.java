@@ -535,19 +535,21 @@ public class DatabaseReader {
 		}
 		return applicant;
 	}
-	public VenueApplicant getVenueApplicantByMatricNo(String matricNo){
+	public ArrayList<VenueApplicant> getVenueApplicantByMatricNo(String matricNo){
 		ResultSet rs = null;
 		VenueApplicant applicant = null;
+		ArrayList<VenueApplicant> venueApplicantList = new ArrayList<VenueApplicant>();
 		try {
 			rs = SQLManager.getVenueApplicantByMatricNo(connection, matricNo);
 			while (rs.next()) {
 				applicant = new VenueApplicant(rs.getInt("ApplicantID"), rs.getString("Name"),
 						matricNo,rs.getString("contact"), rs.getString("email"), rs.getString("organization"));
+				venueApplicantList.add(applicant);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return applicant;
+		return venueApplicantList;
 	}
 	public void insertVenueApplicant(VenueApplicant applicant){
 		int ID = SQLManager.insertVenueApplicant(connection, applicant.getName(), applicant.getMatricNo(), applicant.getContact(), applicant.getEmail(), applicant.getOrganization());

@@ -154,14 +154,14 @@ public class VenueBooking_CheckMyApplication extends Composite {
 	public class check extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			String matricNo = matricNoInput.getText();
-			VenueApplicant venueApplicant = db.getVenueApplicantByMatricNo(matricNo);
+			ArrayList<VenueApplicant> venueApplicantList = db.getVenueApplicantByMatricNo(matricNo);
 			if(matricNo.isEmpty()){
 				MessageBox noInputWarning = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
 				noInputWarning.setText("Warning!");
 				noInputWarning.setMessage("Please enter your matriculation number!");
 				noInputWarning.open();
 			}
-			else if(venueApplicant == null){
+			else if(venueApplicantList.isEmpty()){
 				MessageBox noMatchWarning = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
 				noMatchWarning.setText("Warning!");
 				noMatchWarning.setMessage("No booking applications found!");
@@ -169,34 +169,36 @@ public class VenueBooking_CheckMyApplication extends Composite {
 			}
 			else{
 				applicationTable.removeAll(); // clear the table before loading new information
-				fillApplicationTable(venueApplicant);
+				fillApplicationTable(venueApplicantList);
 			}
 		}
 	}
 	
-	public void fillApplicationTable(VenueApplicant venueApplicant){
-	    bookingApplicationList = db.getVenueBookingInfo(venueApplicant);
-		for (int i=0; i<bookingApplicationList.size(); i++){
-			String name = bookingApplicationList.get(i).getApplicant().getName();
-		    String organization = bookingApplicationList.get(i).getApplicant().getOrganization();
-		    BookedDateTime dateTime = bookingApplicationList.get(i).getDateTime();
-		    int statusIndex = bookingApplicationList.get(i).getStatus();
-		    String status = "";
-		    if(statusIndex == MACRO.APPROVED){
-		    	status = "Approved";
-		    }
-		    else if(statusIndex == MACRO.PENDING){
-		    	status = "Pending";
-		    }
-		    else if(statusIndex == MACRO.REJECTED){
-		    	status = "Rejected";
-		    }
-		    
-		    TableItem item = new TableItem(applicationTable, SWT.NULL);
-		    item.setText(0, name);
-		    item.setText(1, organization);
-		    item.setText(2, dateTime.toString());
-		    item.setText(3, status);
+	public void fillApplicationTable(ArrayList<VenueApplicant> venueApplicantList){
+		for(int i=0; i<venueApplicantList.size(); i++){
+		    bookingApplicationList = db.getVenueBookingInfo(venueApplicantList.get(i));
+			for (int j=0; j<bookingApplicationList.size(); j++){
+				String name = bookingApplicationList.get(j).getApplicant().getName();
+			    String organization = bookingApplicationList.get(j).getApplicant().getOrganization();
+			    BookedDateTime dateTime = bookingApplicationList.get(j).getDateTime();
+			    int statusIndex = bookingApplicationList.get(j).getStatus();
+			    String status = "";
+			    if(statusIndex == MACRO.APPROVED){
+			    	status = "Approved";
+			    }
+			    else if(statusIndex == MACRO.PENDING){
+			    	status = "Pending";
+			    }
+			    else if(statusIndex == MACRO.REJECTED){
+			    	status = "Rejected";
+			    }
+			    
+			    TableItem item = new TableItem(applicationTable, SWT.NULL);
+			    item.setText(0, name);
+			    item.setText(1, organization);
+			    item.setText(2, dateTime.toString());
+			    item.setText(3, status);
+			}
 		}
 	}
 }
