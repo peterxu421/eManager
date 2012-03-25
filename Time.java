@@ -57,7 +57,7 @@ public class Time {
 		return hour;
 	}
 	
-	boolean isEqualTo(Time time){
+	public boolean isEqualTo(Time time){
 		if (hour == time.getHour() &&
 				minute == time.getMinute() &&
 				second == time.getSecond() ){

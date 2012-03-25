@@ -5,6 +5,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -37,14 +38,14 @@ public class VenueBooking_VenueList extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 545, 330);
+		composite.setBounds(0, 0, 545, 340);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		venueTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		venueTable.setLinesVisible(true);
 		venueTable.setHeaderVisible(true);
-		venueTable.setBounds(10, 10, 406, 314);
+		venueTable.setBounds(0, 0, 406, 314);
 		toolkit.adapt(venueTable);
 		toolkit.paintBordersFor(venueTable);
 		
@@ -65,7 +66,7 @@ public class VenueBooking_VenueList extends Composite {
 		tblclmnCapacity.setText("Capacity");
 		
 		Button btnCheckAvailability = new Button(composite, SWT.NONE);
-		btnCheckAvailability.setBounds(422, 10, 106, 25);
+		btnCheckAvailability.setBounds(412, 0, 106, 25);
 		toolkit.adapt(btnCheckAvailability, true, true);
 		btnCheckAvailability.setText("Check Availability");
 		btnCheckAvailability.addSelectionListener(new check());
@@ -91,6 +92,9 @@ public class VenueBooking_VenueList extends Composite {
 			int index = venueTable.getSelectionIndex();
 			if(index >=0 && index < venueTable.getItemCount()){
 				Shell venueWeekViewShell = new Shell(getDisplay());
+				Image icon = new Image(getDisplay(), "resources/eManager.png");
+				venueWeekViewShell.setText("eManager");
+				venueWeekViewShell.setImage(icon);
 				VenueBooking_VenueWeekView venueWeekViewPage = new VenueBooking_VenueWeekView(venueWeekViewShell, SWT.None, index);
 				venueWeekViewPage.pack();
 				venueWeekViewShell.pack();

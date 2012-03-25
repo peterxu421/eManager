@@ -7,12 +7,14 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
@@ -29,14 +31,22 @@ public class EventPlanning_ActualEvent extends Composite {
 	private ArrayList<Facilitator> facilitatorList;
 	private ArrayList<Participant> participantList;
 	private int index;
+	// Attributes for each table.
 	private String[] stringArrayItinerary = { "Description", "Date", "Time",
 			"Done" };
+	private int[] signatureItinerary = { MACRO.TEXT, MACRO.DATE, MACRO.TIME,
+			MACRO.CHECK };
 	private String[] stringArrayAllocationOfManpower = { "Task", "Assigned To",
 			"Date", "Done" };
+	private int[] signatureAllocationOfManpower = { MACRO.TEXT, MACRO.TEXT,
+			MACRO.DATE, MACRO.CHECK };
 	private String[] stringArrayFacilitator = { "Name", "Year", "Faculty",
 			"Postion" };
+	private int[] signatureFacilitator = { MACRO.TEXT, MACRO.INT, MACRO.TEXT,
+			MACRO.TEXT };
 	private String[] stringArrayParticipant = { "Name", "Year", "Faculty",
 			"Food Type" };
+	private int[] signatureParticipant = { MACRO.TEXT, MACRO.INT, MACRO.TEXT };
 
 	/**
 	 * Create the composite.
@@ -435,14 +445,14 @@ public class EventPlanning_ActualEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell itineraryAddItemPage = new Shell(getDisplay());
 			AbstractAdd itineraryAddItem = new AbstractAdd(
-					itineraryAddItemPage, SWT.None, stringArrayItinerary) {
+					itineraryAddItemPage, SWT.None, stringArrayItinerary, signatureItinerary) {
 				public void onSubmit() {
 					// insert to database
-					Date date = new Date(textList[1].getText());
-					Time time = new Time(textList[2].getText());
-					Done done = new Done(textList[3].getText());
-					Itinerary itinerary = new Itinerary(textList[0].getText(),
-							date, time, done.isDone());
+					String[] tempList=get();
+					Date date=new Date(tempList[1]);
+					Time time=new Time(tempList[2]);
+					Done done=new Done(tempList[3]);
+					Itinerary itinerary = new Itinerary(tempList[0], date, time, done.isDone());
 					db.insertItinerary(event, itinerary);
 					itineraryList.add(itinerary);
 					// update the table
@@ -450,7 +460,7 @@ public class EventPlanning_ActualEvent extends Composite {
 							table_eventPlanning_actualEvent_tableItinerary,
 							SWT.NULL);
 					for (int i = 0; i < stringArrayItinerary.length; i++) {
-						item.setText(i, textList[i].getText());
+						item.setText(i, tempList[i]);
 					}
 				}
 			};

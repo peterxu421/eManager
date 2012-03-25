@@ -7,6 +7,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 class Venuespace extends Composite{
 	
@@ -32,12 +33,15 @@ class Venuespace extends Composite{
 	//Constructor
 	public Venuespace(Composite parent, int style, boolean[] mode){
 		super(parent, style);
+		setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 1;
 		this.setLayout(gridLayout);
 	    Composite header = new Composite(this,SWT.None);
+	    header.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    header.setLayoutData(new GridData(770,60));
 	    Composite optionBar = new Composite(this, SWT.None);
+	    optionBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    optionBar.setLayoutData(new GridData(771, 30));
 	    
 	    //optionBar->
@@ -51,12 +55,13 @@ class Venuespace extends Composite{
 	    Button[] buttons = new Button[num];
 	    for(int i=0; i<num; i++)
 	    {
-	    	buttons[i].getEnabled(mode[i]);
+	    	buttons[i].setEnabled(mode[i]);
 	    	buttons[i] = new Button(optionBar, SWT.PUSH);
 	    	buttons[i].setText(optionMenu[i]);
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
 	    }
 	    body = new Composite(this, SWT.None);
+	    body.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    body.setLayoutData(new GridData(769, 463));
 	    
 	    //body->
@@ -64,7 +69,9 @@ class Venuespace extends Composite{
 	    bodyLayout.numColumns = 2;
 	    body.setLayout(bodyLayout);
 	    left = new Composite(body, SWT.None);
+	    left.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    right = new Composite(body, SWT.None);
+	    right.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    left.setLayoutData(new GridData(150,450));
 	    right.setLayoutData(new GridData(660,450));
 
@@ -75,8 +82,10 @@ class Venuespace extends Composite{
 	    headerLayout.spacing = 50;
 	    header.setLayout(headerLayout);
 	    Label eventName = new Label(header, SWT.NONE);
+	    eventName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    eventName.setText("(Venue owner)");
 	    Label eventDescription = new Label(header, SWT.NONE);
+	    eventDescription.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    eventDescription.setText("(Venue owner's message)");
 	    
 	    //body->left panel
@@ -95,7 +104,7 @@ class Venuespace extends Composite{
 	    }
 	    
 	    //body -> right panel
-	    VenueManagement_VenueList vList  = new VenueManagement_VenueList(right, SWT.NULL);
+	    VenueManagement_VenueList vList  = new VenueManagement_VenueList(right, SWT.NONE);
 	    vList.pack();
 	}
 	class TabSelectionAdapter extends SelectionAdapter{
@@ -107,21 +116,21 @@ class Venuespace extends Composite{
 			String name = ((Button)e.getSource()).getText();
 			if(name.equals("Venue List"))
 			{
-			    VenueManagement_VenueList vList  = new VenueManagement_VenueList(right, SWT.None);
+			    VenueManagement_VenueList vList  = new VenueManagement_VenueList(right, SWT.NONE);
 			    vList.pack();
 			}
 			else if(name.equals("Booking Applications"))
 			{
-			    VenueManagement_BookingApplications vApplicants  = new VenueManagement_BookingApplications(right, SWT.None);
+			    VenueManagement_BookingApplications vApplicants  = new VenueManagement_BookingApplications(right, SWT.NONE);
 			    vApplicants.pack();
 			}
 			else if(name.equals("Regulations and Rules")){
-				VenueBooking_InstructionPage vInstruc = new VenueBooking_InstructionPage (right, SWT.None);
+				VenueBooking_InstructionPage vInstruc = new VenueBooking_InstructionPage (right, SWT.BORDER);
 	    		vInstruc.pack();
 			}
 			else if(name.equals("Select and Book"))
 			{
-			    VenueBooking_VenueList vList  = new VenueBooking_VenueList(right, SWT.None);
+			    VenueBooking_VenueList vList  = new VenueBooking_VenueList(right, SWT.NONE);
 			    vList.pack();
 			}
 			right.pack();

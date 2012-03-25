@@ -1,5 +1,8 @@
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Arrays;
 
+import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -15,26 +18,28 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 public abstract class AbstractForm extends Composite {
-	
+
 	protected String[] labelList;
 	protected int[] signature;
 	protected int[] sizeList;
 	protected DatabaseReader db;
 	protected Button btnAdd;
 	private HashMap<String, Object> map;
-	
+
 	public abstract void onLoad();
+
 	public abstract void onSubmit();
 
-	public AbstractForm(Composite parent, int style, String[] labelList, int[] signature){
+	public AbstractForm(Composite parent, int style, String[] labelList,
+			int[] signature) {
 		super(parent, style);
-		
+
 		this.labelList = labelList;
 		this.signature = signature;
 		this.db = new DatabaseReader();
 		this.map = new HashMap<String, Object>();
-		
-		/*Layout*/
+
+		/* Layout */
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginLeft = 20;
 		gridLayout.marginRight = 20;
@@ -45,66 +50,101 @@ public abstract class AbstractForm extends Composite {
 		gridLayout.numColumns = 2;
 		this.setLayout(gridLayout);
 
-		/*Content*/
-		for(int i=0; i<labelList.length; i++){
+		/* Content */
+		for (int i = 0; i < labelList.length; i++) {
 			Label label = new Label(this, SWT.None);
 			label.setText(labelList[i]);
 			map.put(labelList[i], createInput(this, signature[i]));
 		}
-		
-		/*Buttons
-		 * 
-		 * 
+		/*
+		 * Buttons
 		 */
 		onLoad();
 	}
-	public AbstractForm(Composite parent, int style, String[] labelList, int[] signature, int[] sizeList){
+
+	public AbstractForm(Composite parent, int style, String[] labelList,
+			int[] signature, int[] sizeList) {
 		super(parent, style);
-		//use this constructor when size of each box is specified
+		// use this constructor when size of each box is specified
 	}
-	
-	private Object createInput(Composite parent, int signature){
-		Object input;
-		if(signature == MACRO.TEXT){
+
+	// Set the input format given the key: labelList.
+	private Object createInput(Composite parent, int signature) {
+		Object input = null;
+		if (signature == MACRO.TEXT || signature == MACRO.INT) {
 			input = new Text(parent, SWT.NONE);
+		} else if (signature == MACRO.DATE) {
+			input = new CalendarCombo(this, SWT.None);
+			((CalendarCombo)input).setDate(Calendar.getInstance());
+		} else if (signature == MACRO.TIME) {
+			input = new DateTime(parent, SWT.TIME);
+		} else if (signature == MACRO.CHECK) {
+			input = new Button(parent, SWT.CHECK);
 		}
-		else if(signature == MACRO.DATE){
-			input = new DateTime(parent, SWT.None);
-		}
-//		... and so on
 		return input;
 	}
-	
-	protected Object get(String label){
-		return map.get(label);
-	}
-	
-	protected boolean check(){
-		boolean isValid = true;
-		//I think do error checking here is more convenient
-		for(int i=0; i<labelList.length; i++){
-			if(signature[i] == MACRO.TEXT){
-				Text text = (Text)get(labelList[i]);
-				isValid = !text.getText().isEmpty();
+
+	// Pre-condition: there is no error for the input data.
+	// Cast all kinds of data type to string and return an array of string.
+	protected String[] get() {
+		String[] stringList = new String[signature.length];
+		for (int i = 0; i < signature.length; i++) {
+			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT) {
+				stringList[i] = ((Text) map.get(labelList[i])).getText();
+			} else if (signature[i] == MACRO.DATE) {
+				stringList[i] = ((CalendarCombo) map.get(labelList[i])).getDateAsString();
+			} else if (signature[i] == MACRO.TIME) {
+				DateTime tempTime = (DateTime) map.get(labelList[i]);
+				Time time = new Time(tempTime.getHours(),
+						tempTime.getMinutes(), tempTime.getSeconds());
+				stringList[i] = time.toString();
+			} else if (signature[i] == MACRO.CHECK) {
+				if (((Button) map.get(labelList[i])).getSelection())
+					stringList[i] = "Done";
+				else
+					stringList[i] = "UnDone";
 			}
-//			and etc....
 		}
+		return stringList;
 	}
-	private class SubmitHandler extends SelectionAdapter {
+
+	// Error checking.
+	protected boolean check() {
+		boolean isValid = true;
+		for (int i = 0; i < labelList.length; i++) {
+			if (signature[i] == MACRO.TEXT) {
+				Text text = (Text) map.get(labelList[i]);
+				isValid = !text.getText().isEmpty();
+			} else if (signature[i] == MACRO.INT) {
+				Text text = (Text) map.get(labelList[i]);
+				String tempInt = text.getText();
+				// Catch the exception if string is not integer.
+				try {
+					Integer.parseInt(tempInt);
+					isValid = true;
+				} catch (NumberFormatException e) {
+					isValid = false;
+				}
+			}
+			// and etc....
+		}
+		return isValid;
+	}
+
+	protected class SubmitHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if(check()){
+			if (check()) {
 				onSubmit();
 				getParent().dispose();
+			} else {
+				// Do something i.e.
+				// Dialog dialog = new Dialog()
 			}
-			else{
-				//Do something i.e.
-				//Dialog dialog = new Dialog()
-			}
-				
+
 		}
 	}
 
-	private class CancelHandler extends SelectionAdapter {
+	protected class CancelHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			getParent().dispose();
 		}

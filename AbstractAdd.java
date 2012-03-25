@@ -14,8 +14,9 @@ import org.eclipse.swt.events.SelectionEvent;
 
 public abstract class AbstractAdd extends AbstractForm {
 
-	public AbstractAdd(Composite parent, int style, String[] stringList) {
-		super(parent, style, stringList);
+	public AbstractAdd(Composite parent, int style, String[] stringList,
+			int[] signature) {
+		super(parent, style, stringList, signature);
 		// TODO Auto-generated constructor stub
 		// Set buttons
 		btnAdd = new Button(this, SWT.None);
@@ -27,9 +28,10 @@ public abstract class AbstractAdd extends AbstractForm {
 		btnCancel.addSelectionListener(new CancelHandler());
 		btnCancel.setText("Cancel");
 		btnCancel.setLayoutData(new GridData(60, 30));
-	}	
-	//do nothing about the onLoad();
-	public void onLoad(){
-		
+	}
+
+	// do nothing about the onLoad();
+	public void onLoad() {
+
 	}
 }

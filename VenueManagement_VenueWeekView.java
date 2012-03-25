@@ -5,6 +5,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
@@ -67,6 +68,12 @@ public class VenueManagement_VenueWeekView extends Composite {
 		weekViewTable.setHeaderVisible(true);
 		weekViewTable.setLinesVisible(true);
 		
+		weekViewTable.addListener(SWT.MouseDown, new Listener(){
+			public void handleEvent(Event event){
+				weekViewTable.deselectAll();
+			}
+		}); // disable table item selection
+		
 		tblclmnTimeSlot = new TableColumn(weekViewTable, SWT.CENTER);
 		tblclmnTimeSlot.setWidth(100);
 
@@ -90,7 +97,7 @@ public class VenueManagement_VenueWeekView extends Composite {
 		lblEnterPreferredEvent.setBounds(10, 24, 109, 23);
 		toolkit.adapt(lblEnterPreferredEvent, true, true);
 		
-		preferredEventDate = new DateTime(composite, SWT.BORDER);
+		preferredEventDate = new DateTime(composite, SWT.NONE);
 		preferredEventDate.setBounds(125, 24, 80, 24);
 		toolkit.adapt(preferredEventDate);
 		toolkit.paintBordersFor(preferredEventDate);
@@ -188,6 +195,10 @@ public class VenueManagement_VenueWeekView extends Composite {
 	public class viewAllApplications extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
 			Shell viewBookingInfoShell = new Shell(getDisplay());
+			Image icon = new Image(getDisplay(), "resources/eManager.png");
+			viewBookingInfoShell.setText("eManager");
+			viewBookingInfoShell.setImage(icon);
+			
 			VenueViewBookingInfo viewBookingInfoPage = new VenueViewBookingInfo(viewBookingInfoShell, SWT.None, selectedVenue);
 			viewBookingInfoPage.pack();
 			viewBookingInfoShell.pack();
