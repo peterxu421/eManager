@@ -1,6 +1,5 @@
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -9,6 +8,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
 
+// Abstract Edit page inherits from AbstractForm
 public abstract class AbstractEdit extends AbstractForm {
 
 	public AbstractEdit(Composite parent, int style, String[] stringList,
@@ -35,7 +35,7 @@ public abstract class AbstractEdit extends AbstractForm {
 		} else if (signature == MACRO.DATE) {
 			Date date = new Date(string);
 			Calendar cal = new GregorianCalendar();
-			cal.set(date.getYear(), date.getMonth(), date.getDay());
+			cal.set(date.getYear(), date.getMonth()-1, date.getDay());
 			((CalendarCombo) get(index)).setDate(cal);
 		} else if (signature == MACRO.TIME) {
 			Time time = new Time(string);

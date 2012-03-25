@@ -3,6 +3,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
+//Abstract Add page inherits from AbstractForm
 public abstract class AbstractAdd extends AbstractForm {
 
 	public AbstractAdd(Composite parent, int style, String[] stringList,
