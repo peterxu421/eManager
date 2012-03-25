@@ -56,10 +56,10 @@ class Venuespace extends Composite{
 	    Button[] buttons = new Button[num];
 	    for(int i=0; i<num; i++)
 	    {
-	    	//buttons[i].setEnabled(boolMode[i]);
 	    	buttons[i] = new Button(optionBar, SWT.PUSH);
 	    	buttons[i].setText(optionMenu[i]);
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
+	    	buttons[i].setEnabled(boolMode[i]);
 	    }
 	    body = new Composite(this, SWT.None);
 	    body.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
