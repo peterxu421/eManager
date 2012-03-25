@@ -13,8 +13,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public abstract class AbstractForm extends Composite {
@@ -140,7 +142,6 @@ public abstract class AbstractForm extends Composite {
 				// Do something i.e.
 				// Dialog dialog = new Dialog()
 			}
-
 		}
 	}
 

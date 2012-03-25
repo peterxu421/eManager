@@ -141,9 +141,6 @@ public class eManager{
 				//invoke path of recent projects
 			}
 
-			if(((MenuItem) event.widget).getText().equals("Quit")) {
-				display.dispose();
-			}
 
 			if(((MenuItem) event.widget).getText().equals("Version")) {
 				Shell version_shell = new Shell(display,SWT.None);
@@ -153,6 +150,10 @@ public class eManager{
 				version_page.pack();
 				version_shell.pack();
 				version_shell.open();
+			}
+
+			if(((MenuItem) event.widget).getText().equals("Quit")) {
+				display.dispose();
 			}
 		}
 	}
