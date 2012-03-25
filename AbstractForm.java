@@ -1,20 +1,14 @@
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Arrays;
-
 import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
+
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -32,6 +26,7 @@ public abstract class AbstractForm extends Composite {
 
 	public abstract void onSubmit();
 
+	// Constructor
 	public AbstractForm(Composite parent, int style, String[] labelList,
 			int[] signature) {
 		super(parent, style);
@@ -64,6 +59,7 @@ public abstract class AbstractForm extends Composite {
 		onLoad();
 	}
 
+	// Another type of constructor.
 	public AbstractForm(Composite parent, int style, String[] labelList,
 			int[] signature, int[] sizeList) {
 		super(parent, style);
@@ -77,7 +73,7 @@ public abstract class AbstractForm extends Composite {
 			input = new Text(parent, SWT.NONE);
 		} else if (signature == MACRO.DATE) {
 			input = new CalendarCombo(this, SWT.None);
-			((CalendarCombo)input).setDate(Calendar.getInstance());
+			((CalendarCombo) input).setDate(Calendar.getInstance());
 		} else if (signature == MACRO.TIME) {
 			input = new DateTime(parent, SWT.TIME);
 		} else if (signature == MACRO.CHECK) {
@@ -86,22 +82,27 @@ public abstract class AbstractForm extends Composite {
 		return input;
 	}
 
+	// Get Object.
+	protected Object get(int i) {
+		return map.get(labelList[i]);
+	}
+
 	// Pre-condition: there is no error for the input data.
 	// Cast all kinds of data type to string and return an array of string.
-	protected String[] get() {
+	protected String[] getStringList() {
 		String[] stringList = new String[signature.length];
 		for (int i = 0; i < signature.length; i++) {
 			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT) {
-				stringList[i] = ((Text) map.get(labelList[i])).getText();
+				stringList[i] = ((Text) get(i)).getText();
 			} else if (signature[i] == MACRO.DATE) {
-				stringList[i] = ((CalendarCombo) map.get(labelList[i])).getDateAsString();
+				stringList[i] = ((CalendarCombo) get(i)).getDateAsString();
 			} else if (signature[i] == MACRO.TIME) {
-				DateTime tempTime = (DateTime) map.get(labelList[i]);
+				DateTime tempTime = (DateTime) get(i);
 				Time time = new Time(tempTime.getHours(),
 						tempTime.getMinutes(), tempTime.getSeconds());
 				stringList[i] = time.toString();
 			} else if (signature[i] == MACRO.CHECK) {
-				if (((Button) map.get(labelList[i])).getSelection())
+				if (((Button) get(i)).getSelection())
 					stringList[i] = "Done";
 				else
 					stringList[i] = "UnDone";
@@ -128,11 +129,11 @@ public abstract class AbstractForm extends Composite {
 					isValid = false;
 				}
 			}
-			// and etc....
 		}
 		return isValid;
 	}
 
+	// When click submit.
 	protected class SubmitHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (check()) {
@@ -141,10 +142,17 @@ public abstract class AbstractForm extends Composite {
 			} else {
 				// Do something i.e.
 				// Dialog dialog = new Dialog()
+				// custom title, error icon
+				/*
+				 * JOptionPane.showMessageDialog(frame,
+				 * "Eggs are not supposed to be green.", "Inane error",
+				 * JOptionPane.ERROR_MESSAGE);
+				 */
 			}
 		}
 	}
 
+	// When click cancel.
 	protected class CancelHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			getParent().dispose();

@@ -445,14 +445,16 @@ public class EventPlanning_ActualEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell itineraryAddItemPage = new Shell(getDisplay());
 			AbstractAdd itineraryAddItem = new AbstractAdd(
-					itineraryAddItemPage, SWT.None, stringArrayItinerary, signatureItinerary) {
+					itineraryAddItemPage, SWT.None, stringArrayItinerary,
+					signatureItinerary) {
 				public void onSubmit() {
 					// insert to database
-					String[] tempList=get();
-					Date date=new Date(tempList[1]);
-					Time time=new Time(tempList[2]);
-					Done done=new Done(tempList[3]);
-					Itinerary itinerary = new Itinerary(tempList[0], date, time, done.isDone());
+					String[] tempList = getStringList();
+					Date date = new Date(tempList[1]);
+					Time time = new Time(tempList[2]);
+					Done done = new Done(tempList[3]);
+					Itinerary itinerary = new Itinerary(tempList[0], date,
+							time, done.isDone());
 					db.insertItinerary(event, itinerary);
 					itineraryList.add(itinerary);
 					// update the table
