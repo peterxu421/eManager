@@ -3,6 +3,7 @@ public class MACRO {
 	public static int FACILITATOR = 2;
 	public static int PARTICIPANT = 3;
 	public static int APPLICANT = 4;
+	public static int MANAGER = 5;
 	
 	public static int PENDING = 1;
 	public static int APPROVED = 2;
@@ -13,6 +14,7 @@ public class MACRO {
 	public static int CHECK = 4;
 	public static int INT = 5;
 	
-	public static boolean[] MANAGER={true};
-
+	public static boolean[] ORGANIZER_MODE = {true, true, true, true};
+	public static boolean[] FACILITATOR_MODE = {false, true, true, true};
+	public static boolean[] PARTICIPANT_MODE ={false, false, true, true};
 }

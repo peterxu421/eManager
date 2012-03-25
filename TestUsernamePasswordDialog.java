@@ -9,14 +9,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class UsernamePasswordDialog extends Dialog {
+public class TestUsernamePasswordDialog extends Dialog {
   private static final int RESET_ID = IDialogConstants.NO_TO_ALL_ID + 1;
 
   private Text usernameField;
 
   private Text passwordField;
 
-  public UsernamePasswordDialog(Shell parentShell) {
+  public TestUsernamePasswordDialog(Shell parentShell) {
     super(parentShell);
   }
 

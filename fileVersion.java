@@ -7,7 +7,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 
 
-public class fileVersion extends Composite {
+public class FileVersion extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 
@@ -16,7 +16,7 @@ public class fileVersion extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public fileVersion(Composite parent, int style) {
+	public FileVersion(Composite parent, int style) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {

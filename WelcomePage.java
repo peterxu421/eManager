@@ -65,8 +65,8 @@ public class WelcomePage extends Composite {
 		toolkit.adapt(btnVenueManagement, true, true);
 		btnVenueManagement.setText("Venue Management");
 		btnVenueManagement.addSelectionListener(new venueManager());
-
 	}
+	
 	class Event extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM | SWT.ON_TOP);
@@ -78,6 +78,7 @@ public class WelcomePage extends Composite {
 			add_item_shell.open();
 		}
 	}
+	
 	class venueManager extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell shell = new Shell(getDisplay());
@@ -85,7 +86,7 @@ public class WelcomePage extends Composite {
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			shell.setText("eManager");
 			shell.setImage(icon);
-			Venuespace ws2 = new Venuespace(shell, SWT.None, MACRO.MANAGER);
+			Venuespace ws2 = new Venuespace(shell, SWT.None, MACRO.ORGANIZER_MODE);
 				ws2.pack();
 				shell.pack();
 				shell.open();
