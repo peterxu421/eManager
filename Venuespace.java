@@ -7,10 +7,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-<<<<<<< HEAD
 import org.eclipse.wb.swt.SWTResourceManager;
-=======
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 
 class Venuespace extends Composite{
 	
@@ -36,23 +33,15 @@ class Venuespace extends Composite{
 	//Constructor
 	public Venuespace(Composite parent, int style){
 		super(parent, style);
-<<<<<<< HEAD
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-=======
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 1;
 		this.setLayout(gridLayout);
 	    Composite header = new Composite(this,SWT.None);
-<<<<<<< HEAD
 	    header.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    header.setLayoutData(new GridData(770,60));
 	    Composite optionBar = new Composite(this, SWT.None);
 	    optionBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-=======
-	    header.setLayoutData(new GridData(770,60));
-	    Composite optionBar = new Composite(this, SWT.None);
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 	    optionBar.setLayoutData(new GridData(771, 30));
 	    
 	    //optionBar->
@@ -71,10 +60,7 @@ class Venuespace extends Composite{
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
 	    }
 	    body = new Composite(this, SWT.None);
-<<<<<<< HEAD
 	    body.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-=======
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 	    body.setLayoutData(new GridData(769, 463));
 	    
 	    //body->
@@ -82,13 +68,9 @@ class Venuespace extends Composite{
 	    bodyLayout.numColumns = 2;
 	    body.setLayout(bodyLayout);
 	    left = new Composite(body, SWT.None);
-<<<<<<< HEAD
 	    left.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    right = new Composite(body, SWT.None);
 	    right.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-=======
-	    right = new Composite(body, SWT.None);
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 	    left.setLayoutData(new GridData(150,450));
 	    right.setLayoutData(new GridData(660,450));
 
@@ -99,15 +81,10 @@ class Venuespace extends Composite{
 	    headerLayout.spacing = 50;
 	    header.setLayout(headerLayout);
 	    Label eventName = new Label(header, SWT.NONE);
-<<<<<<< HEAD
 	    eventName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    eventName.setText("(Venue owner)");
 	    Label eventDescription = new Label(header, SWT.NONE);
 	    eventDescription.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-=======
-	    eventName.setText("(Venue owner)");
-	    Label eventDescription = new Label(header, SWT.NONE);
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 	    eventDescription.setText("(Venue owner's message)");
 	    
 	    //body->left panel
@@ -126,11 +103,7 @@ class Venuespace extends Composite{
 	    }
 	    
 	    //body -> right panel
-<<<<<<< HEAD
 	    VenueManagement_VenueList vList  = new VenueManagement_VenueList(right, SWT.NONE);
-=======
-	    VenueManagement_VenueList vList  = new VenueManagement_VenueList(right, SWT.NULL);
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 	    vList.pack();
 	}
 	class TabSelectionAdapter extends SelectionAdapter{
@@ -142,37 +115,22 @@ class Venuespace extends Composite{
 			String name = ((Button)e.getSource()).getText();
 			if(name.equals("Venue List"))
 			{
-<<<<<<< HEAD
 			    VenueManagement_VenueList vList  = new VenueManagement_VenueList(right, SWT.NONE);
-=======
-			    VenueManagement_VenueList vList  = new VenueManagement_VenueList(right, SWT.None);
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 			    vList.pack();
 			}
 			else if(name.equals("Booking Applications"))
 			{
-<<<<<<< HEAD
 			    VenueManagement_BookingApplications vApplicants  = new VenueManagement_BookingApplications(right, SWT.NONE);
 			    vApplicants.pack();
 			}
 			else if(name.equals("Regulations and Rules")){
 				VenueBooking_InstructionPage vInstruc = new VenueBooking_InstructionPage (right, SWT.BORDER);
-=======
-			    VenueManagement_BookingApplications vApplicants  = new VenueManagement_BookingApplications(right, SWT.None);
-			    vApplicants.pack();
-			}
-			else if(name.equals("Regulations and Rules")){
-				VenueBooking_InstructionPage vInstruc = new VenueBooking_InstructionPage (right, SWT.None);
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
+
 	    		vInstruc.pack();
 			}
 			else if(name.equals("Select and Book"))
 			{
-<<<<<<< HEAD
 			    VenueBooking_VenueList vList  = new VenueBooking_VenueList(right, SWT.NONE);
-=======
-			    VenueBooking_VenueList vList  = new VenueBooking_VenueList(right, SWT.None);
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 			    vList.pack();
 			}
 			right.pack();

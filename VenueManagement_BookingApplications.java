@@ -12,21 +12,14 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Button;
-
-<<<<<<< HEAD
 import com.ibm.icu.util.Calendar;
 import com.ibm.icu.util.GregorianCalendar;
 
-=======
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 public class VenueManagement_BookingApplications extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Table applicationTable;
-<<<<<<< HEAD
 	private Date today = new Date();
-=======
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 	
 	private ArrayList<VenueBookingInfo> bookingInfoList;
 
@@ -69,11 +62,7 @@ public class VenueManagement_BookingApplications extends Composite {
 		applicationTable.setHeaderVisible(true);
 		toolkit.adapt(applicationTable);
 		toolkit.paintBordersFor(applicationTable);
-<<<<<<< HEAD
 
-=======
-		
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		TableColumn tblclmnVenueName = new TableColumn(applicationTable, SWT.NONE);
 		tblclmnVenueName.setWidth(98);
 		tblclmnVenueName.setText("Booked Venue");
@@ -107,13 +96,10 @@ public class VenueManagement_BookingApplications extends Composite {
 		tblclmnApproval.setText("Approval");
 		btnAccept.addSelectionListener(new accept());
 		
-<<<<<<< HEAD
 		Calendar calendar = Calendar.getInstance(); // today
 		today.setYear(calendar.get(Calendar.YEAR));
 		today.setMonth(calendar.get(Calendar.MONTH)+1);
 		today.setDay(calendar.get(Calendar.DATE));
-=======
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		
 		importApplicationData();
 
@@ -125,7 +111,6 @@ public class VenueManagement_BookingApplications extends Composite {
 		bookingInfoList = db.getVenueBookingInfo();
 		if(!bookingInfoList.isEmpty()){ //  booked
 			for(int j=0; j<bookingInfoList.size(); j++){
-<<<<<<< HEAD
 				if(bookingInfoList.get(j).getDateTime().getDate().isNotLaterThan(today)){
 					TableItem item = new TableItem(applicationTable, SWT.NULL);
 					item.setText(0, bookingInfoList.get(j).getVenue().getName() + " at " + bookingInfoList.get(j).getVenue().getLocation() );
@@ -143,23 +128,6 @@ public class VenueManagement_BookingApplications extends Composite {
 					}
 					else item.setText(7, "Rejected");
 				}
-=======
-				TableItem item = new TableItem(applicationTable, SWT.NULL);
-				item.setText(0, bookingInfoList.get(j).getVenue().getName() + " at " + bookingInfoList.get(j).getVenue().getLocation() );
-				item.setText(1, bookingInfoList.get(j).getApplicant().getName());
-				item.setText(2, bookingInfoList.get(j).getApplicant().getMatricNo());
-				item.setText(3, bookingInfoList.get(j).getApplicant().getOrganization());
-				item.setText(4, bookingInfoList.get(j).getApplicant().getContact());
-				item.setText(5, bookingInfoList.get(j).getApplicant().getEmail());
-				item.setText(6, bookingInfoList.get(j).getDateTime().toString());
-				if(bookingInfoList.get(j).getStatus()== MACRO.PENDING){
-					item.setText(7,"Pending");
-				}
-				else if (bookingInfoList.get(j).getStatus()== MACRO.APPROVED){
-					item.setText(7,"Approved");
-				}
-				else item.setText(7, "Rejected");
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 			}
 		}
 	}

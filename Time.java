@@ -56,12 +56,9 @@ public class Time {
 		int hour = Integer.parseInt(contents[0]);
 		return hour;
 	}
-	
-<<<<<<< HEAD
+
 	public boolean isEqualTo(Time time){
-=======
-	boolean isEqualTo(Time time){
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
+
 		if (hour == time.getHour() &&
 				minute == time.getMinute() &&
 				second == time.getSecond() ){

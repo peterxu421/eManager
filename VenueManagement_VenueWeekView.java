@@ -5,10 +5,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-<<<<<<< HEAD
 import org.eclipse.swt.graphics.Image;
-=======
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
@@ -71,15 +68,12 @@ public class VenueManagement_VenueWeekView extends Composite {
 		weekViewTable.setHeaderVisible(true);
 		weekViewTable.setLinesVisible(true);
 		
-<<<<<<< HEAD
 		weekViewTable.addListener(SWT.MouseDown, new Listener(){
 			public void handleEvent(Event event){
 				weekViewTable.deselectAll();
 			}
 		}); // disable table item selection
-		
-=======
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
+
 		tblclmnTimeSlot = new TableColumn(weekViewTable, SWT.CENTER);
 		tblclmnTimeSlot.setWidth(100);
 
@@ -103,11 +97,7 @@ public class VenueManagement_VenueWeekView extends Composite {
 		lblEnterPreferredEvent.setBounds(10, 24, 109, 23);
 		toolkit.adapt(lblEnterPreferredEvent, true, true);
 		
-<<<<<<< HEAD
 		preferredEventDate = new DateTime(composite, SWT.NONE);
-=======
-		preferredEventDate = new DateTime(composite, SWT.BORDER);
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 		preferredEventDate.setBounds(125, 24, 80, 24);
 		toolkit.adapt(preferredEventDate);
 		toolkit.paintBordersFor(preferredEventDate);
@@ -205,13 +195,11 @@ public class VenueManagement_VenueWeekView extends Composite {
 	public class viewAllApplications extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
 			Shell viewBookingInfoShell = new Shell(getDisplay());
-<<<<<<< HEAD
+
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			viewBookingInfoShell.setText("eManager");
 			viewBookingInfoShell.setImage(icon);
 			
-=======
->>>>>>> de2b69bfc67aaafeb9b3c8d5b15122ffabc7fcd6
 			VenueViewBookingInfo viewBookingInfoPage = new VenueViewBookingInfo(viewBookingInfoShell, SWT.None, selectedVenue);
 			viewBookingInfoPage.pack();
 			viewBookingInfoShell.pack();
