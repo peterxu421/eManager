@@ -450,14 +450,13 @@ public class SQLManager {
 		return rs;
 	}
 	public static ResultSet getVenueApplicantByMatricNo(Connection connection, String matricNo){
-		String getVenueBookingDetailsByApplicant = 
+		String getVenueApplicantByMatricNo = 
 				"SELECT ApplicantID FROM ApplicantDetails " +
 				"WHERE MatricNo=?";
 		PreparedStatement prep = null;
 		ResultSet rs = null;
-		int applicantID = 0;
 		try{
-			prep = connection.prepareStatement(getVenueBookingDetailsByApplicant);
+			prep = connection.prepareStatement(getVenueApplicantByMatricNo);
 			prep.setString(1, matricNo);
 			rs = prep.executeQuery();
 		}catch(SQLException sqle){

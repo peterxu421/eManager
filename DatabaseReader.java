@@ -548,7 +548,7 @@ public class DatabaseReader {
 			e.printStackTrace();
 		}
 		return applicant;
-	}	
+	}
 	public void insertVenueApplicant(VenueApplicant applicant){
 		int ID = SQLManager.insertVenueApplicant(connection, applicant.getName(), applicant.getMatricNo(), applicant.getContact(), applicant.getEmail(), applicant.getOrganization());
 		applicant.setID(ID);
