@@ -31,19 +31,19 @@ public class EventPlanning_ActualEvent extends Composite {
 	// Attributes for each table.
 	private String[] stringArrayItinerary = { "Description", "Date", "Time",
 			"Done" };
-	private int[] signatureItinerary = { MACRO.TEXT, MACRO.DATE, MACRO.TIME,
+	private int[] signatureItinerary = { MACRO.TEXTBIG, MACRO.DATE, MACRO.TIME,
 			MACRO.CHECK };
 	private String[] stringArrayAllocationOfManpower = { "Task", "Assigned To",
 			"Date", "Done" };
-	private int[] signatureAllocationOfManpower = { MACRO.TEXT, MACRO.TEXT,
+	private int[] signatureAllocationOfManpower = { MACRO.TEXT, MACRO.FACILITATOR,
 			MACRO.DATE, MACRO.CHECK };
 	private String[] stringArrayFacilitator = { "Name", "Year", "Faculty",
 			"Postion" };
-	private int[] signatureFacilitator = { MACRO.TEXT, MACRO.INT, MACRO.TEXT,
+	private int[] signatureFacilitator = { MACRO.TEXT, MACRO.INT, MACRO.FACULTY,
 			MACRO.TEXT };
 	private String[] stringArrayParticipant = { "Name", "Year", "Faculty",
 			"Food Type" };
-	private int[] signatureParticipant = { MACRO.TEXT, MACRO.INT, MACRO.TEXT };
+	private int[] signatureParticipant = { MACRO.TEXT, MACRO.INT, MACRO.FACULTY, MACRO.TEXT };
 
 	/**
 	 * Create the composite.

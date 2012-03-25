@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
@@ -27,11 +26,11 @@ public class EventPlanning_PreEvent extends Composite {
 	private ArrayList<Task> taskList;
 	private ArrayList<Organizer> memberList;
 	private String[] stringArrayItem = { "Task", "Assigned To", "Date", "Done" };
-	private int[] signatureArrayItem = { MACRO.TEXT, MACRO.TEXT, MACRO.DATE,
+	private int[] signatureArrayItem = { MACRO.TEXT, MACRO.ORGANIZER, MACRO.DATE,
 			MACRO.CHECK };
 	private String[] stringArrayMember = { "Name", "Year", "Faculty",
 			"Position" };
-	private int[] signatureArrayMember = { MACRO.TEXT, MACRO.INT, MACRO.TEXT,
+	private int[] signatureArrayMember = { MACRO.TEXT, MACRO.INT, MACRO.FACULTY,
 			MACRO.TEXT };
 	private int index;
 
@@ -127,9 +126,9 @@ public class EventPlanning_PreEvent extends Composite {
 		FillLayout fillLayout = new FillLayout();
 		fillLayout.marginWidth = 0;
 		composite_2.setLayout(fillLayout);
-		//TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
-		//taskChart.setSize(300, 300);
-		//taskChart.pack();
+		// TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
+		// taskChart.setSize(300, 300);
+		// taskChart.pack();
 		composite_2.pack();
 
 		TabItem tbtmPublicity = new TabItem(tabFolderPreEvent, SWT.NONE);
@@ -223,14 +222,14 @@ public class EventPlanning_PreEvent extends Composite {
 			Shell taskAssignAddItemPage = new Shell(getDisplay());
 			taskAssignAddItemPage.setText("Task Assign Add Item");
 			AbstractAdd taskAssignAddItem = new AbstractAdd(
-					taskAssignAddItemPage, SWT.None, stringArrayItem, signatureArrayItem) {
+					taskAssignAddItemPage, SWT.None, stringArrayItem,
+					signatureArrayItem) {
 				public void onSubmit() {
 					// insert to database
-					String[] tempList=getStringList();
+					String[] tempList = getStringList();
 					Date date = new Date(tempList[2]);
 					boolean isDone = Boolean.parseBoolean(tempList[3]);
-					Task task = new Task(tempList[0],
-							tempList[1], date, isDone);
+					Task task = new Task(tempList[0], tempList[1], date, isDone);
 					db.insertTask(event, task);
 					taskList.add(task);
 					// update the table
@@ -252,13 +251,14 @@ public class EventPlanning_PreEvent extends Composite {
 			Shell taskAssignAddMemberPage = new Shell(getDisplay());
 			taskAssignAddMemberPage.setText("Task Assign Add Member");
 			AbstractAdd taskAssignAddMember = new AbstractAdd(
-					taskAssignAddMemberPage, SWT.None, stringArrayMember, signatureArrayMember) {
+					taskAssignAddMemberPage, SWT.None, stringArrayMember,
+					signatureArrayMember) {
 				public void onSubmit() {
 					// insert to database
-					String[] tempList=getStringList();
+					String[] tempList = getStringList();
 					Organizer member = new Organizer(tempList[0],
-							Integer.parseInt(tempList[1]),
-							tempList[2], tempList[3]);
+							Integer.parseInt(tempList[1]), tempList[2],
+							tempList[3]);
 					db.insertOrganizer(event, member);
 					memberList.add(member);
 					// update the table
@@ -312,16 +312,17 @@ public class EventPlanning_PreEvent extends Composite {
 				Shell taskAssignEditItemPage = new Shell(getDisplay());
 				taskAssignEditItemPage.setText("Task Assign Edit Item");
 				AbstractEdit taskAssignEditItem = new AbstractEdit(
-						taskAssignEditItemPage, SWT.None, stringArrayItem, signatureArrayItem) {
+						taskAssignEditItemPage, SWT.None, stringArrayItem,
+						signatureArrayItem) {
 					public void onLoad() {
 						for (int i = 0; i < stringArrayItem.length; i++) {
-							setData(tableTaskAssign.getItem(index)
-									.getText(i),signatureArrayItem[i],i);
+							setData(tableTaskAssign.getItem(index).getText(i),
+									signatureArrayItem[i], i);
 						}
 					}
 
 					public void onSubmit() {
-						String[] tempList=getStringList();
+						String[] tempList = getStringList();
 						Task task = taskList.get(index);
 						task.setTaskDesciption(tempList[0]);
 						task.setAssignedTo(tempList[1]);
@@ -351,18 +352,18 @@ public class EventPlanning_PreEvent extends Composite {
 				Shell taskAssignEditMemberPage = new Shell(getDisplay());
 				taskAssignEditMemberPage.setText("Task Assign Edit Member");
 				AbstractEdit taskAssignEditMember = new AbstractEdit(
-						taskAssignEditMemberPage, SWT.None, stringArrayMember,signatureArrayMember) {
-					//get data from table
+						taskAssignEditMemberPage, SWT.None, stringArrayMember,
+						signatureArrayMember) {
+					// get data from table
 					public void onLoad() {
 						for (int i = 0; i < stringArrayMember.length; i++) {
-							setData(tableCommittee.getItem(index)
-									.getText(i),i);
+							setData(tableCommittee.getItem(index).getText(i), i);
 						}
 					}
 
 					public void onSubmit() {
-						String[] stringList=getStringList();
-						//reset
+						String[] stringList = getStringList();
+						// reset
 						Organizer member = memberList.get(index);
 						member.setName(stringList[0]);
 						member.setYear(Integer.parseInt(stringList[1]));

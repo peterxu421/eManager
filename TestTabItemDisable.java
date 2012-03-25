@@ -13,11 +13,8 @@ public class TestTabItemDisable {
 public static void main (String [] args) {
     Display display = new Display ();
     final Shell shell = new Shell (display);
-    shell.setSize(500, 500);
-    final TabFolder tabFolder = new TabFolder (shell, SWT.BORDER);
-    tabFolder.setSize(500, 500);
+    shell.setSize(207, 86);
     Rectangle clientArea = shell.getClientArea ();
-    tabFolder.setLocation (0, 0);
     for (int i=0; i<6; i++) {
         TabItem item = new TabItem (tabFolder, SWT.NONE);
         item.setText ("TabItem " + i);
@@ -25,15 +22,17 @@ public static void main (String [] args) {
         button.setText ("Page " + i);
         item.setControl (button);
     }
-    tabFolder.pack ();
-
-    // disabling content of selected TabItems
-    tabFolder.setEnabled(true);
-    tabFolder.getTabList()[0].setEnabled(false);
-    tabFolder.getTabList()[2].setEnabled(false);
-    tabFolder.getTabList()[4].setEnabled(false);
 
     shell.pack ();
+        final TabFolder tabFolder = new TabFolder (shell, SWT.BORDER);
+        tabFolder.setBounds(0, 10, 236, 158);
+        tabFolder.pack ();
+        
+            // disabling content of selected TabItems
+            tabFolder.setEnabled(true);
+        tabFolder.getTabList()[0].setEnabled(false);
+        tabFolder.getTabList()[2].setEnabled(false);
+        tabFolder.getTabList()[4].setEnabled(false);
     shell.open ();
     while (!shell.isDisposed ()) {
         if (!display.readAndDispatch ()) display.sleep ();
