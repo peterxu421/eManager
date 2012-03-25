@@ -81,6 +81,7 @@ public class WelcomePage extends Composite {
 	
 	class venueManager extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
+			SessionManager.setCurrentMode(MACRO.MANAGER);
 			Shell shell = new Shell(getDisplay());
 			shell.setLocation(200,100);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");

@@ -18,7 +18,10 @@ public class MACRO {
 	public static int TEXTBIG = 7;
 	public static int FACULTY = 8;
 
-	public static boolean[] ORGANIZER_MODE = { true, true, true, true };
-	public static boolean[] FACILITATOR_MODE = { false, true, true, true };
-	public static boolean[] PARTICIPANT_MODE = { false, false, true, true };
+	
+	public static boolean[] ORGANIZER_MODE = {true, true, true, true};
+	public static boolean[] FACILITATOR_MODE = {false, true, true, true};
+	public static boolean[] PARTICIPANT_MODE = {false, false, true, true};
+	public static boolean[] APPLICANT_MODE = {false, false, true, true};
+	public static boolean[] MANAGER_MODE = {false, false, true, true};
 }
