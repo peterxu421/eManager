@@ -134,7 +134,6 @@ public class SQLManager {
 			"Contact VARCHAR(20)," +
 			"Email VARCHAR(20)," +
 			"Organization VARCHAR(30))";
-
 	public static Connection createDatabase(){
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -175,7 +174,7 @@ public class SQLManager {
 		}
 		return connection;
 	}
-	
+
 	public static Connection getConnection(){
 		return ConnectionManager.getConnection();
 	}
@@ -1010,6 +1009,18 @@ public class SQLManager {
 		try {
 			PreparedStatement prep = connection.prepareStatement(deletePackingDetails);
 			prep.setInt(1, memberID);
+			prep.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void deleteVenueBookingDetailsByVenue(Connection connection, int venueID){
+		String deleteVenueBookingDetailsByVenue = 
+				"DELETE FROM VenueBookingDetails " +
+				"WHERE VenueID=?";
+		try {
+			PreparedStatement prep = connection.prepareStatement(deleteVenueBookingDetailsByVenue);
+			prep.setInt(1, venueID);
 			prep.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
