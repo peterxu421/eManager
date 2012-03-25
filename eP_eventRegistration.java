@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.custom.ScrolledComposite;
 
-public class eP_eventRegistration extends AbstractForm {
+public class eP_eventRegistration extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Text textName;

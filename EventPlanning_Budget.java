@@ -44,12 +44,12 @@ public class EventPlanning_Budget extends Composite {
 	private ArrayList<Outflow> outflowList;
 	private String[] stringArrayBudget = { "Item", "Person in Charge",
 			"Cost($)", "Date" };
-	private int[] signatureArrayBudget = { MACRO.TEXT, MACRO.TEXT,
+	private int[] signatureArrayBudget = { MACRO.TEXT, MACRO.ORGANIZER,
 			MACRO.DOUBLE, MACRO.DATE };
 	private String[] stringArrayInflow = { "Sponsor", "Amount($)", "Date",
 			"Remarks" };
 	private int[] signatureArrayInflow = { MACRO.TEXT, MACRO.DOUBLE,
-			MACRO.DATE, MACRO.TEXT };
+			MACRO.DATE, MACRO.TEXTBIG };
 	private String[] stringArrayOutflow = { "Item", "Quantity", "Type",
 			"Purchase Date", "Cost" };
 	private int[] signatureArrayOutflow = { MACRO.TEXT, MACRO.INT, MACRO.TEXT,
@@ -592,6 +592,7 @@ public class EventPlanning_Budget extends Composite {
 
 					public void onSubmit() {
 						String[] tempList = getStringList();
+						
 						BudgetAllocation budgetAllocation = budgetAllocationList
 								.get(index);
 						budgetAllocation.setItem(tempList[0]);

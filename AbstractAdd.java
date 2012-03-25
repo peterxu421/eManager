@@ -12,7 +12,7 @@ public abstract class AbstractAdd extends AbstractForm {
 		super(parent, style, stringList, signature);
 		// TODO Auto-generated constructor stub
 		// Set buttons
-		btnAdd = new Button(this, SWT.None);
+		Button btnAdd = new Button(this, SWT.None);
 		btnAdd.addSelectionListener(new SubmitHandler());
 		btnAdd.setText("Add");
 		btnAdd.setLayoutData(new GridData(60, 30));

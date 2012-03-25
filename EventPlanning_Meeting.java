@@ -4,7 +4,6 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableColumn;
@@ -15,6 +14,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.ui.forms.widgets.FormToolkit;
 
 public class EventPlanning_Meeting extends Composite {
 
@@ -112,7 +112,6 @@ public class EventPlanning_Meeting extends Composite {
 		/* update the meeting table */
 		for (int i = 0; i < meetingList.size(); i++) {
 			TableItem temp = new TableItem(table, SWT.NULL);
-			System.out.println(meetingList.get(i).getMeetingDetails());
 			temp.setText(0, meetingList.get(i).getMeetingDetails());
 			temp.setText(1, meetingList.get(i).getDate().toString());
 			temp.setText(2, meetingList.get(i).getTime().toString());
