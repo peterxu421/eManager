@@ -85,7 +85,7 @@ public class WelcomePage extends Composite {
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			shell.setText("eManager");
 			shell.setImage(icon);
-			Venuespace ws2 = new Venuespace(shell, SWT.None);
+			Venuespace ws2 = new Venuespace(shell, SWT.None, MACRO.MANAGER);
 				ws2.pack();
 				shell.pack();
 				shell.open();
