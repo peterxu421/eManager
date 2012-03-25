@@ -451,7 +451,7 @@ public class SQLManager {
 	}
 	public static ResultSet getVenueApplicantByMatricNo(Connection connection, String matricNo){
 		String getVenueApplicantByMatricNo = 
-				"SELECT ApplicantID FROM ApplicantDetails " +
+				"SELECT * FROM ApplicantDetails " +
 				"WHERE MatricNo=?";
 		PreparedStatement prep = null;
 		ResultSet rs = null;
