@@ -14,7 +14,7 @@ public class Date {
 	}
 
 	public Date(String date) {
-		String[] contents = date.split("-");
+		String[] contents = date.split("/");
 		this.year = Integer.parseInt(contents[0]);
 		this.month = Integer.parseInt(contents[1]);
 		this.day = Integer.parseInt(contents[2]);

@@ -633,13 +633,13 @@ public class DatabaseReader {
 		ArrayList<VenueBookingApplication> bookings = new ArrayList<VenueBookingApplication>();
 		ResultSet rs = null;
 		try{
-			rs = SQLManager.getVenueBookingDetailsByApplicant(connection, applicant.getID());
+//			rs = SQLManageranager.getVenueBookingDetailsByApplicant(connection, applicant.getID());
 			while(rs.next()){
 				Venue venue = getVenueByID(rs.getInt("VenueID"));
 				BookedDateTime time = new BookedDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
 						Time.parseTime(rs.getString("TimeEnd")));
-				VenueBookingApplication booking = new VenueBookingApplication(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
-				bookings.add(booking);
+//				VenueBookingApplication booking = new VenueBookingApplication(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
+//				bookings.add(booking);
 			}
 		}catch (SQLException e) {
 				e.printStackTrace();
