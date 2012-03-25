@@ -299,7 +299,12 @@ public class VenueBooking_VenueWeekView extends Composite {
 			    	  Date deselectedDate = dateInAWeekList.get(i-1); //find the deselected date;
 			    	  BookedDateTime deselectedDateTime = new BookedDateTime(deselectedDate, deselectedTimeStart, deselectedTimeEnd);
 			    	  selectedDateTimeList.remove(deselectedDateTime.toString());
-			    	  bookedDateTimeList.remove(deselectedDateTime);
+			    	  for(int j=0; j<bookedDateTimeList.size(); j++){
+			    		  if(bookedDateTimeList.get(j).isEqualTo(deselectedDateTime)){
+			    			  bookedDateTimeList.remove(j);
+			    			  break;
+			    		  }	 
+			    	  }
 			      }
 			      else weekViewTable.deselectAll(); // clear the redundant selection
 			  }
