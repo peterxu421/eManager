@@ -4,13 +4,13 @@ import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
-
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 
 public abstract class AbstractForm extends Composite {
@@ -45,6 +45,7 @@ public abstract class AbstractForm extends Composite {
 		gridLayout.marginWidth = 20;
 		gridLayout.marginHeight = 10;
 		gridLayout.numColumns = 2;
+		gridLayout.verticalSpacing = 15;
 		this.setLayout(gridLayout);
 
 		/* Content */
@@ -70,15 +71,18 @@ public abstract class AbstractForm extends Composite {
 	private Object createInput(Composite parent, int signature) {
 		Object input = null;
 		if (signature == MACRO.TEXT || signature == MACRO.INT) {
-			input = new Text(parent, SWT.NONE);
+			input = new Text(parent, SWT.BORDER);
+			((Text) input).setLayoutData(new GridData(100, 20));
 		} else if (signature == MACRO.DATE) {
-			input = new CalendarCombo(this, SWT.None);
+			input = new CalendarCombo(this, SWT.READ_ONLY);
 			((CalendarCombo) input).setDate(Calendar.getInstance());
+			((CalendarCombo) input).setLayoutData(new GridData(100,30));
 		} else if (signature == MACRO.TIME) {
 			input = new DateTime(parent, SWT.TIME);
+			((DateTime) input).setLayoutData(new GridData(100,30));
 		} else if (signature == MACRO.CHECK) {
 			input = new Button(parent, SWT.CHECK);
-		}
+		} 
 		return input;
 	}
 
@@ -102,18 +106,22 @@ public abstract class AbstractForm extends Composite {
 						tempTime.getMinutes(), tempTime.getSeconds());
 				stringList[i] = time.toString();
 			} else if (signature[i] == MACRO.CHECK) {
+				//If selected, change to true; else change to false.
 				if (((Button) get(i)).getSelection())
-					stringList[i] = "Done";
+					stringList[i] = "true";
 				else
-					stringList[i] = "UnDone";
+					stringList[i] = "false";
 			}
 		}
 		return stringList;
 	}
 
 	// Error checking.
-	protected boolean check() {
+	// If there is no error, then return -1;
+	// If there exist error, then return the index.
+	protected int check() {
 		boolean isValid = true;
+		int index = -1;
 		for (int i = 0; i < labelList.length; i++) {
 			if (signature[i] == MACRO.TEXT) {
 				Text text = (Text) map.get(labelList[i]);
@@ -129,30 +137,39 @@ public abstract class AbstractForm extends Composite {
 					isValid = false;
 				}
 			}
+			index = i;
+			// If isValid is false, return directly return false.
+			if (!isValid) {
+				return index;
+			}
 		}
-		return isValid;
+		return -1;
 	}
 
-	// When click submit.
+	// When click submit button.
 	protected class SubmitHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if (check()) {
+			if (check() == -1) {
 				onSubmit();
 				getParent().dispose();
 			} else {
-				// Do something i.e.
-				// Dialog dialog = new Dialog()
-				// custom title, error icon
-				/*
-				 * JOptionPane.showMessageDialog(frame,
-				 * "Eggs are not supposed to be green.", "Inane error",
-				 * JOptionPane.ERROR_MESSAGE);
-				 */
+				// Show messageBox if there is error in input data and specify
+				// where is the error.
+				MessageBox warningPage = new MessageBox(getDisplay()
+						.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+				warningPage.setText("Warning!");
+				warningPage.setMessage("There exists error in "
+						+ labelList[check()] + ".");
+				int choice = warningPage.open(); // indicates the user's choice
+				switch (choice) {
+				case SWT.OK:
+					break;
+				}
 			}
 		}
 	}
 
-	// When click cancel.
+	// When click cancel button.
 	protected class CancelHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			getParent().dispose();

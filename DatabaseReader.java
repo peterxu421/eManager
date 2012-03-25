@@ -606,6 +606,9 @@ public class DatabaseReader {
 	public void deleteVenueBookingInfo(Venue venue){
 		SQLManager.deleteVenueBookingDetailsByVenue(connection, venue.getVenueId());
 	}
+	public void deleteVenueBookingInfo(VenueBookingApplication booking){
+		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
+	}
 	public ArrayList<VenueBookingApplication> getVenueBookingInfo(VenueApplicant applicant){
 		ArrayList<VenueBookingApplication> bookings = new ArrayList<VenueBookingApplication>();
 		ResultSet rs = null;

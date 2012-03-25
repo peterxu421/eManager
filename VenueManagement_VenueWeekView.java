@@ -200,7 +200,7 @@ public class VenueManagement_VenueWeekView extends Composite {
 			viewBookingInfoShell.setText("eManager");
 			viewBookingInfoShell.setImage(icon);
 			
-			VenueViewBookingInfo viewBookingInfoPage = new VenueViewBookingInfo(viewBookingInfoShell, SWT.None, selectedVenue);
+			VenueViewBookingInfo viewBookingInfoPage = new VenueViewBookingInfo(viewBookingInfoShell, SWT.None, selectedVenue, weekViewTable);
 			viewBookingInfoPage.pack();
 			viewBookingInfoShell.pack();
 			viewBookingInfoShell.open();

@@ -13,6 +13,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 
@@ -22,13 +24,14 @@ public class VenueViewBookingInfo extends Composite {
 	private List listBookingStatus;
 	private String format =  "|%1$-15s|%2$-15s|%3$-40s|%4$-10s";
 	private DatabaseReader db = new DatabaseReader();
+	private ArrayList<VenueBookingApplication> bookingApplicationList;
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public VenueViewBookingInfo(Composite parent, int style, final Venue venue) {
+	public VenueViewBookingInfo(Composite parent, int style, final Venue venue, final Table weekViewTable) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -63,28 +66,43 @@ public class VenueViewBookingInfo extends Composite {
 		Button btnClearAllApplications = new Button(composite, SWT.NONE);
 		btnClearAllApplications.setBounds(249, 492, 121, 25);
 		toolkit.adapt(btnClearAllApplications, true, true);
-		btnClearAllApplications.setText("Clear the log");
+		btnClearAllApplications.setText("Clear all");
 		btnClearAllApplications.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
-				MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.CANCEL | SWT.ICON_WARNING );
-				warningPage.setText("Warning!");
-				warningPage.setMessage("Remove all the booking application records for <" + venue.getName() + "> from the database?");
-				int choice = warningPage.open(); // indicates the user's choice
-				switch(choice){
-				case SWT.OK:
-					/* update the database*/
-					db.deleteVenueBookingInfo(venue);
-					
-					/* update the list */
-					listBookingStatus.removeAll();
-					String header[] = {"Name","Organization","Date and Time","Status"};
-					listBookingStatus.add(String.format(format, (Object[])header));
-					listBookingStatus.add("\n");
-					listBookingStatus.add("---Not Booked---");
-					break;
-				case SWT.CANCEL:
-					break;
+				if(!bookingApplicationList.isEmpty()){
+					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.CANCEL | SWT.ICON_WARNING );
+					warningPage.setText("Warning!");
+					warningPage.setMessage("Remove all the booking application records for <" + venue.getName() + "> from the database?");
+					int choice = warningPage.open(); // indicates the user's choice
+					switch(choice){
+					case SWT.OK:
+						/* update the database*/
+						db.deleteVenueBookingInfo(venue);
+						
+						/* update the list */
+						listBookingStatus.removeAll();
+						String header[] = {"Name","Organization","Date and Time","Status"};
+						listBookingStatus.add(String.format(format, (Object[])header));
+						listBookingStatus.add("\n");
+						listBookingStatus.add("---Not Booked---");
+						/* update the weekViewTable */
+						weekViewTable.clearAll();
+						for (int i = 6; i<23; i++){
+							TableItem item = new TableItem(weekViewTable, SWT.NULL);
+							item.setText(0, String.format("%02d", i) + ":00" + ":00");
+						} 
+						break;
+					case SWT.CANCEL:
+						break;
+					}
 				}
+				else {
+					MessageBox noInfoWarning = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+					noInfoWarning.setText("Warning!");
+					noInfoWarning.setMessage("This venue has no booking applictions!");
+					noInfoWarning.open();
+				}
+
 			}
 		});
 		
@@ -93,16 +111,16 @@ public class VenueViewBookingInfo extends Composite {
 	
 	public void fillApplicationList(Venue venue){
 		/* show the booking info from database */
-		ArrayList<VenueBookingApplication> bookingInfoList = db.getVenueBookingInfo(venue);
+		bookingApplicationList = db.getVenueBookingInfo(venue);
 		String header[] = {"Name","Organization","Date and Time","Status"};
 		listBookingStatus.add(String.format(format, (Object[])header));
 		listBookingStatus.add("\n");
-		if (!bookingInfoList.isEmpty()){
-			for (int i=0; i<bookingInfoList.size(); i++){
-				String name = bookingInfoList.get(i).getApplicant().getName();
-			    String organization = bookingInfoList.get(i).getApplicant().getOrganization();
-			    BookedDateTime dateTime = bookingInfoList.get(i).getDateTime();
-			    int statusIndex = bookingInfoList.get(i).getStatus();
+		if (!bookingApplicationList.isEmpty()){
+			for (int i=0; i<bookingApplicationList.size(); i++){
+				String name = bookingApplicationList.get(i).getApplicant().getName();
+			    String organization = bookingApplicationList.get(i).getApplicant().getOrganization();
+			    BookedDateTime dateTime = bookingApplicationList.get(i).getDateTime();
+			    int statusIndex = bookingApplicationList.get(i).getStatus();
 			    String status = "";
 			    if(statusIndex == MACRO.APPROVED){
 			    	status = "Approved";

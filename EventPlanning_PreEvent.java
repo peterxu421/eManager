@@ -127,9 +127,9 @@ public class EventPlanning_PreEvent extends Composite {
 		FillLayout fillLayout = new FillLayout();
 		fillLayout.marginWidth = 0;
 		composite_2.setLayout(fillLayout);
-		TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
-		taskChart.setSize(300, 300);
-		taskChart.pack();
+		//TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
+		//taskChart.setSize(300, 300);
+		//taskChart.pack();
 		composite_2.pack();
 
 		TabItem tbtmPublicity = new TabItem(tabFolderPreEvent, SWT.NONE);
@@ -204,7 +204,7 @@ public class EventPlanning_PreEvent extends Composite {
 			item.setText(0, taskList.get(i).getTaskDesciption());
 			item.setText(1, taskList.get(i).getAssignedTo());
 			item.setText(2, taskList.get(i).getDateDue().toString());
-			item.setText(3, taskList.get(i).isDone() ? "Done" : "Undone");
+			item.setText(3, taskList.get(i).isDone() ? "true" : "false");
 		}
 
 		for (int i = 0; i < memberList.size(); i++) {
@@ -221,15 +221,16 @@ public class EventPlanning_PreEvent extends Composite {
 
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddItemPage = new Shell(getDisplay());
+			taskAssignAddItemPage.setText("Task Assign Add Item Page");
 			AbstractAdd taskAssignAddItem = new AbstractAdd(
 					taskAssignAddItemPage, SWT.None, stringArrayItem, signatureArrayItem) {
 				public void onSubmit() {
 					// insert to database
 					String[] tempList=getStringList();
 					Date date = new Date(tempList[2]);
-					Done done = new Done(tempList[3]);
+					boolean isDone = Boolean.parseBoolean(tempList[3]);
 					Task task = new Task(tempList[0],
-							tempList[1], date, done.isDone());
+							tempList[1], date, isDone);
 					db.insertTask(event, task);
 					taskList.add(task);
 					// update the table
@@ -249,6 +250,7 @@ public class EventPlanning_PreEvent extends Composite {
 
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddMemberPage = new Shell(getDisplay());
+			taskAssignAddMemberPage.setText("Task Assign Add Member Page");
 			AbstractAdd taskAssignAddMember = new AbstractAdd(
 					taskAssignAddMemberPage, SWT.None, stringArrayMember, signatureArrayMember) {
 				public void onSubmit() {
@@ -308,6 +310,7 @@ public class EventPlanning_PreEvent extends Composite {
 			index = tableTaskAssign.getSelectionIndex();
 			if (index < tableTaskAssign.getItemCount() && index >= 0) {
 				Shell taskAssignEditItemPage = new Shell(getDisplay());
+				taskAssignEditItemPage.setText("Task Assign Edit Item Page");
 				AbstractEdit taskAssignEditItem = new AbstractEdit(
 						taskAssignEditItemPage, SWT.None, stringArrayItem, signatureArrayItem) {
 					public void onLoad() {
@@ -323,8 +326,8 @@ public class EventPlanning_PreEvent extends Composite {
 						task.setTaskDesciption(tempList[0]);
 						task.setAssignedTo(tempList[1]);
 						task.setDateDue(new Date(tempList[2]));
-						Done done = new Done(tempList[3]);
-						task.setDone(done.isDone());
+						boolean isDone = Boolean.parseBoolean(tempList[3]);
+						task.setDone(isDone);
 						// update database
 						db.updateTask(task);
 						// update the table
@@ -346,6 +349,7 @@ public class EventPlanning_PreEvent extends Composite {
 			index = tableCommittee.getSelectionIndex();
 			if (index < tableCommittee.getItemCount() && index >= 0) {
 				Shell taskAssignEditMemberPage = new Shell(getDisplay());
+				taskAssignEditMemberPage.setText("Task Assign Edit Member Page");
 				AbstractEdit taskAssignEditMember = new AbstractEdit(
 						taskAssignEditMemberPage, SWT.None, stringArrayMember,signatureArrayMember) {
 					//get data from table

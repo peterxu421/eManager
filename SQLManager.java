@@ -15,7 +15,9 @@ public class SQLManager {
 			"CREATE TABLE EventDetails(" +
 			"EventID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," + 
 			"EventName VARCHAR(50)," +
-			"EventDescription VARCHAR(255))";
+			"EventDescription VARCHAR(255)," +
+			"Organizer_Password VARCHAR(50)," +
+			"Facilitator_Password VARCHAR(50))";
 	private static String createTaskDetailsTable = 
 			"CREATE TABLE TaskDetails(" +
 			"TaskID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +

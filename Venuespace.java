@@ -27,6 +27,7 @@ class Venuespace extends Composite{
 			{	
 				"Regulations and Rules",
 				"Select and Book",
+				"Check My Applications"
 			}
 	};
 
@@ -55,7 +56,7 @@ class Venuespace extends Composite{
 	    Button[] buttons = new Button[num];
 	    for(int i=0; i<num; i++)
 	    {
-	    	buttons[i].setEnabled(mode[i]);
+	    	//buttons[i].setEnabled(mode[i]);
 	    	buttons[i] = new Button(optionBar, SWT.PUSH);
 	    	buttons[i].setText(optionMenu[i]);
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
@@ -132,6 +133,11 @@ class Venuespace extends Composite{
 			{
 			    VenueBooking_VenueList vList  = new VenueBooking_VenueList(right, SWT.NONE);
 			    vList.pack();
+			}
+			else if(name.equals("Check My Applications"))
+			{
+			    VenueBooking_CheckMyApplication vCheckMyApp  = new VenueBooking_CheckMyApplication(right, SWT.NONE);
+			    vCheckMyApp.pack();
 			}
 			right.pack();
 		}
