@@ -59,7 +59,7 @@ public class VenueBooking_VenueBooking extends Composite {
 		Label lblMatricNo = new Label(composite, SWT.NONE);
 		lblMatricNo.setBounds(10, 62, 127, 17);
 		toolkit.adapt(lblMatricNo, true, true);
-		lblMatricNo.setText("Matriculation Card");
+		lblMatricNo.setText("Matriculation Number");
 		
 		matricNo = new Text(composite, SWT.BORDER);
 		matricNo.setBounds(10, 85, 128, 23);
@@ -95,7 +95,7 @@ public class VenueBooking_VenueBooking extends Composite {
 		Label lblDateTime = new Label(composite, SWT.NONE);
 		lblDateTime.setBounds(10, 262, 127, 17);
 		toolkit.adapt(lblDateTime, true, true);
-		lblDateTime.setText("Date and Time Slot");
+		lblDateTime.setText("Date and Time ");
 		
 		listDateTime = new List(composite, SWT.BORDER | SWT.V_SCROLL);
 		listDateTime.setBounds(10, 285, 232, 98);
@@ -163,7 +163,7 @@ public class VenueBooking_VenueBooking extends Composite {
 				DatabaseReader db = new DatabaseReader();
 				for(int i=0; i<bookedDateTimeIntervalList.size(); i++){
 					VenueApplicant newApplicant = new VenueApplicant(_name, _matricNo, _contact, _email, _organization);
-					VenueBookingInfo newBookingInfo = new VenueBookingInfo(selected, newApplicant, bookedDateTimeIntervalList.get(i));
+					VenueBookingApplication newBookingInfo = new VenueBookingApplication(selected, newApplicant, bookedDateTimeIntervalList.get(i));
 				    db.insertVenueBookingInfo(newBookingInfo);
 				}
 				getParent().dispose();

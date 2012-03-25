@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 import org.eclipse.swt.events.DisposeEvent;
@@ -20,6 +21,7 @@ public class VenueViewBookingInfo extends Composite {
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private List listBookingStatus;
 	private String format =  "|%1$-15s|%2$-15s|%3$-40s|%4$-10s";
+	private DatabaseReader db = new DatabaseReader();
 
 	/**
 	 * Create the composite.
@@ -71,7 +73,7 @@ public class VenueViewBookingInfo extends Composite {
 				switch(choice){
 				case SWT.OK:
 					/* update the database*/
-					//db.deleteVenueBookingInfo(venue);
+					db.deleteVenueBookingInfo(venue);
 					
 					/* update the list */
 					listBookingStatus.removeAll();
@@ -91,8 +93,7 @@ public class VenueViewBookingInfo extends Composite {
 	
 	public void fillApplicationList(Venue venue){
 		/* show the booking info from database */
-		DatabaseReader db = new DatabaseReader();
-		ArrayList<VenueBookingInfo> bookingInfoList = db.getVenueBookingInfo(venue);
+		ArrayList<VenueBookingApplication> bookingInfoList = db.getVenueBookingInfo(venue);
 		String header[] = {"Name","Organization","Date and Time","Status"};
 		listBookingStatus.add(String.format(format, (Object[])header));
 		listBookingStatus.add("\n");
@@ -124,3 +125,4 @@ public class VenueViewBookingInfo extends Composite {
 		else listBookingStatus.add("---Not Booked---");
 	}
 }
+

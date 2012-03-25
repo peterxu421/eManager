@@ -535,7 +535,7 @@ public class DatabaseReader {
 		}
 		return applicant;
 	}
-	public VenueApplicant getVenueApplicantByID(String matricNo){
+	public VenueApplicant getVenueApplicantByMatricNo(String matricNo){
 		ResultSet rs = null;
 		VenueApplicant applicant = null;
 		try {
@@ -554,9 +554,9 @@ public class DatabaseReader {
 		applicant.setID(ID);
 	}
 	
-	/*VenueBookingInfo*/
-	public ArrayList<VenueBookingInfo> getVenueBookingInfo(Venue venue){
-		ArrayList<VenueBookingInfo> bookings = new ArrayList<VenueBookingInfo>();
+	/*VenueBookingApplication*/
+	public ArrayList<VenueBookingApplication> getVenueBookingInfo(Venue venue){
+		ArrayList<VenueBookingApplication> bookings = new ArrayList<VenueBookingApplication>();
 		ResultSet rs = null;
 		try{
 			rs = SQLManager.getVenueBookingDetails(connection, venue.getVenueId());
@@ -564,7 +564,7 @@ public class DatabaseReader {
 				VenueApplicant applicant = getVenueApplicantByID(rs.getInt("ApplicantID"));
 				BookedDateTime time = new BookedDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
 						Time.parseTime(rs.getString("TimeEnd")));
-				VenueBookingInfo booking = new VenueBookingInfo(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
+				VenueBookingApplication booking = new VenueBookingApplication(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
 				bookings.add(booking);
 			}
 		}catch (SQLException e) {
@@ -572,8 +572,8 @@ public class DatabaseReader {
 		}
 		return bookings;
 	}
-	public ArrayList<VenueBookingInfo> getVenueBookingInfo(){
-		ArrayList<VenueBookingInfo> bookings = new ArrayList<VenueBookingInfo>();
+	public ArrayList<VenueBookingApplication> getVenueBookingInfo(){
+		ArrayList<VenueBookingApplication> bookings = new ArrayList<VenueBookingApplication>();
 		ResultSet rs = null;
 		try{
 			rs = SQLManager.getVenueBookingDetailsAll(connection);
@@ -582,7 +582,7 @@ public class DatabaseReader {
 				VenueApplicant applicant = getVenueApplicantByID(rs.getInt("ApplicantID"));
 				BookedDateTime time = new BookedDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
 						Time.parseTime(rs.getString("TimeEnd")));
-				VenueBookingInfo booking = new VenueBookingInfo(rs.getInt("BookingID"), venue , applicant, time, rs.getInt("Status"));
+				VenueBookingApplication booking = new VenueBookingApplication(rs.getInt("BookingID"), venue , applicant, time, rs.getInt("Status"));
 				bookings.add(booking);
 			}
 		}catch (SQLException e) {
@@ -590,14 +590,14 @@ public class DatabaseReader {
 		}
 		return bookings;
 	}
-	public void insertVenueBookingInfo(VenueBookingInfo booking){
+	public void insertVenueBookingInfo(VenueBookingApplication booking){
 		insertVenueApplicant(booking.getApplicant());
 		int id = SQLManager.insertVenueBookingDetails(connection, booking.getVenue().getVenueId(), 
 				booking.getApplicant().getID(), booking.getDateTime().getDate().toString(), 
 				booking.getDateTime().getTimeStart().toString(), booking.getDateTime().getTimeEnd().toString(), booking.getStatus());
 		booking.setVenueBookingInfoID(id);
 	}
-	public void updateVenueBookingInfo(VenueBookingInfo booking){
+	public void updateVenueBookingInfo(VenueBookingApplication booking){
 		SQLManager.updateVenueBookingDetails(connection, booking.getVenueBookingInfoID(), 
 				booking.getApplicant().getID(), booking.getDateTime().getDate().toString(),
 				booking.getDateTime().getTimeStart().toString(),
@@ -606,8 +606,8 @@ public class DatabaseReader {
 	public void deleteVenueBookingInfo(Venue venue){
 		SQLManager.deleteVenueBookingDetailsByVenue(connection, venue.getVenueId());
 	}
-	public ArrayList<VenueBookingInfo> getVenueBookingInfo(VenueApplicant applicant){
-		ArrayList<VenueBookingInfo> bookings = new ArrayList<VenueBookingInfo>();
+	public ArrayList<VenueBookingApplication> getVenueBookingInfo(VenueApplicant applicant){
+		ArrayList<VenueBookingApplication> bookings = new ArrayList<VenueBookingApplication>();
 		ResultSet rs = null;
 		try{
 			rs = SQLManager.getVenueBookingDetailsByApplicant(connection, applicant.getID());
@@ -615,7 +615,7 @@ public class DatabaseReader {
 				Venue venue = getVenueByID(rs.getInt("VenueID"));
 				BookedDateTime time = new BookedDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
 						Time.parseTime(rs.getString("TimeEnd")));
-				VenueBookingInfo booking = new VenueBookingInfo(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
+				VenueBookingApplication booking = new VenueBookingApplication(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
 				bookings.add(booking);
 			}
 		}catch (SQLException e) {

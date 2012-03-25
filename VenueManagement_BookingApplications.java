@@ -22,7 +22,7 @@ public class VenueManagement_BookingApplications extends Composite {
 	private Table applicationTable;
 	private Date today = new Date();
 	
-	private ArrayList<VenueBookingInfo> bookingInfoList;
+	private ArrayList<VenueBookingApplication> bookingInfoList;
 
 	/**
 	 * Create the composite.
@@ -143,7 +143,7 @@ public class VenueManagement_BookingApplications extends Composite {
 				
 				/* update the database */
 				DatabaseReader db = new DatabaseReader();
-				VenueBookingInfo bookingInfo = bookingInfoList.get(index);
+				VenueBookingApplication bookingInfo = bookingInfoList.get(index);
 				bookingInfo.setStatus(MACRO.REJECTED);
 				db.updateVenueBookingInfo(bookingInfo);
 			}
@@ -160,7 +160,7 @@ public class VenueManagement_BookingApplications extends Composite {
 				
 				/* update the database */
 				DatabaseReader db = new DatabaseReader();
-				VenueBookingInfo bookingInfo = bookingInfoList.get(index);
+				VenueBookingApplication bookingInfo = bookingInfoList.get(index);
 				bookingInfo.setStatus(MACRO.APPROVED);
 				db.updateVenueBookingInfo(bookingInfo);
 
