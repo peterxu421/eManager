@@ -27,8 +27,12 @@ public class EventPlanning_PreEvent extends Composite {
 	private ArrayList<Task> taskList;
 	private ArrayList<Organizer> memberList;
 	private String[] stringArrayItem = { "Task", "Assigned To", "Date", "Done" };
+	private int[] signatureArrayItem = { MACRO.TEXT, MACRO.TEXT, MACRO.DATE,
+			MACRO.CHECK };
 	private String[] stringArrayMember = { "Name", "Year", "Faculty",
 			"Position" };
+	private int[] signatureArrayMember = { MACRO.TEXT, MACRO.INT, MACRO.TEXT,
+			MACRO.TEXT };
 	private int index;
 
 	/**
@@ -218,19 +222,20 @@ public class EventPlanning_PreEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddItemPage = new Shell(getDisplay());
 			AbstractAdd taskAssignAddItem = new AbstractAdd(
-					taskAssignAddItemPage, SWT.None, stringArrayItem) {
+					taskAssignAddItemPage, SWT.None, stringArrayItem, signatureArrayItem) {
 				public void onSubmit() {
 					// insert to database
-					Date date = new Date(textList[2].getText());
-					Done done = new Done(textList[3].getText());
-					Task task = new Task(textList[0].getText(),
-							textList[1].getText(), date, done.isDone());
+					String[] tempList=getStringList();
+					Date date = new Date(tempList[2]);
+					Done done = new Done(tempList[3]);
+					Task task = new Task(tempList[0],
+							tempList[1], date, done.isDone());
 					db.insertTask(event, task);
 					taskList.add(task);
 					// update the table
 					TableItem item = new TableItem(tableTaskAssign, SWT.NULL);
 					for (int i = 0; i < stringArrayItem.length; i++) {
-						item.setText(i, textList[i].getText());
+						item.setText(i, tempList[i]);
 					}
 				}
 			};
@@ -245,18 +250,19 @@ public class EventPlanning_PreEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddMemberPage = new Shell(getDisplay());
 			AbstractAdd taskAssignAddMember = new AbstractAdd(
-					taskAssignAddMemberPage, SWT.None, stringArrayMember) {
+					taskAssignAddMemberPage, SWT.None, stringArrayMember, signatureArrayMember) {
 				public void onSubmit() {
 					// insert to database
-					Organizer member = new Organizer(textList[0].getText(),
-							Integer.parseInt(textList[1].getText()),
-							textList[0].getText(), textList[0].getText());
+					String[] tempList=getStringList();
+					Organizer member = new Organizer(tempList[0],
+							Integer.parseInt(tempList[1]),
+							tempList[2], tempList[3]);
 					db.insertOrganizer(event, member);
 					memberList.add(member);
 					// update the table
 					TableItem item = new TableItem(tableCommittee, SWT.NULL);
 					for (int i = 0; i < stringArrayMember.length; i++) {
-						item.setText(i, textList[i].getText());
+						item.setText(i, tempList[i]);
 					}
 				}
 			};
@@ -302,24 +308,29 @@ public class EventPlanning_PreEvent extends Composite {
 			index = tableTaskAssign.getSelectionIndex();
 			if (index < tableTaskAssign.getItemCount() && index >= 0) {
 				Shell taskAssignEditItemPage = new Shell(getDisplay());
-				AbstractEdit taskAssignEditItem = new AbstractEdit(taskAssignEditItemPage, SWT.None,stringArrayItem){
-					public void onLoad(){
-						for(int i=0; i<stringArrayItem.length; i++){
-							textList[i].setText(tableTaskAssign.getItem(index).getText(i));
+				AbstractEdit taskAssignEditItem = new AbstractEdit(
+						taskAssignEditItemPage, SWT.None, stringArrayItem, signatureArrayItem) {
+					public void onLoad() {
+						for (int i = 0; i < stringArrayItem.length; i++) {
+							setData(tableTaskAssign.getItem(index)
+									.getText(i),signatureArrayItem[i],i);
 						}
 					}
-					public void onSubmit(){
+
+					public void onSubmit() {
+						String[] tempList=getStringList();
 						Task task = taskList.get(index);
-						task.setTaskDesciption(textList[0].getText());
-						task.setAssignedTo(textList[1].getText());
-						task.setDateDue(new Date(textList[2].getText()));
-						Done done = new Done(textList[3].getText());
+						task.setTaskDesciption(tempList[0]);
+						task.setAssignedTo(tempList[1]);
+						task.setDateDue(new Date(tempList[2]));
+						Done done = new Done(tempList[3]);
 						task.setDone(done.isDone());
-						//update database
+						// update database
 						db.updateTask(task);
-						//update the table
-						for(int i=0; i<stringArrayItem.length; i++){
-							tableTaskAssign.getItem(index).setText(i,textList[i].getText());
+						// update the table
+						for (int i = 0; i < stringArrayItem.length; i++) {
+							tableTaskAssign.getItem(index).setText(i,
+									tempList[i]);
 						}
 					}
 				};
@@ -335,24 +346,30 @@ public class EventPlanning_PreEvent extends Composite {
 			index = tableCommittee.getSelectionIndex();
 			if (index < tableCommittee.getItemCount() && index >= 0) {
 				Shell taskAssignEditMemberPage = new Shell(getDisplay());
-				AbstractEdit taskAssignEditMember = new AbstractEdit(taskAssignEditMemberPage, SWT.None,stringArrayMember){
-					public void onLoad(){
-						for(int i=0; i<stringArrayMember.length; i++){
-							textList[i].setText(tableCommittee.getItem(index).getText(i));
+				AbstractEdit taskAssignEditMember = new AbstractEdit(
+						taskAssignEditMemberPage, SWT.None, stringArrayMember,signatureArrayMember) {
+					//get data from table
+					public void onLoad() {
+						for (int i = 0; i < stringArrayMember.length; i++) {
+							setData(tableCommittee.getItem(index)
+									.getText(i),i);
 						}
 					}
-					public void onSubmit(){
+
+					public void onSubmit() {
+						String[] stringList=getStringList();
 						//reset
 						Organizer member = memberList.get(index);
-						member.setName(textList[0].getText());
-						member.setYear(Integer.parseInt(textList[1].getText()));
-						member.setFaculty(textList[2].getText());
-						member.setPosition(textList[3].getText());
-						//update database
+						member.setName(stringList[0]);
+						member.setYear(Integer.parseInt(stringList[1]));
+						member.setFaculty(stringList[2]);
+						member.setPosition(stringList[3]);
+						// update database
 						db.updateOrganizer(member);
-						//update the table
-						for(int i=0; i<stringArrayMember.length; i++){
-							tableCommittee.getItem(index).setText(i,textList[i].getText());
+						// update the table
+						for (int i = 0; i < stringArrayMember.length; i++) {
+							tableCommittee.getItem(index).setText(i,
+									stringList[i]);
 						}
 					}
 				};
