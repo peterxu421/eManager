@@ -30,12 +30,13 @@ public abstract class AbstractEdit extends AbstractForm {
 
 	// Set data for Text, Calendar, Time and Check Box.
 	protected void setData(String string, int signature, int index) {
-		if (signature == MACRO.TEXT || signature == MACRO.INT) {
+		if (signature == MACRO.TEXT || signature == MACRO.INT
+				|| signature == MACRO.TEXTBIG) {
 			((Text) get(index)).setText(string);
 		} else if (signature == MACRO.DATE) {
 			Date date = new Date(string);
 			Calendar cal = new GregorianCalendar();
-			cal.set(date.getYear(), date.getMonth()-1, date.getDay());
+			cal.set(date.getYear(), date.getMonth() - 1, date.getDay());
 			((CalendarCombo) get(index)).setDate(cal);
 		} else if (signature == MACRO.TIME) {
 			Time time = new Time(string);
