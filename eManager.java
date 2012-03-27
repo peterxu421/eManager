@@ -13,9 +13,9 @@ public class eManager{
 	Shell welcome_shell;
 	WelcomePage welcome_page;
 	Display display;
-	int mode;
 
-	public eManager() {
+
+	public eManager() {		
 		display = new Display();
 		rootShell = new Shell(display);
 		// menu
@@ -46,7 +46,6 @@ public class eManager{
 
 		/*
 		//menu->edit
->>>>>>> fd79da1fe5a497e07b205fe66f5914954192dce4
 		Menu editMenu = new Menu(rootShell, SWT.DROP_DOWN);
 		edit.setMenu(editMenu);
 		MenuItem undo = new MenuItem(editMenu, SWT.PUSH);
@@ -61,7 +60,6 @@ public class eManager{
 
 		/*
 		//menu->view
->>>>>>> fd79da1fe5a497e07b205fe66f5914954192dce4
 		Menu viewMenu = new Menu(rootShell, SWT.DROP_DOWN);
 		view.setMenu(viewMenu);
 		MenuItem pref = new MenuItem(viewMenu, SWT.PUSH);
@@ -137,15 +135,13 @@ public class eManager{
 		}
 		display.dispose();
 	}
-
+		
 	//opens Welcome page
 	class MenuOpenListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
-
 			welcome_shell = new Shell(display,SWT.NONE);
 			welcome_shell.setLocation(400, 250);
 			welcome_page = new WelcomePage(welcome_shell, SWT.NONE);
-
 			welcome_page.pack();
 			welcome_shell.pack();
 			welcome_shell.open();
@@ -166,7 +162,6 @@ public class eManager{
 			Shell version_shell = new Shell(display,SWT.None);
 			version_shell.setLocation(400, 250);
 			FileVersion version_page = new FileVersion(version_shell, SWT.None);
-
 			version_page.pack();
 			version_shell.pack();
 			version_shell.open();
@@ -175,9 +170,9 @@ public class eManager{
 
 	class MenuManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if(mode != MACRO.ORGANIZER) {
+			if(SessionManager.getCurrentIntMode() != MACRO.ORGANIZER) {
 				Shell mode_shell = new Shell(display, SWT.None);
-				PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None, mode);
+				PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None, MACRO.ORGANIZER);
 				mode_page.pack();
 				mode_shell.pack();
 				mode_shell.open();
@@ -186,9 +181,9 @@ public class eManager{
 	}
 	class MenuFacilitatorListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if(mode != MACRO.FACILITATOR) {
+			if(SessionManager.getCurrentIntMode() != MACRO.FACILITATOR) {
 				Shell mode_shell = new Shell(display, SWT.None);
-				PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None, mode);
+				PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None, MACRO.FACILITATOR);
 				mode_page.pack();
 				mode_shell.pack();
 				mode_shell.open();
@@ -197,9 +192,9 @@ public class eManager{
 	}
 	class MenuParticipantListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if(mode != MACRO.PARTICIPANT) {
+			if(SessionManager.getCurrentIntMode() != MACRO.PARTICIPANT) {
 				Shell mode_shell = new Shell(display, SWT.None);
-				PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None, mode);
+				PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None, MACRO.PARTICIPANT);
 				mode_page.pack();
 				mode_shell.pack();
 				mode_shell.open();

@@ -153,7 +153,7 @@ public class TestCreateNewEventPage extends Composite {
 				Event newEvent = new Event(textEventName.getText(), textDescription.getText());
 				DatabaseReader dbReader = new DatabaseReader();
 				dbReader.insertEvent(newEvent);
-				Eventspace workspace = new Eventspace(shell, SWT.None, newEvent);
+				Eventspace workspace = new Eventspace(shell, SWT.None, MACRO.APPLICANT_MODE);
 				workspace.pack();
 				shell.pack();
 				shell.open();

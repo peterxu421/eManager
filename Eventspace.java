@@ -13,7 +13,6 @@ class Eventspace extends Composite{
 	Composite body;
 	Composite left;
 	Composite right;
-	Event event = null;
 	
 	private String[] optionList = new String[]{
 		"Organizer",
@@ -21,6 +20,13 @@ class Eventspace extends Composite{
 		"Participants",
 		"Event Registration"
 	};
+	
+	private boolean[] booleanList = new boolean[]{
+			true,
+			true,
+			true,
+			true
+		};
 	
 	private String[][] tabList = new String[][]{
 			{	"Pre-Event",
@@ -39,9 +45,8 @@ class Eventspace extends Composite{
 	};
 
 	//Constructor
-	public Eventspace(Composite parent, int style,Event event){
+	public Eventspace(Composite parent, int style, boolean[] boolMode){
 		super(parent, style);
-		this.event = event;
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 1;
 		this.setLayout(gridLayout);
@@ -67,9 +72,13 @@ class Eventspace extends Composite{
 	    Button[] buttons = new Button[num];
 	    for(int i=0; i<num; i++)
 	    {
+	    	System.out.println(num + " " + i);
+	    	System.out.println(num + " " + i);
 	    	buttons[i] = new Button(optionBar, SWT.PUSH);
 	    	buttons[i].setText(optionList[i]);
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
+	    	System.out.println("bool" + boolMode[0]);
+	    	//buttons[i].setEnabled(boolMode[i]);
 	    }
 	    
 	    //body
@@ -97,9 +106,9 @@ class Eventspace extends Composite{
 	    headerLayout.spacing = 50;
 	    header.setLayout(headerLayout);
 	    Label eventName = new Label(header, SWT.NONE);
-	    eventName.setText(event.getEventName());
+	    eventName.setText(SessionManager.getCurrentEvent().getEventName());
 	    Label eventDescription = new Label(header, SWT.NONE);
-	    eventDescription.setText(event.getEventDescription());
+	    eventDescription.setText(SessionManager.getCurrentEvent().getEventDescription());
 	    
 	    //body->left panel
 	    GridLayout leftLayout = new GridLayout();
@@ -117,7 +126,7 @@ class Eventspace extends Composite{
 	    }
 	    
 	    //body -> right panel
-	    EventPlanning_PreEvent pre_event  = new EventPlanning_PreEvent(right, SWT.None, event);
+	    EventPlanning_PreEvent pre_event  = new EventPlanning_PreEvent(right, SWT.None, SessionManager.getCurrentEvent());
 	    pre_event.pack();
 	  
 	}
@@ -130,47 +139,47 @@ class Eventspace extends Composite{
 			String name = ((Button)e.getSource()).getText();
 			if(name.equals("Pre-Event"))
 			{
-				EventPlanning_PreEvent pre_event = new EventPlanning_PreEvent(right, SWT.None, event);
+				EventPlanning_PreEvent pre_event = new EventPlanning_PreEvent(right, SWT.None, SessionManager.getCurrentEvent());
 				pre_event.pack();
 			}
 			else if(name.equals("Meeting"))
 			{
-				EventPlanning_Meeting meeting = new EventPlanning_Meeting(right, SWT.None, event);
+				EventPlanning_Meeting meeting = new EventPlanning_Meeting(right, SWT.None, SessionManager.getCurrentEvent());
 				meeting.pack();
 			}
 			else if(name.equals("Feedback"))
 			{
-				EventPlanning_FeedBack feedback = new EventPlanning_FeedBack(right, SWT.None, event);
+				EventPlanning_FeedBack feedback = new EventPlanning_FeedBack(right, SWT.None, SessionManager.getCurrentEvent());
 				feedback.pack();
 			}
 			else if(name.equals("Budget"))
 			{
-				EventPlanning_Budget budget = new EventPlanning_Budget(right, SWT.None, event);
+				EventPlanning_Budget budget = new EventPlanning_Budget(right, SWT.None, SessionManager.getCurrentEvent());
 				budget.pack();
 			}
 			else if(name.equals("Actual-Event"))
 			{
-				EventPlanning_ActualEvent actual_event = new EventPlanning_ActualEvent(right, SWT.NONE, event);
+				EventPlanning_ActualEvent actual_event = new EventPlanning_ActualEvent(right, SWT.NONE, SessionManager.getCurrentEvent());
 				actual_event.pack();
 			}
 			else if(name.equals("Manpower Allocation"))
 			{
-				eP_facilitator_AllocOfManpower allocation = new eP_facilitator_AllocOfManpower(right,SWT.None, event);
+				eP_facilitator_AllocOfManpower allocation = new eP_facilitator_AllocOfManpower(right,SWT.None, SessionManager.getCurrentEvent());
 				allocation.pack();
 			}
 			else if(name.equals("Itinerary"))
 			{
-				eP_participants_itinerary itinerary = new eP_participants_itinerary(right, SWT.None, event);
+				eP_participants_itinerary itinerary = new eP_participants_itinerary(right, SWT.None, SessionManager.getCurrentEvent());
 				itinerary.pack();
 			}
 			else if(name.equals("Packing List"))
 			{
-				eP_participants_packingList packing = new eP_participants_packingList(right, SWT.None,event);
+				eP_participants_packingList packing = new eP_participants_packingList(right, SWT.None,SessionManager.getCurrentEvent());
 				packing.pack();
 			}
 			else if(name.equals("Event Registration"))
 			{
-				eP_eventRegistration register = new eP_eventRegistration(right, SWT.None, event);
+				eP_eventRegistration register = new eP_eventRegistration(right, SWT.None, SessionManager.getCurrentEvent());
 				register.pack();
 			}
 			right.pack();

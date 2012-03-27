@@ -65,4 +65,18 @@ public class Time {
 		}
 		else return false;
 	}
+	
+	public boolean isEarlierThan(Time time) {
+		if (hour < time.getHour()){
+			return true;
+		}
+		else return false;
+	}
+	
+	public boolean isLaterThan(Time time) {
+		if (hour > time.getHour()){
+			return true;
+		}
+		else return false;
+	}
 }

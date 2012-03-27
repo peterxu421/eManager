@@ -12,19 +12,12 @@ import org.eclipse.swt.widgets.Label;
 public class VenueBooking_InstructionPage extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	private String lyrics = "This is the page to display regulations and rules.:-)\n" +
-			"Regulations: You say it!\n" +
-			"Regulations: You say it!\n" +
-			"Regulations: You say it!\n" +
-			"Regulations: You say it!\n" +
-			"Regulations: You say it!\n" +
-			"Regulations: You say it!\n" +
-			"Regulations: You say it!\n" +
-			"Regulations: You say it!\n" +
-			"Regulations: You say it!\n" +
-			"Regulations: You say it!\n" +
-			"Regulations: You say it!\n" +
-			"Rules: You say it!";
+	private String lyrics = "Eligibility\n" +
+			"The bookings are only for NUS Students Staff.\n\n" +
+			"Terms and Conditions\n" +
+			"<to be set by the venue manager>\n\n" +
+			"Administration Guide\n" +
+			"<to be set by the venue manager>\n\n";
 
 	/**
 	 * Create the composite.

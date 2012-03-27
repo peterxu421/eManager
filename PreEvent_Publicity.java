@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Shell;
 public class PreEvent_Publicity extends Composite{
 	protected Composite left;
 	protected Composite right;
+	private GalleryItem group;
 	public PreEvent_Publicity(Composite parent, int style) {
 		super(parent, style);
 		Image image = new Image(getDisplay(), "resources/me.jpg");
@@ -41,47 +42,25 @@ public class PreEvent_Publicity extends Composite{
 		
 		//left->
 		GridLayout leftLayout = new GridLayout();
-		leftLayout.numColumns = 3;
+		leftLayout.numColumns = 1;
 		left.setLayout(leftLayout);
-//		for(int i=0; i<3; i++){
-//			Canvas canvas = new Canvas(left, SWT.None);
-//			GridData imageGridData = new GridData(250,250);
-//			canvas.setLayoutData(imageGridData);
-//			canvas.addPaintListener(new PaintListener() {
-//				public void paintControl(PaintEvent e) {
-//					Image image = new Image(getDisplay(), new ImageData("resources/me.jpg").scaledTo(250, 250)); 
-//					e.gc.drawImage(image, 0,0);
-//					image.dispose();
-//				}
-//			});
-//		}
+
 		Gallery gallery = new Gallery(left, SWT.V_SCROLL | SWT.MULTI);
-		GridData galleryData = new GridData();
+		GridData galleryData = new GridData(750,500);
 		gallery.setLayoutData(galleryData);
 		
 		DefaultGalleryGroupRenderer gr = new DefaultGalleryGroupRenderer();
 		gr.setMinMargin(2);
-		gr.setItemHeight(56);
-		gr.setItemWidth(72);
-		gr.setAutoMargin(true);
+		gr.setItemHeight(200);
+		gr.setItemWidth(200);
+		gr.setAutoMargin(false);
 		gallery.setGroupRenderer(gr);
 		
 		DefaultGalleryItemRenderer ir = new DefaultGalleryItemRenderer();
 		gallery.setItemRenderer(ir);
-		
-		for (int g = 0; g < 2; g++) {
-			GalleryItem group = new GalleryItem(gallery, SWT.NONE);
-			group.setText("Group " + g); //$NON-NLS-1$
-			group.setExpanded(true);
-
-			for (int i = 0; i < 50; i++) {
-				GalleryItem item = new GalleryItem(group, SWT.NONE);
-				if (image != null) {
-					item.setImage(image);
-				}
-				item.setText("Item " + i); //$NON-NLS-1$
-			}
-		}
+		group = new GalleryItem(gallery, SWT.NONE);
+		group.setText("Images");
+		group.setExpanded(true);
 		
 		//right->
 		GridLayout rightLayout = new GridLayout();
@@ -89,33 +68,35 @@ public class PreEvent_Publicity extends Composite{
 		right.setLayout(rightLayout);
 		
 		Button importPic = new Button(right, SWT.PUSH);
-		GridData buttonData = new GridData(130,50);
-		importPic.setLayoutData(buttonData);
+		GridData importPicData = new GridData(130,50);
+		importPic.setLayoutData(importPicData);
 		importPic.setText("Import");
 		importPic.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
 				Shell open = new Shell(getDisplay());
-				FileDialog browser = new FileDialog(open, SWT.OPEN);
-				String path = browser.open();
-				if(path != null){
-					addImage(path);
+				FileDialog browser = new FileDialog(open, SWT.OPEN | SWT.MULTI);
+				browser.setFilterExtensions(new String[]{"*.jpg", "*.png", "*.*"});
+				browser.open();
+				String[] filenames = browser.getFileNames();
+				String path = browser.getFilterPath();
+				for(int i=0; i<filenames.length; i++){
+					addImage(path +"\\" + filenames[i]);
 				}
 			}
 		});
 		
+		Button edit = new Button(right, SWT.PUSH);
+		GridData editData = new GridData(130,50);
+		edit.setText("Edit");
+		edit.setLayoutData(editData);
 	}
 	public void addImage(final String path){
-		Canvas canvas = new Canvas(left, SWT.None);
-		GridData imageGridData = new GridData(250,250);
-		canvas.setLayoutData(imageGridData);
-		canvas.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
-				Image image = new Image(getDisplay(), new ImageData(path).scaledTo(250, 250)); 
-				e.gc.drawImage(image, 0,0);
-				image.dispose();
-			}
-		});
-		left.layout();
+		Image image = new Image(getDisplay(), new ImageData(path));
+		GalleryItem item = new GalleryItem(group, SWT.None);
+		item.setText(path);
+		if(image!=null){
+			item.setImage(image);
+		}
 	}
 	
 	public static void main(String[] args){
@@ -130,5 +111,4 @@ public class PreEvent_Publicity extends Composite{
 		}
 		display.dispose();
 	}
-	
 }

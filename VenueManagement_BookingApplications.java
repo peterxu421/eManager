@@ -1,27 +1,31 @@
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Button;
 
-import com.ibm.icu.util.Calendar;
-
 public class VenueManagement_BookingApplications extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Table applicationTable;
-	private Date today = new Date();
+	private Button btnReject;
+	private Button btnApprove;
 	
-	private ArrayList<VenueBookingApplication> bookingInfoList;
+	private DatabaseReader db = new DatabaseReader();
+	private Date today = new Date();
+	private ArrayList<VenueBookingApplication> bookingAppList;
 
 	/**
 	 * Create the composite.
@@ -43,17 +47,17 @@ public class VenueManagement_BookingApplications extends Composite {
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
-		Button btnReject = new Button(composite, SWT.NONE);
+		btnReject = new Button(composite, SWT.NONE);
 		btnReject.setText("Reject");
 		btnReject.setBounds(10, 10, 89, 27);
 		toolkit.adapt(btnReject, true, true);
 		btnReject.addSelectionListener(new reject());
 		
-		Button btnAccept = new Button(composite, SWT.NONE);
-		btnAccept.setBounds(10, 41, 89, 27);
-		toolkit.adapt(btnAccept, true, true);
-		btnAccept.setText("Accept");
-		btnAccept.addSelectionListener(new accept());
+		btnApprove = new Button(composite, SWT.NONE);
+		btnApprove.setBounds(10, 41, 89, 27);
+		toolkit.adapt(btnApprove, true, true);
+		btnApprove.setText("Approve");
+		btnApprove.addSelectionListener(new approve());
 		
 		applicationTable = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
 		applicationTable.setLocation(0, 0);
@@ -93,8 +97,7 @@ public class VenueManagement_BookingApplications extends Composite {
 		
 		TableColumn tblclmnApproval = new TableColumn(applicationTable, SWT.CENTER);
 		tblclmnApproval.setWidth(100);
-		tblclmnApproval.setText("Approval");
-		btnAccept.addSelectionListener(new accept());
+		tblclmnApproval.setText("Status");
 		
 		Calendar calendar = Calendar.getInstance(); // today
 		today.setYear(calendar.get(Calendar.YEAR));
@@ -106,23 +109,21 @@ public class VenueManagement_BookingApplications extends Composite {
 	}
 
 	public void importApplicationData() {
-		DatabaseReader db = new DatabaseReader();
-		
-		bookingInfoList = db.getVenueBookingInfoFromToday(today);
-		if(!bookingInfoList.isEmpty()){ //  booked
-			for(int j=0; j<bookingInfoList.size(); j++){
+		bookingAppList = db.getVenueBookingInfoFromToday(today);
+		if(!bookingAppList.isEmpty()){ //  booked
+			for(int j=0; j<bookingAppList.size(); j++){
 				TableItem item = new TableItem(applicationTable, SWT.NULL);
-				item.setText(0, bookingInfoList.get(j).getVenue().getName() + " at " + bookingInfoList.get(j).getVenue().getLocation() );
-				item.setText(1, bookingInfoList.get(j).getApplicant().getName());
-				item.setText(2, bookingInfoList.get(j).getApplicant().getMatricNo());
-				item.setText(3, bookingInfoList.get(j).getApplicant().getOrganization());
-				item.setText(4, bookingInfoList.get(j).getApplicant().getContact());
-				item.setText(5, bookingInfoList.get(j).getApplicant().getEmail());
-				item.setText(6, bookingInfoList.get(j).getDateTime().toString());
-				if(bookingInfoList.get(j).getStatus()== MACRO.PENDING){
+				item.setText(0, bookingAppList.get(j).getVenue().getName() + " at " + bookingAppList.get(j).getVenue().getLocation() );
+				item.setText(1, bookingAppList.get(j).getApplicant().getName());
+				item.setText(2, bookingAppList.get(j).getApplicant().getMatricNo());
+				item.setText(3, bookingAppList.get(j).getApplicant().getOrganization());
+				item.setText(4, bookingAppList.get(j).getApplicant().getContact());
+				item.setText(5, bookingAppList.get(j).getApplicant().getEmail());
+				item.setText(6, bookingAppList.get(j).getDateTime().toString());
+				if(bookingAppList.get(j).getStatus()== MACRO.PENDING){
 					item.setText(7,"Pending");
 				}
-				else if (bookingInfoList.get(j).getStatus()== MACRO.APPROVED){
+				else if (bookingAppList.get(j).getStatus()== MACRO.APPROVED){
 					item.setText(7,"Approved");
 				}
 				else item.setText(7, "Rejected");
@@ -136,32 +137,83 @@ public class VenueManagement_BookingApplications extends Composite {
 			if(index>=0 && index <= applicationTable.getItemCount()){
 				/* update the application table */
 				TableItem item = applicationTable.getItem(index);
+				item.setBackground(null); // get rid of the conflict reminder if there is any
 				item.setText(7,"Rejected");
 				
 				/* update the database */
 				DatabaseReader db = new DatabaseReader();
-				VenueBookingApplication bookingInfo = bookingInfoList.get(index);
+				VenueBookingApplication bookingInfo = bookingAppList.get(index);
 				bookingInfo.setStatus(MACRO.REJECTED);
 				db.updateVenueBookingInfo(bookingInfo);
 			}
 		}
 	}
 	
-	public class accept extends SelectionAdapter {
+	public class approve extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
+			ArrayList<VenueBookingApplication> conflictedAppList = new ArrayList<VenueBookingApplication>();
+			ArrayList<Integer> conflictIndexList = new ArrayList<Integer>();
 			int index = applicationTable.getSelectionIndex();
+			
 			if(index>=0 && index <= applicationTable.getItemCount()){
-				/* update the application table */
+				VenueBookingApplication selectedBookingApp = bookingAppList.get(index);
 				TableItem item = applicationTable.getItem(index);
-				item.setText(7,"Accepted");
-				
-				/* update the database */
-				DatabaseReader db = new DatabaseReader();
-				VenueBookingApplication bookingInfo = bookingInfoList.get(index);
-				bookingInfo.setStatus(MACRO.APPROVED);
-				db.updateVenueBookingInfo(bookingInfo);
-
-			}
-		}
-	}
+				for(int i=0; i<bookingAppList.size(); i++){
+					if (   (bookingAppList.get(i).getStatus() == MACRO.PENDING ||
+							bookingAppList.get(i).getStatus() == MACRO.APPROVED) 
+							&& 
+							bookingAppList.get(i).getDateTime().getDate().isEqualTo(selectedBookingApp.getDateTime().getDate()) 
+							&& 
+							bookingAppList.get(i).getDateTime().getTimeStart().isEarlierThan(selectedBookingApp.getDateTime().getTimeEnd()) 
+							&& 
+						    bookingAppList.get(i).getDateTime().getTimeEnd().isLaterThan(selectedBookingApp.getDateTime().getTimeStart())
+						    &&
+						    i!=index // no conflict with it self
+						){
+						conflictedAppList.add(bookingAppList.get(i));
+						conflictIndexList.add(i);
+				    }
+			
+			    }
+				if(!conflictedAppList.isEmpty()){
+					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.NO | SWT.ICON_WARNING );
+					warningPage.setText("Warning!");
+					warningPage.setMessage("Conflicted applications will be rejected automatically. Do you want to review them before proceeding? ");
+					int choice = warningPage.open(); // indicates the user's choice
+					switch(choice){
+					case SWT.NO:
+						/* update the database */
+						for(int i=0; i<conflictedAppList.size(); i++){
+							conflictedAppList.get(i).setStatus(MACRO.REJECTED);
+							db.updateVenueBookingInfo(conflictedAppList.get(i));
+						}
+						selectedBookingApp.setStatus(MACRO.APPROVED);
+						db.updateVenueBookingInfo(selectedBookingApp);
+						/* update the application table */
+						for(int i=0; i<conflictIndexList.size();i++){
+							TableItem tempItem = applicationTable.getItem(conflictIndexList.get(i));
+							tempItem.setText(7, "Rejected");
+						}
+						item.setText(7, "Approved");
+						break;
+					case SWT.YES:
+						/* highlight them in the table */
+						Color conflictedColor = applicationTable.getDisplay().getSystemColor(SWT.COLOR_RED);
+						for(int i=0; i<conflictIndexList.size();i++){
+							TableItem tempItem = applicationTable.getItem(conflictIndexList.get(i));
+							tempItem.setBackground(conflictedColor);
+						}
+						break;
+					}
+				}
+				else {
+					/* update the database */	
+					selectedBookingApp.setStatus(MACRO.APPROVED);
+					db.updateVenueBookingInfo(selectedBookingApp);
+					/* update the application table */
+					item.setText(7,"Approved");
+				}
+		    }
+	    }
+    }
 }

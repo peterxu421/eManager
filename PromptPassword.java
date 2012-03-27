@@ -1,5 +1,7 @@
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -14,15 +16,16 @@ import org.eclipse.swt.widgets.Button;
 public class PromptPassword extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	private Text text;
 	private Text text_1;
+	private String password = "123";
+	private int changeToMode;
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public PromptPassword(Composite parent, int style, int mode) {
+	public PromptPassword(Composite parent, int style, int changeToMode) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -31,70 +34,96 @@ public class PromptPassword extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		this.changeToMode = changeToMode;
 
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 224, 165);
+		composite.setBounds(10, 10, 224, 129);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 
-		Label lblUser = new Label(composite, SWT.NONE);
-		lblUser.setBounds(21, 20, 59, 14);
-		toolkit.adapt(lblUser, true, true);
-		lblUser.setText("Username:");
-
-		text = new Text(composite, SWT.BORDER);
-		text.setBounds(96, 20, 103, 19);
-		toolkit.adapt(text, true, true);
-
 		Label lblPassword = new Label(composite, SWT.NONE);
 		lblPassword.setText("Password:");
-		lblPassword.setBounds(21, 52, 59, 14);
+		lblPassword.setBounds(21, 20, 59, 14);
 		toolkit.adapt(lblPassword, true, true);
 
 		text_1 = new Text(composite, SWT.BORDER);
-		text_1.setBounds(96, 52, 103, 19);
+		text_1.setBounds(96, 20, 103, 19);
 		toolkit.adapt(text_1, true, true);
 
 		Button btnConfirm = new Button(composite, SWT.NONE);
-		btnConfirm.setBounds(10, 87, 94, 28);
+		btnConfirm.setBounds(10, 55, 94, 28);
 		toolkit.adapt(btnConfirm, true, true);
 		btnConfirm.setText("Confirm");
+		btnConfirm.addSelectionListener(new MenuConfirmListener());
 
 		Button btnCancel = new Button(composite, SWT.NONE);
-		btnCancel.setBounds(120, 87, 94, 28);
+		btnCancel.setBounds(120, 55, 94, 28);
 		toolkit.adapt(btnCancel, true, true);
 		btnCancel.setText("Cancel");
 
 		Button btnForgotPassword = new Button(composite, SWT.NONE);
-		btnForgotPassword.setBounds(10, 121, 125, 28);
+		btnForgotPassword.setBounds(10, 89, 125, 28);
 		toolkit.adapt(btnForgotPassword, true, true);
 		btnForgotPassword.setText("Forgot Password?");
 
-		if (mode==MACRO.ORGANIZER)
-		{
-
-		}
-		if (mode==MACRO.FACILITATOR)
-		{
-
-		}
-		if (mode==MACRO.PARTICIPANT)
-		{
-
-		}
-
 	}
 
-	public void CreatePage(boolean[] mode) { 
+	public void CreateEventPage(boolean[] boolMode) { 
 		Shell shell = new Shell(getDisplay());
 		shell.setLocation(200,100);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
 		shell.setText("eManager");
 		shell.setImage(icon);
-		Venuespace ws2 = null;
-		ws2 = new Venuespace(shell, SWT.None, mode);
-		ws2.pack();
+		Eventspace workspace = new Eventspace(shell, SWT.None, boolMode);
+		workspace.pack();
 		shell.pack();
 		shell.open();
+	}
+	
+	public void CreateVenuePage(boolean[] boolMode) { 
+		Shell shell = new Shell(getDisplay());
+		shell.setLocation(200,100);
+		Image icon = new Image(getDisplay(), "resources/eManager.png");
+		shell.setText("eManager");
+		shell.setImage(icon);
+		Venuespace venuespace = new Venuespace(shell, SWT.None, boolMode);
+		venuespace.pack();
+		shell.pack();
+		shell.open();
+	}
+
+	class MenuConfirmListener extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent event) {
+			if (changeToMode==MACRO.ORGANIZER)
+			{
+				//password = event.getOrganizerPassword();
+				if(text_1.getText().equals(password)) {
+					CreateEventPage(MACRO.ORGANIZER_MODE);
+				}
+			}
+			
+			if (changeToMode==MACRO.FACILITATOR)
+			{
+				//password = event.getFacilitatorPassword();
+				if(text_1.getText().equals(password)) {
+					CreateEventPage(MACRO.FACILITATOR_MODE);
+				}
+			}
+			
+			if (changeToMode==MACRO.PARTICIPANT)
+			{
+				CreateEventPage(MACRO.PARTICIPANT_MODE);
+			}
+			
+			if (changeToMode==MACRO.MANAGER)
+			{
+				CreateVenuePage(MACRO.MANAGER_MODE);
+			}
+			
+			if (changeToMode==MACRO.APPLICANT)
+			{
+				CreateVenuePage(MACRO.APPLICANT_MODE);
+			}
+		}
 	}
 }

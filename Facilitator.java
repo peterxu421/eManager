@@ -32,6 +32,9 @@ public class Facilitator extends Member {
 		this.allergy = allergy;
 		this.position = position;
 	}
+	public String getName(){
+		return name;
+	}
 	public String getPosition() {
 		return position;
 	}

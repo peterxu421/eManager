@@ -86,7 +86,7 @@ public class VenueViewBookingInfo extends Composite {
 						listBookingStatus.add("\n");
 						listBookingStatus.add("---Not Booked---");
 						/* update the weekViewTable */
-						weekViewTable.clearAll();
+						weekViewTable.removeAll();
 						for (int i = 6; i<23; i++){
 							TableItem item = new TableItem(weekViewTable, SWT.NULL);
 							item.setText(0, String.format("%02d", i) + ":00" + ":00");
@@ -135,7 +135,6 @@ public class VenueViewBookingInfo extends Composite {
 			                         dateTime.getDate().toString() + " From " + 
 		                             dateTime.getTimeStart().toString() + " to " +
 				                     dateTime.getTimeEnd().toString(), status};
-			    System.out.println(String.format(format, (Object[])bookingInfo));
 			    listBookingStatus.add(String.format(format, (Object[])bookingInfo));
 			}
 		}

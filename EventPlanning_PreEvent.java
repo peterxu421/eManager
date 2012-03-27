@@ -26,11 +26,11 @@ public class EventPlanning_PreEvent extends Composite {
 	private ArrayList<Task> taskList;
 	private ArrayList<Organizer> memberList;
 	private String[] stringArrayItem = { "Task", "Assigned To", "Date", "Done" };
-	private int[] signatureArrayItem = { MACRO.TEXT, MACRO.TEXT, MACRO.DATE,
+	private int[] signatureArrayItem = { MACRO.TEXT, MACRO.ORGANIZER, MACRO.DATE,
 			MACRO.CHECK };
 	private String[] stringArrayMember = { "Name", "Year", "Faculty",
 			"Position" };
-	private int[] signatureArrayMember = { MACRO.TEXT, MACRO.INT, MACRO.TEXT,
+	private int[] signatureArrayMember = { MACRO.TEXT, MACRO.INT, MACRO.FACULTY,
 			MACRO.TEXT };
 	private int index;
 

@@ -7,6 +7,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
@@ -18,8 +19,12 @@ public abstract class AbstractForm extends Composite {
 	protected String[] labelList;
 	protected int[] signature;
 	protected int[] sizeList;
+	protected String[] facultyArray = { "Arts and Social Sciences", "Business",
+			"Computing", "Dentistry", "Design and Environment", "Engineering",
+			"Law", "Medicine", "Music", "Science" };
 	protected DatabaseReader db;
-	protected Button btnAdd;
+	protected String[] organizerArray;
+	protected String[] facilitatorArray;
 	private HashMap<String, Object> map;
 
 	public abstract void onLoad();
@@ -35,7 +40,24 @@ public abstract class AbstractForm extends Composite {
 		this.signature = signature;
 		this.db = new DatabaseReader();
 		this.map = new HashMap<String, Object>();
-
+		// Update member name array
+		int organizerSize = db.getOrganizers(SessionManager.getCurrentEvent())
+				.size();
+		organizerArray = new String[organizerSize];
+		for (int i = 0; i < organizerSize; i++) {
+			organizerArray[i] = db
+					.getOrganizers(SessionManager.getCurrentEvent()).get(i)
+					.getName();
+		}
+		// Update facilitator name array
+		int facilitatorSize = db.getFacilitators(
+				SessionManager.getCurrentEvent()).size();
+		facilitatorArray = new String[facilitatorSize];
+		for (int i = 0; i < facilitatorSize; i++) {
+			facilitatorArray[i] = db
+					.getFacilitators(SessionManager.getCurrentEvent()).get(i)
+					.getName();
+		}
 		/* Layout */
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginLeft = 20;
@@ -70,26 +92,55 @@ public abstract class AbstractForm extends Composite {
 	// Set the input format given the key: labelList.
 	private Object createInput(Composite parent, int signature) {
 		Object input = null;
-		if (signature == MACRO.TEXT || signature == MACRO.INT||signature==MACRO.DOUBLE) {
+		// Deal with Text, int and double
+		if (signature == MACRO.TEXT || signature == MACRO.INT
+				|| signature == MACRO.DOUBLE) {
 			input = new Text(parent, SWT.BORDER);
 			((Text) input).setLayoutData(new GridData(120, 20));
-		} else if (signature == MACRO.DATE) {
+		}
+		// Deal with Date
+		else if (signature == MACRO.DATE) {
 			input = new CalendarCombo(this, SWT.READ_ONLY);
 			((CalendarCombo) input).setDate(Calendar.getInstance());
-			((CalendarCombo) input).setLayoutData(new GridData(120,30));
-		} else if (signature == MACRO.TIME) {
+			((CalendarCombo) input).setLayoutData(new GridData(120, 30));
+		}
+		// Deal with Time
+		else if (signature == MACRO.TIME) {
 			input = new DateTime(parent, SWT.TIME);
-			((DateTime) input).setLayoutData(new GridData(120,30));
-		} else if (signature == MACRO.CHECK) {
+			((DateTime) input).setLayoutData(new GridData(120, 30));
+		}
+		// Deal with CheckBox
+		else if (signature == MACRO.CHECK) {
 			input = new Button(parent, SWT.CHECK);
-		} 
-		// Make Text bigger.
-		else if (signature==MACRO.TEXTBIG){
-			input = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		}
+		// Deal with bigger Text
+		else if (signature == MACRO.TEXTBIG) {
+			input = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL
+					| SWT.MULTI);
 			((Text) input).setLayoutData(new GridData(120, 50));
 		}
-		//Make a drop down list for names, positions, faculties, etc.
-		
+		// Make a drop down list for names, faculties, etc.
+		// Deal with Faculties
+		else if (signature == MACRO.FACULTY) {
+			input = new Combo(parent, SWT.READ_ONLY);
+			((Combo) input).setItems(facultyArray);
+			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+					true, false, 1, 1));
+		}
+		// Deal with organizer names
+		else if (signature == MACRO.ORGANIZER) {
+			input = new Combo(parent, SWT.READ_ONLY);
+			((Combo) input).setItems(organizerArray);
+			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+					true, false, 1, 1));
+		}
+		// Deal with facilitator names
+		else if (signature == MACRO.FACILITATOR) {
+			input = new Combo(parent, SWT.READ_ONLY);
+			((Combo) input).setItems(facilitatorArray);
+			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+					true, false, 1, 1));
+		}
 		return input;
 	}
 
@@ -103,21 +154,37 @@ public abstract class AbstractForm extends Composite {
 	protected String[] getStringList() {
 		String[] stringList = new String[signature.length];
 		for (int i = 0; i < signature.length; i++) {
-			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT) {
+			// Deal with Text, BigText, int and double
+			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT
+					|| signature[i] == MACRO.DOUBLE
+					|| signature[i] == MACRO.TEXTBIG) {
 				stringList[i] = ((Text) get(i)).getText();
-			} else if (signature[i] == MACRO.DATE) {
+			}
+			// Deal with Date
+			else if (signature[i] == MACRO.DATE) {
 				stringList[i] = ((CalendarCombo) get(i)).getDateAsString();
-			} else if (signature[i] == MACRO.TIME) {
+			}
+			// Deal with Time
+			else if (signature[i] == MACRO.TIME) {
 				DateTime tempTime = (DateTime) get(i);
 				Time time = new Time(tempTime.getHours(),
 						tempTime.getMinutes(), tempTime.getSeconds());
 				stringList[i] = time.toString();
-			} else if (signature[i] == MACRO.CHECK) {
-				//If selected, change to true; else change to false.
+			}
+			// Deal with CheckBox
+			else if (signature[i] == MACRO.CHECK) {
+				// If selected, change to true; else change to false.
 				if (((Button) get(i)).getSelection())
 					stringList[i] = "true";
 				else
 					stringList[i] = "false";
+			}
+			// Deal with names, positions, faculties, etc(Combos).
+			else if (signature[i] == MACRO.FACULTY
+					|| signature[i] == MACRO.ORGANIZER
+					|| signature[i] == MACRO.FACILITATOR) {
+				stringList[i] = ((Combo) get(i)).getItem(((Combo) get(i))
+						.getSelectionIndex());
 			}
 		}
 		return stringList;
@@ -130,10 +197,13 @@ public abstract class AbstractForm extends Composite {
 		boolean isValid = true;
 		int index = -1;
 		for (int i = 0; i < labelList.length; i++) {
-			if (signature[i] == MACRO.TEXT||signature[i]==MACRO.TEXTBIG) {
+			// Deal with Text and BigText
+			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.TEXTBIG) {
 				Text text = (Text) map.get(labelList[i]);
 				isValid = !text.getText().isEmpty();
-			} else if (signature[i] == MACRO.INT) {
+			}
+			// Deal with integer
+			else if (signature[i] == MACRO.INT) {
 				Text text = (Text) map.get(labelList[i]);
 				String tempInt = text.getText();
 				// Catch the exception if string is not integer.
@@ -143,7 +213,9 @@ public abstract class AbstractForm extends Composite {
 				} catch (NumberFormatException e) {
 					isValid = false;
 				}
-			} else if(signature[i]==MACRO.DOUBLE){
+			}
+			// Deal with double
+			else if (signature[i] == MACRO.DOUBLE) {
 				Text text = (Text) map.get(labelList[i]);
 				String tempDouble = text.getText();
 				// Catch the exception if string is not double.
