@@ -33,13 +33,19 @@ public class EventPlanning_PreEvent extends Composite {
 	private int[] signatureArrayMember = { MACRO.TEXT, MACRO.INT, MACRO.FACULTY,
 			MACRO.TEXT };
 	private int index;
-
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
+	
+	public static void main(String args[]){
+		Display display = new Display();
+		Shell shell = new Shell(display);
+		EventPlanning_PreEvent page = new EventPlanning_PreEvent(shell, SWT.NONE, new Event("ABC", "ABC"));
+		page.pack();
+		shell.pack();
+		shell.open();
+		while(!shell.isDisposed()){
+			if(!display.readAndDispatch()) display.sleep();
+		}
+		display.dispose();
+	}
 	public EventPlanning_PreEvent(Composite parent, int style, Event event) {
 
 		super(parent, style);
@@ -133,11 +139,14 @@ public class EventPlanning_PreEvent extends Composite {
 
 		TabItem tbtmPublicity = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmPublicity.setText("Publicity");
-
-		Composite composite_3 = new Composite(tabFolderPreEvent, SWT.NONE);
-		tbtmPublicity.setControl(composite_3);
-		toolkit.paintBordersFor(composite_3);
-
+		Composite publicity = new PreEvent_Publicity(tabFolderPreEvent, SWT.NONE);
+		tbtmPublicity.setControl(publicity);
+		toolkit.paintBordersFor(publicity);
+		
+		publicity.pack();
+		tabFolderPreEvent.pack();
+		compositePreEvent.pack();
+		getShell().pack();
 		TabItem tbtmCommittee = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmCommittee.setText("Committee");
 
