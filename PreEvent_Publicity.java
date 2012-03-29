@@ -90,6 +90,8 @@ public class PreEvent_Publicity extends Composite{
 		edit.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
 				Shell shell = new Shell(getShell(), SWT.None);
+				shell.setLocation(300,150);
+				
 				if(gallery.getSelection().length!=0){
 					Image image = gallery.getSelection()[0].getImage();
 					PhotoEditorPage page = new PhotoEditorPage(shell, SWT.NONE, image);

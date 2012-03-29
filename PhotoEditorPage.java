@@ -20,7 +20,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -118,7 +117,7 @@ public class PhotoEditorPage extends Composite{
 				FileDialog fileDialog = new FileDialog(new Shell(getDisplay()), SWT.SAVE);
 				fileDialog.setFilterExtensions(new String[]{"*.jpg"});
 				String filePath = fileDialog.open();
-				imageLoader.save(filePath, SWT.IMAGE_JPEG);
+				if(filePath!=null) imageLoader.save(filePath, SWT.IMAGE_JPEG);
 			}
 		});
 		
