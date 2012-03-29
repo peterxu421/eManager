@@ -53,7 +53,7 @@ public class WelcomePage extends Composite {
 		btnEventPlanning.setLayoutData(fd_btnEventPlanning);
 		toolkit.adapt(btnEventPlanning, true, true);
 		btnEventPlanning.setText("Event Planning");
-		btnEventPlanning.addSelectionListener(new Event());
+		btnEventPlanning.addSelectionListener(new EventPlanner());
 		
 		Button btnVenueManagement = new Button(this, SWT.NONE);
 		fd_btnEventPlanning.bottom = new FormAttachment(100, -92);
@@ -67,7 +67,7 @@ public class WelcomePage extends Composite {
 		btnVenueManagement.addSelectionListener(new venueManager());
 	}
 	
-	class Event extends SelectionAdapter {
+	class EventPlanner extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM | SWT.ON_TOP);
 			add_item_shell.setLocation(400,250);
@@ -76,6 +76,7 @@ public class WelcomePage extends Composite {
 			add_new_item_page.pack();
 			add_item_shell.pack();
 			add_item_shell.open();
+			getShell().dispose();
 		}
 	}
 	

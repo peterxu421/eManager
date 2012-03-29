@@ -57,146 +57,141 @@ public class EventPlanning_PreEvent extends Composite {
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
 		this.event = event;
-
-		Composite compositePreEvent = new Composite(this, SWT.NONE);
-		compositePreEvent.setBounds(10, 10, 563, 325);
-		toolkit.adapt(compositePreEvent);
-		toolkit.paintBordersFor(compositePreEvent);
-
-		TabFolder tabFolderPreEvent = new TabFolder(compositePreEvent, SWT.NONE);
-		tabFolderPreEvent.setBackground(SWTResourceManager
-				.getColor(SWT.COLOR_RED));
-		tabFolderPreEvent.setToolTipText("Task Assignment");
-		tabFolderPreEvent.setBounds(10, 10, 543, 305);
-		toolkit.adapt(tabFolderPreEvent);
-		toolkit.paintBordersFor(tabFolderPreEvent);
-
-		TabItem tbtmTaskAssigned = new TabItem(tabFolderPreEvent, SWT.NONE);
-		tbtmTaskAssigned.setText("Task Assigned");
-
-		Composite composite_1 = new Composite(tabFolderPreEvent, SWT.NONE);
-		tbtmTaskAssigned.setControl(composite_1);
-		toolkit.paintBordersFor(composite_1);
-
-		tableTaskAssign = new Table(composite_1, SWT.BORDER
-				| SWT.FULL_SELECTION);
-		tableTaskAssign.setBounds(10, 10, 418, 255);
-		toolkit.adapt(tableTaskAssign);
-		toolkit.paintBordersFor(tableTaskAssign);
-		tableTaskAssign.setHeaderVisible(true);
-		tableTaskAssign.setLinesVisible(true);
-
-		TableColumn tblclmnTask = new TableColumn(tableTaskAssign, SWT.CENTER);
-		tblclmnTask.setWidth(150);
-		tblclmnTask.setText("Task");
-
-		TableColumn tblclmnAssignedTo = new TableColumn(tableTaskAssign,
-				SWT.NONE);
-		tblclmnAssignedTo.setWidth(105);
-		tblclmnAssignedTo.setText("Assigned To");
-
-		TableColumn tblclmnDateDue = new TableColumn(tableTaskAssign, SWT.NONE);
-		tblclmnDateDue.setWidth(98);
-		tblclmnDateDue.setText("Date Due");
-
-		TableColumn tblclmnDone = new TableColumn(tableTaskAssign, SWT.NONE);
-		tblclmnDone.setWidth(56);
-		tblclmnDone.setText("Done");
-
-		Button btnTaskAssinAddItem = new Button(composite_1, SWT.NONE);
-		btnTaskAssinAddItem.addSelectionListener(new TaskAssignAddItemPage());
-		btnTaskAssinAddItem.setBounds(445, 10, 80, 27);
-		toolkit.adapt(btnTaskAssinAddItem, true, true);
-		btnTaskAssinAddItem.setText("Add ");
-
-		Button btnTaskAssignDeleteItem = new Button(composite_1, SWT.NONE);
-		btnTaskAssignDeleteItem
-				.addSelectionListener(new TaskAssignDeleteItem());
-		btnTaskAssignDeleteItem.setBounds(445, 43, 80, 27);
-		toolkit.adapt(btnTaskAssignDeleteItem, true, true);
-		btnTaskAssignDeleteItem.setText("Delete ");
-
-		Button btnTaskAssignEditItem = new Button(composite_1, SWT.NONE);
-		btnTaskAssignEditItem
-				.addSelectionListener(new TaskAssignEditItemPage());
-		btnTaskAssignEditItem.setBounds(445, 76, 80, 27);
-		toolkit.adapt(btnTaskAssignEditItem, true, true);
-		btnTaskAssignEditItem.setText("Edit ");
-
-		TabItem tbtmTaskChart = new TabItem(tabFolderPreEvent, SWT.NONE);
-		tbtmTaskChart.setText("Task Chart");
-
-		Composite composite_2 = new Composite(tabFolderPreEvent, SWT.NONE);
-		tbtmTaskChart.setControl(composite_2);
-		toolkit.paintBordersFor(composite_2);
-		FillLayout fillLayout = new FillLayout();
-		fillLayout.marginWidth = 0;
-		composite_2.setLayout(fillLayout);
-		// TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
-		// taskChart.setSize(300, 300);
-		// taskChart.pack();
-		composite_2.pack();
-
-		TabItem tbtmPublicity = new TabItem(tabFolderPreEvent, SWT.NONE);
-		tbtmPublicity.setText("Publicity");
-		Composite publicity = new PreEvent_Publicity(tabFolderPreEvent, SWT.NONE);
-		tbtmPublicity.setControl(publicity);
-		toolkit.paintBordersFor(publicity);
 		
-		publicity.pack();
-		tabFolderPreEvent.pack();
-		compositePreEvent.pack();
-		getShell().pack();
-		TabItem tbtmCommittee = new TabItem(tabFolderPreEvent, SWT.NONE);
-		tbtmCommittee.setText("Committee");
-
-		Composite composite_4 = new Composite(tabFolderPreEvent, SWT.NONE);
-		tbtmCommittee.setControl(composite_4);
-		toolkit.paintBordersFor(composite_4);
-
-		tableCommittee = new Table(composite_4, SWT.BORDER | SWT.FULL_SELECTION);
-		tableCommittee.setBounds(10, 10, 408, 255);
-		toolkit.adapt(tableCommittee);
-		toolkit.paintBordersFor(tableCommittee);
-		tableCommittee.setHeaderVisible(true);
-		tableCommittee.setLinesVisible(true);
-
-		TableColumn tblclmnName = new TableColumn(tableCommittee, SWT.NONE);
-		tblclmnName.setWidth(84);
-		tblclmnName.setText("Name");
-
-		TableColumn tblclmnYear = new TableColumn(tableCommittee, SWT.NONE);
-		tblclmnYear.setWidth(56);
-		tblclmnYear.setText("Year");
-
-		TableColumn tblclmnFaculty = new TableColumn(tableCommittee, SWT.NONE);
-		tblclmnFaculty.setWidth(80);
-		tblclmnFaculty.setText("Faculty");
-
-		TableColumn tblclmnPosition = new TableColumn(tableCommittee, SWT.NONE);
-		tblclmnPosition.setWidth(118);
-		tblclmnPosition.setText("Position");
-
-		Button btnCommitteeAddMember = new Button(composite_4, SWT.NONE);
-		btnCommitteeAddMember
-				.addSelectionListener(new TaskAssignAddMemberPage());
-		btnCommitteeAddMember.setBounds(424, 10, 101, 27);
-		toolkit.adapt(btnCommitteeAddMember, true, true);
-		btnCommitteeAddMember.setText("Add");
-
-		Button btnCommitteeDeleteMember = new Button(composite_4, SWT.NONE);
-		btnCommitteeDeleteMember
-				.addSelectionListener(new TaskAssignDeleteMember());
-		btnCommitteeDeleteMember.setBounds(424, 43, 101, 27);
-		toolkit.adapt(btnCommitteeDeleteMember, true, true);
-		btnCommitteeDeleteMember.setText("Delete");
-
-		Button btnCommitteeEditMember = new Button(composite_4, SWT.NONE);
-		btnCommitteeEditMember
-				.addSelectionListener(new TaskAssignEditMemberPage());
-		btnCommitteeEditMember.setBounds(424, 76, 101, 27);
-		toolkit.adapt(btnCommitteeEditMember, true, true);
-		btnCommitteeEditMember.setText("Edit");
+				TabFolder tabFolderPreEvent = new TabFolder(this, SWT.NONE);
+				tabFolderPreEvent.setSize(673, 538);
+				tabFolderPreEvent.setBackground(SWTResourceManager
+						.getColor(SWT.COLOR_RED));
+				tabFolderPreEvent.setToolTipText("Task Assignment");
+				toolkit.adapt(tabFolderPreEvent);
+				toolkit.paintBordersFor(tabFolderPreEvent);
+				
+						TabItem tbtmTaskAssigned = new TabItem(tabFolderPreEvent, SWT.NONE);
+						tbtmTaskAssigned.setText("Task Assigned");
+						
+								Composite composite_1 = new Composite(tabFolderPreEvent, SWT.NONE);
+								tbtmTaskAssigned.setControl(composite_1);
+								toolkit.paintBordersFor(composite_1);
+								
+										tableTaskAssign = new Table(composite_1, SWT.BORDER
+												| SWT.FULL_SELECTION);
+										tableTaskAssign.setBounds(10, 10, 418, 255);
+										toolkit.adapt(tableTaskAssign);
+										toolkit.paintBordersFor(tableTaskAssign);
+										tableTaskAssign.setHeaderVisible(true);
+										tableTaskAssign.setLinesVisible(true);
+										
+												TableColumn tblclmnTask = new TableColumn(tableTaskAssign, SWT.CENTER);
+												tblclmnTask.setWidth(150);
+												tblclmnTask.setText("Task");
+												
+														TableColumn tblclmnAssignedTo = new TableColumn(tableTaskAssign,
+																SWT.NONE);
+														tblclmnAssignedTo.setWidth(105);
+														tblclmnAssignedTo.setText("Assigned To");
+														
+																TableColumn tblclmnDateDue = new TableColumn(tableTaskAssign, SWT.NONE);
+																tblclmnDateDue.setWidth(98);
+																tblclmnDateDue.setText("Date Due");
+																
+																		TableColumn tblclmnDone = new TableColumn(tableTaskAssign, SWT.NONE);
+																		tblclmnDone.setWidth(56);
+																		tblclmnDone.setText("Done");
+																		
+																				Button btnTaskAssinAddItem = new Button(composite_1, SWT.NONE);
+																				btnTaskAssinAddItem.addSelectionListener(new TaskAssignAddItemPage());
+																				btnTaskAssinAddItem.setBounds(445, 10, 80, 27);
+																				toolkit.adapt(btnTaskAssinAddItem, true, true);
+																				btnTaskAssinAddItem.setText("Add ");
+																				
+																						Button btnTaskAssignDeleteItem = new Button(composite_1, SWT.NONE);
+																						btnTaskAssignDeleteItem
+																								.addSelectionListener(new TaskAssignDeleteItem());
+																						btnTaskAssignDeleteItem.setBounds(445, 43, 80, 27);
+																						toolkit.adapt(btnTaskAssignDeleteItem, true, true);
+																						btnTaskAssignDeleteItem.setText("Delete ");
+																						
+																								Button btnTaskAssignEditItem = new Button(composite_1, SWT.NONE);
+																								btnTaskAssignEditItem
+																										.addSelectionListener(new TaskAssignEditItemPage());
+																								btnTaskAssignEditItem.setBounds(445, 76, 80, 27);
+																								toolkit.adapt(btnTaskAssignEditItem, true, true);
+																								btnTaskAssignEditItem.setText("Edit ");
+																								
+																										TabItem tbtmTaskChart = new TabItem(tabFolderPreEvent, SWT.NONE);
+																										tbtmTaskChart.setText("Task Chart");
+																										
+																												Composite composite_2 = new Composite(tabFolderPreEvent, SWT.NONE);
+																												tbtmTaskChart.setControl(composite_2);
+																												toolkit.paintBordersFor(composite_2);
+																												FillLayout fillLayout = new FillLayout();
+																												fillLayout.marginWidth = 0;
+																												composite_2.setLayout(fillLayout);
+																												// TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
+																												// taskChart.setSize(300, 300);
+																												// taskChart.pack();
+																												composite_2.pack();
+																												
+																														TabItem tbtmPublicity = new TabItem(tabFolderPreEvent, SWT.NONE);
+																														tbtmPublicity.setText("Publicity");
+																														Composite publicity = new PreEvent_Publicity(tabFolderPreEvent, SWT.NONE);
+																														tbtmPublicity.setControl(publicity);
+																														toolkit.paintBordersFor(publicity);
+																														
+																														publicity.pack();
+																														tabFolderPreEvent.pack();
+																														
+																														TabItem tbtmCommittee = new TabItem(tabFolderPreEvent, SWT.NONE);
+																														tbtmCommittee.setText("Committee");
+																														
+																																Composite composite_4 = new Composite(tabFolderPreEvent, SWT.NONE);
+																																tbtmCommittee.setControl(composite_4);
+																																toolkit.paintBordersFor(composite_4);
+																																
+																																		tableCommittee = new Table(composite_4, SWT.BORDER | SWT.FULL_SELECTION);
+																																		tableCommittee.setBounds(10, 10, 408, 255);
+																																		toolkit.adapt(tableCommittee);
+																																		toolkit.paintBordersFor(tableCommittee);
+																																		tableCommittee.setHeaderVisible(true);
+																																		tableCommittee.setLinesVisible(true);
+																																		
+																																				TableColumn tblclmnName = new TableColumn(tableCommittee, SWT.NONE);
+																																				tblclmnName.setWidth(84);
+																																				tblclmnName.setText("Name");
+																																				
+																																						TableColumn tblclmnYear = new TableColumn(tableCommittee, SWT.NONE);
+																																						tblclmnYear.setWidth(56);
+																																						tblclmnYear.setText("Year");
+																																						
+																																								TableColumn tblclmnFaculty = new TableColumn(tableCommittee, SWT.NONE);
+																																								tblclmnFaculty.setWidth(80);
+																																								tblclmnFaculty.setText("Faculty");
+																																								
+																																										TableColumn tblclmnPosition = new TableColumn(tableCommittee, SWT.NONE);
+																																										tblclmnPosition.setWidth(118);
+																																										tblclmnPosition.setText("Position");
+																																										
+																																												Button btnCommitteeAddMember = new Button(composite_4, SWT.NONE);
+																																												btnCommitteeAddMember
+																																														.addSelectionListener(new TaskAssignAddMemberPage());
+																																												btnCommitteeAddMember.setBounds(424, 10, 101, 27);
+																																												toolkit.adapt(btnCommitteeAddMember, true, true);
+																																												btnCommitteeAddMember.setText("Add");
+																																												
+																																														Button btnCommitteeDeleteMember = new Button(composite_4, SWT.NONE);
+																																														btnCommitteeDeleteMember
+																																																.addSelectionListener(new TaskAssignDeleteMember());
+																																														btnCommitteeDeleteMember.setBounds(424, 43, 101, 27);
+																																														toolkit.adapt(btnCommitteeDeleteMember, true, true);
+																																														btnCommitteeDeleteMember.setText("Delete");
+																																														
+																																																Button btnCommitteeEditMember = new Button(composite_4, SWT.NONE);
+																																																btnCommitteeEditMember
+																																																		.addSelectionListener(new TaskAssignEditMemberPage());
+																																																btnCommitteeEditMember.setBounds(424, 76, 101, 27);
+																																																toolkit.adapt(btnCommitteeEditMember, true, true);
+																																																btnCommitteeEditMember.setText("Edit");
+		this.pack();
 		fillTable();
 
 	}

@@ -54,7 +54,7 @@ public class PhotoEditorPage extends Composite{
 		gridLayout.numColumns = 2;
 		this.setLayout(gridLayout);
 		
-		Group left = new Group(this, SWT.None);
+		final Group left = new Group(this, SWT.None);
 		left.setLayoutData(new GridData(width,height));
 		
 		Group right = new Group(this, SWT.None);
@@ -172,7 +172,10 @@ public class PhotoEditorPage extends Composite{
 			public void widgetSelected(SelectionEvent e){
 				width = Integer.parseInt(widthText.getText());
 				height = Integer.parseInt(heightText.getText()); 
-				getComposite().layout();
+				getParent().setSize(width+200, height);
+				left.setLayoutData(new GridData(width, height));
+				getComposite().pack();
+				getParent().pack();
 				canvas.redraw();
 			}
 		});
@@ -188,19 +191,6 @@ public class PhotoEditorPage extends Composite{
 	}
 	public Composite getComposite(){
 		return this;
-	}
-	
-	public static void main(String args[]){
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		PhotoEditorPage page = new PhotoEditorPage(shell, SWT.NONE, new Image(display, "F://me.JPG"));
-		page.pack();
-		shell.pack();
-		shell.open();
-		while(!shell.isDisposed()){
-			if(!display.readAndDispatch()) display.sleep();
-		}
-		display.dispose();
 	}
 	
 	public class AutoGenerate extends Composite{
@@ -224,8 +214,8 @@ public class PhotoEditorPage extends Composite{
 			generate.addSelectionListener(new SelectionAdapter(){
 				public void widgetSelected(SelectionEvent e){
 					ArrayList<PaintData> current = new ArrayList<PaintData>();
-					if(eventName.getSelection()) current.add(new PaintData("Event Name Here", 100, 300));
-					if(eventDescription.getSelection()) current.add(new PaintData("Event Description Here", 100, 350));
+					if(eventName.getSelection()) current.add(new PaintData(SessionManager.getCurrentEvent().getEventName(), 100, 300));
+					if(eventDescription.getSelection()) current.add(new PaintData(SessionManager.getCurrentEvent().getEventDescription(), 100, 350));
 					stack.push(current);
 					canvas.redraw();
 					getShell().dispose();
@@ -259,6 +249,9 @@ public class PhotoEditorPage extends Composite{
 						current.add(new PaintData(content, x, y));
 						stack.push(current);
 						canvas.redraw();
+						text.dispose();
+					}
+					if(e.keyCode == SWT.ESC){
 						text.dispose();
 					}
 				}

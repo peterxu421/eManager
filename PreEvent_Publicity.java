@@ -30,7 +30,7 @@ public class PreEvent_Publicity extends Composite{
 		this.setLayout(gridLayout);
 		
 		left = new Composite(this, SWT.None);
-		GridData leftData = new GridData(750,500);
+		GridData leftData = new GridData(500,500);
 		left.setLayoutData(leftData);
 		
 		right = new Composite(this, SWT.None);
@@ -43,13 +43,13 @@ public class PreEvent_Publicity extends Composite{
 		left.setLayout(leftLayout);
 
 		gallery = new Gallery(left, SWT.V_SCROLL | SWT.MULTI);
-		GridData galleryData = new GridData(750,500);
+		GridData galleryData = new GridData(500,500);
 		gallery.setLayoutData(galleryData);
 		
 		DefaultGalleryGroupRenderer gr = new DefaultGalleryGroupRenderer();
 		gr.setMinMargin(2);
-		gr.setItemHeight(200);
-		gr.setItemWidth(200);
+		gr.setItemHeight(150);
+		gr.setItemWidth(150);
 		gr.setAutoMargin(false);
 		gallery.setGroupRenderer(gr);
 		

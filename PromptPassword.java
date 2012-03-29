@@ -60,6 +60,7 @@ public class PromptPassword extends Composite {
 		btnCancel.setBounds(120, 55, 94, 28);
 		toolkit.adapt(btnCancel, true, true);
 		btnCancel.setText("Cancel");
+		btnCancel.addSelectionListener(new CancelListener());
 
 		Button btnForgotPassword = new Button(composite, SWT.NONE);
 		btnForgotPassword.setBounds(10, 89, 125, 28);
@@ -69,7 +70,7 @@ public class PromptPassword extends Composite {
 	}
 
 	public void CreateEventPage(boolean[] boolMode) { 
-		Shell shell = new Shell(getDisplay());
+		Shell shell = new Shell(getDisplay(), SWT.NO_TRIM);
 		shell.setLocation(200,100);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
 		shell.setText("eManager");
@@ -78,6 +79,7 @@ public class PromptPassword extends Composite {
 		workspace.pack();
 		shell.pack();
 		shell.open();
+		getParent().getShell().getParent().dispose();
 	}
 	
 	public void CreateVenuePage(boolean[] boolMode) { 
@@ -92,6 +94,12 @@ public class PromptPassword extends Composite {
 		shell.open();
 	}
 
+	private class CancelListener extends SelectionAdapter{
+		public void widgetSelected(SelectionEvent event)
+		{
+			getParent().dispose();
+		}
+	}	
 	class MenuConfirmListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
 			if (changeToMode==MACRO.ORGANIZER)

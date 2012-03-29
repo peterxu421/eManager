@@ -26,13 +26,7 @@ public class SelectEventPage extends Composite {
 	private DatabaseReader databaseReader;
 	private List list;
 	private Button btnSelect;
-	
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
+
 	public SelectEventPage(Composite parent, int style) {
 		super(parent, SWT.NONE);
 		addDisposeListener(new DisposeListener() {
@@ -160,8 +154,8 @@ public class SelectEventPage extends Composite {
 
 	class SelectProjectHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell shell = new Shell(getDisplay());
-			shell.setLocation(200, 100);
+			Shell shell = new Shell(getDisplay(), SWT.NO_TRIM);
+			shell.setLocation(400, 200);
 			int index = list.getSelectionIndex();
 			if (index != -1) {
 				Event existEvent = events.get(index);
