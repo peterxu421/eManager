@@ -631,17 +631,17 @@ public class DatabaseReader {
 	public void deleteVenueBookingInfo(VenueBookingApplication booking){
 		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
 	}
-	public ArrayList<VenueBookingApplication> getVenueBookingInfoByMatricNo(String matricNo){
+	public ArrayList<VenueBookingApplication> getVenueBookingInfo(VenueApplicant applicant){
 		ArrayList<VenueBookingApplication> bookings = new ArrayList<VenueBookingApplication>();
 		ResultSet rs = null;
 		try{
-//			rs = SQLManageranager.getVenueBookingDetailsByApplicant(connection, applicant.getID());
+			rs = SQLManager.getVenueBookingDetailsByApplicant(connection, applicant.getID());
 			while(rs.next()){
 				Venue venue = getVenueByID(rs.getInt("VenueID"));
 				BookedDateTime time = new BookedDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
 						Time.parseTime(rs.getString("TimeEnd")));
-//				VenueBookingApplication booking = new VenueBookingApplication(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
-//				bookings.add(booking);
+				VenueBookingApplication booking = new VenueBookingApplication(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
+				bookings.add(booking);
 			}
 		}catch (SQLException e) {
 				e.printStackTrace();
@@ -650,10 +650,8 @@ public class DatabaseReader {
 	} 
 	public static void main(String[] args){
 		DatabaseReader db = new DatabaseReader();
-		VenueBookingApplication application = db.getVenueBookingInfo().get(4);
-//		application.setStatus(3);
-//		db.updateVenueBookingInfo(application);
-//		application = db.getVenueBookingInfo().get(4);
-		
+		Event event = db.getEvents().get(0);
+		int size = db.getFacilitators(event).size();
+		System.out.println(size);
 	}
 }
