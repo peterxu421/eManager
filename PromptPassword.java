@@ -12,16 +12,16 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
 
-
 public class PromptPassword extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	private Text text_1;
+	private Text textPassWord;
 	private String password = "123";
 	private int changeToMode;
 
 	/**
 	 * Create the composite.
+	 * 
 	 * @param parent
 	 * @param style
 	 */
@@ -46,9 +46,9 @@ public class PromptPassword extends Composite {
 		lblPassword.setBounds(21, 20, 59, 14);
 		toolkit.adapt(lblPassword, true, true);
 
-		text_1 = new Text(composite, SWT.BORDER);
-		text_1.setBounds(96, 20, 103, 19);
-		toolkit.adapt(text_1, true, true);
+		textPassWord = new Text(composite, SWT.BORDER | SWT.PASSWORD);
+		textPassWord.setBounds(96, 20, 103, 19);
+		toolkit.adapt(textPassWord, true, true);
 
 		Button btnConfirm = new Button(composite, SWT.NONE);
 		btnConfirm.setBounds(10, 55, 94, 28);
@@ -69,9 +69,9 @@ public class PromptPassword extends Composite {
 
 	}
 
-	public void CreateEventPage(boolean[] boolMode) { 
+	public void CreateEventPage(boolean[] boolMode) {
 		Shell shell = new Shell(getDisplay(), SWT.NO_TRIM);
-		shell.setLocation(200,100);
+		shell.setLocation(200, 100);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
 		shell.setText("eManager");
 		shell.setImage(icon);
@@ -81,10 +81,10 @@ public class PromptPassword extends Composite {
 		shell.open();
 		getParent().getShell().getParent().dispose();
 	}
-	
-	public void CreateVenuePage(boolean[] boolMode) { 
+
+	public void CreateVenuePage(boolean[] boolMode) {
 		Shell shell = new Shell(getDisplay());
-		shell.setLocation(200,100);
+		shell.setLocation(200, 100);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
 		shell.setText("eManager");
 		shell.setImage(icon);
@@ -94,42 +94,37 @@ public class PromptPassword extends Composite {
 		shell.open();
 	}
 
-	private class CancelListener extends SelectionAdapter{
-		public void widgetSelected(SelectionEvent event)
-		{
+	private class CancelListener extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent event) {
 			getParent().dispose();
 		}
-	}	
+	}
+
 	class MenuConfirmListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
-			if (changeToMode==MACRO.ORGANIZER)
-			{
-				//password = event.getOrganizerPassword();
-				if(text_1.getText().equals(password)) {
+			if (changeToMode == MACRO.ORGANIZER) {
+				// password = event.getOrganizerPassword();
+				if (textPassWord.getText().equals(password)) {
 					CreateEventPage(MACRO.ORGANIZER_MODE);
 				}
 			}
-			
-			if (changeToMode==MACRO.FACILITATOR)
-			{
-				//password = event.getFacilitatorPassword();
-				if(text_1.getText().equals(password)) {
+
+			if (changeToMode == MACRO.FACILITATOR) {
+				// password = event.getFacilitatorPassword();
+				if (textPassWord.getText().equals(password)) {
 					CreateEventPage(MACRO.FACILITATOR_MODE);
 				}
 			}
-			
-			if (changeToMode==MACRO.PARTICIPANT)
-			{
+
+			if (changeToMode == MACRO.PARTICIPANT) {
 				CreateEventPage(MACRO.PARTICIPANT_MODE);
 			}
-			
-			if (changeToMode==MACRO.MANAGER)
-			{
+
+			if (changeToMode == MACRO.MANAGER) {
 				CreateVenuePage(MACRO.MANAGER_MODE);
 			}
-			
-			if (changeToMode==MACRO.APPLICANT)
-			{
+
+			if (changeToMode == MACRO.APPLICANT) {
 				CreateVenuePage(MACRO.APPLICANT_MODE);
 			}
 		}

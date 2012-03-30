@@ -98,7 +98,6 @@ public class VenueBooking_VenueWeekView extends Composite {
 		}); // Disable the default table selection
 		
 		
-		
 		/* trials to remove row highlighting 
  		weekViewTable.addMouseMoveListener(new mouseOver());
 		*/

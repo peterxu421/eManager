@@ -19,12 +19,12 @@ public abstract class AbstractForm extends Composite {
 	protected String[] labelList;
 	protected int[] signature;
 	protected int[] sizeList;
-	protected String[] facultyArray = { "Arts and Social Sciences", "Business",
-			"Computing", "Dentistry", "Design and Environment", "Engineering",
-			"Law", "Medicine", "Music", "Science" };
 	protected DatabaseReader db;
 	protected String[] organizerArray;
 	protected String[] facilitatorArray;
+	protected String[] facultyArray = { "Arts and Social Sciences", "Business",
+			"Computing", "Dentistry", "Design and Environment", "Engineering",
+			"Law", "Medicine", "Music", "Science" };;
 	private HashMap<String, Object> map;
 
 	public abstract void onLoad();
@@ -40,24 +40,7 @@ public abstract class AbstractForm extends Composite {
 		this.signature = signature;
 		this.db = new DatabaseReader();
 		this.map = new HashMap<String, Object>();
-		// Update member name array
-		int organizerSize = db.getOrganizers(SessionManager.getCurrentEvent())
-				.size();
-		organizerArray = new String[organizerSize];
-		for (int i = 0; i < organizerSize; i++) {
-			organizerArray[i] = db
-					.getOrganizers(SessionManager.getCurrentEvent()).get(i)
-					.getName();
-		}
-		// Update facilitator name array
-		int facilitatorSize = db.getFacilitators(
-				SessionManager.getCurrentEvent()).size();
-		facilitatorArray = new String[facilitatorSize];
-		for (int i = 0; i < facilitatorSize; i++) {
-			facilitatorArray[i] = db
-					.getFacilitators(SessionManager.getCurrentEvent()).get(i)
-					.getName();
-		}
+
 		/* Layout */
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginLeft = 20;
@@ -122,6 +105,7 @@ public abstract class AbstractForm extends Composite {
 		// Make a drop down list for names, faculties, etc.
 		// Deal with Faculties
 		else if (signature == MACRO.FACULTY) {
+
 			input = new Combo(parent, SWT.READ_ONLY);
 			((Combo) input).setItems(facultyArray);
 			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
@@ -129,6 +113,15 @@ public abstract class AbstractForm extends Composite {
 		}
 		// Deal with organizer names
 		else if (signature == MACRO.ORGANIZER) {
+			// Update member name array
+			int organizerSize = db.getOrganizers(
+					SessionManager.getCurrentEvent()).size();
+			organizerArray = new String[organizerSize];
+			for (int i = 0; i < organizerSize; i++) {
+				organizerArray[i] = db
+						.getOrganizers(SessionManager.getCurrentEvent()).get(i)
+						.getName();
+			}
 			input = new Combo(parent, SWT.READ_ONLY);
 			((Combo) input).setItems(organizerArray);
 			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
@@ -136,10 +129,24 @@ public abstract class AbstractForm extends Composite {
 		}
 		// Deal with facilitator names
 		else if (signature == MACRO.FACILITATOR) {
+			// Update facilitator name array
+			int facilitatorSize = db.getFacilitators(
+					SessionManager.getCurrentEvent()).size();
+			facilitatorArray = new String[facilitatorSize];
+			for (int i = 0; i < facilitatorSize; i++) {
+				facilitatorArray[i] = db
+						.getFacilitators(SessionManager.getCurrentEvent())
+						.get(i).getName();
+			}
 			input = new Combo(parent, SWT.READ_ONLY);
 			((Combo) input).setItems(facilitatorArray);
 			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 					true, false, 1, 1));
+		}
+		// Deal with password
+		else if (signature == MACRO.PASSWORD) {
+			input = new Text(parent, SWT.BORDER | SWT.PASSWORD);
+			((Text) input).setLayoutData(new GridData(120, 20));
 		}
 		return input;
 	}
@@ -198,7 +205,8 @@ public abstract class AbstractForm extends Composite {
 		int index = -1;
 		for (int i = 0; i < labelList.length; i++) {
 			// Deal with Text and BigText
-			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.TEXTBIG) {
+			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.TEXTBIG
+					|| signature[i] == MACRO.PASSWORD) {
 				Text text = (Text) map.get(labelList[i]);
 				isValid = !text.getText().isEmpty();
 			}
