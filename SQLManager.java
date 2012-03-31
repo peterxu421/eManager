@@ -1087,7 +1087,7 @@ public class SQLManager {
 	}
 	
 	/*------------------------------------------------------UPDATE--------------------------------------------------------------*/
-	public static void updateEvenetDetails(Connection connection, int eventID, String eventName, String eventDescription, String organizerPassword, String facilitatorPassword){
+	public static void updateEventDetails(Connection connection, int eventID, String eventName, String eventDescription, String organizerPassword, String facilitatorPassword){
 		String updateEventDetails =
 				"UPDATE EventDetails SET EventName=?,EventDescription=?,Organizer_Password=?,Facilitator_Password=? " +
 				"WHERE EventID=?";

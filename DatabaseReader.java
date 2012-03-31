@@ -39,7 +39,8 @@ public class DatabaseReader {
 		SQLManager.deleteEventDetails(connection, event.getEventID());
 	}
 	public void updateEvent(Event event){
-		
+		SQLManager.updateEventDetails(connection, event.getEventID(), event.getEventName(),
+				event.getEventDescription(), event.getOrganizerPassword(), event.getFacilitatorPassword());
 	}
 	
 	/* TaskDetails */
