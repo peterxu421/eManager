@@ -24,6 +24,12 @@ public class VenueBookingApplication {
 		this.dateTime = dateTime;
 		this.status = MACRO.PENDING;
 	}
+	
+	
+
+	public VenueBookingApplication() {
+		super();
+	}
 
 	public int getVenueBookingInfoID() {
 		return venueBookingInfoID;

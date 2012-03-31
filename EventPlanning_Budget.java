@@ -509,7 +509,7 @@ public class EventPlanning_Budget extends Composite {
 				Shell add_allocation_shell = new Shell(getDisplay());
 				AbstractAdd add_allocation_page = new AbstractAdd(
 						add_allocation_shell, SWT.None, stringArrayBudget,
-						signatureArrayBudget) {
+						signatureArrayBudget, AllocationTable) {
 					public void onSubmit() {
 						// insert to database
 						String[] tempList = getStringList();
@@ -581,7 +581,7 @@ public class EventPlanning_Budget extends Composite {
 				Shell edit_allocation_shell = new Shell(getDisplay());
 				AbstractEdit edit_allocation_page = new AbstractEdit(
 						edit_allocation_shell, SWT.None, stringArrayBudget,
-						signatureArrayBudget) {
+						signatureArrayBudget, AllocationTable) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayBudget.length; i++) {
@@ -638,7 +638,7 @@ public class EventPlanning_Budget extends Composite {
 			if (InflowTable.getSelectionCount() == 0) {
 				Shell add_inflow_shell = new Shell(getDisplay());
 				AbstractAdd add_inflow_page = new AbstractAdd(add_inflow_shell,
-						SWT.None, stringArrayInflow, signatureArrayInflow) {
+						SWT.None, stringArrayInflow, signatureArrayInflow, InflowTable) {
 					public void onSubmit() {
 						// insert to database
 						String[] tempList = getStringList();
@@ -706,7 +706,7 @@ public class EventPlanning_Budget extends Composite {
 				Shell edit_inflow_shell = new Shell(getDisplay());
 				AbstractEdit edit_inflow_page = new AbstractEdit(
 						edit_inflow_shell, SWT.None, stringArrayInflow,
-						signatureArrayInflow) {
+						signatureArrayInflow, InflowTable) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayInflow.length; i++) {
@@ -758,7 +758,7 @@ public class EventPlanning_Budget extends Composite {
 				Shell add_outflow_shell = new Shell(getDisplay());
 				AbstractAdd add_outflow_page = new AbstractAdd(
 						add_outflow_shell, SWT.None, stringArrayOutflow,
-						signatureArrayOutflow) {
+						signatureArrayOutflow, OutflowTable) {
 					public void onSubmit() {
 						// insert to database
 						String[] tempList = getStringList();
@@ -831,7 +831,7 @@ public class EventPlanning_Budget extends Composite {
 				Shell edit_outflow_shell = new Shell(getDisplay());
 				AbstractEdit edit_outflow_page = new AbstractEdit(
 						edit_outflow_shell, SWT.None, stringArrayOutflow,
-						signatureArrayOutflow) {
+						signatureArrayOutflow, OutflowTable) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayOutflow.length; i++) {

@@ -17,7 +17,7 @@ public class DatabaseReader {
 		try {
 			while (rs.next()) {
 				Event event = new Event(rs.getInt("EventID"),
-						rs.getString("EventName"), rs.getString(3));
+						rs.getString("EventName"), rs.getString("EventDescription"), rs.getString("Organizer_Password"), rs.getString("Facilitator_Password"));
 				events.add(event);
 			}
 		} catch (SQLException e) {
@@ -28,13 +28,19 @@ public class DatabaseReader {
 	public void insertEvent(Event event) {
 		String eventName = event.getEventName();
 		String eventDescription = event.getEventDescription();
+		String organizerPassword = event.getOrganizerPassword();
+		String facilitatorPassword = event.getFacilitatorPassword();
 		int eventID = SQLManager.insertEventDetails(connection, eventName,
-				eventDescription);
+				eventDescription, organizerPassword, facilitatorPassword);
 		event.setEventID(eventID);
 		return;
 	}
 	public void deleteEvent(Event event) {
 		SQLManager.deleteEventDetails(connection, event.getEventID());
+	}
+	public void updateEvent(Event event){
+		SQLManager.updateEventDetails(connection, event.getEventID(), event.getEventName(),
+				event.getEventDescription(), event.getOrganizerPassword(), event.getFacilitatorPassword());
 	}
 	
 	/* TaskDetails */
@@ -603,7 +609,7 @@ public class DatabaseReader {
 				BookedDateTime time = new BookedDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
 						Time.parseTime(rs.getString("TimeEnd")));
 				VenueBookingApplication booking = new VenueBookingApplication(rs.getInt("BookingID"), venue , applicant, time, rs.getInt("Status"));
-				if(booking.getDateTime().getDate().isNotLaterThan(today)){
+				if(booking.getDateTime().getDate().isNotEarlierThan(today)){
 					bookings.add(booking);
 				}
 			}

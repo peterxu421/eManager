@@ -34,21 +34,6 @@ public class EventPlanning_PreEvent extends Composite {
 			MACRO.FACULTY, MACRO.TEXT };
 	private int index;
 
-	public static void main(String args[]) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		EventPlanning_PreEvent page = new EventPlanning_PreEvent(shell,
-				SWT.NONE, new Event("ABC", "ABC"));
-		page.pack();
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
-
 	public EventPlanning_PreEvent(Composite parent, int style, Event event) {
 
 		super(parent, style);
@@ -231,7 +216,7 @@ public class EventPlanning_PreEvent extends Composite {
 			taskAssignAddItemPage.setText("Task Assign Add Item");
 			AbstractAdd taskAssignAddItem = new AbstractAdd(
 					taskAssignAddItemPage, SWT.None, stringArrayItem,
-					signatureArrayItem) {
+					signatureArrayItem, tableTaskAssign) {
 				public void onSubmit() {
 					// insert to database
 					String[] tempList = getStringList();
@@ -260,7 +245,7 @@ public class EventPlanning_PreEvent extends Composite {
 			taskAssignAddMemberPage.setText("Task Assign Add Member");
 			AbstractAdd taskAssignAddMember = new AbstractAdd(
 					taskAssignAddMemberPage, SWT.None, stringArrayMember,
-					signatureArrayMember) {
+					signatureArrayMember, tableCommittee) {
 				public void onSubmit() {
 					// insert to database
 					String[] tempList = getStringList();
@@ -321,7 +306,7 @@ public class EventPlanning_PreEvent extends Composite {
 				taskAssignEditItemPage.setText("Task Assign Edit Item");
 				AbstractEdit taskAssignEditItem = new AbstractEdit(
 						taskAssignEditItemPage, SWT.None, stringArrayItem,
-						signatureArrayItem) {
+						signatureArrayItem, tableTaskAssign) {
 					public void onLoad() {
 						for (int i = 0; i < stringArrayItem.length; i++) {
 							setData(tableTaskAssign.getItem(index).getText(i),
@@ -361,7 +346,7 @@ public class EventPlanning_PreEvent extends Composite {
 				taskAssignEditMemberPage.setText("Task Assign Edit Member");
 				AbstractEdit taskAssignEditMember = new AbstractEdit(
 						taskAssignEditMemberPage, SWT.None, stringArrayMember,
-						signatureArrayMember) {
+						signatureArrayMember, tableCommittee) {
 					// get data from table
 					public void onLoad() {
 						for (int i = 0; i < stringArrayMember.length; i++) {

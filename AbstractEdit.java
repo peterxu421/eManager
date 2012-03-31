@@ -7,15 +7,16 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
 // Abstract Edit page inherits from AbstractForm
 public abstract class AbstractEdit extends AbstractForm {
 
 	public AbstractEdit(Composite parent, int style, String[] stringList,
-			int[] signature) {
+			int[] signature, Table table) {
 		// Inherit AbstractForm constructor.
-		super(parent, style, stringList, signature);
+		super(parent, style, stringList, signature, table);
 		// TODO Auto-generated constructor stub
 		// Set buttons
 		Button btnAdd = new Button(this, SWT.None);

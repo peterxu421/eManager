@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
@@ -16,7 +17,7 @@ public class PromptPassword extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Text textPassWord;
-	private String password = "";
+	private String password = "123";
 	private int changeToMode;
 
 	/**
@@ -36,8 +37,8 @@ public class PromptPassword extends Composite {
 		toolkit.paintBordersFor(this);
 		this.changeToMode = changeToMode;
 		
-		DatabaseReader db = new DatabaseReader();
-		SessionManager.getCurrentEvent();
+		password=SessionManager.getCurrentEvent().getOrganizerPassword();
+		System.out.println(password);
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(10, 10, 224, 129);
@@ -103,19 +104,37 @@ public class PromptPassword extends Composite {
 		}
 	}
 
+	//Check which mode they will enter
 	class MenuConfirmListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
+			//Check whether their password is correct or not.
 			if (changeToMode == MACRO.ORGANIZER) {
-				// password = event.getOrganizerPassword();
-				if (textPassWord.getText().equals(password)) {
+				if(password==null&&textPassWord.getText().isEmpty()){
 					CreateEventPage(MACRO.ORGANIZER_MODE);
+				}
+				else if (textPassWord.getText().equals(password)) {
+					CreateEventPage(MACRO.ORGANIZER_MODE);
+				}
+				else{
+					MessageBox warningPage = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+					warningPage.setText("Warning!");
+					warningPage.setMessage("Wrong Organizer Password!");
+					warningPage.open();
 				}
 			}
 
 			if (changeToMode == MACRO.FACILITATOR) {
-				// password = event.getFacilitatorPassword();
-				if (textPassWord.getText().equals(password)) {
+				if(password==null&&textPassWord.getText().isEmpty()){
 					CreateEventPage(MACRO.FACILITATOR_MODE);
+				}
+				else if (textPassWord.getText().equals(password)) {
+					CreateEventPage(MACRO.FACILITATOR_MODE);
+				}
+				else{
+					MessageBox warningPage = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+					warningPage.setText("Warning!");
+					warningPage.setMessage("Wrong Facilitator Password!");
+					warningPage.open();
 				}
 			}
 
