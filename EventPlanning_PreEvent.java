@@ -115,9 +115,9 @@ public class EventPlanning_PreEvent extends Composite {
 		FillLayout fillLayout = new FillLayout();
 		fillLayout.marginWidth = 0;
 		composite_2.setLayout(fillLayout);
-		// TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
-		// taskChart.setSize(300, 300);
-		// taskChart.pack();
+		TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
+		taskChart.setSize(400, 300);
+		taskChart.pack();
 		composite_2.pack();
 
 		TabItem tbtmPublicity = new TabItem(tabFolderPreEvent, SWT.NONE);

@@ -28,7 +28,6 @@ public class TaskChart extends Composite {
 		listOfTasks = db.getTasks(event);
 		listOfTotalIndividualTask = new ArrayList<Integer>();
 		listOfTasksDone = new ArrayList<Integer>();
-
 		// initialize
 		for (int i = 0; i < listOfPeople.size(); i++) {
 			listOfTotalIndividualTask.add(0);
@@ -41,28 +40,32 @@ public class TaskChart extends Composite {
 			// populating the stringOfPeople
 			stringOfPeople[i] = listOfPeople.get(i).getName();
 			for (int j = 0; j < listOfTasks.size(); j++) {
-				if (listOfPeople.get(i).getName().equals(listOfTasks.get(j).getAssignedTo())){
-					countTotal++;
-					if(listOfTasks.get(j).isDone()) countDone++;
+				if (listOfPeople.get(i).getName().equals(listOfTasks.get(j).getAssignedTo())) {
+					int temp = listOfTotalIndividualTask.get(i);
+					temp++;
+					listOfTotalIndividualTask.set(i, temp);
+					if (listOfTasks.get(j).isDone()) {
+						temp = listOfTasksDone.get(i);
+						temp++;
+						listOfTasksDone.set(i, temp);
+					}
 				}
 			}
-			listOfTotalIndividualTask.add(countTotal);
-			listOfTasksDone.add(countDone);
 		}
-		//for checking
-		/*for(int i=0;i<listOfPeople.size(); i++){
-			System.out.println(listOfPeople.get(i).getName());
-		}*/
+//		//for checking
+//		for(int i=0;i<listOfPeople.size(); i++){
+//			System.out.println(listOfPeople.get(i).getName());
+//		}
 
 		// create a chart
-		Chart chart = new Chart(parent, SWT.LEFT);
+		Chart chart = new Chart(this, SWT.LEFT);
 
 		// set titles
 		chart.getTitle().setText("Task Chart");
-		chart.getAxisSet().getXAxis(0).getTitle().setText("abc");
+		chart.getAxisSet().getXAxis(0).getTitle().setText("");
 		chart.getAxisSet().getYAxis(0).getTitle().setText("% of work done");
 		chart.setLocation(0, 0);
-		chart.setBounds(0, 0, 400, 400);
+		chart.setBounds(0, 0, 600, 400);
 
 		// set xAxis
 		IAxisSet axisSet = chart.getAxisSet();
@@ -71,15 +74,12 @@ public class TaskChart extends Composite {
 		xAxis.enableCategory(true);
 
 		// set yAxis
-
 		ySeries = new double[listOfPeople.size()];
 		for (int i = 0; i < listOfPeople.size(); i++) {
 			// populating the y-series
-			if (listOfTotalIndividualTask.get(i) == 0) {
-				ySeries[i] = 50;
-				break;
-			}
-			ySeries[i] = ((double)listOfTasksDone.get(i))/listOfTotalIndividualTask.get(i)*100;
+			if(listOfTotalIndividualTask.get(i)!=0)
+				ySeries[i] = (double)listOfTasksDone.get(i)/(double)listOfTotalIndividualTask.get(i);
+			else ySeries[i] = 0;
 		}
 
 		// set Horizontal
@@ -95,8 +95,11 @@ public class TaskChart extends Composite {
 		barSeries.setBarColor(color);
 
 		// adjust the axis range
-		//chart.getAxisSet().adjustRange();
+		chart.getAxisSet().adjustRange();
 
 	}
 
+	public static void main(String arg[]) {
+
+	}
 }
