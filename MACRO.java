@@ -19,9 +19,16 @@ public class MACRO {
 	public static int FACULTY = 8;
 
 	
-	public static boolean[] ORGANIZER_MODE = {true, true, true, true};
-	public static boolean[] FACILITATOR_MODE = {false, true, true, true};
-	public static boolean[] PARTICIPANT_MODE = {false, false, true, true};
-	public static boolean[] APPLICANT_MODE = {false, false, true, true};
-	public static boolean[] MANAGER_MODE = {false, false, true, true};
+	public static boolean[][] ORGANIZER_MODE = new boolean[][] {{true, true, true, true}, {true, true, true, true}};
+	public static boolean[][] FACILITATOR_MODE = {{true, true, true, true}, {true, true, true, true}};
+	public static boolean[][] PARTICIPANT_MODE = {{true, true, true, true}, {true, true, true, true}};
+	public static boolean[][] APPLICANT_MODE = {{true, true, true, true}, {true, true, true, true}};
+	public static boolean[][] MANAGER_MODE = {{true, true, true, true}, {true, true, true, true}};
+	
+	private String[][] tabList = new String[][]{
+			{"Pre-Event", "Actual-Event", "Meeting", "Budget", "Feedback" },
+			{	"Manpower Allocation" },
+			{	"Itinerary","Packing List" },
+			{	"Event Registration" }
+	};
 }

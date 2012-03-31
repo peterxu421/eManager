@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
@@ -19,13 +20,15 @@ public class PromptPassword extends Composite {
 	private Text text_1;
 	private String password = "123";
 	private int changeToMode;
+	private Composite parent;
+	private Composite parentParent;
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public PromptPassword(Composite parent, int style, int changeToMode) {
+	public PromptPassword(Composite parent, Composite parentParent, int style, int changeToMode) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -35,6 +38,9 @@ public class PromptPassword extends Composite {
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
 		this.changeToMode = changeToMode;
+		this.parent = parent;		
+		this.parentParent = parentParent;
+
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(10, 10, 224, 129);
@@ -46,7 +52,7 @@ public class PromptPassword extends Composite {
 		lblPassword.setBounds(21, 20, 59, 14);
 		toolkit.adapt(lblPassword, true, true);
 
-		text_1 = new Text(composite, SWT.BORDER);
+		text_1 = new Text(composite, SWT.BORDER | SWT.PASSWORD);
 		text_1.setBounds(96, 20, 103, 19);
 		toolkit.adapt(text_1, true, true);
 
@@ -68,19 +74,19 @@ public class PromptPassword extends Composite {
 
 	}
 
-	public void CreateEventPage(boolean[] boolMode) { 
+	public void CreateEventPage(boolean[][] boolMode) { 
 		Shell shell = new Shell(getDisplay());
 		shell.setLocation(200,100);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
 		shell.setText("eManager");
 		shell.setImage(icon);
-		Eventspace workspace = new Eventspace(shell, SWT.None, boolMode);
-		workspace.pack();
+		Eventspace eventspace = new Eventspace(shell, SWT.None, boolMode);
+		eventspace.pack();
 		shell.pack();
 		shell.open();
 	}
-	
-	public void CreateVenuePage(boolean[] boolMode) { 
+
+	public void CreateVenuePage(boolean[][] boolMode) { 
 		Shell shell = new Shell(getDisplay());
 		shell.setLocation(200,100);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
@@ -99,9 +105,27 @@ public class PromptPassword extends Composite {
 				//password = event.getOrganizerPassword();
 				if(text_1.getText().equals(password)) {
 					CreateEventPage(MACRO.ORGANIZER_MODE);
+					parent.dispose();
+					parentParent.dispose();
+				}
+				else{
+					// Show messageBox if there is error in input data and specify
+					// where is the error.
+					MessageBox warningPage = new MessageBox(getDisplay()
+							.getActiveShell(), SWT.OK|SWT.CANCEL | SWT.ICON_WARNING);
+					warningPage.setText("Warning!");
+					warningPage.setMessage("Password is wrong.");
+					int choice = warningPage.open(); // indicates the user's choice
+					switch (choice) {
+					case SWT.OK:
+						text_1.setText("");
+						break;
+					case SWT.CANCEL:
+						break;
+					}
 				}
 			}
-			
+
 			if (changeToMode==MACRO.FACILITATOR)
 			{
 				//password = event.getFacilitatorPassword();
@@ -109,17 +133,17 @@ public class PromptPassword extends Composite {
 					CreateEventPage(MACRO.FACILITATOR_MODE);
 				}
 			}
-			
+
 			if (changeToMode==MACRO.PARTICIPANT)
 			{
 				CreateEventPage(MACRO.PARTICIPANT_MODE);
 			}
-			
+
 			if (changeToMode==MACRO.MANAGER)
 			{
 				CreateVenuePage(MACRO.MANAGER_MODE);
 			}
-			
+
 			if (changeToMode==MACRO.APPLICANT)
 			{
 				CreateVenuePage(MACRO.APPLICANT_MODE);

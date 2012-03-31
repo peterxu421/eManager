@@ -6,7 +6,7 @@ public class SessionManager {
 	private static Connection connection = null;
 	private static Event event = null;
 	private static int intMode = 0;
-	public static boolean[] boolMode; 
+	public static boolean[][] boolMode; 
 
 	//Connection
 	public static Connection getConnection() {
@@ -64,7 +64,7 @@ public class SessionManager {
 		}
 
 		//Mode
-		public static boolean[] getCurrentBoolMode() {
+		public static boolean[][] getCurrentBoolMode() {
 			return boolMode;
 		}
 }
