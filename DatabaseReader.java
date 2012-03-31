@@ -633,7 +633,7 @@ public class DatabaseReader {
 	}
 	public VenueBookingApplication getVenueBookingInfo(VenueApplicant applicant){
 		ResultSet rs = null;
-		VenueBookingApplication booking = new VenueBookingApplication();
+		VenueBookingApplication booking = null;
 		try{
 			rs = SQLManager.getVenueBookingDetailsByApplicant(connection, applicant.getID());
 			while(rs.next()){

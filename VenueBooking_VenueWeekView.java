@@ -1,14 +1,13 @@
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -28,7 +27,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Button;
 
 import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
@@ -98,9 +96,20 @@ public class VenueBooking_VenueWeekView extends Composite {
 		}); // Disable the default table selection
 		
 		
-		/* trials to remove row highlighting 
- 		weekViewTable.addMouseMoveListener(new mouseOver());
-		*/
+		/* trials to remove row highlighting */
+		FocusListener disableHighlighting = new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				// do nothing
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				// do nothing
+			}
+		};
+		weekViewTable.addFocusListener(disableHighlighting);
 		
 		weekViewTable.addListener(SWT.MouseDoubleClick, new chooseTime());
 
@@ -162,19 +171,6 @@ public class VenueBooking_VenueWeekView extends Composite {
 		calendarCombo.setDate(Calendar.getInstance());
 		
 	}
-	
-/*	public class mouseOver implements MouseMoveListener{
-
-		@Override
-		public void mouseMove(org.eclipse.swt.events.MouseEvent event) {
-			// TODO Auto-generated method stub
-			  Point pt = new Point(event.x, event.y);
-			  TableItem item = weekViewTable.getItem(pt);
-			  if (item == null)    return;
-			  item.setBackground(cellColor);	
-		}
-		
-	}*/
 	
 	/* Button selection adapters */
 	public class checkBookingInfo extends SelectionAdapter {
@@ -309,31 +305,6 @@ public class VenueBooking_VenueWeekView extends Composite {
 			  }
 		  }
 	}
-	
-	
-/*	public class deleteSelectedDateTime extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e){
-			int index = selectedDateTimeList.getSelectionIndex();
-			if(index >=0 && index < selectedDateTimeList.getItemCount()){
-				 update the table color highlighting 
-				BookedDateTime toBeDeleted = BookedDateTime.parseBookingDateTime(selectedDateTimeList.getItem(index));
-				for(int i=0; i<weekViewTable.getItemCount(); i++){
-					TableItem item = weekViewTable.getItem(i);
-					if(Time.parseHour(item.getText(0)) == toBeDeleted.getTimeStart().getHour()){ // locate the time row
-						for(int j=0; j<dateInAWeekList.size(); j++){
-							if(dateInAWeekList.get(j).isEqualTo(toBeDeleted.getDate())){ // locate the date column
-								item.setBackground(j+1, null);
-							}
-						}
-					}
-				}
-				 update the list 
-				selectedDateTimeList.remove(index);
-				bookedDateTimeList.remove(index);
-				
-			}	
-		}	
-	}*/
 	
 	public class clear extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
