@@ -561,7 +561,9 @@ public class DatabaseReader {
 		int ID = SQLManager.insertVenueApplicant(connection, applicant.getName(), applicant.getMatricNo(), applicant.getContact(), applicant.getEmail(), applicant.getOrganization());
 		applicant.setID(ID);
 	}
-	
+	public void deleteVenueApplicant(VenueApplicant applicant){
+		SQLManager.deleteVenueApplicantDetails(connection, applicant.getID());
+	}
 	/*VenueBookingApplication*/
 	public ArrayList<VenueBookingApplication> getVenueBookingInfo(Venue venue){
 		ArrayList<VenueBookingApplication> bookings = new ArrayList<VenueBookingApplication>();
@@ -635,11 +637,12 @@ public class DatabaseReader {
 		SQLManager.deleteVenueBookingDetailsByVenue(connection, venue.getVenueId());
 	}
 	public void deleteVenueBookingInfo(VenueBookingApplication booking){
+		deleteVenueApplicant(booking.getApplicant());
 		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
 	}
 	public VenueBookingApplication getVenueBookingInfo(VenueApplicant applicant){
 		ResultSet rs = null;
-		VenueBookingApplication booking = new VenueBookingApplication();
+		VenueBookingApplication booking = null;
 		try{
 			rs = SQLManager.getVenueBookingDetailsByApplicant(connection, applicant.getID());
 			while(rs.next()){

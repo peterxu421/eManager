@@ -181,7 +181,6 @@ public class SelectEventPage extends Composite {
 			AbstractAdd add_newEvent_page = new AbstractAdd(add_newEvent_shell,
 					SWT.None, stringArrayNames, signatureNames) {
 				public void onSubmit() {
-
 					Shell shellEvent = new Shell(getDisplay());
 					shellEvent.setLocation(100, 150);
 					String[] tempList = getStringList();
