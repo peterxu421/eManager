@@ -24,7 +24,6 @@ public abstract class AbstractForm extends Composite {
 	protected DatabaseReader db;
 	protected Table table; // the SWT table where the information is stored
 	protected String[] stringList; // to store input texts
-
 	protected String[] organizerArray;
 	protected String[] facilitatorArray;
 	protected String[] facultyArray = { "Arts and Social Sciences", "Business",
@@ -38,6 +37,7 @@ public abstract class AbstractForm extends Composite {
 			"Business", "Computing", "Dentistry", "Design and Environment",
 			"Engineering", "Law", "Medicine", "Music", "Science",
 			"Central Library", "CFA", "PGP", "YIH", "SRC", "UCC", "Others" };
+
 	private HashMap<String, Object> map;
 
 	public abstract void onLoad();
@@ -54,9 +54,7 @@ public abstract class AbstractForm extends Composite {
 		this.db = new DatabaseReader();
 		this.map = new HashMap<String, Object>();
 		this.table = table;
-
-		stringList = new String[signature.length]; // initiate the input text
-													// string array
+		stringList = new String[signature.length]; // initiate the input text string array
 
 		/* Layout */
 		GridLayout gridLayout = new GridLayout();

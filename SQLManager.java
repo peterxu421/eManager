@@ -136,6 +136,11 @@ public class SQLManager {
 			"Contact VARCHAR(20)," +
 			"Email VARCHAR(20)," +
 			"Organization VARCHAR(30))";
+	private static String createPasswordTable = 
+			"CREATE TABLE PasswordTable(" +
+			"ID INTEGER," +
+			"Password VARCHAR(50))";
+	
 	public static Connection createDatabase(){
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -170,6 +175,8 @@ public class SQLManager {
 			statement = connection.prepareStatement(createVenueBookingDetailsTable);
 			statement.execute();
 			statement = connection.prepareStatement(createApplicantDetailsTable);
+			statement.execute();
+			statement = connection.prepareStatement(createPasswordTable);
 			statement.execute();
 		}catch(SQLException sqle){
 			sqle.printStackTrace();
@@ -479,6 +486,22 @@ public class SQLManager {
 		}
 		return rs;
 	}
+	public static ResultSet getPassword(Connection connection, int ID){
+		String getVenueBookingDetailsByMatricNo = 
+				"SELECT Password FROM PasswordTable " +
+				"WHERE ID=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getVenueBookingDetailsByMatricNo);
+			prep.setInt(1, ID);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
+
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
 	public static int insertEventDetails(Connection connection, String eventName, String eventDescription, String organizerPassword, String facilitatorPassword){
 		int eventID = 0;
@@ -1085,6 +1108,18 @@ public class SQLManager {
 			e.printStackTrace();
 		}
 	}
+	public static void deleteVenueApplicantDetails(Connection connection, int applicantID){
+		String deleteVenueApplicantDetails = 
+				"DELETE FROM ApplicantDetails " +
+				"WHERE ApplicantID=?";
+		try {
+			PreparedStatement prep = connection.prepareStatement(deleteVenueApplicantDetails);
+			prep.setInt(1, applicantID);
+			prep.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/*------------------------------------------------------UPDATE--------------------------------------------------------------*/
 	public static void updateEventDetails(Connection connection, int eventID, String eventName, String eventDescription, String organizerPassword, String facilitatorPassword){
@@ -1351,7 +1386,19 @@ public class SQLManager {
 			sqle.printStackTrace();
 		}
 	}
-	
+	public static void updatePassword(Connection connection, int ID){
+		String updatePassword =
+				"UPDATE PasswordTable SET Password=? " +
+				"WHERE ID=?";
+		PreparedStatement prep = null;
+		try{
+			prep = connection.prepareStatement(updatePassword);
+			prep.setInt(1, ID);
+			prep.execute();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+	}
 	/*Get Object By ID*/
 	public static ResultSet getVenueByID(Connection connection, int venueID){
 		String query = 
