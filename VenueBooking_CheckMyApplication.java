@@ -175,13 +175,15 @@ public class VenueBooking_CheckMyApplication extends Composite {
 			else{
 				applicationTable.removeAll(); // clear the table before loading new information
 				fillApplicationTable(venueApplicantList);
-				bookingApplicationList.clear(); // clear the list for next check
 			}
 		}
 	}
 	
 	public void fillApplicationTable(ArrayList<VenueApplicant> venueApplicantList){
+		bookingApplicationList.clear(); // clear the list for check
 		for(int i=0; i<venueApplicantList.size(); i++){
+			System.out.println(venueApplicantList.size()+"");
+			System.out.println(venueApplicantList.get(i).getName()+"" + "   " + i);
 		    bookingApplicationList.add(db.getVenueBookingInfo(venueApplicantList.get(i)));
 		}
 		for (int j=0; j<bookingApplicationList.size(); j++){
