@@ -86,12 +86,12 @@ public class VenueManagement_VenueList extends Composite {
 		btnEdit.setText("Edit");
 		btnEdit.setBounds(454, 76, 89, 27);
 		toolkit.adapt(btnEdit, true, true);
+		btnEdit.addSelectionListener(new edit());
 		
 		Button btnView = new Button(composite, SWT.NONE);
 		btnView.setText("View Booking Applications");
 		btnView.setBounds(423, 109, 153, 27);
 		toolkit.adapt(btnView, true, true);
-	    btnEdit.addSelectionListener(new edit());
 	    btnView.addSelectionListener(new viewBookingInfo());
 	    
 		Calendar calendar = Calendar.getInstance(); // today
@@ -113,7 +113,7 @@ public class VenueManagement_VenueList extends Composite {
 			temp.setText(1, venueList.get(i).getLocation());
 			temp.setText(2, venueList.get(i).getType());
 			temp.setText(3, venueList.get(i).getCapacity()+"");
-		}	
+			}
 	}
 	
 	public class add extends SelectionAdapter {

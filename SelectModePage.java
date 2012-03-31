@@ -62,29 +62,29 @@ public class SelectModePage extends Composite {
 
 	class OrganizerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell pass_shell = new Shell(getShell());
-			pass_shell.setLocation(450, 250);
+			Shell pass_shell = new Shell(getShell(),SWT.NO_TRIM|SWT.ON_TOP);
+			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.ORGANIZER);
 			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None, MACRO.ORGANIZER);
-			pass_page.pack();
+			pass_page.setSize(getShell().getSize());
 			pass_shell.pack();
 			pass_shell.open();
-			//getParent().dispose();
 		}
 	}
 	class FacilitatorListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell pass_shell = new Shell(getDisplay());
+			Shell pass_shell = new Shell(getShell(),SWT.NO_TRIM|SWT.ON_TOP);
+			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.FACILITATOR);
 			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None, MACRO.FACILITATOR);
-			pass_page.pack();
+			pass_page.setSize(getShell().getSize());
 			pass_shell.pack();
 			pass_shell.open();
 		}
 	}
 	class ParticipantListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell shell = new Shell(getDisplay());
+			Shell shell = new Shell(getShell(),SWT.NONE);
 			shell.setLocation(200,100);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			shell.setText("eManager");

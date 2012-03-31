@@ -656,6 +656,26 @@ public class DatabaseReader {
 		}
 		return booking;
 	} 
+	
+	/*Password*/
+	public String getPassword(){
+		ResultSet rs = null;
+		String password = null;
+		try {
+			rs = SQLManager.getPassword(connection, MACRO.MANAGER);
+			while (rs.next()) {
+				password = rs.getString("Password");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return password;
+	}
+	
+	public void updatePassword(){
+		SQLManager.updatePassword(connection, MACRO.MANAGER);
+	}
+	
 	public static void main(String[] args){
 		DatabaseReader db = new DatabaseReader();
 		Event event = db.getEvents().get(0);
