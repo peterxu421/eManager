@@ -44,6 +44,8 @@ public abstract class AbstractForm extends Composite {
 
 	public abstract void onSubmit();
 
+	public abstract boolean additionalCheck();
+
 	// Constructor
 	public AbstractForm(Composite parent, int style, String[] labelList,
 			int[] signature, Table table) {
@@ -54,18 +56,19 @@ public abstract class AbstractForm extends Composite {
 		this.db = new DatabaseReader();
 		this.map = new HashMap<String, Object>();
 		this.table = table;
-		stringList = new String[signature.length]; // initiate the input text string array
+		stringList = new String[signature.length]; // initiate the input text
+													// string array
 
 		/* Layout */
 		GridLayout gridLayout = new GridLayout();
-		gridLayout.marginLeft = 40;
+		gridLayout.marginLeft = 50;
 		gridLayout.marginRight = gridLayout.marginLeft;
-		gridLayout.marginTop = 40;
+		gridLayout.marginTop = 50;
 		gridLayout.marginBottom = gridLayout.marginTop;
-		gridLayout.marginWidth = 50;
-		gridLayout.marginHeight = 10;
+		gridLayout.marginWidth = 20;
+		gridLayout.marginHeight = 20;
 		gridLayout.numColumns = 2;
-		gridLayout.verticalSpacing = 15;
+		gridLayout.verticalSpacing = 20;
 		this.setLayout(gridLayout);
 
 		/* Content */
@@ -279,7 +282,7 @@ public abstract class AbstractForm extends Composite {
 	// When click submit button.
 	protected class SubmitHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if (check() == -1) {
+			if (check() == -1 || additionalCheck()) {
 				// check for duplicate input
 				String inputStr = "";
 				boolean noDuplicateInput = true;

@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class WelcomePage extends Composite {
 
@@ -33,7 +34,8 @@ public class WelcomePage extends Composite {
 		setLayout(null);
 
 		Label lblEmanager = new Label(this, SWT.NONE);
-		lblEmanager.setBounds(110, 80, 105, 17);
+		lblEmanager.setFont(SWTResourceManager.getFont("Myriad Pro Light", 14, SWT.NORMAL));
+		lblEmanager.setBounds(110, 80, 105, 23);
 		toolkit.adapt(lblEmanager, true, true);
 		lblEmanager.setText("eManager");
 

@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Text;
 
 // Abstract Edit page inherits from AbstractForm
 public abstract class AbstractEdit extends AbstractForm {
-
+	Button[] buttonList;
 	public AbstractEdit(Composite parent, int style, String[] stringList,
 			int[] signature, Table table) {
 		// Inherit AbstractForm constructor.
@@ -22,12 +22,28 @@ public abstract class AbstractEdit extends AbstractForm {
 		Button btnAdd = new Button(this, SWT.None);
 		btnAdd.addSelectionListener(new SubmitHandler());
 		btnAdd.setText("Edit");
-		btnAdd.setLayoutData(new GridData(60, 30));
+		btnAdd.setLayoutData(new GridData(80, 30));
 
 		Button btnCancel = new Button(this, SWT.None);
 		btnCancel.addSelectionListener(new CancelHandler());
 		btnCancel.setText("Cancel");
-		btnCancel.setLayoutData(new GridData(60, 30));
+		btnCancel.setLayoutData(new GridData(80, 30));
+	}
+	public AbstractEdit(Composite parent, int style, String[] stringList,
+			int[] signature, Table table, String[] stringButton) {
+		// Inherit AbstractForm constructor.
+		super(parent, style, stringList, signature, table);
+		// TODO Auto-generated constructor stub
+		// Set buttons
+		for(int i=0; i<stringButton.length; i++){
+			buttonList[i] = new Button(this, SWT.None);
+			buttonList[i].setText(stringButton[i]);
+			buttonList[i].setLayoutData(new GridData(80, 30));
+		}
+	}
+	//Do nothing about the additionalCheck()
+	public boolean additionalCheck(){
+		return true;
 	}
 
 	// Set data for Text, Calendar, Time and Check Box.

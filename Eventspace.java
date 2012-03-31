@@ -7,18 +7,25 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 
 class Eventspace extends Composite{
 	
 	Composite body;
 	Composite left;
 	Composite right;
+	private String[] stringPassword={"Old Password","New Password","Confirm New Password"};
+	private int[] signaturePassword={MACRO.PASSWORD,MACRO.PASSWORD,MACRO.PASSWORD};
+	private String[] stringButton={"Submit","Cancel","Organizer Password","Facilitator Password"};
+	private String[] stringSetting={"Event Name","Event Description"};
+	private int[] signatureSetting={MACRO.TEXT,MACRO.TEXTBIG};
 	
 	private String[] optionList = new String[]{
 		"Organizer",
 		"Facilitator",
 		"Participants",
-		"Event Registration"
+		"Registration"
 	};
 	
 	private boolean[] booleanList = new boolean[]{
@@ -52,34 +59,44 @@ class Eventspace extends Composite{
 		this.setLayout(gridLayout);
 		
 		//header
-	    GridData headerData = new GridData(700,60);
+	    GridData headerData = new GridData(1000,60);
 	    Composite header = new Composite(this,SWT.None);
 	    header.setLayoutData(headerData);
 	    
 	    //optionBar
-	    GridData optionBarData = new GridData(700, 30);
+	    GridData optionBarData = new GridData(1000, 50);
 	    Composite optionBar = new Composite(this, SWT.None);
 	    optionBar.setLayoutData(optionBarData);
 	    
 	    //optionBar->
 	    GridLayout optionBarLayout = new GridLayout();
 	    optionBarLayout.marginLeft = 150;
-	    optionBarLayout.numColumns = 4;
+	    optionBarLayout.numColumns = 5;
 	    optionBar.setLayout(optionBarLayout);
 	    
 	    //optionBar->options
 	    int num = optionList.length;
+	    int width=100;
+	    int height=40;
 	    Button[] buttons = new Button[num];
 	    for(int i=0; i<num; i++)
 	    {
 	    	System.out.println(num + " " + i);
 	    	System.out.println(num + " " + i);
 	    	buttons[i] = new Button(optionBar, SWT.PUSH);
+	    	buttons[i].setLayoutData(new GridData(width, height));
 	    	buttons[i].setText(optionList[i]);
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
 	    	System.out.println("bool" + boolMode[0]);
 	    	//buttons[i].setEnabled(boolMode[i]);
 	    }
+	    //setting button
+	    Button btnSetting=new Button(optionBar, SWT.PUSH);
+	    btnSetting.setText("Setting");
+	    GridData settingData = new GridData(width-20, height);
+	    settingData.horizontalIndent=150;
+	    btnSetting.setLayoutData(settingData);
+	    btnSetting.addSelectionListener(new SettingPage());
 	    
 	    //body
 	    GridData bodyData = new GridData(900, 450);
@@ -129,6 +146,47 @@ class Eventspace extends Composite{
 	    EventPlanning_PreEvent pre_event  = new EventPlanning_PreEvent(right, SWT.None, SessionManager.getCurrentEvent());
 	    pre_event.pack();
 	  
+	}
+	class SettingPage extends SelectionAdapter{
+
+		public void widgetselected(SelectionEvent e){
+			Shell settingShell=new Shell(getShell());
+			AbstractEdit settingPage=new AbstractEdit(settingShell,SWT.None,stringSetting,signatureSetting,
+					new Table(getShell(), SWT.None),stringButton){
+				@Override
+				public void onSubmit() {
+					String[] tempList=getStringList();
+					SessionManager.getCurrentEvent().setOrganizerPassword(organizerPassword)
+				}
+								
+				@Override
+				public boolean additionalCheck() {
+					// TODO Auto-generated method stub
+					return false;
+				}
+
+				@Override
+				public void onLoad() {
+					// TODO Auto-generated method stub
+					
+				}
+			};/*{{
+						public void onSubmit() {
+							// insert to database
+							String[] tempList = getStringList();
+							Organizer member = new Organizer(tempList[0],
+									Integer.parseInt(tempList[1]), tempList[2],
+									tempList[3]);
+							db.insertOrganizer(event, member);
+							memberList.add(member);
+							// update the table
+							TableItem item = new TableItem(tableCommittee, SWT.NULL);
+							for (int i = 0; i < stringArrayMember.length; i++) {
+								item.setText(i, tempList[i]);
+							}
+						}
+			};*/
+		}
 	}
 	class TabSelectionAdapter extends SelectionAdapter{
 		public void widgetSelected(SelectionEvent e){

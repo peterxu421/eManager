@@ -16,16 +16,20 @@ public abstract class AbstractAdd extends AbstractForm {
 		Button btnAdd = new Button(this, SWT.None);
 		btnAdd.addSelectionListener(new SubmitHandler());
 		btnAdd.setText("Add");
-		btnAdd.setLayoutData(new GridData(60, 30));
+		btnAdd.setLayoutData(new GridData(80, 30));
 
 		Button btnCancel = new Button(this, SWT.None);
 		btnCancel.addSelectionListener(new CancelHandler());
 		btnCancel.setText("Cancel");
-		btnCancel.setLayoutData(new GridData(60, 30));
+		btnCancel.setLayoutData(new GridData(80, 30));
 	}
 
 	// Do nothing about the onLoad();
 	public void onLoad() {
 
+	}
+	// Do nothing about the additionalCheck();
+	public boolean additionalCheck(){
+		return true;
 	}
 }

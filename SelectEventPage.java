@@ -115,7 +115,7 @@ public class SelectEventPage extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell shell = new Shell(getDisplay(),  SWT.NO_TRIM
 					| SWT.ON_TOP);
-			shell.setLocation(400, 200);
+			shell.setLocation(500,250);
 			int index = list.getSelectionIndex();
 			if (index != -1) {
 				Event existEvent = events.get(index);
@@ -150,6 +150,7 @@ public class SelectEventPage extends Composite {
 					SessionManager.setCurrentMode(MACRO.ORGANIZER);
 					Eventspace workspace = new Eventspace(shellEvent, SWT.None,
 							MACRO.ORGANIZER_MODE);
+					System.out.println(tempList[3]);
 					workspace.pack();
 					shellEvent.pack();
 					shellEvent.open();
