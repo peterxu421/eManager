@@ -138,14 +138,10 @@ public class SelectEventPage extends Composite {
 					SWT.None, stringArrayNames, signatureNames, new Table(
 							getShell(), SWT.None)) {
 				public void onSubmit() {
-<<<<<<< HEAD
 					Shell shellEvent = new Shell(getShell(),SWT.NO_TRIM
 							| SWT.ON_TOP);
 					shellEvent.setLocation(300, 200);
-=======
-					Shell shellEvent = new Shell(getDisplay());
-					shellEvent.setLocation(100, 150);
->>>>>>> 2bca55f623c263f982369351370f0e55e65ad8f2
+
 					String[] tempList = getStringList();
 					Event newEvent = new Event(tempList[0], tempList[1],
 							tempList[2], tempList[3]);
