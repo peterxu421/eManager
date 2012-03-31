@@ -16,7 +16,7 @@ public class PromptPassword extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Text textPassWord;
-	private String password = "123";
+	private String password = "";
 	private int changeToMode;
 
 	/**
@@ -35,6 +35,9 @@ public class PromptPassword extends Composite {
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
 		this.changeToMode = changeToMode;
+		
+		DatabaseReader db = new DatabaseReader();
+		SessionManager.getCurrentEvent();
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(10, 10, 224, 129);

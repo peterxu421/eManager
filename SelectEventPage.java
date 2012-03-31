@@ -30,6 +30,7 @@ public class SelectEventPage extends Composite {
 			"Password for Manager", "Password for Facilitator" };
 	private int[] signatureNames = { MACRO.TEXT, MACRO.TEXTBIG, MACRO.PASSWORD,
 			MACRO.PASSWORD };
+	Composite parent;
 
 	public SelectEventPage(Composite parent, int style) {
 		super(parent, SWT.NONE);
@@ -44,6 +45,7 @@ public class SelectEventPage extends Composite {
 		formLayout.marginBottom = 30;
 		formLayout.marginRight = 30;
 		setLayout(formLayout);
+		this.parent=parent;
 
 		databaseReader = new DatabaseReader();
 		events = databaseReader.getEvents();
@@ -118,11 +120,9 @@ public class SelectEventPage extends Composite {
 		Label lblSelectProject = new Label(this, SWT.NONE);
 		fd_list.top = new FormAttachment(lblSelectProject, 8);
 		FormData fd_lblSelectProject = new FormData();
-		fd_lblSelectProject.right = new FormAttachment(btnCreateNewProject, 0,
-				SWT.RIGHT);
+		fd_lblSelectProject.right = new FormAttachment(100, -249);
+		fd_lblSelectProject.left = new FormAttachment(0, 48);
 		fd_lblSelectProject.top = new FormAttachment(label_1, 2);
-		fd_lblSelectProject.left = new FormAttachment(btnCreateNewProject, 0,
-				SWT.LEFT);
 		lblSelectProject.setLayoutData(fd_lblSelectProject);
 		toolkit.adapt(lblSelectProject, true, true);
 		lblSelectProject.setText("Select Event");
@@ -175,7 +175,7 @@ public class SelectEventPage extends Composite {
 
 	class AddEventHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell add_newEvent_shell = new Shell(getDisplay(), SWT.NO_TRIM
+			Shell add_newEvent_shell = new Shell(getShell(), SWT.NO_TRIM
 					| SWT.ON_TOP);
 			add_newEvent_shell.setLocation(200, 300);
 			AbstractAdd add_newEvent_page = new AbstractAdd(add_newEvent_shell,
@@ -183,7 +183,7 @@ public class SelectEventPage extends Composite {
 				public void onSubmit() {
 
 					Shell shellEvent = new Shell(getDisplay());
-					shellEvent.setLocation(100, 150);
+					shellEvent.setLocation(200, 100);
 					String[] tempList = getStringList();
 					Event newEvent = new Event(tempList[0], tempList[1],
 							tempList[2], tempList[3]);

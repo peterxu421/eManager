@@ -69,12 +69,11 @@ public class SelectModePage extends Composite {
 			pass_page.pack();
 			pass_shell.pack();
 			pass_shell.open();
-			//getParent().dispose();
 		}
 	}
 	class FacilitatorListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell pass_shell = new Shell(getDisplay());
+			Shell pass_shell = new Shell(getShell());
 			SessionManager.setCurrentMode(MACRO.FACILITATOR);
 			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None, MACRO.FACILITATOR);
 			pass_page.pack();
