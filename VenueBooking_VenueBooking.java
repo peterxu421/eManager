@@ -163,8 +163,8 @@ public class VenueBooking_VenueBooking extends Composite {
 				DatabaseReader db = new DatabaseReader();
 				for(int i=0; i<bookedDateTimeIntervalList.size(); i++){
 					VenueApplicant newApplicant = new VenueApplicant(_name, _matricNo, _contact, _email, _organization);
-					VenueBookingApplication newBookingInfo = new VenueBookingApplication(selected, newApplicant, bookedDateTimeIntervalList.get(i));
-				    db.insertVenueBookingInfo(newBookingInfo);
+					VenueBookingApplication newBookingApp = new VenueBookingApplication(selected, newApplicant, bookedDateTimeIntervalList.get(i));
+				    db.insertVenueBookingInfo(newBookingApp);
 				}
 				getParent().dispose();
 			}

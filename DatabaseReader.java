@@ -603,7 +603,7 @@ public class DatabaseReader {
 				BookedDateTime time = new BookedDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
 						Time.parseTime(rs.getString("TimeEnd")));
 				VenueBookingApplication booking = new VenueBookingApplication(rs.getInt("BookingID"), venue , applicant, time, rs.getInt("Status"));
-				if(booking.getDateTime().getDate().isNotLaterThan(today)){
+				if(booking.getDateTime().getDate().isNotEarlierThan(today)){
 					bookings.add(booking);
 				}
 			}

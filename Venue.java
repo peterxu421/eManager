@@ -58,6 +58,17 @@ public class Venue {
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
+    
+	public boolean isSameAs(Venue venue) {
+		if (name.equals(venue.getName()) &&
+				location.equals(venue.getLocation()) && 
+				type.equals(venue.getType()) &&
+				capacity == venue.getCapacity()){
+			return true;
+		}
+		
+		else return false;
+	}
 }
 	
 

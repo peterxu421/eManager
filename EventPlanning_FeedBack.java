@@ -113,7 +113,7 @@ public class EventPlanning_FeedBack extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell feedbackAddItemPage = new Shell(getDisplay());
 			AbstractAdd feedbackAddItem = new AbstractAdd(feedbackAddItemPage,
-					SWT.None, stringArray,signatureArray) {
+					SWT.None, stringArray,signatureArray, tableFeedBack) {
 				public void onSubmit() {
 					// insert to database
 					String[] tempList=getStringList();
@@ -157,7 +157,7 @@ public class EventPlanning_FeedBack extends Composite {
 			if (index < tableFeedBack.getItemCount() && index >= 0) {
 				Shell feedbackEditItemPage = new Shell(getDisplay());
 				AbstractEdit feedbackEditItem = new AbstractEdit(
-						feedbackEditItemPage, SWT.None, stringArray,signatureArray) {
+						feedbackEditItemPage, SWT.None, stringArray,signatureArray, tableFeedBack) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArray.length; i++) {

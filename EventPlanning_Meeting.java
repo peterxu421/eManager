@@ -128,7 +128,7 @@ public class EventPlanning_Meeting extends Composite {
 				Shell add_meeting_shell = new Shell(getDisplay());
 				AbstractAdd add_meeting_page = new AbstractAdd(
 						add_meeting_shell, SWT.None, stringArray,
-						signatureArray) {
+						signatureArray, table) {
 					public void onSubmit() {
 						// insert to database
 						String[] tempList = getStringList();
@@ -177,7 +177,7 @@ public class EventPlanning_Meeting extends Composite {
 				Shell edit_meeting_shell = new Shell(getDisplay());
 				AbstractEdit edit_meeting_page = new AbstractEdit(
 						edit_meeting_shell, SWT.None, stringArray,
-						signatureArray) {
+						signatureArray,table) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArray.length; i++) {

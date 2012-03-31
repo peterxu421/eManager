@@ -231,7 +231,7 @@ public class EventPlanning_PreEvent extends Composite {
 			taskAssignAddItemPage.setText("Task Assign Add Item");
 			AbstractAdd taskAssignAddItem = new AbstractAdd(
 					taskAssignAddItemPage, SWT.None, stringArrayItem,
-					signatureArrayItem) {
+					signatureArrayItem, tableTaskAssign) {
 				public void onSubmit() {
 					// insert to database
 					String[] tempList = getStringList();
@@ -260,7 +260,7 @@ public class EventPlanning_PreEvent extends Composite {
 			taskAssignAddMemberPage.setText("Task Assign Add Member");
 			AbstractAdd taskAssignAddMember = new AbstractAdd(
 					taskAssignAddMemberPage, SWT.None, stringArrayMember,
-					signatureArrayMember) {
+					signatureArrayMember, tableCommittee) {
 				public void onSubmit() {
 					// insert to database
 					String[] tempList = getStringList();
@@ -321,7 +321,7 @@ public class EventPlanning_PreEvent extends Composite {
 				taskAssignEditItemPage.setText("Task Assign Edit Item");
 				AbstractEdit taskAssignEditItem = new AbstractEdit(
 						taskAssignEditItemPage, SWT.None, stringArrayItem,
-						signatureArrayItem) {
+						signatureArrayItem, tableTaskAssign) {
 					public void onLoad() {
 						for (int i = 0; i < stringArrayItem.length; i++) {
 							setData(tableTaskAssign.getItem(index).getText(i),
@@ -361,7 +361,7 @@ public class EventPlanning_PreEvent extends Composite {
 				taskAssignEditMemberPage.setText("Task Assign Edit Member");
 				AbstractEdit taskAssignEditMember = new AbstractEdit(
 						taskAssignEditMemberPage, SWT.None, stringArrayMember,
-						signatureArrayMember) {
+						signatureArrayMember, tableCommittee) {
 					// get data from table
 					public void onLoad() {
 						for (int i = 0; i < stringArrayMember.length; i++) {
