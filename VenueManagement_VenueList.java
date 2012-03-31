@@ -114,7 +114,6 @@ public class VenueManagement_VenueList extends Composite {
 			temp.setText(2, venueList.get(i).getType());
 			temp.setText(3, venueList.get(i).getCapacity()+"");
 		}
-		
 	}
 	
 	public class add extends SelectionAdapter {

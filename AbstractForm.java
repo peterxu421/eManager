@@ -24,17 +24,20 @@ public abstract class AbstractForm extends Composite {
 	protected DatabaseReader db;
 	protected Table table; // the SWT table where the information is stored
 	protected String[] stringList; // to store input texts
-	
 	protected String[] organizerArray;
 	protected String[] facilitatorArray;
 	protected String[] facultyArray = { "Arts and Social Sciences", "Business",
 			"Computing", "Dentistry", "Design and Environment", "Engineering",
 			"Law", "Medicine", "Music", "Science" };
-	protected String[] venueTypeArray = {"Auditorium", "Lecture Theatre", "Tutorial Room", "Seminar Room", "Function Room",
-			 "Practice Room", "Discussion Room", "Music Studio", "Open area", "Sports Room", "Gym", "MPSH", "others"};
-	protected String[] venueLocationArray = { "Arts and Social Sciences", "Business",
-			"Computing", "Dentistry", "Design and Environment", "Engineering",
-			"Law", "Medicine", "Music", "Science", "Central Library", "CFA", "PGP", "YIH", "SRC", "UCC", "Others" };
+	protected String[] venueTypeArray = { "Auditorium", "Lecture Theatre",
+			"Tutorial Room", "Seminar Room", "Function Room", "Practice Room",
+			"Discussion Room", "Music Studio", "Open area", "Sports Room",
+			"Gym", "MPSH", "others" };
+	protected String[] venueLocationArray = { "Arts and Social Sciences",
+			"Business", "Computing", "Dentistry", "Design and Environment",
+			"Engineering", "Law", "Medicine", "Music", "Science",
+			"Central Library", "CFA", "PGP", "YIH", "SRC", "UCC", "Others" };
+
 	private HashMap<String, Object> map;
 
 	public abstract void onLoad();
@@ -51,16 +54,15 @@ public abstract class AbstractForm extends Composite {
 		this.db = new DatabaseReader();
 		this.map = new HashMap<String, Object>();
 		this.table = table;
-		
 		stringList = new String[signature.length]; // initiate the input text string array
 
 		/* Layout */
 		GridLayout gridLayout = new GridLayout();
-		gridLayout.marginLeft = 20;
-		gridLayout.marginRight = 20;
-		gridLayout.marginTop = 20;
-		gridLayout.marginBottom = 20;
-		gridLayout.marginWidth = 20;
+		gridLayout.marginLeft = 40;
+		gridLayout.marginRight = gridLayout.marginLeft;
+		gridLayout.marginTop = 40;
+		gridLayout.marginBottom = gridLayout.marginTop;
+		gridLayout.marginWidth = 50;
 		gridLayout.marginHeight = 10;
 		gridLayout.numColumns = 2;
 		gridLayout.verticalSpacing = 15;
@@ -127,15 +129,15 @@ public abstract class AbstractForm extends Composite {
 		// Deal with venue types
 		else if (signature == MACRO.VENUETYPE) {
 			input = new Combo(parent, SWT.READ_ONLY);
-			((Combo)input).setItems(venueTypeArray);
-			((Combo)input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, 
+			((Combo) input).setItems(venueTypeArray);
+			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 					true, false, 1, 1));
 		}
 		// Deal with venue locations
 		else if (signature == MACRO.VENUELOCATION) {
 			input = new Combo(parent, SWT.READ_ONLY);
-			((Combo)input).setItems(venueLocationArray);
-			((Combo)input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, 
+			((Combo) input).setItems(venueLocationArray);
+			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 					true, false, 1, 1));
 		}
 		// Deal with organizer names
@@ -190,7 +192,8 @@ public abstract class AbstractForm extends Composite {
 			// Deal with Text, BigText, int and double
 			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT
 					|| signature[i] == MACRO.DOUBLE
-					|| signature[i] == MACRO.TEXTBIG) {
+					|| signature[i] == MACRO.TEXTBIG
+					|| signature[i] == MACRO.PASSWORD) {
 				stringList[i] = ((Text) get(i)).getText();
 			}
 			// Deal with Date
@@ -227,7 +230,8 @@ public abstract class AbstractForm extends Composite {
 
 	// Error checking.
 	// If there is no error, then return -1;
-	// If there exist error, then return the index or -2 to indicate duplicate input
+	// If there exist error, then return the index or -2 to indicate duplicate
+	// input
 	protected int check() {
 		boolean isValid = true;
 		int index = -1;
@@ -280,19 +284,18 @@ public abstract class AbstractForm extends Composite {
 				String inputStr = "";
 				boolean noDuplicateInput = true;
 				stringList = getStringList();
-				for(int i=0; i<stringList.length; i++){
+				for (int i = 0; i < stringList.length; i++) {
 					inputStr += stringList[i];
 				}
-				for(int i=0; i<table.getItemCount();i++) {
+				for (int i = 0; i < table.getItemCount(); i++) {
 					TableItem item = table.getItem(i);
 					String tableStr = "";
-					for (int j=0; j<table.getColumnCount();j++) {
+					for (int j = 0; j < table.getColumnCount(); j++) {
 						tableStr += item.getText(j);
 					}
-					System.out.println("**"+inputStr);
-					System.out.println("##"+tableStr);
-					if (inputStr.equalsIgnoreCase(tableStr)){
-						MessageBox warningPage = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+					if (inputStr.equalsIgnoreCase(tableStr)) {
+						MessageBox warningPage = new MessageBox(getDisplay()
+								.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
 						warningPage.setText("Warning!");
 						warningPage.setMessage("Already exsits!");
 						warningPage.open();
@@ -300,12 +303,11 @@ public abstract class AbstractForm extends Composite {
 						break;
 					}
 				}
-				if(noDuplicateInput == true ) {
+				if (noDuplicateInput == true) {
 					onSubmit();
 					getParent().dispose();
 				}
-			} 
-	        else {
+			} else {
 				// Show messageBox if there is error in input data and specify
 				// where is the error.
 				MessageBox warningPage = new MessageBox(getDisplay()

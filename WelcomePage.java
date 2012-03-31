@@ -10,9 +10,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
 
 public class WelcomePage extends Composite {
 
@@ -20,6 +17,7 @@ public class WelcomePage extends Composite {
 
 	/**
 	 * Create the composite.
+	 * 
 	 * @param parent
 	 * @param style
 	 */
@@ -32,68 +30,53 @@ public class WelcomePage extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
-		FormLayout formLayout = new FormLayout();
-		formLayout.marginTop = 30;
-		formLayout.marginBottom = 30;
-		setLayout(formLayout);
-		
+		setLayout(null);
+
 		Label lblEmanager = new Label(this, SWT.NONE);
-		FormData fd_lblEmanager = new FormData();
-		fd_lblEmanager.left = new FormAttachment(0, 122);
-		fd_lblEmanager.right = new FormAttachment(100, -223);
-		lblEmanager.setLayoutData(fd_lblEmanager);
+		lblEmanager.setBounds(110, 80, 105, 17);
 		toolkit.adapt(lblEmanager, true, true);
 		lblEmanager.setText("eManager");
-		
+
 		Button btnEventPlanning = new Button(this, SWT.NONE);
-		fd_lblEmanager.bottom = new FormAttachment(btnEventPlanning, -24);
-		FormData fd_btnEventPlanning = new FormData();
-		fd_btnEventPlanning.left = new FormAttachment(0, 122);
-		fd_btnEventPlanning.right = new FormAttachment(100, -140);
-		btnEventPlanning.setLayoutData(fd_btnEventPlanning);
+		btnEventPlanning.setBounds(110, 120, 188, 60);
 		toolkit.adapt(btnEventPlanning, true, true);
 		btnEventPlanning.setText("Event Planning");
 		btnEventPlanning.addSelectionListener(new EventPlanner());
-		
+
 		Button btnVenueManagement = new Button(this, SWT.NONE);
-		fd_btnEventPlanning.bottom = new FormAttachment(100, -92);
-		FormData fd_btnVenueManagement = new FormData();
-		fd_btnVenueManagement.top = new FormAttachment(btnEventPlanning, 6);
-		fd_btnVenueManagement.right = new FormAttachment(btnEventPlanning, 0, SWT.RIGHT);
-		fd_btnVenueManagement.left = new FormAttachment(0, 122);
-		btnVenueManagement.setLayoutData(fd_btnVenueManagement);
+		btnVenueManagement.setBounds(110, 194, 188, 60);
 		toolkit.adapt(btnVenueManagement, true, true);
 		btnVenueManagement.setText("Venue Management");
 		btnVenueManagement.addSelectionListener(new venueManager());
 	}
-	
+
 	class EventPlanner extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM | SWT.ON_TOP);
-			add_item_shell.setLocation(400,250);
-			SelectEventPage add_new_item_page = new SelectEventPage(add_item_shell,
-					SWT.None);
-			add_new_item_page.pack();
+			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM
+					| SWT.ON_TOP);
+			add_item_shell.setLocation(400, 200);
+			SelectEventPage add_new_item_page = new SelectEventPage(
+					add_item_shell, SWT.None);
+			add_new_item_page.setSize(500, 400);
 			add_item_shell.pack();
 			add_item_shell.open();
 			getShell().dispose();
 		}
 	}
-	
+
 	class venueManager extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			SessionManager.setCurrentMode(MACRO.MANAGER);
-			Shell shell = new Shell(getDisplay());
-			shell.setLocation(200,100);
+			Shell shell = new Shell(getDisplay(), SWT.NO_TRIM | SWT.ON_TOP);
+			shell.setLocation(200, 100);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			shell.setText("eManager");
 			shell.setImage(icon);
-			Venuespace ws2 = new Venuespace(shell, SWT.None, MACRO.ORGANIZER_MODE);
-				ws2.pack();
-				shell.pack();
-				shell.open();
-			}	
+			Venuespace ws2 = new Venuespace(shell, SWT.None,
+					MACRO.ORGANIZER_MODE);
+			ws2.pack();
+			shell.pack();
+			shell.open();
 		}
+	}
 }
-
-

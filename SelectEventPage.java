@@ -1,11 +1,10 @@
 import java.util.ArrayList;
-
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.SWT;
@@ -13,11 +12,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 
 public class SelectEventPage extends Composite {
 
@@ -30,6 +24,7 @@ public class SelectEventPage extends Composite {
 			"Password for Manager", "Password for Facilitator" };
 	private int[] signatureNames = { MACRO.TEXT, MACRO.TEXTBIG, MACRO.PASSWORD,
 			MACRO.PASSWORD };
+	Composite parent;
 
 	public SelectEventPage(Composite parent, int style) {
 		super(parent, SWT.NONE);
@@ -40,102 +35,62 @@ public class SelectEventPage extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
-		FormLayout formLayout = new FormLayout();
-		formLayout.marginBottom = 30;
-		formLayout.marginRight = 30;
-		setLayout(formLayout);
+		this.parent = parent;
 
 		databaseReader = new DatabaseReader();
 		events = databaseReader.getEvents();
+		setLayout(null);
 
 		Button btnCreateNewProject = new Button(this, SWT.NONE);
-		FormData fd_btnCreateNewProject = new FormData();
-		fd_btnCreateNewProject.top = new FormAttachment(0, 40);
-		fd_btnCreateNewProject.left = new FormAttachment(0, 48);
-		btnCreateNewProject.setLayoutData(fd_btnCreateNewProject);
+		btnCreateNewProject.setBounds(48, 30, 130, 40);
 		toolkit.adapt(btnCreateNewProject, true, true);
 		btnCreateNewProject.setText("Create New Event");
 		Label label = new Label(this, SWT.NONE);
-		fd_btnCreateNewProject.right = new FormAttachment(label, 19);
-		FormData fd_label = new FormData();
-		fd_label.top = new FormAttachment(0, 30);
-		fd_label.left = new FormAttachment(0, 152);
-		label.setLayoutData(fd_label);
+		label.setBounds(152, 30, 0, 17);
 		toolkit.adapt(label, true, true);
 		Label label_1 = new Label(this, SWT.NONE);
-		FormData fd_label_1 = new FormData();
-		fd_label_1.top = new FormAttachment(0, 60);
-		fd_label_1.left = new FormAttachment(0, 152);
-		label_1.setLayoutData(fd_label_1);
+		label_1.setBounds(152, 60, 0, 17);
 		toolkit.adapt(label_1, true, true);
 		btnCreateNewProject.addSelectionListener(new AddEventHandler());
 
-		list = new List(this, SWT.BORDER);
+		list = new List(this, SWT.BORDER | SWT.V_SCROLL);
+		list.setBounds(48, 104, 283, 249);
 		list.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				btnSelect.notifyListeners(SWT.Selection, null);
 			}
 		});
-
-		FormData fd_list = new FormData();
-		fd_list.bottom = new FormAttachment(100);
-		fd_list.left = new FormAttachment(0, 48);
-		list.setLayoutData(fd_list);
 		for (int i = 0; i < events.size(); i++) {
 			list.add(events.get(i).getEventName());
 		}
 		toolkit.adapt(list, true, true);
 
 		btnSelect = new Button(this, SWT.NONE);
-		fd_list.right = new FormAttachment(100, -205);
-		FormData fd_btnSelect = new FormData();
-		fd_btnSelect.right = new FormAttachment(100, -101);
-		fd_btnSelect.left = new FormAttachment(list, 21);
-		btnSelect.setLayoutData(fd_btnSelect);
+		btnSelect.setBounds(338, 162, 109, 40);
 		toolkit.adapt(btnSelect, true, true);
 		btnSelect.setText("Select");
 		btnSelect.addSelectionListener(new SelectProjectHandler());
 
 		Button btnCancel = new Button(this, SWT.NONE);
-		FormData fd_btnCancel = new FormData();
-		fd_btnCancel.right = new FormAttachment(btnSelect, 0, SWT.RIGHT);
-		fd_btnCancel.left = new FormAttachment(btnSelect, 0, SWT.LEFT);
-		btnCancel.setLayoutData(fd_btnCancel);
+		btnCancel.setBounds(338, 254, 109, 40);
 		toolkit.adapt(btnCancel, true, true);
 		btnCancel.setText("Cancel");
 		btnCancel.addSelectionListener(new Cancel());
 
 		Label lblNewLabel = new Label(this, SWT.NONE);
-		FormData fd_lblNewLabel = new FormData();
-		fd_lblNewLabel.right = new FormAttachment(100, -205);
-		fd_lblNewLabel.left = new FormAttachment(0, 48);
-		fd_lblNewLabel.bottom = new FormAttachment(label, -5);
-		lblNewLabel.setLayoutData(fd_lblNewLabel);
+		lblNewLabel.setBounds(48, 8, 167, 17);
 		toolkit.adapt(lblNewLabel, true, true);
 		lblNewLabel.setText("Welcome to Event Planner!");
 
 		Label lblSelectProject = new Label(this, SWT.NONE);
-		fd_list.top = new FormAttachment(lblSelectProject, 8);
-		FormData fd_lblSelectProject = new FormData();
-		fd_lblSelectProject.right = new FormAttachment(btnCreateNewProject, 0,
-				SWT.RIGHT);
-		fd_lblSelectProject.top = new FormAttachment(label_1, 2);
-		fd_lblSelectProject.left = new FormAttachment(btnCreateNewProject, 0,
-				SWT.LEFT);
-		lblSelectProject.setLayoutData(fd_lblSelectProject);
+		lblSelectProject.setBounds(48, 79, 109, 40);
 		toolkit.adapt(lblSelectProject, true, true);
 		lblSelectProject.setText("Select Event");
 
 		Button btnDeleteEvent = new Button(this, SWT.NONE);
-		fd_btnCancel.top = new FormAttachment(btnDeleteEvent, 6);
-		fd_btnSelect.bottom = new FormAttachment(btnDeleteEvent, -6);
+		btnDeleteEvent.setBounds(338, 208, 109, 40);
 		btnDeleteEvent.addSelectionListener(new DeleteProjectHandler());
-		FormData fd_btnDeleteEvent = new FormData();
-		fd_btnDeleteEvent.right = new FormAttachment(100, -101);
-		fd_btnDeleteEvent.left = new FormAttachment(list, 21);
-		fd_btnDeleteEvent.top = new FormAttachment(0, 191);
-		btnDeleteEvent.setLayoutData(fd_btnDeleteEvent);
 		toolkit.adapt(btnDeleteEvent, true, true);
 		btnDeleteEvent.setText("Delete");
 	}
@@ -158,7 +113,8 @@ public class SelectEventPage extends Composite {
 
 	class SelectProjectHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell shell = new Shell(getDisplay(), SWT.NO_TRIM);
+			Shell shell = new Shell(getDisplay(),  SWT.NO_TRIM
+					| SWT.ON_TOP);
 			shell.setLocation(400, 200);
 			int index = list.getSelectionIndex();
 			if (index != -1) {
@@ -175,14 +131,17 @@ public class SelectEventPage extends Composite {
 
 	class AddEventHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell add_newEvent_shell = new Shell(getDisplay(), SWT.NO_TRIM
+			Shell add_newEvent_shell = new Shell(getShell(), SWT.NO_TRIM
 					| SWT.ON_TOP);
-			add_newEvent_shell.setLocation(200, 300);
+			add_newEvent_shell.setLocation(getShell().getLocation());
 			AbstractAdd add_newEvent_page = new AbstractAdd(add_newEvent_shell,
-					SWT.None, stringArrayNames, signatureNames) {
+					SWT.None, stringArrayNames, signatureNames, new Table(
+							getShell(), SWT.None)) {
 				public void onSubmit() {
-					Shell shellEvent = new Shell(getDisplay());
-					shellEvent.setLocation(100, 150);
+					Shell shellEvent = new Shell(getShell(),SWT.NO_TRIM
+							| SWT.ON_TOP);
+					shellEvent.setLocation(300, 200);
+
 					String[] tempList = getStringList();
 					Event newEvent = new Event(tempList[0], tempList[1],
 							tempList[2], tempList[3]);
@@ -194,9 +153,10 @@ public class SelectEventPage extends Composite {
 					workspace.pack();
 					shellEvent.pack();
 					shellEvent.open();
+					parent.dispose();
 				}
 			};
-			add_newEvent_page.pack();
+			add_newEvent_page.setSize(getShell().getSize());
 			add_newEvent_shell.pack();
 			add_newEvent_shell.open();
 		}
