@@ -24,19 +24,6 @@ public class Event {
 		this.organizerPassword = organizerPassword;
 		this.facilitatorPassword = facilitatorPassword;
 	}
-
-	public Event(int eventID, String eventName, String eventDescription) {
-		super();
-		this.eventID = eventID;
-		this.eventName = eventName;
-		this.eventDescription = eventDescription;
-	}
-
-	public Event(String eventName, String eventDescription) {
-		this.eventName = eventName;
-		this.eventDescription = eventDescription;
-	}
-	
 	
 	public int getEventID() {
 		return eventID;

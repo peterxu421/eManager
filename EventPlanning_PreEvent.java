@@ -34,21 +34,6 @@ public class EventPlanning_PreEvent extends Composite {
 			MACRO.FACULTY, MACRO.TEXT };
 	private int index;
 
-	public static void main(String args[]) {
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		EventPlanning_PreEvent page = new EventPlanning_PreEvent(shell,
-				SWT.NONE, new Event("ABC", "ABC"));
-		page.pack();
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
-
 	public EventPlanning_PreEvent(Composite parent, int style, Event event) {
 
 		super(parent, style);

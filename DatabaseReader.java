@@ -17,7 +17,7 @@ public class DatabaseReader {
 		try {
 			while (rs.next()) {
 				Event event = new Event(rs.getInt("EventID"),
-						rs.getString("EventName"), rs.getString(3));
+						rs.getString("EventName"), rs.getString("EventDescription"), rs.getString("Organizer_Password"), rs.getString("Facilitator_Password"));
 				events.add(event);
 			}
 		} catch (SQLException e) {
@@ -28,13 +28,19 @@ public class DatabaseReader {
 	public void insertEvent(Event event) {
 		String eventName = event.getEventName();
 		String eventDescription = event.getEventDescription();
+		String organizerPassword = event.getOrganizerPassword();
+		String facilitatorPassword = event.getFacilitatorPassword();
 		int eventID = SQLManager.insertEventDetails(connection, eventName,
-				eventDescription);
+				eventDescription, organizerPassword, facilitatorPassword);
 		event.setEventID(eventID);
 		return;
 	}
 	public void deleteEvent(Event event) {
 		SQLManager.deleteEventDetails(connection, event.getEventID());
+	}
+	public void updateEvent(Event event){
+		SQLManager.updateEventDetails(connection, event.getEventID(), event.getEventName(),
+				event.getEventDescription(), event.getOrganizerPassword(), event.getFacilitatorPassword());
 	}
 	
 	/* TaskDetails */
@@ -555,7 +561,9 @@ public class DatabaseReader {
 		int ID = SQLManager.insertVenueApplicant(connection, applicant.getName(), applicant.getMatricNo(), applicant.getContact(), applicant.getEmail(), applicant.getOrganization());
 		applicant.setID(ID);
 	}
-	
+	public void deleteVenueApplicant(VenueApplicant applicant){
+		SQLManager.deleteVenueApplicantDetails(connection, applicant.getID());
+	}
 	/*VenueBookingApplication*/
 	public ArrayList<VenueBookingApplication> getVenueBookingInfo(Venue venue){
 		ArrayList<VenueBookingApplication> bookings = new ArrayList<VenueBookingApplication>();
@@ -629,6 +637,7 @@ public class DatabaseReader {
 		SQLManager.deleteVenueBookingDetailsByVenue(connection, venue.getVenueId());
 	}
 	public void deleteVenueBookingInfo(VenueBookingApplication booking){
+		deleteVenueApplicant(booking.getApplicant());
 		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
 	}
 	public VenueBookingApplication getVenueBookingInfo(VenueApplicant applicant){

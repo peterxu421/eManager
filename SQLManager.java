@@ -480,17 +480,19 @@ public class SQLManager {
 		return rs;
 	}
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
-	public static int insertEventDetails(Connection connection, String eventName, String eventDescription){
+	public static int insertEventDetails(Connection connection, String eventName, String eventDescription, String organizerPassword, String facilitatorPassword){
 		int eventID = 0;
 		String insertEventDetails =
-				"INSERT INTO EventDetails(EventName, EventDescription)" +
-				"VALUES (?,?)";
+				"INSERT INTO EventDetails(EventName, EventDescription, Organizer_Password, Facilitator_Password)" +
+				"VALUES (?,?,?,?)";
 		PreparedStatement prep = null;
 		ResultSet rs = null;
 		try{
 			prep = connection.prepareStatement(insertEventDetails, Statement.RETURN_GENERATED_KEYS);
 			prep.setString(1, eventName);
 			prep.setString(2, eventDescription);
+			prep.setString(3, organizerPassword);
+			prep.setString(4, facilitatorPassword);
 			prep.execute();
 			rs = prep.getGeneratedKeys();
 			while(rs.next()){
@@ -1083,8 +1085,37 @@ public class SQLManager {
 			e.printStackTrace();
 		}
 	}
+	public static void deleteVenueApplicantDetails(Connection connection, int applicantID){
+		String deleteVenueApplicantDetails = 
+				"DELETE FROM ApplicantDetails " +
+				"WHERE ApplicantID=?";
+		try {
+			PreparedStatement prep = connection.prepareStatement(deleteVenueApplicantDetails);
+			prep.setInt(1, applicantID);
+			prep.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/*------------------------------------------------------UPDATE--------------------------------------------------------------*/
+	public static void updateEventDetails(Connection connection, int eventID, String eventName, String eventDescription, String organizerPassword, String facilitatorPassword){
+		String updateEventDetails =
+				"UPDATE EventDetails SET EventName=?,EventDescription=?,Organizer_Password=?,Facilitator_Password=? " +
+				"WHERE EventID=?";
+				PreparedStatement prep = null;
+				try{
+					prep = connection.prepareStatement(updateEventDetails);
+					prep.setString(1, eventName);
+					prep.setString(2, eventDescription);
+					prep.setString(3, organizerPassword);
+					prep.setString(4, facilitatorPassword);
+					prep.setInt(5, eventID);
+					prep.execute();
+				}catch(SQLException sqle){
+					sqle.printStackTrace();
+				}
+	}
 	public static void updateTaskDetails(Connection connection, int taskID, String taskDescription, String assignedTo, String date, boolean done){
 		String updateTaskDetails =
 		"UPDATE TaskDetails SET TaskDescription=?,AssignedTo=?,Date=?,Done=? " +

@@ -28,16 +28,7 @@ public class TaskChart extends Composite {
 		listOfTasks = db.getTasks(event);
 		listOfTotalIndividualTask = new ArrayList<Integer>();
 		listOfTasksDone = new ArrayList<Integer>();
-<<<<<<< HEAD
-		
-		String[] stringOfPeople = new String[listOfPeople.size()];
-		int countTotal;
-		int countDone;
-		for (int i = 0; i < listOfPeople.size(); i++) {
-			countTotal = 0;
-			countDone = 0;
-			stringOfPeople[i] ="abc";	//listOfPeople.get(i).getName(); 
-=======
+
 		// initialize
 		for (int i = 0; i < listOfPeople.size(); i++) {
 			listOfTotalIndividualTask.add(0);
@@ -49,7 +40,6 @@ public class TaskChart extends Composite {
 		for (int i = 0; i < listOfPeople.size(); i++) {
 			// populating the stringOfPeople
 			stringOfPeople[i] = listOfPeople.get(i).getName();
->>>>>>> abstract
 			for (int j = 0; j < listOfTasks.size(); j++) {
 				if (listOfPeople.get(i).getName().equals(listOfTasks.get(j).getAssignedTo())){
 					countTotal++;
@@ -81,16 +71,7 @@ public class TaskChart extends Composite {
 		xAxis.enableCategory(true);
 
 		// set yAxis
-<<<<<<< HEAD
-		ySeries=new double[listOfPeople.size()];
-		for(int i = 0; i < listOfPeople.size(); i++) {
-			//populating the y-series
-			if(listOfTotalIndividualTask.get(i) == 0) {
-				ySeries[i] = 100;
-				break;
-			}
-			ySeries[i] = listOfTasksDone.get(i)*1.0/listOfTotalIndividualTask.get(i)*100;
-=======
+
 		ySeries = new double[listOfPeople.size()];
 		for (int i = 0; i < listOfPeople.size(); i++) {
 			// populating the y-series
@@ -99,7 +80,6 @@ public class TaskChart extends Composite {
 				break;
 			}
 			ySeries[i] = ((double)listOfTasksDone.get(i))/listOfTotalIndividualTask.get(i)*100;
->>>>>>> abstract
 		}
 
 		// set Horizontal
