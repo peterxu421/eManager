@@ -12,6 +12,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
 public abstract class AbstractForm extends Composite {
@@ -19,12 +21,20 @@ public abstract class AbstractForm extends Composite {
 	protected String[] labelList;
 	protected int[] signature;
 	protected int[] sizeList;
+	protected DatabaseReader db;
+	protected Table table; // the SWT table where the information is stored
+	protected String[] stringList; // to store input texts
+	
+	protected String[] organizerArray;
+	protected String[] facilitatorArray;
 	protected String[] facultyArray = { "Arts and Social Sciences", "Business",
 			"Computing", "Dentistry", "Design and Environment", "Engineering",
 			"Law", "Medicine", "Music", "Science" };
-	protected DatabaseReader db;
-	protected String[] organizerArray;
-	protected String[] facilitatorArray;
+	protected String[] venueTypeArray = {"Auditorium", "Lecture Theatre", "Tutorial Room", "Seminar Room", "Function Room",
+			 "Practice Room", "Discussion Room", "Music Studio", "Open area", "Sports Room", "Gym", "MPSH", "others"};
+	protected String[] venueLocationArray = { "Arts and Social Sciences", "Business",
+			"Computing", "Dentistry", "Design and Environment", "Engineering",
+			"Law", "Medicine", "Music", "Science", "Central Library", "CFA", "PGP", "YIH", "SRC", "UCC", "Others" };
 	private HashMap<String, Object> map;
 
 	public abstract void onLoad();
@@ -33,31 +43,17 @@ public abstract class AbstractForm extends Composite {
 
 	// Constructor
 	public AbstractForm(Composite parent, int style, String[] labelList,
-			int[] signature) {
+			int[] signature, Table table) {
 		super(parent, style);
 
 		this.labelList = labelList;
 		this.signature = signature;
 		this.db = new DatabaseReader();
 		this.map = new HashMap<String, Object>();
-		// Update member name array
-		int organizerSize = db.getOrganizers(SessionManager.getCurrentEvent())
-				.size();
-		organizerArray = new String[organizerSize];
-		for (int i = 0; i < organizerSize; i++) {
-			organizerArray[i] = db
-					.getOrganizers(SessionManager.getCurrentEvent()).get(i)
-					.getName();
-		}
-		// Update facilitator name array
-		int facilitatorSize = db.getFacilitators(
-				SessionManager.getCurrentEvent()).size();
-		facilitatorArray = new String[facilitatorSize];
-		for (int i = 0; i < facilitatorSize; i++) {
-			facilitatorArray[i] = db
-					.getFacilitators(SessionManager.getCurrentEvent()).get(i)
-					.getName();
-		}
+		this.table = table;
+		
+		stringList = new String[signature.length]; // initiate the input text string array
+
 		/* Layout */
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginLeft = 20;
@@ -122,13 +118,37 @@ public abstract class AbstractForm extends Composite {
 		// Make a drop down list for names, faculties, etc.
 		// Deal with Faculties
 		else if (signature == MACRO.FACULTY) {
+
 			input = new Combo(parent, SWT.READ_ONLY);
 			((Combo) input).setItems(facultyArray);
 			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 					true, false, 1, 1));
 		}
+		// Deal with venue types
+		else if (signature == MACRO.VENUETYPE) {
+			input = new Combo(parent, SWT.READ_ONLY);
+			((Combo)input).setItems(venueTypeArray);
+			((Combo)input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, 
+					true, false, 1, 1));
+		}
+		// Deal with venue locations
+		else if (signature == MACRO.VENUELOCATION) {
+			input = new Combo(parent, SWT.READ_ONLY);
+			((Combo)input).setItems(venueLocationArray);
+			((Combo)input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, 
+					true, false, 1, 1));
+		}
 		// Deal with organizer names
 		else if (signature == MACRO.ORGANIZER) {
+			// Update member name array
+			int organizerSize = db.getOrganizers(
+					SessionManager.getCurrentEvent()).size();
+			organizerArray = new String[organizerSize];
+			for (int i = 0; i < organizerSize; i++) {
+				organizerArray[i] = db
+						.getOrganizers(SessionManager.getCurrentEvent()).get(i)
+						.getName();
+			}
 			input = new Combo(parent, SWT.READ_ONLY);
 			((Combo) input).setItems(organizerArray);
 			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
@@ -136,10 +156,24 @@ public abstract class AbstractForm extends Composite {
 		}
 		// Deal with facilitator names
 		else if (signature == MACRO.FACILITATOR) {
+			// Update facilitator name array
+			int facilitatorSize = db.getFacilitators(
+					SessionManager.getCurrentEvent()).size();
+			facilitatorArray = new String[facilitatorSize];
+			for (int i = 0; i < facilitatorSize; i++) {
+				facilitatorArray[i] = db
+						.getFacilitators(SessionManager.getCurrentEvent())
+						.get(i).getName();
+			}
 			input = new Combo(parent, SWT.READ_ONLY);
 			((Combo) input).setItems(facilitatorArray);
 			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 					true, false, 1, 1));
+		}
+		// Deal with password
+		else if (signature == MACRO.PASSWORD) {
+			input = new Text(parent, SWT.BORDER | SWT.PASSWORD);
+			((Text) input).setLayoutData(new GridData(120, 20));
 		}
 		return input;
 	}
@@ -152,7 +186,6 @@ public abstract class AbstractForm extends Composite {
 	// Pre-condition: there is no error for the input data.
 	// Cast all kinds of data type to string and return an array of string.
 	protected String[] getStringList() {
-		String[] stringList = new String[signature.length];
 		for (int i = 0; i < signature.length; i++) {
 			// Deal with Text, BigText, int and double
 			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT
@@ -182,7 +215,9 @@ public abstract class AbstractForm extends Composite {
 			// Deal with names, positions, faculties, etc(Combos).
 			else if (signature[i] == MACRO.FACULTY
 					|| signature[i] == MACRO.ORGANIZER
-					|| signature[i] == MACRO.FACILITATOR) {
+					|| signature[i] == MACRO.FACILITATOR
+					|| signature[i] == MACRO.VENUELOCATION
+					|| signature[i] == MACRO.VENUETYPE) {
 				stringList[i] = ((Combo) get(i)).getItem(((Combo) get(i))
 						.getSelectionIndex());
 			}
@@ -192,13 +227,14 @@ public abstract class AbstractForm extends Composite {
 
 	// Error checking.
 	// If there is no error, then return -1;
-	// If there exist error, then return the index.
+	// If there exist error, then return the index or -2 to indicate duplicate input
 	protected int check() {
 		boolean isValid = true;
 		int index = -1;
 		for (int i = 0; i < labelList.length; i++) {
 			// Deal with Text and BigText
-			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.TEXTBIG) {
+			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.TEXTBIG
+					|| signature[i] == MACRO.PASSWORD) {
 				Text text = (Text) map.get(labelList[i]);
 				isValid = !text.getText().isEmpty();
 			}
@@ -232,6 +268,7 @@ public abstract class AbstractForm extends Composite {
 				return index;
 			}
 		}
+		// no error
 		return -1;
 	}
 
@@ -239,15 +276,42 @@ public abstract class AbstractForm extends Composite {
 	protected class SubmitHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (check() == -1) {
-				onSubmit();
-				getParent().dispose();
-			} else {
+				// check for duplicate input
+				String inputStr = "";
+				boolean noDuplicateInput = true;
+				stringList = getStringList();
+				for(int i=0; i<stringList.length; i++){
+					inputStr += stringList[i];
+				}
+				for(int i=0; i<table.getItemCount();i++) {
+					TableItem item = table.getItem(i);
+					String tableStr = "";
+					for (int j=0; j<table.getColumnCount();j++) {
+						tableStr += item.getText(j);
+					}
+					System.out.println("**"+inputStr);
+					System.out.println("##"+tableStr);
+					if (inputStr.equalsIgnoreCase(tableStr)){
+						MessageBox warningPage = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+						warningPage.setText("Warning!");
+						warningPage.setMessage("Already exsits!");
+						warningPage.open();
+						noDuplicateInput = false;
+						break;
+					}
+				}
+				if(noDuplicateInput == true ) {
+					onSubmit();
+					getParent().dispose();
+				}
+			} 
+	        else {
 				// Show messageBox if there is error in input data and specify
 				// where is the error.
 				MessageBox warningPage = new MessageBox(getDisplay()
 						.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
 				warningPage.setText("Warning!");
-				warningPage.setMessage("There exists error in "
+				warningPage.setMessage("Wrong input format in "
 						+ labelList[check()] + ".");
 				int choice = warningPage.open(); // indicates the user's choice
 				switch (choice) {

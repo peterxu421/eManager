@@ -25,7 +25,10 @@ public class VenueManagement_BookingApplications extends Composite {
 	
 	private DatabaseReader db = new DatabaseReader();
 	private Date today = new Date();
-	private ArrayList<VenueBookingApplication> bookingAppList;
+	private ArrayList<VenueBookingApplication> bookingAppList; 
+	                                           // list of applications with valid dates (after today)
+	private ArrayList<VenueBookingApplication> notApprovedBookingAppList = new ArrayList<VenueBookingApplication>(); 
+	                                                 // list of applications either rejected or pending
 
 	/**
 	 * Create the composite.
@@ -43,7 +46,7 @@ public class VenueManagement_BookingApplications extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(473, 0, 108, 316);
+		composite.setBounds(684, 0, 108, 316);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
@@ -61,7 +64,7 @@ public class VenueManagement_BookingApplications extends Composite {
 		
 		applicationTable = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
 		applicationTable.setLocation(0, 0);
-		applicationTable.setSize(468, 324);
+		applicationTable.setSize(678, 324);
 		applicationTable.setLinesVisible(true);
 		applicationTable.setHeaderVisible(true);
 		toolkit.adapt(applicationTable);
@@ -110,23 +113,28 @@ public class VenueManagement_BookingApplications extends Composite {
 
 	public void importApplicationData() {
 		bookingAppList = db.getVenueBookingInfoFromToday(today);
-		if(!bookingAppList.isEmpty()){ //  booked
-			for(int j=0; j<bookingAppList.size(); j++){
+		// show only the pending and rejected applications
+		for (int i=0; i<bookingAppList.size(); i++){
+			if(bookingAppList.get(i).getStatus() != MACRO.APPROVED){
+				notApprovedBookingAppList.add(bookingAppList.get(i));
+			}
+		}
+		if(!notApprovedBookingAppList.isEmpty()){ 
+			for(int j=0; j<notApprovedBookingAppList.size(); j++){
 				TableItem item = new TableItem(applicationTable, SWT.NULL);
-				item.setText(0, bookingAppList.get(j).getVenue().getName() + " at " + bookingAppList.get(j).getVenue().getLocation() );
-				item.setText(1, bookingAppList.get(j).getApplicant().getName());
-				item.setText(2, bookingAppList.get(j).getApplicant().getMatricNo());
-				item.setText(3, bookingAppList.get(j).getApplicant().getOrganization());
-				item.setText(4, bookingAppList.get(j).getApplicant().getContact());
-				item.setText(5, bookingAppList.get(j).getApplicant().getEmail());
-				item.setText(6, bookingAppList.get(j).getDateTime().toString());
-				if(bookingAppList.get(j).getStatus()== MACRO.PENDING){
+				item.setText(0, notApprovedBookingAppList.get(j).getVenue().getName() + " at " + notApprovedBookingAppList.get(j).getVenue().getLocation() );
+				item.setText(1, notApprovedBookingAppList.get(j).getApplicant().getName());
+				item.setText(2, notApprovedBookingAppList.get(j).getApplicant().getMatricNo());
+				item.setText(3, notApprovedBookingAppList.get(j).getApplicant().getOrganization());
+				item.setText(4, notApprovedBookingAppList.get(j).getApplicant().getContact());
+				item.setText(5, notApprovedBookingAppList.get(j).getApplicant().getEmail());
+				item.setText(6, notApprovedBookingAppList.get(j).getDateTime().toString());
+				if(notApprovedBookingAppList.get(j).getStatus()== MACRO.PENDING){
 					item.setText(7,"Pending");
 				}
-				else if (bookingAppList.get(j).getStatus()== MACRO.APPROVED){
-					item.setText(7,"Approved");
+				if(notApprovedBookingAppList.get(j).getStatus()== MACRO.REJECTED){
+					item.setText(7,"Rejected");
 				}
-				else item.setText(7, "Rejected");
 			}
 		}
 	}
@@ -142,7 +150,7 @@ public class VenueManagement_BookingApplications extends Composite {
 				
 				/* update the database */
 				DatabaseReader db = new DatabaseReader();
-				VenueBookingApplication bookingInfo = bookingAppList.get(index);
+				VenueBookingApplication bookingInfo = notApprovedBookingAppList.get(index);
 				bookingInfo.setStatus(MACRO.REJECTED);
 				db.updateVenueBookingInfo(bookingInfo);
 			}
@@ -153,32 +161,50 @@ public class VenueManagement_BookingApplications extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			ArrayList<VenueBookingApplication> conflictedAppList = new ArrayList<VenueBookingApplication>();
 			ArrayList<Integer> conflictIndexList = new ArrayList<Integer>();
+			boolean conflictWithApprovedApp = false; // a boolean index 
 			int index = applicationTable.getSelectionIndex();
 			
 			if(index>=0 && index <= applicationTable.getItemCount()){
-				VenueBookingApplication selectedBookingApp = bookingAppList.get(index);
+				VenueBookingApplication selectedBookingApp = notApprovedBookingAppList.get(index);
 				TableItem item = applicationTable.getItem(index);
 				for(int i=0; i<bookingAppList.size(); i++){
-					if (   (bookingAppList.get(i).getStatus() == MACRO.PENDING ||
-							bookingAppList.get(i).getStatus() == MACRO.APPROVED) 
-							&& 
+					if (    bookingAppList.get(i).getVenue().isSameAs(selectedBookingApp.getVenue()) // same venue
+							&&
 							bookingAppList.get(i).getDateTime().getDate().isEqualTo(selectedBookingApp.getDateTime().getDate()) 
 							&& 
 							bookingAppList.get(i).getDateTime().getTimeStart().isEarlierThan(selectedBookingApp.getDateTime().getTimeEnd()) 
 							&& 
-						    bookingAppList.get(i).getDateTime().getTimeEnd().isLaterThan(selectedBookingApp.getDateTime().getTimeStart())
+						    bookingAppList.get(i).getDateTime().getTimeEnd().isLaterThan(selectedBookingApp.getDateTime().getTimeStart()) // conflicted time
 						    &&
-						    i!=index // no conflict with it self
-						){
-						conflictedAppList.add(bookingAppList.get(i));
-						conflictIndexList.add(i);
+						    i!=index + (bookingAppList.size() - notApprovedBookingAppList.size()) 
+						                                   // locate the selected application in the list of applications with valid dates
+						                                   // no conflict with itself
+						)
+					{
+						if (bookingAppList.get(i).getStatus() == MACRO.APPROVED){
+							conflictWithApprovedApp = true;
+						}
+						if (bookingAppList.get(i).getStatus() == MACRO.PENDING){
+							conflictedAppList.add(bookingAppList.get(i));
+							int conflictIndex = i - (bookingAppList.size() - notApprovedBookingAppList.size());
+                            // locate the conflict in the table
+							conflictIndexList.add(conflictIndex);
+						}
 				    }
-			
 			    }
-				if(!conflictedAppList.isEmpty()){
+				
+				//warning page for conflict with approved applications
+				if(conflictWithApprovedApp == true){
+					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
+					warningPage.setText("Warning!");
+					warningPage.setMessage("Conflict with approved applications! ");
+					warningPage.open(); 
+				}
+				//warning page for conflict with pending applications
+				else if(!conflictedAppList.isEmpty()){
 					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.NO | SWT.ICON_WARNING );
 					warningPage.setText("Warning!");
-					warningPage.setMessage("Conflicted applications will be rejected automatically. Do you want to review them before proceeding? ");
+					warningPage.setMessage("Conflicted pending application(s) will be rejected automatically. Do you want to review it(them) before proceeding? ");
 					int choice = warningPage.open(); // indicates the user's choice
 					switch(choice){
 					case SWT.NO:
@@ -197,7 +223,7 @@ public class VenueManagement_BookingApplications extends Composite {
 						item.setText(7, "Approved");
 						break;
 					case SWT.YES:
-						/* highlight them in the table */
+						/* highlight conflicts in the table */
 						Color conflictedColor = applicationTable.getDisplay().getSystemColor(SWT.COLOR_RED);
 						for(int i=0; i<conflictIndexList.size();i++){
 							TableItem tempItem = applicationTable.getItem(conflictIndexList.get(i));
@@ -206,6 +232,7 @@ public class VenueManagement_BookingApplications extends Composite {
 						break;
 					}
 				}
+				// no conflict
 				else {
 					/* update the database */	
 					selectedBookingApp.setStatus(MACRO.APPROVED);

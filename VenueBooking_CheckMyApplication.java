@@ -25,7 +25,8 @@ public class VenueBooking_CheckMyApplication extends Composite {
 	private DatabaseReader db = new DatabaseReader();
 	private Text matricNoInput;
 	
-	private ArrayList<VenueBookingApplication> bookingApplicationList;
+	private ArrayList<VenueBookingApplication> bookingApplicationList = new ArrayList<VenueBookingApplication>(); // all booking applications from a person, regardless of his organization
+	                                                                   // such a person may be considered as different applicants if he booked for different organizations
 	private Table applicationTable;
 
 	/**
@@ -44,7 +45,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		composite = new Composite(this, SWT.NONE);
-		composite.setBounds(0, 0, 661, 387);
+		composite.setBounds(0, 0, 768, 396);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
@@ -67,7 +68,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		btnCheck.setText("Check");
 		
 		applicationTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
-		applicationTable.setBounds(0, 39, 586, 290);
+		applicationTable.setBounds(0, 39, 685, 290);
 		toolkit.adapt(applicationTable);
 		toolkit.paintBordersFor(applicationTable);
 		applicationTable.setHeaderVisible(true);
@@ -80,6 +81,10 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		TableColumn tblclmnOrganization = new TableColumn(applicationTable, SWT.CENTER);
 		tblclmnOrganization.setWidth(100);
 		tblclmnOrganization.setText("Organization");
+		
+		TableColumn tblclmnVenue = new TableColumn(applicationTable, SWT.CENTER);
+		tblclmnVenue.setWidth(100);
+		tblclmnVenue.setText("Venue");
 		
 		TableColumn tblclmnDateAndTime = new TableColumn(applicationTable, SWT.CENTER);
 		tblclmnDateAndTime.setWidth(281);
@@ -154,7 +159,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 	public class check extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			String matricNo = matricNoInput.getText();
-			ArrayList<VenueApplicant> venueApplicantList = db.getVenueApplicantByMatricNo(matricNo);
+			ArrayList<VenueApplicant> venueApplicantList = db.getVenueApplicantByMatricNo(matricNo); // same name, same matric no, but different organization, considered as two applicants in such case
 			if(matricNo.isEmpty()){
 				MessageBox noInputWarning = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
 				noInputWarning.setText("Warning!");
@@ -170,35 +175,38 @@ public class VenueBooking_CheckMyApplication extends Composite {
 			else{
 				applicationTable.removeAll(); // clear the table before loading new information
 				fillApplicationTable(venueApplicantList);
+				bookingApplicationList.clear(); // clear the list for next check
 			}
 		}
 	}
 	
 	public void fillApplicationTable(ArrayList<VenueApplicant> venueApplicantList){
 		for(int i=0; i<venueApplicantList.size(); i++){
-		    bookingApplicationList = db.getVenueBookingInfo(venueApplicantList.get(i));
-			for (int j=0; j<bookingApplicationList.size(); j++){
-				String name = bookingApplicationList.get(j).getApplicant().getName();
-			    String organization = bookingApplicationList.get(j).getApplicant().getOrganization();
-			    BookedDateTime dateTime = bookingApplicationList.get(j).getDateTime();
-			    int statusIndex = bookingApplicationList.get(j).getStatus();
-			    String status = "";
-			    if(statusIndex == MACRO.APPROVED){
-			    	status = "Approved";
-			    }
-			    else if(statusIndex == MACRO.PENDING){
-			    	status = "Pending";
-			    }
-			    else if(statusIndex == MACRO.REJECTED){
-			    	status = "Rejected";
-			    }
-			    
-			    TableItem item = new TableItem(applicationTable, SWT.NULL);
-			    item.setText(0, name);
-			    item.setText(1, organization);
-			    item.setText(2, dateTime.toString());
-			    item.setText(3, status);
-			}
+		    bookingApplicationList.add(db.getVenueBookingInfo(venueApplicantList.get(i)));
+		}
+		for (int j=0; j<bookingApplicationList.size(); j++){
+			String name = bookingApplicationList.get(j).getApplicant().getName();
+		    String organization = bookingApplicationList.get(j).getApplicant().getOrganization();
+		    String venue = bookingApplicationList.get(j).getVenue().getName() + "(" + bookingApplicationList.get(j).getVenue().getType() +")";
+		    BookedDateTime dateTime = bookingApplicationList.get(j).getDateTime();
+		    int statusIndex = bookingApplicationList.get(j).getStatus();
+		    String status = "";
+		    if(statusIndex == MACRO.APPROVED){
+		    	status = "Approved";
+		    }
+		    else if(statusIndex == MACRO.PENDING){
+		    	status = "Pending";
+		    }
+		    else if(statusIndex == MACRO.REJECTED){
+		    	status = "Rejected";
+		    }
+		    
+		    TableItem item = new TableItem(applicationTable, SWT.NULL);
+		    item.setText(0, name);
+		    item.setText(1, organization);
+		    item.setText(2, venue);
+		    item.setText(3, dateTime.toString());
+		    item.setText(4, status);
 		}
 	}
 }

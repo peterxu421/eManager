@@ -608,7 +608,7 @@ public class DatabaseReader {
 				BookedDateTime time = new BookedDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
 						Time.parseTime(rs.getString("TimeEnd")));
 				VenueBookingApplication booking = new VenueBookingApplication(rs.getInt("BookingID"), venue , applicant, time, rs.getInt("Status"));
-				if(booking.getDateTime().getDate().isNotLaterThan(today)){
+				if(booking.getDateTime().getDate().isNotEarlierThan(today)){
 					bookings.add(booking);
 				}
 			}
@@ -636,29 +636,26 @@ public class DatabaseReader {
 	public void deleteVenueBookingInfo(VenueBookingApplication booking){
 		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
 	}
-	public ArrayList<VenueBookingApplication> getVenueBookingInfoByMatricNo(String matricNo){
-		ArrayList<VenueBookingApplication> bookings = new ArrayList<VenueBookingApplication>();
+	public VenueBookingApplication getVenueBookingInfo(VenueApplicant applicant){
 		ResultSet rs = null;
+		VenueBookingApplication booking = new VenueBookingApplication();
 		try{
-//			rs = SQLManageranager.getVenueBookingDetailsByApplicant(connection, applicant.getID());
+			rs = SQLManager.getVenueBookingDetailsByApplicant(connection, applicant.getID());
 			while(rs.next()){
 				Venue venue = getVenueByID(rs.getInt("VenueID"));
 				BookedDateTime time = new BookedDateTime(Date.parseDate(rs.getString("Date")), Time.parseTime(rs.getString("TimeStart")), 
 						Time.parseTime(rs.getString("TimeEnd")));
-//				VenueBookingApplication booking = new VenueBookingApplication(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
-//				bookings.add(booking);
+				booking = new VenueBookingApplication(rs.getInt("BookingID"), venue, applicant, time, rs.getInt("Status"));
 			}
 		}catch (SQLException e) {
 				e.printStackTrace();
 		}
-		return bookings;
+		return booking;
 	} 
 	public static void main(String[] args){
 		DatabaseReader db = new DatabaseReader();
-		VenueBookingApplication application = db.getVenueBookingInfo().get(4);
-//		application.setStatus(3);
-//		db.updateVenueBookingInfo(application);
-//		application = db.getVenueBookingInfo().get(4);
-		
+		Event event = db.getEvents().get(0);
+		int size = db.getFacilitators(event).size();
+		System.out.println(size);
 	}
 }

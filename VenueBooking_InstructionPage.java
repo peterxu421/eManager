@@ -17,7 +17,8 @@ public class VenueBooking_InstructionPage extends Composite {
 			"Terms and Conditions\n" +
 			"<to be set by the venue manager>\n\n" +
 			"Administration Guide\n" +
-			"<to be set by the venue manager>\n\n";
+			"<to be set by the venue manager>\n\n" + 
+			"Note: please submit your event proposal to the venue manager before booking a venue.";
 
 	/**
 	 * Create the composite.
@@ -39,7 +40,7 @@ public class VenueBooking_InstructionPage extends Composite {
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
-		Label lblNewLabel = new Label(composite, SWT.HORIZONTAL);
+		Label lblNewLabel = new Label(composite, SWT.WRAP | SWT.HORIZONTAL);
 		lblNewLabel.setAlignment(SWT.LEFT);
 		lblNewLabel.setFont(SWTResourceManager.getFont("Courier New", 11, SWT.NORMAL));
 		lblNewLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));

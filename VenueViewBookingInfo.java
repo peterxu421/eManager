@@ -66,7 +66,7 @@ public class VenueViewBookingInfo extends Composite {
 		Button btnClearAllApplications = new Button(composite, SWT.NONE);
 		btnClearAllApplications.setBounds(249, 492, 121, 25);
 		toolkit.adapt(btnClearAllApplications, true, true);
-		btnClearAllApplications.setText("Clear all");
+		btnClearAllApplications.setText("Clear the log");
 		btnClearAllApplications.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
 				if(!bookingApplicationList.isEmpty()){
