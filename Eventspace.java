@@ -25,7 +25,7 @@ class Eventspace extends Composite {
 	private int[] signatureSetting = { MACRO.TEXT, MACRO.TEXTBIG };
 
 	private String[] optionList = new String[] { "Organizer", "Facilitator",
-			"Participants", "Registration" };
+			"Participants", "Event Registration" };
 
 	private boolean[] booleanList = new boolean[] { true, true, true, true };
 
@@ -59,7 +59,7 @@ class Eventspace extends Composite {
 
 		// optionBar->options
 		int num = optionList.length;
-		int width = 100;
+		int width = 130;
 		int height = 40;
 		Button[] buttons = new Button[num];
 		for (int i = 0; i < num; i++) {
@@ -75,7 +75,7 @@ class Eventspace extends Composite {
 		// setting button
 		Button btnSetting = new Button(optionBar, SWT.PUSH);
 		btnSetting.setText("Setting");
-		GridData settingData = new GridData(width - 20, height);
+		GridData settingData = new GridData(width - 50, height);
 		settingData.horizontalIndent = 150;
 		btnSetting.setLayoutData(settingData);
 		btnSetting.addSelectionListener(new SettingPage());
@@ -120,7 +120,7 @@ class Eventspace extends Composite {
 		for (int i = 0; i < num; i++) {
 			buttons[i] = new Button(left, SWT.PUSH);
 			buttons[i].setText(tabList[0][i]);
-			buttons[i].setLayoutData(new GridData(130, 20));
+			buttons[i].setLayoutData(new GridData(130, 40));
 			buttons[i].addSelectionListener(new TabSelectionAdapter());
 		}
 
@@ -134,6 +134,7 @@ class Eventspace extends Composite {
 	class SettingPage extends SelectionAdapter {
 		public void widgetselected(SelectionEvent e) {
 			Shell settingShell = new Shell(getShell(), SWT.ON_TOP | SWT.NO_TRIM);
+			System.out.println("YES");
 			AbstractEdit settingPage = new Setting(settingShell, SWT.None,
 					stringSetting, signatureSetting, new Table(getShell(),
 							SWT.None), stringButton);
@@ -349,7 +350,7 @@ class Eventspace extends Composite {
 					for (int j = 0; j < tabList[i].length; j++) {
 						Button button = new Button(left, SWT.PUSH);
 						button.setText(tabList[i][j]);
-						button.setLayoutData(new GridData(130, 20));
+						button.setLayoutData(new GridData(130, 40));
 						button.addSelectionListener(new TabSelectionAdapter());
 						if (j == 0)
 							button.notifyListeners(SWT.Selection, null);

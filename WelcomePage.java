@@ -34,7 +34,7 @@ public class WelcomePage extends Composite {
 		setLayout(null);
 
 		Label lblEmanager = new Label(this, SWT.NONE);
-		lblEmanager.setFont(SWTResourceManager.getFont("Myriad Pro Light", 14, SWT.NORMAL));
+		lblEmanager.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
 		lblEmanager.setBounds(110, 80, 105, 23);
 		toolkit.adapt(lblEmanager, true, true);
 		lblEmanager.setText("eManager");
