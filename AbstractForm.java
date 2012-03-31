@@ -242,7 +242,7 @@ public abstract class AbstractForm extends Composite {
 			// Deal with Text and BigText
 			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.TEXTBIG
 					|| signature[i] == MACRO.PASSWORD) {
-				Text text = (Text) map.get(labelList[i]);
+				Text text = (Text) get(i);
 				isValid = !text.getText().isEmpty();
 			}
 			// Deal with integer
@@ -269,6 +269,15 @@ public abstract class AbstractForm extends Composite {
 					isValid = false;
 				}
 			}
+			// Deal with names, positions, faculties, etc(Combos).
+			else if (signature[i] == MACRO.FACULTY
+					|| signature[i] == MACRO.ORGANIZER
+					|| signature[i] == MACRO.FACILITATOR
+					|| signature[i] == MACRO.VENUELOCATION
+					|| signature[i] == MACRO.VENUETYPE) {
+				Combo combo = (Combo) get(i);
+				isValid = !combo.getText().isEmpty();
+			}
 			index = i;
 			// If isValid is false, return directly return false.
 			if (!isValid) {
@@ -282,7 +291,7 @@ public abstract class AbstractForm extends Composite {
 	// When click submit button.
 	protected class SubmitHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if (check() == -1 || additionalCheck()) {
+			if (check() == -1 && additionalCheck()) {
 				// check for duplicate input
 				String inputStr = "";
 				boolean noDuplicateInput = true;

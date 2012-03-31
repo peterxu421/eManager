@@ -30,16 +30,8 @@ public abstract class AbstractEdit extends AbstractForm {
 		btnCancel.setLayoutData(new GridData(80, 30));
 	}
 	public AbstractEdit(Composite parent, int style, String[] stringList,
-			int[] signature, Table table, String[] stringButton) {
-		// Inherit AbstractForm constructor.
+			int[] signature, Table table,String[] stringButton){
 		super(parent, style, stringList, signature, table);
-		// TODO Auto-generated constructor stub
-		// Set buttons
-		for(int i=0; i<stringButton.length; i++){
-			buttonList[i] = new Button(this, SWT.None);
-			buttonList[i].setText(stringButton[i]);
-			buttonList[i].setLayoutData(new GridData(80, 30));
-		}
 	}
 	//Do nothing about the additionalCheck()
 	public boolean additionalCheck(){
