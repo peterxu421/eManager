@@ -38,35 +38,35 @@ public class VenueBooking_VenueList extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(0, 0, 545, 340);
+		composite.setBounds(0, 0, 800, 350);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		venueTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		venueTable.setLinesVisible(true);
 		venueTable.setHeaderVisible(true);
-		venueTable.setBounds(0, 0, 406, 314);
+		venueTable.setBounds(0, 0, 600, 350);
 		toolkit.adapt(venueTable);
 		toolkit.paintBordersFor(venueTable);
 		
 		TableColumn tableColumn = new TableColumn(venueTable, SWT.CENTER);
-		tableColumn.setWidth(100);
+		tableColumn.setWidth(150);
 		tableColumn.setText("Name");
 		
 		TableColumn tableColumn_1 = new TableColumn(venueTable, SWT.CENTER);
-		tableColumn_1.setWidth(100);
+		tableColumn_1.setWidth(150);
 		tableColumn_1.setText("Location");
 		
 		TableColumn tableColumn_2 = new TableColumn(venueTable, SWT.CENTER);
-		tableColumn_2.setWidth(100);
+		tableColumn_2.setWidth(150);
 		tableColumn_2.setText("Type");
 		
 		TableColumn tblclmnCapacity = new TableColumn(venueTable, SWT.CENTER);
-		tblclmnCapacity.setWidth(100);
+		tblclmnCapacity.setWidth(150);
 		tblclmnCapacity.setText("Capacity");
 		
 		Button btnCheckAvailability = new Button(composite, SWT.NONE);
-		btnCheckAvailability.setBounds(412, 0, 106, 25);
+		btnCheckAvailability.setBounds(625, 0, 150, 30);
 		toolkit.adapt(btnCheckAvailability, true, true);
 		btnCheckAvailability.setText("Check Availability");
 		btnCheckAvailability.addSelectionListener(new check());

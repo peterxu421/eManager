@@ -52,12 +52,12 @@ public class VenueManagement_BookingApplications extends Composite {
 		
 		btnReject = new Button(composite, SWT.NONE);
 		btnReject.setText("Reject");
-		btnReject.setBounds(10, 10, 89, 27);
+		btnReject.setBounds(10, 10, 90, 35);
 		toolkit.adapt(btnReject, true, true);
 		btnReject.addSelectionListener(new reject());
 		
 		btnApprove = new Button(composite, SWT.NONE);
-		btnApprove.setBounds(10, 41, 89, 27);
+		btnApprove.setBounds(10, 60, 90, 35);
 		toolkit.adapt(btnApprove, true, true);
 		btnApprove.setText("Approve");
 		btnApprove.addSelectionListener(new approve());

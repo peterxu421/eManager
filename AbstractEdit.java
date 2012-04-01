@@ -7,16 +7,15 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
 // Abstract Edit page inherits from AbstractForm
 public abstract class AbstractEdit extends AbstractForm {
 	Button[] buttonList;
 	public AbstractEdit(Composite parent, int style, String[] stringList,
-			int[] signature, Table table) {
+			int[] signature) {
 		// Inherit AbstractForm constructor.
-		super(parent, style, stringList, signature, table);
+		super(parent, style, stringList, signature);
 		// TODO Auto-generated constructor stub
 		// Set buttons
 		Button btnAdd = new Button(this, SWT.None);
@@ -30,8 +29,8 @@ public abstract class AbstractEdit extends AbstractForm {
 		btnCancel.setLayoutData(new GridData(80, 30));
 	}
 	public AbstractEdit(Composite parent, int style, String[] stringList,
-			int[] signature, Table table,String[] stringButton){
-		super(parent, style, stringList, signature, table);
+			int[] signature,String[] stringButton){
+		super(parent, style, stringList, signature);
 	}
 	//Do nothing about the additionalCheck()
 	public boolean additionalCheck(){

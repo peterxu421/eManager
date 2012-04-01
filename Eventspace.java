@@ -147,7 +147,7 @@ class Eventspace extends Composite {
 	class Setting extends AbstractEdit {
 		public Setting(Shell settingShell, int type, String[] stringList,
 				int[] sigantureList, Table table, String[] stringButton) {
-			super(settingShell, type, stringList, sigantureList, table,
+			super(settingShell, type, stringList, sigantureList,
 					stringButton);
 			// Create the setting page
 			Button btnOK = new Button(this, SWT.None);
@@ -182,7 +182,7 @@ class Eventspace extends Composite {
 				event = SessionManager.getCurrentEvent();
 				AbstractEdit organizerPasword = new AbstractEdit(
 						organizerPaswordPage, SWT.None, stringPassword,
-						signaturePassword, new Table(getShell(), SWT.None)) {
+						signaturePassword) {
 					// Do nothing.
 					public void onLoad() {
 					}
@@ -225,7 +225,7 @@ class Eventspace extends Composite {
 				event = SessionManager.getCurrentEvent();
 				AbstractEdit facilitatorPasword = new AbstractEdit(
 						facilitatorPaswordPage, SWT.None, stringPassword,
-						signaturePassword, new Table(getShell(), SWT.None)) {
+						signaturePassword) {
 					// Do nothing.
 					public void onLoad() {
 					}

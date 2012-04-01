@@ -45,30 +45,29 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		composite = new Composite(this, SWT.NONE);
-		composite.setBounds(0, 0, 768, 396);
+		composite.setBounds(0, 0, 800, 400);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
-
-		
 		Label lblEnterYourMatriculation = new Label(composite, SWT.NONE);
-		lblEnterYourMatriculation.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
+		lblEnterYourMatriculation.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblEnterYourMatriculation.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
-		lblEnterYourMatriculation.setBounds(0, 0, 189, 25);
+		lblEnterYourMatriculation.setBounds(0, 0, 200, 30);
 		toolkit.adapt(lblEnterYourMatriculation, true, true);
-		lblEnterYourMatriculation.setText("Enter your Matriculation No");
+		lblEnterYourMatriculation.setText("Enter your Matriculation No:");
 		
 		matricNoInput = new Text(composite, SWT.BORDER);
-		matricNoInput.setBounds(194, 0, 134, 21);
+		matricNoInput.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
+		matricNoInput.setBounds(200, 0, 200, 30);
 		toolkit.adapt(matricNoInput, true, true);
 		
 		Button btnCheck = new Button(composite, SWT.NONE);
-		btnCheck.setBounds(357, -1, 75, 25);
+		btnCheck.setBounds(430, 0, 90, 30);
 		toolkit.adapt(btnCheck, true, true);
 		btnCheck.setText("Check");
 		
 		applicationTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
-		applicationTable.setBounds(0, 39, 685, 290);
+		applicationTable.setBounds(0, 40, 800, 310);
 		toolkit.adapt(applicationTable);
 		toolkit.paintBordersFor(applicationTable);
 		applicationTable.setHeaderVisible(true);
@@ -83,11 +82,11 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		tblclmnOrganization.setText("Organization");
 		
 		TableColumn tblclmnVenue = new TableColumn(applicationTable, SWT.CENTER);
-		tblclmnVenue.setWidth(100);
+		tblclmnVenue.setWidth(200);
 		tblclmnVenue.setText("Venue");
 		
 		TableColumn tblclmnDateAndTime = new TableColumn(applicationTable, SWT.CENTER);
-		tblclmnDateAndTime.setWidth(281);
+		tblclmnDateAndTime.setWidth(300);
 		tblclmnDateAndTime.setText("Date and Time");
 		
 		TableColumn tblclmnStatus = new TableColumn(applicationTable, SWT.CENTER);
@@ -96,7 +95,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		btnCheck.addSelectionListener(new check());
 		
 		Button btnWithdrawAll = new Button(composite, SWT.NONE);
-		btnWithdrawAll.setBounds(139, 349, 121, 25);
+		btnWithdrawAll.setBounds(130, 360, 120, 30);
 		toolkit.adapt(btnWithdrawAll, true, true);
 		btnWithdrawAll.setText("Withdraw all");
 		btnWithdrawAll.addSelectionListener(new SelectionAdapter(){
@@ -121,7 +120,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		});
 		
 		Button btnWithdraw = new Button(composite, SWT.NONE);
-		btnWithdraw.setBounds(0, 349, 121, 25);
+		btnWithdraw.setBounds(0, 360, 120, 30);
 		toolkit.adapt(btnWithdraw, true, true);
 		btnWithdraw.setText("Withdraw");
 		btnWithdraw.addSelectionListener(new SelectionAdapter(){
@@ -189,7 +188,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		for (int j=0; j<bookingApplicationList.size(); j++){
 			String name = bookingApplicationList.get(j).getApplicant().getName();
 		    String organization = bookingApplicationList.get(j).getApplicant().getOrganization();
-		    String venue = bookingApplicationList.get(j).getVenue().getName() + "(" + bookingApplicationList.get(j).getVenue().getType() +")";
+		    String venue = bookingApplicationList.get(j).getVenue().getName() + "(" + bookingApplicationList.get(j).getVenue().getLocation() +")";
 		    BookedDateTime dateTime = bookingApplicationList.get(j).getDateTime();
 		    int statusIndex = bookingApplicationList.get(j).getStatus();
 		    String status = "";

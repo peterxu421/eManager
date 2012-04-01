@@ -14,6 +14,7 @@ class Venuespace extends Composite{
 	Composite body;
 	Composite left;
 	Composite right;
+	Composite header;
 	
 	private String[] optionMenu = new String[]{
 		"Venue Management",
@@ -34,22 +35,32 @@ class Venuespace extends Composite{
 	//Constructor
 	public Venuespace(Composite parent, int style, boolean[] boolMode){
 		super(parent, style);
-		setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		//setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 1;
 		this.setLayout(gridLayout);
-	    Composite header = new Composite(this,SWT.None);
-	    header.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-	    header.setLayoutData(new GridData(1000,60));
-	    Composite optionBar = new Composite(this, SWT.None);
-	    optionBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-	    optionBar.setLayoutData(new GridData(771, 30));
+		
+		// header
+	    header = new Composite(this,SWT.None);
+	   // header.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+	    header.setLayoutData(new GridData(1000, 100));
+	    //header.setBounds(0, 0, 1000, 100);
+	    //header->
+	    FillLayout headerLayout = new FillLayout();
+	    headerLayout.marginHeight = 20;
+	    headerLayout.marginWidth = 20;
+	    headerLayout.spacing = 50;
+	    header.setLayout(headerLayout);
+
 	    
 	    //optionBar->
+	    Composite optionBar = new Composite(this, SWT.None);
 	    GridLayout optionBarLayout = new GridLayout();
-	    optionBarLayout.marginLeft = 155;
-	    optionBarLayout.numColumns = 4;
+	    optionBarLayout.marginLeft = 154;
+	    optionBarLayout.numColumns = 5;
 	    optionBar.setLayout(optionBarLayout);
+	   // optionBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+	    optionBar.setLayoutData(new GridData(1000, 50));
 	    
 	    //optionBar->options
 	    int num = optionMenu.length;
@@ -57,37 +68,39 @@ class Venuespace extends Composite{
 	    for(int i=0; i<num; i++)
 	    {
 	    	buttons[i] = new Button(optionBar, SWT.PUSH);
+	    	buttons[i].setLayoutData(new GridData(130, 40));
 	    	buttons[i].setText(optionMenu[i]);
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
 	    	buttons[i].setEnabled(boolMode[i]);
 	    }
-	    body = new Composite(this, SWT.None);
-	    body.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-	    body.setLayoutData(new GridData(1000, 463));
 	    
 	    //body->
+	    body = new Composite(this, SWT.None);
+	    //body.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+	    body.setLayoutData(new GridData(1000, 460));
+	    
+	    
 	    GridLayout bodyLayout = new GridLayout();
 	    bodyLayout.numColumns = 2;
 	    body.setLayout(bodyLayout);
 	    left = new Composite(body, SWT.None);
-	    left.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+	   // left.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    right = new Composite(body, SWT.None);
-	    right.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+	 //   right.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    left.setLayoutData(new GridData(150,450));
 	    right.setLayoutData(new GridData(800,450));
-
-	    //header->
-	    FillLayout headerLayout = new FillLayout();
-	    headerLayout.marginHeight = 20;
-	    headerLayout.marginWidth = 20;
-	    headerLayout.spacing = 50;
-	    header.setLayout(headerLayout);
-	    Label eventName = new Label(header, SWT.NONE);
-	    eventName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-	    eventName.setText("(Venue owner)");
-	    Label eventDescription = new Label(header, SWT.NONE);
-	    eventDescription.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-	    eventDescription.setText("(Venue owner's message)");
+	    
+	    Label eventName = new Label(header, SWT.WRAP);
+	    eventName.setFont(SWTResourceManager.getFont("Courier New", 11, SWT.NORMAL));
+	  //  eventName.setBounds(0, 10, 1000, 25);
+	   // eventName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+	    eventName.setText("NUS Office of Studnet Affairs\n© Copyright 2001-08 National University of Singapore. All Rights Reserved.");
+	    
+	    Label eventDescription = new Label(header, SWT.WRAP);
+	    eventDescription.setFont(SWTResourceManager.getFont("Courier New", 11, SWT.NORMAL));
+	   // eventDescription.setBounds(0, 50, 1000, 40);
+	   // eventDescription.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+	    eventDescription.setText("We are committed to providing you with easy accessibility and responsiveness in our services.");
 	    
 	    //body->left panel
 	    GridLayout leftLayout = new GridLayout();
@@ -100,7 +113,7 @@ class Venuespace extends Composite{
 	    {
 	    	buttons[i] = new Button(left, SWT.PUSH);
 	    	buttons[i].setText(tabList[0][i]);
-	    	buttons[i].setLayoutData(new GridData(130,20));
+	    	buttons[i].setLayoutData(new GridData(130, 40));
 	    	buttons[i].addSelectionListener(new TabSelectionAdapter());
 	    }
 	    
@@ -165,7 +178,7 @@ class Venuespace extends Composite{
 					{
 				    	Button button = new Button(left, SWT.PUSH);
 				    	button.setText(tabList[i][j]);
-				    	button.setLayoutData(new GridData(130,20));
+				    	button.setLayoutData(new GridData(130,40));
 				    	button.addSelectionListener(new TabSelectionAdapter());
 				    	if(j==0)button.notifyListeners(SWT.Selection, null); // to display the the first page of each component in the menu bar
  					}

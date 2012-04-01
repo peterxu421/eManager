@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Label;
 
 
 public class VenueManagement_VenueList extends Composite {
@@ -43,54 +44,54 @@ public class VenueManagement_VenueList extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(0, 0, 587, 351);
+		composite.setBounds(0, 0, 800, 350);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		venueTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		venueTable.setLinesVisible(true);
 		venueTable.setHeaderVisible(true);
-		venueTable.setBounds(0, 0, 408, 314);
+		venueTable.setBounds(0, 0, 600, 350);
 		toolkit.adapt(venueTable);
 		toolkit.paintBordersFor(venueTable);
 		
 		TableColumn tableColumn = new TableColumn(venueTable, SWT.CENTER);
-		tableColumn.setWidth(100);
+		tableColumn.setWidth(150);
 		tableColumn.setText("Name");
 		
 		TableColumn tableColumn_1 = new TableColumn(venueTable, SWT.CENTER);
-		tableColumn_1.setWidth(100);
+		tableColumn_1.setWidth(150);
 		tableColumn_1.setText("Location");
 		
 		TableColumn tableColumn_2 = new TableColumn(venueTable, SWT.CENTER);
-		tableColumn_2.setWidth(103);
+		tableColumn_2.setWidth(150);
 		tableColumn_2.setText("Type");
 		
 		TableColumn tblclmnCapacity = new TableColumn(venueTable, SWT.CENTER);
-		tblclmnCapacity.setWidth(100);
+		tblclmnCapacity.setWidth(150);
 		tblclmnCapacity.setText("Capacity");
 		
 		Button btnAdd = new Button(composite, SWT.NONE);
 		btnAdd.setText("Add");
-		btnAdd.setBounds(454, 10, 89, 27);
+		btnAdd.setBounds(655, 0, 90, 30);
 		toolkit.adapt(btnAdd, true, true);
 		btnAdd.addSelectionListener(new add());
 		
 		Button btnDelete = new Button(composite, SWT.NONE);
 		btnDelete.setText("Delete");
-		btnDelete.setBounds(454, 43, 89, 27);
+		btnDelete.setBounds(655, 40, 90, 30);
 		toolkit.adapt(btnDelete, true, true);
 		btnDelete.addSelectionListener(new delete());
 		
 		Button btnEdit = new Button(composite, SWT.NONE);
 		btnEdit.setText("Edit");
-		btnEdit.setBounds(454, 76, 89, 27);
+		btnEdit.setBounds(655, 80, 90, 30);
 		toolkit.adapt(btnEdit, true, true);
 		btnEdit.addSelectionListener(new edit());
 		
 		Button btnView = new Button(composite, SWT.NONE);
 		btnView.setText("View Booking Applications");
-		btnView.setBounds(423, 109, 153, 27);
+		btnView.setBounds(625, 120, 150, 30);
 		toolkit.adapt(btnView, true, true);
 	    btnView.addSelectionListener(new viewBookingInfo());
 	    
@@ -196,7 +197,7 @@ public class VenueManagement_VenueList extends Composite {
 				editVenueShell.setText("eManager - Edit a venue");
 				editVenueShell.setImage(icon);
 				AbstractEdit editVenuePage = new AbstractEdit(editVenueShell, SWT.None, 
-						venueInfoArray, venueInfoSignatureArray, venueTable){
+						venueInfoArray, venueInfoSignatureArray){
 					// get data from table selection
 					public void onLoad(){
 						for (int i=0; i<venueInfoArray.length; i++){

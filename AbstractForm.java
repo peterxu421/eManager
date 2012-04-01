@@ -12,8 +12,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
 public abstract class AbstractForm extends Composite {
@@ -22,7 +20,6 @@ public abstract class AbstractForm extends Composite {
 	protected int[] signature;
 	protected int[] sizeList;
 	protected DatabaseReader db;
-	protected Table table; // the SWT table where the information is stored
 	protected String[] stringList; // to store input texts
 	protected String[] organizerArray;
 	protected String[] facilitatorArray;
@@ -48,14 +45,13 @@ public abstract class AbstractForm extends Composite {
 
 	// Constructor
 	public AbstractForm(Composite parent, int style, String[] labelList,
-			int[] signature, Table table) {
+			int[] signature) {
 		super(parent, style);
 
 		this.labelList = labelList;
 		this.signature = signature;
 		this.db = new DatabaseReader();
 		this.map = new HashMap<String, Object>();
-		this.table = table;
 		stringList = new String[signature.length]; // initiate the input text
 													// string array
 
@@ -287,39 +283,19 @@ public abstract class AbstractForm extends Composite {
 		// no error
 		return -1;
 	}
-
+	
+	// Submit button handler
 	// When click submit button.
 	protected class SubmitHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if (check() == -1 && additionalCheck()) {
-				// check for duplicate input
-				String inputStr = "";
-				boolean noDuplicateInput = true;
-				stringList = getStringList();
-				for (int i = 0; i < stringList.length; i++) {
-					inputStr += stringList[i];
-				}
-				for (int i = 0; i < table.getItemCount(); i++) {
-					TableItem item = table.getItem(i);
-					String tableStr = "";
-					for (int j = 0; j < table.getColumnCount(); j++) {
-						tableStr += item.getText(j);
-					}
-					if (inputStr.equalsIgnoreCase(tableStr)) {
-						MessageBox warningPage = new MessageBox(getDisplay()
-								.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
-						warningPage.setText("Warning!");
-						warningPage.setMessage("Already exsits!");
-						warningPage.open();
-						noDuplicateInput = false;
-						break;
-					}
-				}
-				if (noDuplicateInput == true) {
+			if (check() == -1) {
+				if(additionalCheck()){
 					onSubmit();
 					getParent().dispose();
 				}
-			} else {
+			} 
+			
+			else {
 				// Show messageBox if there is error in input data and specify
 				// where is the error.
 				MessageBox warningPage = new MessageBox(getDisplay()
