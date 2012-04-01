@@ -7,13 +7,15 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
-public class eManager {
+
+public class eManager{
 	Shell rootShell;
 	Shell welcome_shell;
 	WelcomePage welcome_page;
 	Display display;
 
-	public eManager() {
+
+	public eManager() {		
 		display = new Display();
 		rootShell = new Shell(display);
 		// menu
@@ -23,10 +25,6 @@ public class eManager {
 		// menu->
 		MenuItem file = new MenuItem(menu, SWT.CASCADE);
 		file.setText("File");
-		MenuItem edit = new MenuItem(menu, SWT.CASCADE);
-		edit.setText("Edit");
-		MenuItem view = new MenuItem(menu, SWT.CASCADE);
-		view.setText("View");
 		MenuItem mode = new MenuItem(menu, SWT.CASCADE);
 		mode.setText("Mode");
 		MenuItem help = new MenuItem(menu, SWT.CASCADE);
@@ -37,40 +35,18 @@ public class eManager {
 		file.setMenu(fileMenu);
 		MenuItem open = new MenuItem(fileMenu, SWT.PUSH);
 		open.setText("Open");
-		// MenuItem open_recent = new MenuItem(fileMenu, SWT.PUSH);
-		// open_recent.setText("Open Recent\t>");
 		MenuItem quit = new MenuItem(fileMenu, SWT.PUSH);
 		quit.setText("Quit");
 
-		/*
-		 * //menu->edit Menu editMenu = new Menu(rootShell, SWT.DROP_DOWN);
-		 * edit.setMenu(editMenu); MenuItem undo = new MenuItem(editMenu,
-		 * SWT.PUSH); undo.setText("Undo\tCtrl+Z"); MenuItem redo = new
-		 * MenuItem(editMenu, SWT.PUSH); redo.setText("Redo\tCtrl+Shift+Z");
-		 * MenuItem copy = new MenuItem(editMenu, SWT.PUSH);
-		 * copy.setText("Copy\tCtrl+C"); MenuItem cut = new MenuItem(editMenu,
-		 * SWT.PUSH); cut.setText("Cut\tCtrl+X");
-		 */
-
-		/*
-		 * //menu->view Menu viewMenu = new Menu(rootShell, SWT.DROP_DOWN);
-		 * view.setMenu(viewMenu); MenuItem pref = new MenuItem(viewMenu,
-		 * SWT.PUSH); pref.setText("eManager Preferences"); MenuItem exam = new
-		 * MenuItem(viewMenu, SWT.PUSH); exam.setText("eManager Examples");
-		 * MenuItem rag = new MenuItem(viewMenu, SWT.PUSH);
-		 * rag.setText("Rag&Flag"); MenuItem osa = new MenuItem(viewMenu,
-		 * SWT.PUSH); osa.setText("OSA Venues");
-		 */
-
-		// menu-> mode
-		Menu modeMenu = new Menu(rootShell, SWT.DROP_DOWN);
-		mode.setMenu(modeMenu);
-		MenuItem manager = new MenuItem(modeMenu, SWT.PUSH);
-		manager.setText("Manager Mode");
-		MenuItem facilitator = new MenuItem(modeMenu, SWT.PUSH);
-		facilitator.setText("Facilitator Mode");
-		MenuItem participant = new MenuItem(modeMenu, SWT.PUSH);
-		participant.setText("Participant Mode");
+		// menu->  menuMode
+		Menu modeItem = new Menu(rootShell, SWT.DROP_DOWN);
+		mode.setMenu(modeItem);
+		MenuItem eventManager = new MenuItem(modeItem, SWT.PUSH);
+		eventManager.setText("Event Manager");
+		MenuItem manager = new MenuItem(modeItem, SWT.PUSH);
+		manager.setText("Venue Manager Mode");
+		MenuItem applicant = new MenuItem(modeItem, SWT.PUSH);
+		applicant.setText("Venue Applicant Mode");
 
 		// menu-> help
 		Menu helpMenu = new Menu(rootShell, SWT.DROP_DOWN);
@@ -87,38 +63,26 @@ public class eManager {
 		rootShell.setBackgroundImage(image);
 		rootShell.open();
 
-		// menu->file
+		//menu->file
 		open.addSelectionListener(new MenuOpenListener());
-		// open_recent.addSelectionListener(new MenuListener());
 		quit.addSelectionListener(new MenuQuitListener());
 
-		/*
-		 * //menu->edit edit.addSelectionListener(new MenuListener());
-		 * undo.addSelectionListener(new MenuListener());
-		 * redo.addSelectionListener(new MenuListener());
-		 * copy.addSelectionListener(new MenuListener());
-		 * cut.addSelectionListener(new MenuListener());
-		 */
-
-		// menu->mode
+		//menu->mode
+		eventManager.addSelectionListener(new eventManagerListener());
 		manager.addSelectionListener(new MenuManagerListener());
-		// facilitator.addSelectionListener(new MenuFacilitatorListener());
-		// participant.addSelectionListener(new MenuParticipantListener());
+		applicant.addSelectionListener(new MenuApplicantListener());
 
-		// menu-> help
-		// help.addSelectionListener(new MenuListener());
-		// readme.addSelectionListener(new MenuListener());
+		//menu-> help
+		//readme.addSelectionListener(new MenuListener());
 		version.addSelectionListener(new MenuVersionListener());
 
 		// welcome page
-		welcome_shell = new Shell(display, SWT.NO_TRIM|SWT.ON_TOP);
-		welcome_shell.setLocation(400, 200);
-		welcome_shell.setSize(400, 400);
+		welcome_shell = new Shell(display, SWT.NO_TRIM);
+		welcome_shell.setLocation(400, 250);
 		welcome_page = new WelcomePage(welcome_shell, SWT.None);
-		welcome_page.setSize(400, 400);
 
-		// welcome_page.pack();
-		// welcome_shell.pack();
+		welcome_page.pack();
+		welcome_shell.pack();
 		welcome_shell.open();
 		while (!rootShell.isDisposed()) {
 			if (!display.readAndDispatch())
@@ -127,29 +91,30 @@ public class eManager {
 		display.dispose();
 	}
 
-	// opens Welcome page
+	//opens Welcome page
 	class MenuOpenListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
-			welcome_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
-			welcome_shell.setLocation(400, 200);
+			welcome_shell = new Shell(display,SWT.NONE);
+			welcome_shell.setLocation(400, 250);
 			welcome_page = new WelcomePage(welcome_shell, SWT.NONE);
-			welcome_page.setSize(400, 400);
+			welcome_page.pack();
 			welcome_shell.pack();
 			welcome_shell.open();
 		}
 	}
 
-	// Quits the program
+	//Quits the program
 	class MenuQuitListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
 			display.dispose();
 		}
 	}
 
-	// opens Version page
+
+	//opens Version page
 	class MenuVersionListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
-			Shell version_shell = new Shell(display, SWT.ON_TOP|SWT.NO_TRIM);
+			Shell version_shell = new Shell(display,SWT.None);
 			version_shell.setLocation(400, 250);
 			FileVersion version_page = new FileVersion(version_shell, SWT.None);
 			version_page.pack();
@@ -158,39 +123,34 @@ public class eManager {
 		}
 	}
 
+	class eventManagerListener extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
+			if(SessionManager.getCurrentIntMode() != MACRO.MANAGER) {
+				Shell mode_shell = new Shell(display, SWT.None);
+				SelectEventPage newEventPage = new SelectEventPage(mode_shell, SWT.None);
+				newEventPage.pack();
+				mode_shell.pack();
+				mode_shell.open();
+			}
+		}
+	}
 	class MenuManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if (SessionManager.getCurrentIntMode() != MACRO.ORGANIZER) {
-				Shell mode_shell = new Shell(display, SWT.ON_TOP|SWT.NO_TRIM);
-				PromptPassword mode_page = new PromptPassword(mode_shell,
-						SWT.None, MACRO.ORGANIZER);
+			if(SessionManager.getCurrentIntMode() != MACRO.MANAGER) {
+				Shell mode_shell = new Shell(display, SWT.None);
+				PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None, MACRO.MANAGER);
 				mode_page.pack();
 				mode_shell.pack();
 				mode_shell.open();
 			}
 		}
 	}
-
-	class MenuFacilitatorListener extends SelectionAdapter {
+	class MenuApplicantListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if (SessionManager.getCurrentIntMode() != MACRO.FACILITATOR) {
-				Shell mode_shell = new Shell(display, SWT.ON_TOP|SWT.NO_TRIM);
-				PromptPassword mode_page = new PromptPassword(mode_shell,
-						SWT.None, MACRO.FACILITATOR);
-				mode_page.pack();
-				mode_shell.pack();
-				mode_shell.open();
-			}
-		}
-	}
-
-	class MenuParticipantListener extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e) {
-			if (SessionManager.getCurrentIntMode() != MACRO.PARTICIPANT) {
-				Shell mode_shell = new Shell(display, SWT.ON_TOP|SWT.NO_TRIM);
-				PromptPassword mode_page = new PromptPassword(mode_shell,
-						SWT.None, MACRO.PARTICIPANT);
-				mode_page.pack();
+			if(SessionManager.getCurrentIntMode() != MACRO.APPLICANT) {
+				Shell mode_shell = new Shell(display, SWT.None);
+				Venuespace venuspace = new Venuespace(mode_shell, SWT.None, MACRO.APPLICANT_MODE);
+				venuspace.pack();
 				mode_shell.pack();
 				mode_shell.open();
 			}

@@ -18,6 +18,7 @@ class Eventspace extends Composite {
 	Composite body;
 	Composite left;
 	Composite right;
+
 	Label eventName;
 	Label eventDescription;
 	private String[] stringArrayRegistration = { "Name", "Matriculation",
@@ -44,7 +45,7 @@ class Eventspace extends Composite {
 			{ "Event Registration" } };
 
 	// Constructor
-	public Eventspace(Composite parent, int style, boolean[] boolMode) {
+	public Eventspace(Composite parent, int style, boolean[][] boolMode) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 1;
@@ -76,7 +77,7 @@ class Eventspace extends Composite {
 			buttons[i].setLayoutData(new GridData(width, height));
 			buttons[i].setText(optionList[i]);
 			buttons[i].addSelectionListener(new OptionSelectionAdapter());
-			// buttons[i].setEnabled(boolMode[i]);
+			buttons[i].setEnabled(boolMode[0][i]);
 		}
 		// setting button
 		Button btnSetting = new Button(optionBar, SWT.PUSH);
@@ -85,6 +86,7 @@ class Eventspace extends Composite {
 		settingData.horizontalIndent = 150;
 		btnSetting.setLayoutData(settingData);
 		btnSetting.addSelectionListener(new SettingAdapter());
+		btnSetting.setEnabled(boolMode[5][0]);
 
 		// body
 		GridData bodyData = new GridData(900, 450);
@@ -128,6 +130,7 @@ class Eventspace extends Composite {
 			buttons[i].setText(tabList[0][i]);
 			buttons[i].setLayoutData(new GridData(130, 40));
 			buttons[i].addSelectionListener(new TabSelectionAdapter());
+			buttons[i].setEnabled(boolMode[1][i]);
 		}
 
 		// body -> right panel
