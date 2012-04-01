@@ -10,6 +10,7 @@ import org.swtchart.IAxis;
 import org.swtchart.IAxisSet;
 import org.swtchart.IBarSeries;
 import org.swtchart.ISeries.SeriesType;
+import org.swtchart.Range;
 
 public class TaskChart extends Composite {
 
@@ -24,7 +25,6 @@ public class TaskChart extends Composite {
 	public TaskChart(Composite parent, int style, Event event) {
 		// set attributes
 		super(parent, style);
-		this.setLayout(new GridLayout());
 		db = new DatabaseReader();
 		listOfPeople = db.getOrganizers(event);
 		listOfTasks = db.getTasks(event);
@@ -63,13 +63,12 @@ public class TaskChart extends Composite {
 			chart.getAxisSet().getYAxis(0).getTitle().setText("% of work done");
 			chart.setLocation(0, 0);
 			chart.setBounds(0, 0, 600, 400);
-	
+			
 			// set xAxis
 			IAxisSet axisSet = chart.getAxisSet();
 			IAxis xAxis = axisSet.getXAxis(0);
 			xAxis.setCategorySeries(stringOfPeople);
-			xAxis.enableCategory(true);
-	
+			
 			// set yAxis
 			ySeries = new double[listOfPeople.size()];
 			for (int i = 0; i < listOfPeople.size(); i++) {
@@ -93,8 +92,13 @@ public class TaskChart extends Composite {
 	
 			// adjust the axis range
 			chart.getAxisSet().adjustRange();
+			IAxis yAxis = axisSet.getYAxis(0);
+			xAxis.enableCategory(true);
+			yAxis.setRange(new Range(0,1));
+			
 		}
 		else{
+			this.setLayout(new GridLayout());
 			Label label = new Label(this, SWT.None);
 			label.setText("Sorry, there is neither tasks nor committee members added");
 		}

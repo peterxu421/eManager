@@ -89,7 +89,7 @@ public abstract class AbstractAdd extends AbstractForm {
 	
 	
 	
-	// Do nothing about the additionalCheck();
+	// Override the additionalCheck();
 	public boolean additionalCheck(){
 		// check for duplicate input
 		String inputStr = "";

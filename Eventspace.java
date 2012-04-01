@@ -7,16 +7,21 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
 class Eventspace extends Composite {
 
+	Composite header;
+	Composite optionBar;
 	Composite body;
 	Composite left;
 	Composite right;
 
-	private String[] stringPassword = { "Old Password", "New Password",
+	Label eventName;
+	Label eventDescription;
+	private String[] stringPassword = { "Original Password", "New Password",
 			"Confirm New Password" };
 	private int[] signaturePassword = { MACRO.PASSWORD, MACRO.PASSWORD,
 			MACRO.PASSWORD };
@@ -44,12 +49,12 @@ class Eventspace extends Composite {
 
 		// header
 		GridData headerData = new GridData(1000, 60);
-		Composite header = new Composite(this, SWT.None);
+		header = new Composite(this, SWT.None);
 		header.setLayoutData(headerData);
 
 		// optionBar
 		GridData optionBarData = new GridData(1000, 50);
-		Composite optionBar = new Composite(this, SWT.None);
+		optionBar = new Composite(this, SWT.None);
 		optionBar.setLayoutData(optionBarData);
 
 		// optionBar->
@@ -102,9 +107,9 @@ class Eventspace extends Composite {
 		headerLayout.marginWidth = 20;
 		headerLayout.spacing = 50;
 		header.setLayout(headerLayout);
-		Label eventName = new Label(header, SWT.NONE);
+		eventName = new Label(header, SWT.NONE);
 		eventName.setText(SessionManager.getCurrentEvent().getEventName());
-		Label eventDescription = new Label(header, SWT.NONE);
+		eventDescription = new Label(header, SWT.NONE);
 		eventDescription.setText(SessionManager.getCurrentEvent()
 				.getEventDescription());
 
@@ -196,15 +201,27 @@ class Eventspace extends Composite {
 					// Override
 					public boolean additionalCheck() {
 						String[] stringList = getStringList();
+						boolean isValid=true;
 						// if the input password does not match the system one
-						if (!stringList[0].equals(event.getOrganizerPassword())) {
-							return false;
+						if (!stringList[0].equals(event
+								.getOrganizerPassword())) {
+							isValid=false;
+							MessageBox warningPage = new MessageBox(getDisplay()
+									.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+							warningPage.setText("Warning!");
+							warningPage.setMessage("Original organizer password is wrong!");
+							warningPage.open();
 						}
 						// if the two input password does not match
 						else if (!stringList[1].equals(stringList[2])) {
-							return false;
-						} else
-							return true;
+							isValid=false;
+							MessageBox warningPage = new MessageBox(getDisplay()
+									.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+							warningPage.setText("Warning!");
+							warningPage.setMessage("The confirmed new passowrd for organizer does not match to new password!");
+							warningPage.open();
+						} 
+						return isValid;
 					}
 				};
 				organizerPasword.pack();
@@ -239,16 +256,27 @@ class Eventspace extends Composite {
 					// Override
 					public boolean additionalCheck() {
 						String[] stringList = getStringList();
+						boolean isValid=true;
 						// if the input password does not match the system one
 						if (!stringList[0].equals(event
 								.getFacilitatorPassword())) {
-							return false;
+							isValid=false;
+							MessageBox warningPage = new MessageBox(getDisplay()
+									.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+							warningPage.setText("Warning!");
+							warningPage.setMessage("Original facilitator password is wrong!");
+							warningPage.open();
 						}
 						// if the two input password does not match
 						else if (!stringList[1].equals(stringList[2])) {
-							return false;
-						} else
-							return true;
+							isValid=false;
+							MessageBox warningPage = new MessageBox(getDisplay()
+									.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+							warningPage.setText("Warning!");
+							warningPage.setMessage("The confirmed new passowrd for facilitator does not match to new password!");
+							warningPage.open();
+						} 
+						return isValid;
 					}
 				};
 				facilitatorPasword.pack();
@@ -274,7 +302,10 @@ class Eventspace extends Composite {
 			event.setEventDescription(stringList[1]);
 			// update database
 			db.updateEvent(event);
-		}
+			// update event name and event description
+			eventName.setText(stringList[0]);
+			eventDescription.setText(stringList[1]);
+			}
 
 		@Override
 		public boolean additionalCheck() {

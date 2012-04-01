@@ -45,30 +45,26 @@ public class EventPlanning_Meeting extends Composite {
 		toolkit.paintBordersFor(this);
 		this.event = event;
 
-		FormLayout formLayout = new FormLayout();
-		formLayout.marginRight = 30;
-		formLayout.marginBottom = 30;
-		setLayout(formLayout);
-
-		Composite composite = new Composite(this, SWT.NONE);
 		FormData fd_composite = new FormData();
 		fd_composite.top = new FormAttachment(0);
 		fd_composite.left = new FormAttachment(0);
 		fd_composite.bottom = new FormAttachment(0, 298);
 		fd_composite.right = new FormAttachment(0, 682);
-		composite.setLayoutData(fd_composite);
-		toolkit.adapt(composite);
-		toolkit.paintBordersFor(composite);
+		this.setLayoutData(fd_composite);
+		toolkit.adapt(this);
+		toolkit.paintBordersFor(this);
+		setLayout(null);
 
-		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setBounds(10, 10, 521, 278);
+		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
+		table.setBounds(0, 0, 543, 45);
+		table.setBounds(10, 10, 550, 400);
 		toolkit.adapt(table);
 		toolkit.paintBordersFor(table);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 
 		TableColumn tblclmnMeetingDetails = new TableColumn(table, SWT.CENTER);
-		tblclmnMeetingDetails.setWidth(268);
+		tblclmnMeetingDetails.setWidth(277);
 		tblclmnMeetingDetails.setText("Meeting Details");
 
 		TableColumn tblclmnDate = new TableColumn(table, SWT.CENTER);
@@ -80,24 +76,27 @@ public class EventPlanning_Meeting extends Composite {
 		tblclmnTime.setText("Time");
 
 		TableColumn tblclmnDone = new TableColumn(table, SWT.CENTER);
-		tblclmnDone.setWidth(48);
+		tblclmnDone.setWidth(61);
 		tblclmnDone.setText("Done");
 
-		Button Add = new Button(composite, SWT.NONE);
+		Button Add = new Button(this, SWT.NONE);
+		Add.setBounds(0, 0, 36, 27);
 		Add.setText("Add");
-		Add.setBounds(564, 31, 75, 25);
+		Add.setBounds(570, 10, 80, 40);
 		toolkit.adapt(Add, true, true);
 		Add.addSelectionListener(new Add());
 
-		Button Delete = new Button(composite, SWT.NONE);
+		Button Delete = new Button(this, SWT.NONE);
+		Delete.setBounds(0, 0, 49, 27);
 		Delete.setText("Delete");
-		Delete.setBounds(564, 81, 75, 25);
+		Delete.setBounds(570, 60, 80, 40);
 		toolkit.adapt(Delete, true, true);
 		Delete.addSelectionListener(new Delete());
 
-		Button Edit = new Button(composite, SWT.NONE);
+		Button Edit = new Button(this, SWT.NONE);
+		Edit.setBounds(0, 0, 34, 27);
 		Edit.setText("Edit");
-		Edit.setBounds(564, 130, 75, 25);
+		Edit.setBounds(570, 110, 80, 40);
 		toolkit.adapt(Edit, true, true);
 		Edit.addSelectionListener(new Edit());
 
