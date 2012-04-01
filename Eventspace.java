@@ -73,7 +73,7 @@ class Eventspace extends Composite {
 			buttons[i].setLayoutData(new GridData(width, height));
 			buttons[i].setText(optionList[i]);
 			buttons[i].addSelectionListener(new OptionSelectionAdapter());
-			// buttons[i].setEnabled(boolMode[i]);
+			buttons[i].setEnabled(boolMode[0][i]);
 		}
 		// setting button
 		Button btnSetting = new Button(optionBar, SWT.PUSH);
@@ -125,6 +125,7 @@ class Eventspace extends Composite {
 			buttons[i].setText(tabList[0][i]);
 			buttons[i].setLayoutData(new GridData(130, 40));
 			buttons[i].addSelectionListener(new TabSelectionAdapter());
+			buttons[i].setEnabled(boolMode[1][i]);
 		}
 
 		// body -> right panel

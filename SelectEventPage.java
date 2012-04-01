@@ -148,10 +148,10 @@ public class SelectEventPage extends Composite {
 					db.insertEvent(newEvent);
 					SessionManager.setCurrentEvent(newEvent);
 					SessionManager.setCurrentMode(MACRO.ORGANIZER);
-					Eventspace workspace = new Eventspace(shellEvent, SWT.None,
+					Eventspace eventspace = new Eventspace(shellEvent, SWT.None,
 							MACRO.ORGANIZER_MODE);
 					System.out.println(tempList[3]);
-					workspace.pack();
+					eventspace.pack();
 					shellEvent.pack();
 					shellEvent.open();
 					parent.dispose();

@@ -40,7 +40,6 @@ public class PromptPassword extends Composite {
 		toolkit.paintBordersFor(this);
 		this.changeToMode = changeToMode;
 		this.parent = parent;		
-		this.parentParent = parentParent;
 
 
 		password = SessionManager.getCurrentEvent().getOrganizerPassword();
@@ -52,7 +51,7 @@ public class PromptPassword extends Composite {
 		toolkit.paintBordersFor(composite);
 
 		Label lblPassword = new Label(composite, SWT.NONE);
-		lblPassword.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblPassword.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.NORMAL));
 		lblPassword.setText("Password");
 		lblPassword.setBounds(37, 60, 85, 26);
 		toolkit.adapt(lblPassword, true, true);
@@ -91,6 +90,7 @@ public class PromptPassword extends Composite {
 	}
 
 	public void CreateVenuePage(boolean[][] boolMode) { 
+		System.out.println("YES");
 		Shell shell = new Shell(getDisplay());
 		shell.setLocation(200, 100);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");

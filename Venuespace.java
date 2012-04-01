@@ -115,6 +115,7 @@ class Venuespace extends Composite{
 	    	buttons[i].setText(tabList[0][i]);
 	    	buttons[i].setLayoutData(new GridData(150, 40));
 	    	buttons[i].addSelectionListener(new TabSelectionAdapter());
+	    	buttons[i].setEnabled(boolMode[1][i]);
 	    }
 	    
 	    //body -> right panel
