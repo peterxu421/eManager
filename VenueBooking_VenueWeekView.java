@@ -30,6 +30,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Button;
 
 import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
+import org.eclipse.nebula.widgets.calendarcombo.ICalendarListener;
 
 public class VenueBooking_VenueWeekView extends Composite {
 
@@ -124,15 +125,15 @@ public class VenueBooking_VenueWeekView extends Composite {
 		Label lblEnterPreferredEvent = new Label(composite, SWT.NONE);
 		lblEnterPreferredEvent.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblEnterPreferredEvent.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		lblEnterPreferredEvent.setText("Preferred event date");
-		lblEnterPreferredEvent.setBounds(10, 24, 144, 23);
+		lblEnterPreferredEvent.setText("Select preferred event date");
+		lblEnterPreferredEvent.setBounds(10, 25, 180, 25);
 		toolkit.adapt(lblEnterPreferredEvent, true, true);
 		
-		Button btnCheck = new Button(composite, SWT.NONE);
-		btnCheck.setBounds(259, 23, 75, 25);
-		toolkit.adapt(btnCheck, true, true);
-		btnCheck.setText("Check");
-		btnCheck.addSelectionListener(new checkBookingInfo());
+//		Button btnCheck = new Button(composite, SWT.NONE);
+//		btnCheck.setBounds(319, 23, 75, 25);
+//		toolkit.adapt(btnCheck, true, true);
+//		btnCheck.setText("Check");
+//		btnCheck.addSelectionListener(new checkBookingInfo());
 		
 		Label lblSelectedDateAnd = new Label(composite, SWT.NONE);
 		lblSelectedDateAnd.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
@@ -164,17 +165,28 @@ public class VenueBooking_VenueWeekView extends Composite {
 		                            "      2. Select more cells if you need to book more than 1 hour.\n" +
 				                    "      3. Double click a marked cell again to cancel the selection.");
 		
-		calendarCombo = new CalendarCombo(composite, SWT.NONE);
-		calendarCombo.setBounds(160, 24, 88, 23);
+		calendarCombo = new CalendarCombo(composite, SWT.READ_ONLY);
+		calendarCombo.setBounds(200, 25, 100, 25);
 		toolkit.adapt(calendarCombo);
 		toolkit.paintBordersFor(calendarCombo);
 		calendarCombo.setDate(Calendar.getInstance());
+		calendarCombo.addCalendarListener(new checkBookingInfo());
 		
 	}
 	
 	/* Button selection adapters */
-	public class checkBookingInfo extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e) {
+	public class checkBookingInfo implements ICalendarListener {
+		@Override
+		public void dateChanged(Calendar date) {
+			
+		}
+
+		@Override
+		public void dateRangeChanged(Calendar start, Calendar end) {
+			
+		}
+		@Override
+		public void popupClosed() {
 			/* Clear the week view time table before start a new bookingInfo check */
 			weekViewTable.removeAll();
 			
@@ -193,6 +205,7 @@ public class VenueBooking_VenueWeekView extends Composite {
 			
 			/* Arrange the week view table */
 			int day_of_week;
+			Date _date = new Date();
 			tblclmn[3].setToolTipText("Prefered date");
 			for(int i=0; i<7; i++){
 				dateInAWeekList.add(new Date(0,0,0)); // initialize the arraylist
@@ -200,16 +213,16 @@ public class VenueBooking_VenueWeekView extends Composite {
 			for(int i=3; i<7; i++){ // right hand side half
 				day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
 				tblclmnTextFill(day_of_week, calendar, tblclmn[i]);
-				Date date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH)); // MONTH+1 because MONTH starts from 0 in default
-				dateInAWeekList.set(i, date);
+				_date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH)); // MONTH+1 because MONTH starts from 0 in default
+				dateInAWeekList.set(i, _date);
 				calendar.add(Calendar.DAY_OF_MONTH, 1);  // roll the date forward
 			} 
 			calendar.add(Calendar.DAY_OF_MONTH, -4); // roll back to the selected date
 			for(int i=3; i>=0; i--){
 				day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
 				tblclmnTextFill(day_of_week, calendar, tblclmn[i]);
-				Date date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH)); // MONTH+1 because MONTH starts from 0 in default
-				dateInAWeekList.set(i, date);
+				_date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH)); // MONTH+1 because MONTH starts from 0 in default
+				dateInAWeekList.set(i, _date);
 				calendar.add(Calendar.DAY_OF_MONTH, -1); // roll the date backward
 			}
 			
@@ -262,8 +275,12 @@ public class VenueBooking_VenueWeekView extends Composite {
 			case 5: tblclmn.setText("Thu " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
 			case 6: tblclmn.setText("Fri " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
 			case 7: tblclmn.setText("Sat " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
-			}
+			}	
+			
 		}
+//		public void widgetSelected(SelectionEvent e) {
+//	
+//		}
 	}
 	
 	
