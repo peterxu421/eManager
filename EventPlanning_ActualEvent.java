@@ -35,15 +35,16 @@ public class EventPlanning_ActualEvent extends Composite {
 			MACRO.CHECK };
 	private String[] stringArrayAllocationOfManpower = { "Task", "Assigned To",
 			"Date", "Done" };
-	private int[] signatureAllocationOfManpower = { MACRO.TEXT, MACRO.FACILITATOR,
-			MACRO.DATE, MACRO.CHECK };
+	private int[] signatureAllocationOfManpower = { MACRO.TEXT,
+			MACRO.FACILITATOR, MACRO.DATE, MACRO.CHECK };
 	private String[] stringArrayFacilitator = { "Name", "Year", "Faculty",
 			"Postion" };
-	private int[] signatureFacilitator = { MACRO.TEXT, MACRO.INT, MACRO.FACULTY,
-			MACRO.TEXT };
+	private int[] signatureFacilitator = { MACRO.TEXT, MACRO.INT,
+			MACRO.FACULTY, MACRO.TEXT };
 	private String[] stringArrayParticipant = { "Name", "Year", "Faculty",
 			"Food Type" };
-	private int[] signatureParticipant = { MACRO.TEXT, MACRO.INT, MACRO.FACULTY, MACRO.TEXT };
+	private int[] signatureParticipant = { MACRO.TEXT, MACRO.INT,
+			MACRO.FACULTY, MACRO.TEXT };
 
 	/**
 	 * Create the composite.
@@ -62,16 +63,12 @@ public class EventPlanning_ActualEvent extends Composite {
 		toolkit.paintBordersFor(this);
 		this.event = event;
 
-		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 686, 329);
-		toolkit.adapt(composite);
-		toolkit.paintBordersFor(composite);
-
-		TabFolder folder_eventPlanning_actualEvent = new TabFolder(composite,
+		TabFolder folder_eventPlanning_actualEvent = new TabFolder(this,
 				SWT.NONE);
+		folder_eventPlanning_actualEvent.setLocation(0, 0);
+		folder_eventPlanning_actualEvent.setSize(673, 500);
 		// tabFolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		folder_eventPlanning_actualEvent.setToolTipText("Itinerary");
-		folder_eventPlanning_actualEvent.setBounds(10, 10, 576, 305);
 		toolkit.adapt(folder_eventPlanning_actualEvent);
 		toolkit.paintBordersFor(folder_eventPlanning_actualEvent);
 
@@ -88,8 +85,8 @@ public class EventPlanning_ActualEvent extends Composite {
 		table_eventPlanning_actualEvent_tableItinerary = new Table(
 				comp_eventPlanning_actualEvent_Itinerary, SWT.BORDER
 						| SWT.FULL_SELECTION);
-		table_eventPlanning_actualEvent_tableItinerary.setBounds(10, 10, 446,
-				255);
+		table_eventPlanning_actualEvent_tableItinerary.setBounds(10, 10, 550,
+				400);
 		toolkit.adapt(table_eventPlanning_actualEvent_tableItinerary);
 		toolkit.paintBordersFor(table_eventPlanning_actualEvent_tableItinerary);
 		table_eventPlanning_actualEvent_tableItinerary.setHeaderVisible(true);
@@ -98,30 +95,30 @@ public class EventPlanning_ActualEvent extends Composite {
 		// itinerary
 		TableColumn col_eventPlanning_actualEvent__itinerary_description = new TableColumn(
 				table_eventPlanning_actualEvent_tableItinerary, SWT.CENTER);
-		col_eventPlanning_actualEvent__itinerary_description.setWidth(196);
+		col_eventPlanning_actualEvent__itinerary_description.setWidth(220);
 		col_eventPlanning_actualEvent__itinerary_description
 				.setText("Description");
 
 		TableColumn col_eventPlanning_actualEvent__itinerary_date = new TableColumn(
 				table_eventPlanning_actualEvent_tableItinerary, SWT.NONE);
-		col_eventPlanning_actualEvent__itinerary_date.setWidth(93);
+		col_eventPlanning_actualEvent__itinerary_date.setWidth(120);
 		col_eventPlanning_actualEvent__itinerary_date.setText("Date");
 
 		TableColumn col_eventPlanning_actualEvent__itinerary_time = new TableColumn(
 				table_eventPlanning_actualEvent_tableItinerary, SWT.NONE);
-		col_eventPlanning_actualEvent__itinerary_time.setWidth(93);
+		col_eventPlanning_actualEvent__itinerary_time.setWidth(120);
 		col_eventPlanning_actualEvent__itinerary_time.setText("Time");
 
 		TableColumn col_eventPlanning_actualEvent__itinerary_done = new TableColumn(
 				table_eventPlanning_actualEvent_tableItinerary, SWT.NONE);
-		col_eventPlanning_actualEvent__itinerary_done.setWidth(59);
+		col_eventPlanning_actualEvent__itinerary_done.setWidth(80);
 		col_eventPlanning_actualEvent__itinerary_done.setText("Done");
 
 		Button btn_eventPlanning_actualEvent_Itinerary_add = new Button(
 				comp_eventPlanning_actualEvent_Itinerary, SWT.NONE);
 		btn_eventPlanning_actualEvent_Itinerary_add
 				.addSelectionListener(new ItineraryAddItemPage());
-		btn_eventPlanning_actualEvent_Itinerary_add.setBounds(462, 10, 80, 27);
+		btn_eventPlanning_actualEvent_Itinerary_add.setBounds(570, 10, 80, 40);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_add, true, true);
 		btn_eventPlanning_actualEvent_Itinerary_add.setText("Add ");
 
@@ -129,7 +126,7 @@ public class EventPlanning_ActualEvent extends Composite {
 				comp_eventPlanning_actualEvent_Itinerary, SWT.NONE);
 		btn_eventPlanning_actualEvent_Itinerary_del
 				.addSelectionListener(new ItineraryDeleteItem());
-		btn_eventPlanning_actualEvent_Itinerary_del.setBounds(462, 45, 80, 27);
+		btn_eventPlanning_actualEvent_Itinerary_del.setBounds(570, 60, 80, 40);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_del, true, true);
 		btn_eventPlanning_actualEvent_Itinerary_del.setText("Delete");
 
@@ -137,7 +134,7 @@ public class EventPlanning_ActualEvent extends Composite {
 				comp_eventPlanning_actualEvent_Itinerary, SWT.NONE);
 		btn_eventPlanning_actualEvent_Itinerary_edit
 				.addSelectionListener(new ItineraryEditItemPage());
-		btn_eventPlanning_actualEvent_Itinerary_edit.setBounds(462, 78, 80, 27);
+		btn_eventPlanning_actualEvent_Itinerary_edit.setBounds(570, 110, 80, 40);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_edit, true, true);
 		btn_eventPlanning_actualEvent_Itinerary_edit.setText("Edit ");
 
@@ -158,31 +155,31 @@ public class EventPlanning_ActualEvent extends Composite {
 				SWT.BORDER | SWT.FULL_SELECTION);
 		table_eventPlanning_actualEvents_allocOfManpower.setLinesVisible(true);
 		table_eventPlanning_actualEvents_allocOfManpower.setHeaderVisible(true);
-		table_eventPlanning_actualEvents_allocOfManpower.setBounds(10, 10, 457,
-				255);
+		table_eventPlanning_actualEvents_allocOfManpower.setBounds(10, 10, 550,
+				400);
 		toolkit.adapt(table_eventPlanning_actualEvents_allocOfManpower);
 		toolkit.paintBordersFor(table_eventPlanning_actualEvents_allocOfManpower);
 
 		TableColumn col_eventPlanning_actualEvents_allocOfManpower_task = new TableColumn(
 				table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
-		col_eventPlanning_actualEvents_allocOfManpower_task.setWidth(217);
+		col_eventPlanning_actualEvents_allocOfManpower_task.setWidth(240);
 		col_eventPlanning_actualEvents_allocOfManpower_task.setText("Task");
 
 		TableColumn col_eventPlanning_actualEvents_allocOfManpower_assignedTo = new TableColumn(
-				table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
-		col_eventPlanning_actualEvents_allocOfManpower_assignedTo.setWidth(97);
+				table_eventPlanning_actualEvents_allocOfManpower, SWT.LEFT);
+		col_eventPlanning_actualEvents_allocOfManpower_assignedTo.setWidth(120);
 		col_eventPlanning_actualEvents_allocOfManpower_assignedTo
 				.setText("Assigned To");
 
 		TableColumn col_eventPlanning_actualEvents_allocOfManpower_dateDue = new TableColumn(
-				table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
-		col_eventPlanning_actualEvents_allocOfManpower_dateDue.setWidth(96);
+				table_eventPlanning_actualEvents_allocOfManpower, SWT.LEFT);
+		col_eventPlanning_actualEvents_allocOfManpower_dateDue.setWidth(120);
 		col_eventPlanning_actualEvents_allocOfManpower_dateDue
 				.setText("Date Due");
 
 		TableColumn col_eventPlanning_actualEvents_allocOfManpower_done = new TableColumn(
-				table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
-		col_eventPlanning_actualEvents_allocOfManpower_done.setWidth(42);
+				table_eventPlanning_actualEvents_allocOfManpower, SWT.LEFT);
+		col_eventPlanning_actualEvents_allocOfManpower_done.setWidth(80);
 		col_eventPlanning_actualEvents_allocOfManpower_done.setText("Done");
 
 		Button btn_eventPlanning_actualEvent_AllocationManpower_add = new Button(
@@ -190,8 +187,8 @@ public class EventPlanning_ActualEvent extends Composite {
 		btn_eventPlanning_actualEvent_AllocationManpower_add
 				.addSelectionListener(new AllocOfManpowerAddItemPage());
 		btn_eventPlanning_actualEvent_AllocationManpower_add.setText("Add");
-		btn_eventPlanning_actualEvent_AllocationManpower_add.setBounds(473, 10,
-				80, 27);
+		btn_eventPlanning_actualEvent_AllocationManpower_add.setBounds(570, 10,
+				80, 40);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_add,
 				true, true);
 
@@ -200,8 +197,8 @@ public class EventPlanning_ActualEvent extends Composite {
 		btn_eventPlanning_actualEvent_AllocationManpower_del
 				.addSelectionListener(new AllocOfManpowerDelItem());
 		btn_eventPlanning_actualEvent_AllocationManpower_del.setText("Delete");
-		btn_eventPlanning_actualEvent_AllocationManpower_del.setBounds(473, 43,
-				80, 27);
+		btn_eventPlanning_actualEvent_AllocationManpower_del.setBounds(570, 60,
+				80, 40);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_del,
 				true, true);
 
@@ -210,8 +207,8 @@ public class EventPlanning_ActualEvent extends Composite {
 		btn_eventPlanning_actualEvent_AllocationManpower_edit
 				.addSelectionListener(new AllocOfManpowerEditItemPage());
 		btn_eventPlanning_actualEvent_AllocationManpower_edit.setText("Edit");
-		btn_eventPlanning_actualEvent_AllocationManpower_edit.setBounds(473,
-				76, 80, 27);
+		btn_eventPlanning_actualEvent_AllocationManpower_edit.setBounds(570, 110,
+				80, 40);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_edit,
 				true, true);
 
@@ -231,30 +228,30 @@ public class EventPlanning_ActualEvent extends Composite {
 						| SWT.FULL_SELECTION);
 		table_eventPlanning_actualEvents_facilitators.setLinesVisible(true);
 		table_eventPlanning_actualEvents_facilitators.setHeaderVisible(true);
-		table_eventPlanning_actualEvents_facilitators.setBounds(10, 10, 418,
-				255);
+		table_eventPlanning_actualEvents_facilitators.setBounds(10, 10, 550,
+				400);
 		toolkit.adapt(table_eventPlanning_actualEvents_facilitators);
 		toolkit.paintBordersFor(table_eventPlanning_actualEvents_facilitators);
 
 		TableColumn col_eventPlanning_actualEvents_facilitators_name = new TableColumn(
 				table_eventPlanning_actualEvents_facilitators, SWT.CENTER);
-		col_eventPlanning_actualEvents_facilitators_name.setWidth(161);
+		col_eventPlanning_actualEvents_facilitators_name.setWidth(170);
 		col_eventPlanning_actualEvents_facilitators_name.setText("Name");
 
 		TableColumn col_eventPlanning_actualEvents_facilitators_year = new TableColumn(
 				table_eventPlanning_actualEvents_facilitators, SWT.NONE);
-		col_eventPlanning_actualEvents_facilitators_year.setWidth(43);
+		col_eventPlanning_actualEvents_facilitators_year.setWidth(60);
 		col_eventPlanning_actualEvents_facilitators_year.setText("Year");
 
 		TableColumn col_eventPlanning_actualEvents_facilitators_interestedIn = new TableColumn(
 				table_eventPlanning_actualEvents_facilitators, SWT.NONE);
-		col_eventPlanning_actualEvents_facilitators_interestedIn.setWidth(82);
+		col_eventPlanning_actualEvents_facilitators_interestedIn.setWidth(120);
 		col_eventPlanning_actualEvents_facilitators_interestedIn
 				.setText("Faculty");
 
 		TableColumn col_eventPlanning_actualEvents_facilitators_status = new TableColumn(
 				table_eventPlanning_actualEvents_facilitators, SWT.NONE);
-		col_eventPlanning_actualEvents_facilitators_status.setWidth(149);
+		col_eventPlanning_actualEvents_facilitators_status.setWidth(200);
 		col_eventPlanning_actualEvents_facilitators_status
 				.setText("Interested In(Pos)");
 
@@ -263,7 +260,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		btnFacilitatorsAddItem
 				.addSelectionListener(new FacilitatorAddItemPage());
 		btnFacilitatorsAddItem.setText("Add ");
-		btnFacilitatorsAddItem.setBounds(445, 10, 80, 27);
+		btnFacilitatorsAddItem.setBounds(570, 10, 80, 40);
 		toolkit.adapt(btnFacilitatorsAddItem, true, true);
 
 		Button btnFacilitatorsDelItem = new Button(
@@ -271,7 +268,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		btnFacilitatorsDelItem
 				.addSelectionListener(new FacilitatorDeleteItem());
 		btnFacilitatorsDelItem.setText("Delete");
-		btnFacilitatorsDelItem.setBounds(445, 43, 80, 27);
+		btnFacilitatorsDelItem.setBounds(570, 60, 80, 40);
 		toolkit.adapt(btnFacilitatorsDelItem, true, true);
 
 		Button btnFacilitatorsEditItem = new Button(
@@ -279,7 +276,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		btnFacilitatorsEditItem
 				.addSelectionListener(new FacilitatorEditItemPage());
 		btnFacilitatorsEditItem.setText("Edit");
-		btnFacilitatorsEditItem.setBounds(445, 76, 80, 27);
+		btnFacilitatorsEditItem.setBounds(570, 110, 80, 40);
 		toolkit.adapt(btnFacilitatorsEditItem, true, true);
 
 		// participants
@@ -297,7 +294,7 @@ public class EventPlanning_ActualEvent extends Composite {
 				composite_eventPlanning_actualEvent_participants, SWT.BORDER
 						| SWT.FULL_SELECTION);
 		table_eventPlanning_actualEvent_participants
-				.setBounds(10, 10, 408, 255);
+				.setBounds(10, 10, 550, 400);
 		toolkit.adapt(table_eventPlanning_actualEvent_participants);
 		toolkit.paintBordersFor(table_eventPlanning_actualEvent_participants);
 		table_eventPlanning_actualEvent_participants.setHeaderVisible(true);
@@ -336,7 +333,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		btn_eventPlanning_actualEvent_participants_participants_add
 				.addSelectionListener(new ParticipantAddItemPage());
 		btn_eventPlanning_actualEvent_participants_participants_add.setBounds(
-				424, 10, 101, 27);
+				570, 10, 80, 40);
 		toolkit.adapt(
 				btn_eventPlanning_actualEvent_participants_participants_add,
 				true, true);
@@ -348,7 +345,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		btn_eventPlanning_actualEvent_participants_participants_del
 				.addSelectionListener(new ParticipantDeleteItem());
 		btn_eventPlanning_actualEvent_participants_participants_del.setBounds(
-				424, 43, 101, 27);
+				570, 60, 80, 40);
 		toolkit.adapt(
 				btn_eventPlanning_actualEvent_participants_participants_del,
 				true, true);
@@ -360,7 +357,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		btn_eventPlanning_actualEvent_participants_participants_edit
 				.addSelectionListener(new ParticipantEditItemPage());
 		btn_eventPlanning_actualEvent_participants_participants_edit.setBounds(
-				424, 76, 101, 27);
+				570, 110, 80, 40);
 		toolkit.adapt(
 				btn_eventPlanning_actualEvent_participants_participants_edit,
 				true, true);
@@ -449,7 +446,8 @@ public class EventPlanning_ActualEvent extends Composite {
 			Shell itineraryAddItemPage = new Shell(getDisplay());
 			AbstractAdd itineraryAddItem = new AbstractAdd(
 					itineraryAddItemPage, SWT.None, stringArrayItinerary,
-					signatureItinerary, table_eventPlanning_actualEvent_tableItinerary) {
+					signatureItinerary,
+					table_eventPlanning_actualEvent_tableItinerary) {
 				public void onSubmit() {
 					// insert to database
 					String[] tempList = getStringList();
@@ -552,7 +550,8 @@ public class EventPlanning_ActualEvent extends Composite {
 			AbstractAdd allocOfManpowerAddItem = new AbstractAdd(
 					allocOfManpowerAddItemPage, SWT.None,
 					stringArrayAllocationOfManpower,
-					signatureAllocationOfManpower,table_eventPlanning_actualEvents_allocOfManpower) {
+					signatureAllocationOfManpower,
+					table_eventPlanning_actualEvents_allocOfManpower) {
 				public void onSubmit() {
 					// insert to database
 					String[] tempList = getStringList();
@@ -654,7 +653,8 @@ public class EventPlanning_ActualEvent extends Composite {
 			Shell facilitatorAddItemPage = new Shell(getDisplay());
 			AbstractAdd facilitatorAddItem = new AbstractAdd(
 					facilitatorAddItemPage, SWT.None, stringArrayFacilitator,
-					signatureFacilitator,table_eventPlanning_actualEvents_facilitators) {
+					signatureFacilitator,
+					table_eventPlanning_actualEvents_facilitators) {
 				public void onSubmit() {
 					// insert to database
 					String[] tempList = getStringList();
@@ -748,7 +748,8 @@ public class EventPlanning_ActualEvent extends Composite {
 			Shell participantAddItemPage = new Shell(getDisplay());
 			AbstractAdd participantAddItem = new AbstractAdd(
 					participantAddItemPage, SWT.None, stringArrayParticipant,
-					signatureParticipant,table_eventPlanning_actualEvent_participants) {
+					signatureParticipant,
+					table_eventPlanning_actualEvent_participants) {
 				public void onSubmit() {
 					// insert to database
 					String[] tempList = getStringList();

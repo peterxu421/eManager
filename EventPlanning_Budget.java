@@ -21,6 +21,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
 import com.ibm.icu.text.DecimalFormat;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class EventPlanning_Budget extends Composite {
 
@@ -71,15 +72,10 @@ public class EventPlanning_Budget extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
-		this.event = event; // access current event
+		this.event = event;
 
-		Composite BudgetComposite = new Composite(this, SWT.NONE);
-		BudgetComposite.setBounds(0, 0, 689, 430);
-		toolkit.adapt(BudgetComposite);
-		toolkit.paintBordersFor(BudgetComposite);
-
-		TabFolder tabFolder = new TabFolder(BudgetComposite, SWT.NONE);
-		tabFolder.setBounds(0, 0, 689, 320);
+		TabFolder tabFolder = new TabFolder(this, SWT.NONE);
+		tabFolder.setSize(673, 540);
 		toolkit.adapt(tabFolder);
 		toolkit.paintBordersFor(tabFolder);
 
@@ -94,57 +90,59 @@ public class EventPlanning_Budget extends Composite {
 				| SWT.FULL_SELECTION);
 		AllocationTable.setLinesVisible(true);
 		AllocationTable.setHeaderVisible(true);
-		AllocationTable.setBounds(10, 10, 542, 240);
+		AllocationTable.setBounds(10, 10, 550, 330);
 		toolkit.adapt(AllocationTable);
 		toolkit.paintBordersFor(AllocationTable);
 
 		TableColumn AllocationTableItemColumn = new TableColumn(
 				AllocationTable, SWT.NONE);
-		AllocationTableItemColumn.setWidth(211);
+		AllocationTableItemColumn.setWidth(200);
 		AllocationTableItemColumn.setText("Item");
 
 		TableColumn AllocationTablePersonInChargeColumn = new TableColumn(
 				AllocationTable, SWT.CENTER);
-		AllocationTablePersonInChargeColumn.setWidth(123);
+		AllocationTablePersonInChargeColumn.setWidth(120);
 		AllocationTablePersonInChargeColumn.setText("Person in Charge");
 
 		TableColumn AllocationTableCostColumn = new TableColumn(
 				AllocationTable, SWT.CENTER);
-		AllocationTableCostColumn.setWidth(100);
+		AllocationTableCostColumn.setWidth(120);
 		AllocationTableCostColumn.setText("Cost($)");
 
 		TableColumn AllocationTableDateColumn = new TableColumn(
 				AllocationTable, SWT.CENTER);
-		AllocationTableDateColumn.setWidth(117);
+		AllocationTableDateColumn.setWidth(120);
 		AllocationTableDateColumn.setText("Date");
 
 		Button btnAllocationAdd = new Button(AllocationComposite, SWT.NONE);
-		btnAllocationAdd.setBounds(575, 49, 75, 25);
+		btnAllocationAdd.setBounds(570, 10, 80, 40);
 		toolkit.adapt(btnAllocationAdd, true, true);
 		btnAllocationAdd.setText("Add");
 		btnAllocationAdd.addSelectionListener(new AddAllocation());
 
+		Button btnAllocationDelete = new Button(AllocationComposite, SWT.NONE);
+		btnAllocationDelete.setBounds(570, 60, 80, 40);
+		toolkit.adapt(btnAllocationDelete, true, true);
+		btnAllocationDelete.setText("Delete");
+		btnAllocationDelete.addSelectionListener(new DeleteAllocation());
+		
 		Button btnAllocationEdit = new Button(AllocationComposite, SWT.NONE);
-		btnAllocationEdit.setBounds(575, 95, 75, 25);
+		btnAllocationEdit.setBounds(570, 110, 80, 40);
 		toolkit.adapt(btnAllocationEdit, true, true);
 		btnAllocationEdit.setText("Edit");
 		btnAllocationEdit.addSelectionListener(new EditAllocation());
 
-		Button btnAllocationDelete = new Button(AllocationComposite, SWT.NONE);
-		btnAllocationDelete.setBounds(575, 138, 75, 25);
-		toolkit.adapt(btnAllocationDelete, true, true);
-		btnAllocationDelete.setText("Delete");
-		btnAllocationDelete.addSelectionListener(new DeleteAllocation());
-
 		Label lblYouStillHave = new Label(AllocationComposite, SWT.NONE);
+		lblYouStillHave.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
 		lblYouStillHave.setAlignment(SWT.CENTER);
-		lblYouStillHave.setBounds(10, 256, 98, 15);
+		lblYouStillHave.setBounds(10, 360, 135, 30);
 		toolkit.adapt(lblYouStillHave, true, true);
 		lblYouStillHave.setText("Money Left ($)");
 
 		lblYouStillHave_Amount = new Label(AllocationComposite, SWT.BORDER);
+		lblYouStillHave_Amount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
 		lblYouStillHave_Amount.setAlignment(SWT.CENTER);
-		lblYouStillHave_Amount.setBounds(114, 256, 108, 15);
+		lblYouStillHave_Amount.setBounds(168, 360, 135, 30);
 		toolkit.adapt(lblYouStillHave_Amount, true, true);
 		lblYouStillHave_Amount.setText("0.0");
 
@@ -156,7 +154,7 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.paintBordersFor(CashFlowComposite);
 
 		TabFolder tabFolder_1 = new TabFolder(CashFlowComposite, SWT.NONE);
-		tabFolder_1.setBounds(0, 0, 736, 287);
+		tabFolder_1.setBounds(0, 0, 673, 287);
 		toolkit.adapt(tabFolder_1);
 		toolkit.paintBordersFor(tabFolder_1);
 
@@ -171,7 +169,7 @@ public class EventPlanning_Budget extends Composite {
 				| SWT.FULL_SELECTION);
 		InflowTable.setLinesVisible(true);
 		InflowTable.setHeaderVisible(true);
-		InflowTable.setBounds(10, 10, 551, 207);
+		InflowTable.setBounds(10, 10, 550, 350);
 		toolkit.adapt(InflowTable);
 		toolkit.paintBordersFor(InflowTable);
 
@@ -196,21 +194,21 @@ public class EventPlanning_Budget extends Composite {
 		InflowTableRemarksColumn.setText("Remarks");
 
 		Button btnInflowAdd = new Button(InflowComposite, SWT.NONE);
-		btnInflowAdd.setBounds(585, 28, 75, 25);
+		btnInflowAdd.setBounds(570, 10, 80, 40);
 		toolkit.adapt(btnInflowAdd, true, true);
 		btnInflowAdd.setText("Add");
 		btnInflowAdd.addSelectionListener(new AddInflow());
 
+		Button btnInflowDelete = new Button(InflowComposite, SWT.NONE);
+		btnInflowDelete.setBounds(570, 60, 80, 40);
+		toolkit.adapt(btnInflowDelete, true, true);
+		btnInflowDelete.setText("Delete");
+
 		Button btnInflowEdit = new Button(InflowComposite, SWT.NONE);
-		btnInflowEdit.setBounds(585, 77, 75, 25);
+		btnInflowEdit.setBounds(570, 110, 80, 40);
 		toolkit.adapt(btnInflowEdit, true, true);
 		btnInflowEdit.setText("Edit");
 		btnInflowEdit.addSelectionListener(new EditInflow());
-
-		Button btnInflowDelete = new Button(InflowComposite, SWT.NONE);
-		btnInflowDelete.setBounds(585, 128, 75, 25);
-		toolkit.adapt(btnInflowDelete, true, true);
-		btnInflowDelete.setText("Delete");
 
 		Label lblTotalMoneyReceived = new Label(InflowComposite, SWT.NONE);
 		lblTotalMoneyReceived.setText("Money Received($):");
@@ -592,7 +590,7 @@ public class EventPlanning_Budget extends Composite {
 
 					public void onSubmit() {
 						String[] tempList = getStringList();
-						
+
 						BudgetAllocation budgetAllocation = budgetAllocationList
 								.get(index);
 						budgetAllocation.setItem(tempList[0]);
@@ -638,7 +636,8 @@ public class EventPlanning_Budget extends Composite {
 			if (InflowTable.getSelectionCount() == 0) {
 				Shell add_inflow_shell = new Shell(getDisplay());
 				AbstractAdd add_inflow_page = new AbstractAdd(add_inflow_shell,
-						SWT.None, stringArrayInflow, signatureArrayInflow, InflowTable) {
+						SWT.None, stringArrayInflow, signatureArrayInflow,
+						InflowTable) {
 					public void onSubmit() {
 						// insert to database
 						String[] tempList = getStringList();
