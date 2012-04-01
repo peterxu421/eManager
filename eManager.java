@@ -81,7 +81,7 @@ public class eManager{
 		welcome_shell.setLocation(400, 250);
 		welcome_page = new WelcomePage(welcome_shell, SWT.None);
 
-		welcome_page.pack();
+		welcome_page.setSize(400, 350);
 		welcome_shell.pack();
 		welcome_shell.open();
 		while (!rootShell.isDisposed()) {
@@ -97,6 +97,7 @@ public class eManager{
 			welcome_shell = new Shell(display,SWT.NONE);
 			welcome_shell.setLocation(400, 250);
 			welcome_page = new WelcomePage(welcome_shell, SWT.NONE);
+			welcome_page.setSize(400, 350);
 			welcome_page.pack();
 			welcome_shell.pack();
 			welcome_shell.open();

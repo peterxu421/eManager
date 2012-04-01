@@ -51,7 +51,7 @@ public class PromptPassword extends Composite {
 		toolkit.paintBordersFor(composite);
 
 		Label lblPassword = new Label(composite, SWT.NONE);
-		lblPassword.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.NORMAL));
+		lblPassword.setFont(SWTResourceManager.getFont("Calibri", 13, SWT.NORMAL));
 		lblPassword.setText("Password");
 		lblPassword.setBounds(37, 60, 85, 26);
 		toolkit.adapt(lblPassword, true, true);
