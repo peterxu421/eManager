@@ -398,7 +398,7 @@ public class DatabaseReader {
 		ArrayList<Venue> venuesAtSameLocation = new ArrayList<Venue>();
 		ResultSet rs = null;
 		try{
-			rs = SQLManager.getVenueDetails(connection, location);
+			rs = SQLManager.getVenuesByLocation(connection, location);
 			while(rs.next()){
 				Venue venue = new Venue(rs.getInt(1), rs.getString(2),
 						location, rs.getString(4), rs.getInt(5));

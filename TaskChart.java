@@ -99,5 +99,4 @@ public class TaskChart extends Composite {
 			label.setText("Sorry, there is neither tasks nor committee members added");
 		}
 	}
-
 }
