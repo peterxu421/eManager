@@ -26,20 +26,14 @@ public class EventPlanning_PreEvent extends Composite {
 	private ArrayList<Task> taskList;
 	private ArrayList<Organizer> memberList;
 	private String[] stringArrayItem = { "Task", "Assigned To", "Date", "Done" };
-	private int[] signatureArrayItem = { MACRO.TEXT, MACRO.ORGANIZER, MACRO.DATE,
-			MACRO.CHECK };
+	private int[] signatureArrayItem = { MACRO.TEXT, MACRO.ORGANIZER,
+			MACRO.DATE, MACRO.CHECK };
 	private String[] stringArrayMember = { "Name", "Year", "Faculty",
 			"Position" };
-	private int[] signatureArrayMember = { MACRO.TEXT, MACRO.INT, MACRO.FACULTY,
-			MACRO.TEXT };
+	private int[] signatureArrayMember = { MACRO.TEXT, MACRO.INT,
+			MACRO.FACULTY, MACRO.TEXT };
 	private int index;
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public EventPlanning_PreEvent(Composite parent, int style, Event event) {
 
 		super(parent, style);
@@ -52,16 +46,11 @@ public class EventPlanning_PreEvent extends Composite {
 		toolkit.paintBordersFor(this);
 		this.event = event;
 
-		Composite compositePreEvent = new Composite(this, SWT.NONE);
-		compositePreEvent.setBounds(10, 10, 563, 325);
-		toolkit.adapt(compositePreEvent);
-		toolkit.paintBordersFor(compositePreEvent);
-
-		TabFolder tabFolderPreEvent = new TabFolder(compositePreEvent, SWT.NONE);
+		TabFolder tabFolderPreEvent = new TabFolder(this, SWT.NONE);
+		tabFolderPreEvent.setSize(673, 538);
 		tabFolderPreEvent.setBackground(SWTResourceManager
 				.getColor(SWT.COLOR_RED));
 		tabFolderPreEvent.setToolTipText("Task Assignment");
-		tabFolderPreEvent.setBounds(10, 10, 543, 305);
 		toolkit.adapt(tabFolderPreEvent);
 		toolkit.paintBordersFor(tabFolderPreEvent);
 
@@ -133,10 +122,13 @@ public class EventPlanning_PreEvent extends Composite {
 
 		TabItem tbtmPublicity = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmPublicity.setText("Publicity");
+		Composite publicity = new PreEvent_Publicity(tabFolderPreEvent,
+				SWT.NONE);
+		tbtmPublicity.setControl(publicity);
+		toolkit.paintBordersFor(publicity);
 
-		Composite composite_3 = new Composite(tabFolderPreEvent, SWT.NONE);
-		tbtmPublicity.setControl(composite_3);
-		toolkit.paintBordersFor(composite_3);
+		publicity.pack();
+		tabFolderPreEvent.pack();
 
 		TabItem tbtmCommittee = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmCommittee.setText("Committee");
@@ -188,6 +180,7 @@ public class EventPlanning_PreEvent extends Composite {
 		btnCommitteeEditMember.setBounds(424, 76, 101, 27);
 		toolkit.adapt(btnCommitteeEditMember, true, true);
 		btnCommitteeEditMember.setText("Edit");
+		this.pack();
 		fillTable();
 
 	}
@@ -223,7 +216,7 @@ public class EventPlanning_PreEvent extends Composite {
 			taskAssignAddItemPage.setText("Task Assign Add Item");
 			AbstractAdd taskAssignAddItem = new AbstractAdd(
 					taskAssignAddItemPage, SWT.None, stringArrayItem,
-					signatureArrayItem) {
+					signatureArrayItem, tableTaskAssign) {
 				public void onSubmit() {
 					// insert to database
 					String[] tempList = getStringList();
@@ -252,7 +245,7 @@ public class EventPlanning_PreEvent extends Composite {
 			taskAssignAddMemberPage.setText("Task Assign Add Member");
 			AbstractAdd taskAssignAddMember = new AbstractAdd(
 					taskAssignAddMemberPage, SWT.None, stringArrayMember,
-					signatureArrayMember) {
+					signatureArrayMember, tableCommittee) {
 				public void onSubmit() {
 					// insert to database
 					String[] tempList = getStringList();
@@ -313,7 +306,7 @@ public class EventPlanning_PreEvent extends Composite {
 				taskAssignEditItemPage.setText("Task Assign Edit Item");
 				AbstractEdit taskAssignEditItem = new AbstractEdit(
 						taskAssignEditItemPage, SWT.None, stringArrayItem,
-						signatureArrayItem) {
+						signatureArrayItem, tableTaskAssign) {
 					public void onLoad() {
 						for (int i = 0; i < stringArrayItem.length; i++) {
 							setData(tableTaskAssign.getItem(index).getText(i),
@@ -353,11 +346,12 @@ public class EventPlanning_PreEvent extends Composite {
 				taskAssignEditMemberPage.setText("Task Assign Edit Member");
 				AbstractEdit taskAssignEditMember = new AbstractEdit(
 						taskAssignEditMemberPage, SWT.None, stringArrayMember,
-						signatureArrayMember) {
+						signatureArrayMember, tableCommittee) {
 					// get data from table
 					public void onLoad() {
 						for (int i = 0; i < stringArrayMember.length; i++) {
-							setData(tableCommittee.getItem(index).getText(i), i);
+							setData(tableCommittee.getItem(index).getText(i),
+									signatureArrayMember[i], i);
 						}
 					}
 

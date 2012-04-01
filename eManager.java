@@ -135,7 +135,7 @@ public class eManager{
 		}
 		display.dispose();
 	}
-		
+
 	//opens Welcome page
 	class MenuOpenListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
@@ -204,6 +204,7 @@ public class eManager{
 
 	public static void main(String[] args) {
 		eManager eManager = new eManager();
+		DatabaseReader db = new DatabaseReader();
 	}
 
 }

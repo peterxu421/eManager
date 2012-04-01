@@ -65,7 +65,7 @@ public class Date {
 		else return false;	
 	}
 	
-	public boolean isNotLaterThan(Date date) {
+	public boolean isNotEarlierThan(Date date) {
 		if (year > date.getYear() ||
 				year == date.getYear() && month > date.getMonth() ||
 				year == date.getYear() && month == date.getMonth() && day > date.getDay() ||

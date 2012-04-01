@@ -40,7 +40,7 @@ class Venuespace extends Composite{
 		this.setLayout(gridLayout);
 	    Composite header = new Composite(this,SWT.None);
 	    header.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-	    header.setLayoutData(new GridData(770,60));
+	    header.setLayoutData(new GridData(1000,60));
 	    Composite optionBar = new Composite(this, SWT.None);
 	    optionBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    optionBar.setLayoutData(new GridData(771, 30));
@@ -63,7 +63,7 @@ class Venuespace extends Composite{
 	    }
 	    body = new Composite(this, SWT.None);
 	    body.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-	    body.setLayoutData(new GridData(769, 463));
+	    body.setLayoutData(new GridData(1000, 463));
 	    
 	    //body->
 	    GridLayout bodyLayout = new GridLayout();
@@ -74,7 +74,7 @@ class Venuespace extends Composite{
 	    right = new Composite(body, SWT.None);
 	    right.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    left.setLayoutData(new GridData(150,450));
-	    right.setLayoutData(new GridData(660,450));
+	    right.setLayoutData(new GridData(800,450));
 
 	    //header->
 	    FillLayout headerLayout = new FillLayout();

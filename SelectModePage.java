@@ -63,7 +63,8 @@ public class SelectModePage extends Composite {
 
 	class OrganizerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell pass_shell = new Shell(getDisplay());
+			Shell pass_shell = new Shell(getShell());
+			pass_shell.setLocation(450, 250);
 			SessionManager.setCurrentMode(MACRO.ORGANIZER);
 			PromptPassword pass_page = new PromptPassword(pass_shell, parent, SWT.None, MACRO.ORGANIZER);
 			pass_page.pack();

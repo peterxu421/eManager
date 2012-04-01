@@ -34,8 +34,8 @@ public class SessionManager {
 		connection = DriverManager.getConnection(url);
 		return;
 	}
-	
-	
+
+
 	//Events
 	public static Event getCurrentEvent() {
 		return event;
@@ -43,28 +43,28 @@ public class SessionManager {
 	public static void setCurrentEvent(Event newEvent) {
 		event = newEvent;
 	}
-	
-	
-	//Mode
-		public static int getCurrentIntMode() {
-			return intMode;
-		}
-		public static void setCurrentMode(int mode) {
-			intMode = mode;
-			if(mode == 1)
-				boolMode = MACRO.ORGANIZER_MODE;
-			if(mode == 2)
-				boolMode = MACRO.FACILITATOR_MODE;
-			if(mode == 3)
-				boolMode = MACRO.PARTICIPANT_MODE;
-			if(mode == 4)
-				boolMode = MACRO.APPLICANT_MODE;
-			if(mode == 5)
-				boolMode = MACRO.MANAGER_MODE;
-		}
 
-		//Mode
-		public static boolean[][] getCurrentBoolMode() {
-			return boolMode;
-		}
+
+	//Mode
+	public static int getCurrentIntMode() {
+		return intMode;
+	}
+	public static void setCurrentMode(int mode) {
+		intMode = mode;
+		if(mode == 1)
+			boolMode = MACRO.ORGANIZER_MODE;
+		if(mode == 2)
+			boolMode = MACRO.FACILITATOR_MODE;
+		if(mode == 3)
+			boolMode = MACRO.PARTICIPANT_MODE;
+		if(mode == 4)
+			boolMode = MACRO.APPLICANT_MODE;
+		if(mode == 5)
+			boolMode = MACRO.MANAGER_MODE;
+	}
+
+	//Mode
+	public static boolean[][] getCurrentBoolMode() {
+		return boolMode;
+	}
 }

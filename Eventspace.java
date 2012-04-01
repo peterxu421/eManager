@@ -69,6 +69,8 @@ class Eventspace extends Composite{
 	    	buttons[i].setText(optionList[i]);
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
 	    	buttons[i].setEnabled(boolMode[0][i]);
+	    	System.out.println("bool" + boolMode[0]);
+	    	//buttons[i].setEnabled(boolMode[i]);
 	    }
 	    
 	    //body

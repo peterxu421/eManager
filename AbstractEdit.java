@@ -7,15 +7,16 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
 // Abstract Edit page inherits from AbstractForm
 public abstract class AbstractEdit extends AbstractForm {
 
 	public AbstractEdit(Composite parent, int style, String[] stringList,
-			int[] signature) {
+			int[] signature, Table table) {
 		// Inherit AbstractForm constructor.
-		super(parent, style, stringList, signature);
+		super(parent, style, stringList, signature, table);
 		// TODO Auto-generated constructor stub
 		// Set buttons
 		Button btnAdd = new Button(this, SWT.None);
@@ -31,25 +32,25 @@ public abstract class AbstractEdit extends AbstractForm {
 
 	// Set data for Text, Calendar, Time and Check Box.
 	protected void setData(String string, int signature, int index) {
-		//Deal with Text, BigText, integer, double
+		// Deal with Text, BigText, integer, double
 		if (signature == MACRO.TEXT || signature == MACRO.INT
-				|| signature == MACRO.TEXTBIG||signature==MACRO.DOUBLE) {
+				|| signature == MACRO.TEXTBIG || signature == MACRO.DOUBLE) {
 			((Text) get(index)).setText(string);
-		} 
-		//Deal with Date
+		}
+		// Deal with Date
 		else if (signature == MACRO.DATE) {
 			Date date = new Date(string);
 			Calendar cal = new GregorianCalendar();
 			cal.set(date.getYear(), date.getMonth() - 1, date.getDay());
 			((CalendarCombo) get(index)).setDate(cal);
-		} 
-		//Deal with Time
+		}
+		// Deal with Time
 		else if (signature == MACRO.TIME) {
 			Time time = new Time(string);
 			((DateTime) get(index)).setTime(time.getHour(), time.getMinute(),
 					time.getSecond());
-		} 
-		//Deal with CheckBox
+		}
+		// Deal with CheckBox
 		else if (signature == MACRO.CHECK) {
 			boolean isDone = Boolean.parseBoolean(string);
 			if (isDone) {
@@ -57,9 +58,9 @@ public abstract class AbstractEdit extends AbstractForm {
 			} else {
 				((Button) get(index)).setSelection(false);
 			}
-		} 
-		//Deal with Faculty
-		else if (signature==MACRO.FACULTY){
+		}
+		// Deal with Faculty
+		else if (signature == MACRO.FACULTY||signature==MACRO.ORGANIZER||signature==MACRO.FACILITATOR) {
 			((Combo) get(index)).setText(string);
 		}
 	}

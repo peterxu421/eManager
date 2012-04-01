@@ -7,6 +7,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -20,7 +21,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 
@@ -36,6 +36,10 @@ public class VenueManagement_VenueWeekView extends Composite {
 	private Venue selectedVenue = new Venue();
 	private ArrayList<Date> dateInAWeekList = new ArrayList<Date>();  
 	private Button btnViewAllApplications;
+	private Label lblApproved;
+	private Label lblApprovedColor;
+	private Label lblPending;
+	private Label lblPendingColor;
 	                // an arrayList containing the the dates of the seven days in the week shown at the top row of the table
 
 	/**
@@ -105,7 +109,7 @@ public class VenueManagement_VenueWeekView extends Composite {
 		btnViewAllApplications = new Button(composite, SWT.NONE);
 		btnViewAllApplications.setBounds(10, 444, 124, 25);
 		toolkit.adapt(btnViewAllApplications, true, true);
-		btnViewAllApplications.setText("View all applications");
+		btnViewAllApplications.setText("Application History");
 		btnViewAllApplications.addSelectionListener(new viewAllApplications());
 		
 		calendarCombo = new CalendarCombo(composite, SWT.NONE);
@@ -113,6 +117,26 @@ public class VenueManagement_VenueWeekView extends Composite {
 		toolkit.adapt(calendarCombo);
 		toolkit.paintBordersFor(calendarCombo);
 		calendarCombo.setDate(Calendar.getInstance());
+		
+		lblApproved = new Label(composite, SWT.NONE);
+		lblApproved.setAlignment(SWT.RIGHT);
+		lblApproved.setBounds(211, 449, 55, 15);
+		toolkit.adapt(lblApproved, true, true);
+		lblApproved.setText("Approved");
+		
+		lblApprovedColor = new Label(composite, SWT.NONE);
+		lblApprovedColor.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+		lblApprovedColor.setBounds(275, 449, 55, 15);
+		
+		lblPending = new Label(composite, SWT.NONE);
+		lblPending.setAlignment(SWT.RIGHT);
+		lblPending.setBounds(363, 449, 55, 15);
+		toolkit.adapt(lblPending, true, true);
+		lblPending.setText("Pending");
+		
+		lblPendingColor = new Label(composite, SWT.NONE);
+		lblPendingColor.setBackground(SWTResourceManager.getColor(SWT.COLOR_YELLOW));
+		lblPendingColor.setBounds(424, 449, 55, 15);
 		
 	}
 	
@@ -162,20 +186,30 @@ public class VenueManagement_VenueWeekView extends Composite {
 			if (!bookingInfoList.isEmpty()){
 				for (int i=0; i<bookingInfoList.size(); i++){
 					if(bookingInfoList.get(i).getStatus() == MACRO.PENDING || bookingInfoList.get(i).getStatus() == MACRO.APPROVED){
-					    BookedDateTime dateTime = bookingInfoList.get(i).getDateTime();
-					    for (int j=0; j<dateInAWeekList.size(); j++){
-					    	if(dateInAWeekList.get(j).isEqualTo(dateTime.getDate())){ // find the booked date
-					    		for(int k=0; k<weekViewTable.getItemCount();k++){
-					    			if(Time.parseHour(weekViewTable.getItem(k).getText(0)) == dateTime.getTimeStart().getHour()){ // find the booked time
-					    				for (int t=0; t<(dateTime.getTimeEnd().getHour()-dateTime.getTimeStart().getHour()); t++){
-					    					weekViewTable.getItem(k).setText(j+1, bookingInfoList.get(i).getApplicant().getOrganization());
-					    					k++; // move to the next hour in the week view time table
-					    				}
-					    			}
-					    		}
-					    	} 
-					    }
+			
 					}
+				    BookedDateTime dateTime = bookingInfoList.get(i).getDateTime();
+				    for (int j=0; j<dateInAWeekList.size(); j++){
+				    	if(dateInAWeekList.get(j).isEqualTo(dateTime.getDate())){ // find the booked date
+				    		for(int k=0; k<weekViewTable.getItemCount();k++){
+				    			if(Time.parseHour(weekViewTable.getItem(k).getText(0)) == dateTime.getTimeStart().getHour()){ // find the booked time
+				    				for (int t=0; t<(dateTime.getTimeEnd().getHour()-dateTime.getTimeStart().getHour()); t++){	
+				    					if(bookingInfoList.get(i).getStatus() == MACRO.APPROVED){
+				    						weekViewTable.getItem(k).setText(j+1, bookingInfoList.get(i).getApplicant().getOrganization());
+				    						Color approvedColor = weekViewTable.getDisplay().getSystemColor(SWT.COLOR_GREEN);
+				    						weekViewTable.getItem(k).setBackground(j+1, approvedColor);
+				    					}	
+				    					if(bookingInfoList.get(i).getStatus() == MACRO.PENDING){
+				    						weekViewTable.getItem(k).setText(j+1, bookingInfoList.get(i).getApplicant().getOrganization());
+				    						Color pendingColor = weekViewTable.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
+				    						weekViewTable.getItem(k).setBackground(j+1, pendingColor);
+				    					}
+				    					k++; // move to the next hour in the week view time table
+				    				}
+				    			}
+				    		}
+				    	} 
+				    }
 				}
 			}	
 		}

@@ -4,8 +4,6 @@ import org.eclipse.nebula.widgets.gallery.DefaultGalleryItemRenderer;
 import org.eclipse.nebula.widgets.gallery.Gallery;
 import org.eclipse.nebula.widgets.gallery.GalleryItem;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -13,7 +11,6 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
@@ -23,16 +20,17 @@ import org.eclipse.swt.widgets.Shell;
 public class PreEvent_Publicity extends Composite{
 	protected Composite left;
 	protected Composite right;
+	Gallery gallery;
+	private GalleryItem group;
 	public PreEvent_Publicity(Composite parent, int style) {
 		super(parent, style);
-		Image image = new Image(getDisplay(), "resources/me.jpg");
 		//Background
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2;
 		this.setLayout(gridLayout);
 		
 		left = new Composite(this, SWT.None);
-		GridData leftData = new GridData(750,500);
+		GridData leftData = new GridData(500,500);
 		left.setLayoutData(leftData);
 		
 		right = new Composite(this, SWT.None);
@@ -41,47 +39,25 @@ public class PreEvent_Publicity extends Composite{
 		
 		//left->
 		GridLayout leftLayout = new GridLayout();
-		leftLayout.numColumns = 3;
+		leftLayout.numColumns = 1;
 		left.setLayout(leftLayout);
-//		for(int i=0; i<3; i++){
-//			Canvas canvas = new Canvas(left, SWT.None);
-//			GridData imageGridData = new GridData(250,250);
-//			canvas.setLayoutData(imageGridData);
-//			canvas.addPaintListener(new PaintListener() {
-//				public void paintControl(PaintEvent e) {
-//					Image image = new Image(getDisplay(), new ImageData("resources/me.jpg").scaledTo(250, 250)); 
-//					e.gc.drawImage(image, 0,0);
-//					image.dispose();
-//				}
-//			});
-//		}
-		Gallery gallery = new Gallery(left, SWT.V_SCROLL | SWT.MULTI);
-		GridData galleryData = new GridData();
+
+		gallery = new Gallery(left, SWT.V_SCROLL | SWT.MULTI);
+		GridData galleryData = new GridData(500,500);
 		gallery.setLayoutData(galleryData);
 		
 		DefaultGalleryGroupRenderer gr = new DefaultGalleryGroupRenderer();
 		gr.setMinMargin(2);
-		gr.setItemHeight(56);
-		gr.setItemWidth(72);
-		gr.setAutoMargin(true);
+		gr.setItemHeight(150);
+		gr.setItemWidth(150);
+		gr.setAutoMargin(false);
 		gallery.setGroupRenderer(gr);
 		
 		DefaultGalleryItemRenderer ir = new DefaultGalleryItemRenderer();
 		gallery.setItemRenderer(ir);
-		
-		for (int g = 0; g < 2; g++) {
-			GalleryItem group = new GalleryItem(gallery, SWT.NONE);
-			group.setText("Group " + g); //$NON-NLS-1$
-			group.setExpanded(true);
-
-			for (int i = 0; i < 50; i++) {
-				GalleryItem item = new GalleryItem(group, SWT.NONE);
-				if (image != null) {
-					item.setImage(image);
-				}
-				item.setText("Item " + i); //$NON-NLS-1$
-			}
-		}
+		group = new GalleryItem(gallery, SWT.NONE);
+		group.setText("Images");
+		group.setExpanded(true);
 		
 		//right->
 		GridLayout rightLayout = new GridLayout();
@@ -89,33 +65,66 @@ public class PreEvent_Publicity extends Composite{
 		right.setLayout(rightLayout);
 		
 		Button importPic = new Button(right, SWT.PUSH);
-		GridData buttonData = new GridData(130,50);
-		importPic.setLayoutData(buttonData);
+		GridData importPicData = new GridData(130,50);
+		importPic.setLayoutData(importPicData);
 		importPic.setText("Import");
 		importPic.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
 				Shell open = new Shell(getDisplay());
-				FileDialog browser = new FileDialog(open, SWT.OPEN);
-				String path = browser.open();
-				if(path != null){
-					addImage(path);
+				FileDialog browser = new FileDialog(open, SWT.OPEN | SWT.MULTI);
+				browser.setFilterExtensions(new String[]{"*.jpg", "*.png", "*.bmp", "*.*"});
+				browser.open();
+				String[] filenames = browser.getFileNames();
+				String path = browser.getFilterPath();
+				for(int i=0; i<filenames.length; i++){
+					addImage(path +"\\" + filenames[i]);
+				}
+				gallery.redraw();
+			}
+		});
+		
+		Button edit = new Button(right, SWT.PUSH);
+		GridData editData = new GridData(130,50);
+		edit.setText("Edit");
+		edit.setLayoutData(editData);
+		edit.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e){
+				Shell shell = new Shell(getShell(), SWT.None);
+				shell.setLocation(300,150);
+				
+				if(gallery.getSelection().length!=0){
+					Image image = gallery.getSelection()[0].getImage();
+					PhotoEditorPage page = new PhotoEditorPage(shell, SWT.NONE, image);
+					page.pack();
+					shell.pack();
+					shell.open();
 				}
 			}
 		});
 		
-	}
-	public void addImage(final String path){
-		Canvas canvas = new Canvas(left, SWT.None);
-		GridData imageGridData = new GridData(250,250);
-		canvas.setLayoutData(imageGridData);
-		canvas.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
-				Image image = new Image(getDisplay(), new ImageData(path).scaledTo(250, 250)); 
-				e.gc.drawImage(image, 0,0);
-				image.dispose();
+		Button delete = new Button(right, SWT.PUSH);
+		GridData deleteData = new GridData(130, 50);
+		delete.setText("Delete");
+		delete.setLayoutData(deleteData);
+		delete.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e){
+				if(gallery.getSelectionCount()!=0){
+					int length = gallery.getSelection().length;
+					GalleryItem[] images = gallery.getSelection();
+					for(int i=0; i<length; i++){
+						group.remove(images[i]);
+					}
+				}
 			}
 		});
-		left.layout();
+	}
+	public void addImage(final String path){
+		Image image = new Image(getDisplay(), new ImageData(path));
+		GalleryItem item = new GalleryItem(group, SWT.None);
+		item.setText(path);
+		if(image!=null){
+			item.setImage(image);
+		}
 	}
 	
 	public static void main(String[] args){
@@ -130,5 +139,4 @@ public class PreEvent_Publicity extends Composite{
 		}
 		display.dispose();
 	}
-	
 }
