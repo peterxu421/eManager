@@ -18,12 +18,18 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 
 public class VenueManagement_VenueList extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Table venueTable;
+	protected String[] venueLocationArray = { "Arts and Social Sciences",
+			"Business", "Computing", "Dentistry", "Design and Environment",
+			"Engineering", "Law", "Medicine", "Music", "Science",
+			"Central Library", "CFA", "PGP", "YIH", "SRC", "UCC", "Others" };
 	private String[] venueInfoArray = { "Name", "Location", "Type", "Capacity" };
     private int[] venueInfoSignatureArray = { MACRO.TEXT, MACRO.VENUELOCATION, MACRO.VENUETYPE, MACRO.INT};
     
@@ -35,6 +41,7 @@ public class VenueManagement_VenueList extends Composite {
 	 */
 	public VenueManagement_VenueList(Composite parent, int style) {
 		super(parent, style);
+		setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				toolkit.dispose();
@@ -44,14 +51,14 @@ public class VenueManagement_VenueList extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(0, 0, 800, 350);
+		composite.setBounds(0, 0, 800, 390);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		venueTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		venueTable.setLinesVisible(true);
 		venueTable.setHeaderVisible(true);
-		venueTable.setBounds(0, 0, 600, 350);
+		venueTable.setBounds(0, 40, 600, 350);
 		toolkit.adapt(venueTable);
 		toolkit.paintBordersFor(venueTable);
 		
@@ -73,27 +80,41 @@ public class VenueManagement_VenueList extends Composite {
 		
 		Button btnAdd = new Button(composite, SWT.NONE);
 		btnAdd.setText("Add");
-		btnAdd.setBounds(655, 0, 90, 30);
+		btnAdd.setBounds(655, 40, 90, 30);
 		toolkit.adapt(btnAdd, true, true);
 		btnAdd.addSelectionListener(new add());
 		
 		Button btnDelete = new Button(composite, SWT.NONE);
 		btnDelete.setText("Delete");
-		btnDelete.setBounds(655, 40, 90, 30);
+		btnDelete.setBounds(655, 80, 90, 30);
 		toolkit.adapt(btnDelete, true, true);
 		btnDelete.addSelectionListener(new delete());
 		
 		Button btnEdit = new Button(composite, SWT.NONE);
 		btnEdit.setText("Edit");
-		btnEdit.setBounds(655, 80, 90, 30);
+		btnEdit.setBounds(655, 120, 90, 30);
 		toolkit.adapt(btnEdit, true, true);
 		btnEdit.addSelectionListener(new edit());
 		
 		Button btnView = new Button(composite, SWT.NONE);
 		btnView.setText("View Booking Applications");
-		btnView.setBounds(625, 120, 150, 30);
+		btnView.setBounds(625, 160, 150, 30);
 		toolkit.adapt(btnView, true, true);
-	    btnView.addSelectionListener(new viewBookingInfo());
+		btnView.addSelectionListener(new viewBookingInfo());
+		
+		Label lblEnterLocation = new Label(composite, SWT.NONE);
+		lblEnterLocation.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
+		lblEnterLocation.setBounds(0, 0, 116, 30);
+		toolkit.adapt(lblEnterLocation, true, true);
+		lblEnterLocation.setText("Choose location");
+		
+		Combo comboLocation = new Combo(composite, SWT.NONE);
+		comboLocation.setBounds(130, 0, 100, 30);
+		toolkit.adapt(comboLocation);
+		toolkit.paintBordersFor(comboLocation);
+		comboLocation.setText("Location");
+		comboLocation.addSelectionListener(new chooseLocation());
+	   
 	    
 		Calendar calendar = Calendar.getInstance(); // today
 		today.setYear(calendar.get(Calendar.YEAR));
@@ -102,6 +123,13 @@ public class VenueManagement_VenueList extends Composite {
 	    
 	    importVenueListData();
 
+	}
+	
+	public class chooseLocation extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
+			
+			
+		}
 	}
 	
 	public void importVenueListData() {
@@ -171,7 +199,7 @@ public class VenueManagement_VenueList extends Composite {
 						else {
 							MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
 							warningPage.setText("Warning!");
-							warningPage.setMessage("Please clear its applicatin log before removing a venue!");
+							warningPage.setMessage("Please clear its application log before removing a venue!");
 							warningPage.open(); 
 						}
 					}

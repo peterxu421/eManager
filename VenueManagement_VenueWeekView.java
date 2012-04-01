@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
+import org.eclipse.nebula.widgets.calendarcombo.ICalendarListener;
 
 public class VenueManagement_VenueWeekView extends Composite {
 
@@ -96,15 +97,15 @@ public class VenueManagement_VenueWeekView extends Composite {
 		Label lblEnterPreferredEvent = new Label(composite, SWT.NONE);
 		lblEnterPreferredEvent.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblEnterPreferredEvent.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		lblEnterPreferredEvent.setText("Choose the date");
-		lblEnterPreferredEvent.setBounds(10, 24, 109, 23);
+		lblEnterPreferredEvent.setText("Select date");
+		lblEnterPreferredEvent.setBounds(10, 25, 80, 25);
 		toolkit.adapt(lblEnterPreferredEvent, true, true);
 		
-		Button btnCheck = new Button(composite, SWT.NONE);
-		btnCheck.setBounds(240, 22, 75, 25);
-		toolkit.adapt(btnCheck, true, true);
-		btnCheck.setText("Check");
-		btnCheck.addSelectionListener(new checkBookingInfo());
+//		Button btnCheck = new Button(composite, SWT.NONE);
+//		btnCheck.setBounds(240, 22, 75, 25);
+//		toolkit.adapt(btnCheck, true, true);
+//		btnCheck.setText("Check");
+//		btnCheck.addSelectionListener(new checkBookingInfo());
 		
 		btnViewAllApplications = new Button(composite, SWT.NONE);
 		btnViewAllApplications.setBounds(10, 444, 124, 25);
@@ -112,11 +113,12 @@ public class VenueManagement_VenueWeekView extends Composite {
 		btnViewAllApplications.setText("Application History");
 		btnViewAllApplications.addSelectionListener(new viewAllApplications());
 		
-		calendarCombo = new CalendarCombo(composite, SWT.NONE);
-		calendarCombo.setBounds(128, 24, 88, 23);
+		calendarCombo = new CalendarCombo(composite, SWT.READ_ONLY);
+		calendarCombo.setBounds(90, 25, 100, 25);
 		toolkit.adapt(calendarCombo);
 		toolkit.paintBordersFor(calendarCombo);
 		calendarCombo.setDate(Calendar.getInstance());
+		calendarCombo.addCalendarListener(new checkBookingInfo());
 		
 		lblApproved = new Label(composite, SWT.NONE);
 		lblApproved.setAlignment(SWT.RIGHT);
@@ -141,8 +143,21 @@ public class VenueManagement_VenueWeekView extends Composite {
 	}
 	
 	/* Button selection adapters */
-	public class checkBookingInfo extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e) {
+	public class checkBookingInfo implements ICalendarListener {
+		@Override
+		public void dateChanged(Calendar date) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void dateRangeChanged(Calendar start, Calendar end) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void popupClosed() {
 			/* Clear the week view time table before start a new bookingInfo check */
 			weekViewTable.removeAll();
 			
@@ -224,7 +239,12 @@ public class VenueManagement_VenueWeekView extends Composite {
 			case 6: tblclmn.setText("Fri " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
 			case 7: tblclmn.setText("Sat " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
 			}
+			
 		}
+		
+//		public void widgetSelected(SelectionEvent e) {
+//
+//		}
 	}
 	
 	public class viewAllApplications extends SelectionAdapter {
