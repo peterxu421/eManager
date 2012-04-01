@@ -393,6 +393,22 @@ public class DatabaseReader {
 		}
 		return venues;
 	}
+	
+	public ArrayList<Venue> getVenuesByLocation(String location){
+		ArrayList<Venue> venuesAtSameLocation = new ArrayList<Venue>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getVenuesByLocation(connection, location);
+			while(rs.next()){
+				Venue venue = new Venue(rs.getInt(1), rs.getString(2),
+						location, rs.getString(4), rs.getInt(5));
+				venuesAtSameLocation.add(venue);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return venuesAtSameLocation;
+	}
 	public void insertVenue(Venue venue) {
 		int venueID = SQLManager.insertVenueDetails(connection,
 				venue.getName(), venue.getLocation(), venue.getType(), venue.getCapacity());
@@ -656,6 +672,26 @@ public class DatabaseReader {
 		}
 		return booking;
 	} 
+	
+	/*Password*/
+	public String getPassword(){
+		ResultSet rs = null;
+		String password = null;
+		try {
+			rs = SQLManager.getPassword(connection, MACRO.MANAGER);
+			while (rs.next()) {
+				password = rs.getString("Password");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return password;
+	}
+	
+	public void updatePassword(){
+		SQLManager.updatePassword(connection, MACRO.MANAGER);
+	}
+	
 	public static void main(String[] args){
 		DatabaseReader db = new DatabaseReader();
 		Event event = db.getEvents().get(0);

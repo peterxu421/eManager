@@ -135,7 +135,7 @@ public class eManager{
 		}
 		display.dispose();
 	}
-
+		
 	//opens Welcome page
 	class MenuOpenListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
@@ -172,7 +172,7 @@ public class eManager{
 		public void widgetSelected(SelectionEvent e) {
 			if(SessionManager.getCurrentIntMode() != MACRO.ORGANIZER) {
 				Shell mode_shell = new Shell(display, SWT.None);
-				PromptPassword mode_page = new PromptPassword(mode_shell, null, SWT.None, MACRO.ORGANIZER);
+				PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None, MACRO.ORGANIZER);
 				mode_page.pack();
 				mode_shell.pack();
 				mode_shell.open();
@@ -183,7 +183,7 @@ public class eManager{
 		public void widgetSelected(SelectionEvent e) {
 			if(SessionManager.getCurrentIntMode() != MACRO.FACILITATOR) {
 				Shell mode_shell = new Shell(display, SWT.None);
-				PromptPassword mode_page = new PromptPassword(mode_shell, null, SWT.None, MACRO.FACILITATOR);
+				PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None, MACRO.FACILITATOR);
 				mode_page.pack();
 				mode_shell.pack();
 				mode_shell.open();
@@ -194,7 +194,7 @@ public class eManager{
 		public void widgetSelected(SelectionEvent e) {
 			if(SessionManager.getCurrentIntMode() != MACRO.PARTICIPANT) {
 				Shell mode_shell = new Shell(display, SWT.None);
-				PromptPassword mode_page = new PromptPassword(mode_shell, null, SWT.None, MACRO.PARTICIPANT);
+				PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None, MACRO.PARTICIPANT);
 				mode_page.pack();
 				mode_shell.pack();
 				mode_shell.open();

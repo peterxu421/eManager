@@ -581,7 +581,7 @@ public class EventPlanning_Budget extends Composite {
 				Shell edit_allocation_shell = new Shell(getDisplay());
 				AbstractEdit edit_allocation_page = new AbstractEdit(
 						edit_allocation_shell, SWT.None, stringArrayBudget,
-						signatureArrayBudget, AllocationTable) {
+						signatureArrayBudget) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayBudget.length; i++) {
@@ -706,7 +706,7 @@ public class EventPlanning_Budget extends Composite {
 				Shell edit_inflow_shell = new Shell(getDisplay());
 				AbstractEdit edit_inflow_page = new AbstractEdit(
 						edit_inflow_shell, SWT.None, stringArrayInflow,
-						signatureArrayInflow, InflowTable) {
+						signatureArrayInflow) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayInflow.length; i++) {
@@ -831,7 +831,7 @@ public class EventPlanning_Budget extends Composite {
 				Shell edit_outflow_shell = new Shell(getDisplay());
 				AbstractEdit edit_outflow_page = new AbstractEdit(
 						edit_outflow_shell, SWT.None, stringArrayOutflow,
-						signatureArrayOutflow, OutflowTable) {
+						signatureArrayOutflow) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayOutflow.length; i++) {

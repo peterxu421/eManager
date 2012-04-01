@@ -508,7 +508,7 @@ public class EventPlanning_ActualEvent extends Composite {
 				Shell itineraryEditItemPage = new Shell(getDisplay());
 				AbstractEdit itineraryEditItem = new AbstractEdit(
 						itineraryEditItemPage, SWT.None, stringArrayItinerary,
-						signatureItinerary,table_eventPlanning_actualEvent_tableItinerary) {
+						signatureItinerary) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayItinerary.length; i++) {
@@ -610,7 +610,7 @@ public class EventPlanning_ActualEvent extends Composite {
 				AbstractEdit allocOfManpowerEditItem = new AbstractEdit(
 						allocOfManpowerEditItemPage, SWT.None,
 						stringArrayAllocationOfManpower,
-						signatureAllocationOfManpower,table_eventPlanning_actualEvents_allocOfManpower) {
+						signatureAllocationOfManpower) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayAllocationOfManpower.length; i++) {
@@ -706,7 +706,7 @@ public class EventPlanning_ActualEvent extends Composite {
 				Shell facilitatorEditItemPage = new Shell(getDisplay());
 				AbstractEdit facilitatorEditItem = new AbstractEdit(
 						facilitatorEditItemPage, SWT.None,
-						stringArrayFacilitator, signatureFacilitator,table_eventPlanning_actualEvents_facilitators) {
+						stringArrayFacilitator, signatureFacilitator) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayFacilitator.length; i++) {
@@ -800,7 +800,7 @@ public class EventPlanning_ActualEvent extends Composite {
 				Shell participantEditItemPage = new Shell(getDisplay());
 				AbstractEdit participantEditItem = new AbstractEdit(
 						participantEditItemPage, SWT.None,
-						stringArrayParticipant, signatureParticipant,table_eventPlanning_actualEvent_participants) {
+						stringArrayParticipant, signatureParticipant) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayParticipant.length; i++) {

@@ -157,7 +157,7 @@ public class EventPlanning_FeedBack extends Composite {
 			if (index < tableFeedBack.getItemCount() && index >= 0) {
 				Shell feedbackEditItemPage = new Shell(getDisplay());
 				AbstractEdit feedbackEditItem = new AbstractEdit(
-						feedbackEditItemPage, SWT.None, stringArray,signatureArray, tableFeedBack) {
+						feedbackEditItemPage, SWT.None, stringArray,signatureArray) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArray.length; i++) {

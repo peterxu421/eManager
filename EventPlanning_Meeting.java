@@ -177,7 +177,7 @@ public class EventPlanning_Meeting extends Composite {
 				Shell edit_meeting_shell = new Shell(getDisplay());
 				AbstractEdit edit_meeting_page = new AbstractEdit(
 						edit_meeting_shell, SWT.None, stringArray,
-						signatureArray,table) {
+						signatureArray) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArray.length; i++) {

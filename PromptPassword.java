@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class PromptPassword extends Composite {
 
@@ -28,7 +29,7 @@ public class PromptPassword extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public PromptPassword(Composite parent, Composite parentParent, int style, int changeToMode) {
+	public PromptPassword(Composite parent, int style, int changeToMode) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -42,36 +43,37 @@ public class PromptPassword extends Composite {
 		this.parentParent = parentParent;
 
 
+		password = SessionManager.getCurrentEvent().getOrganizerPassword();
+		System.out.println(password);
+
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 224, 129);
+		composite.setBounds(10, 10, 363, 243);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 
 		Label lblPassword = new Label(composite, SWT.NONE);
-		lblPassword.setText("Password:");
-		lblPassword.setBounds(21, 20, 59, 14);
+		lblPassword.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblPassword.setText("Password");
+		lblPassword.setBounds(37, 60, 85, 26);
 		toolkit.adapt(lblPassword, true, true);
 
 		textPassWord = new Text(composite, SWT.BORDER | SWT.PASSWORD);
-		textPassWord.setBounds(96, 20, 103, 19);
+		textPassWord.setFont(SWTResourceManager.getFont("Myriad Pro Light", 14,
+				SWT.NORMAL));
+		textPassWord.setBounds(162, 60, 111, 26);
 		toolkit.adapt(textPassWord, true, true);
 
 		Button btnConfirm = new Button(composite, SWT.NONE);
-		btnConfirm.setBounds(10, 55, 94, 28);
+		btnConfirm.setBounds(37, 112, 100, 40);
 		toolkit.adapt(btnConfirm, true, true);
 		btnConfirm.setText("Confirm");
 		btnConfirm.addSelectionListener(new MenuConfirmListener());
 
 		Button btnCancel = new Button(composite, SWT.NONE);
-		btnCancel.setBounds(120, 55, 94, 28);
+		btnCancel.setBounds(162, 112, 100, 40);
 		toolkit.adapt(btnCancel, true, true);
 		btnCancel.setText("Cancel");
 		btnCancel.addSelectionListener(new CancelListener());
-
-		Button btnForgotPassword = new Button(composite, SWT.NONE);
-		btnForgotPassword.setBounds(10, 89, 125, 28);
-		toolkit.adapt(btnForgotPassword, true, true);
-		btnForgotPassword.setText("Forgot Password?");
 
 	}
 
@@ -106,11 +108,12 @@ public class PromptPassword extends Composite {
 		}
 	}
 
+	// Check which mode they will enter
 	class MenuConfirmListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
+			// Check whether their password is correct or not.
 			if (changeToMode == MACRO.ORGANIZER) {
-				// password = event.getOrganizerPassword();
-				if (textPassWord.getText().equals(password)) {
+				if (password == null && textPassWord.getText().isEmpty()) {
 					CreateEventPage(MACRO.ORGANIZER_MODE);
 					parent.dispose();
 					parentParent.dispose();
@@ -130,13 +133,31 @@ public class PromptPassword extends Composite {
 					case SWT.CANCEL:
 						break;
 					}
-				}
+//=======
+//				} else if (textPassWord.getText().equals(password)) {
+//					CreateEventPage(MACRO.ORGANIZER_MODE);
+//				} else {
+//					MessageBox warningPage = new MessageBox(getDisplay()
+//							.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+//					warningPage.setText("Warning!");
+//					warningPage.setMessage("Wrong Organizer Password!");
+//					warningPage.open();
+//>>>>>>> 1856a91a858f77e0e48f65cc5af8f17f23692e1d
+//				}
+			}
 			}
 
 			if (changeToMode == MACRO.FACILITATOR) {
-				// password = event.getFacilitatorPassword();
-				if (textPassWord.getText().equals(password)) {
+				if (password == null && textPassWord.getText().isEmpty()) {
 					CreateEventPage(MACRO.FACILITATOR_MODE);
+				} else if (textPassWord.getText().equals(password)) {
+					CreateEventPage(MACRO.FACILITATOR_MODE);
+				} else {
+					MessageBox warningPage = new MessageBox(getDisplay()
+							.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+					warningPage.setText("Warning!");
+					warningPage.setMessage("Wrong Facilitator Password!");
+					warningPage.open();
 				}
 			}
 

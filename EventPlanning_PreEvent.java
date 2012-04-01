@@ -115,9 +115,9 @@ public class EventPlanning_PreEvent extends Composite {
 		FillLayout fillLayout = new FillLayout();
 		fillLayout.marginWidth = 0;
 		composite_2.setLayout(fillLayout);
-		// TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
-		// taskChart.setSize(300, 300);
-		// taskChart.pack();
+		TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
+		taskChart.setSize(400, 300);
+		taskChart.pack();
 		composite_2.pack();
 
 		TabItem tbtmPublicity = new TabItem(tabFolderPreEvent, SWT.NONE);
@@ -306,7 +306,7 @@ public class EventPlanning_PreEvent extends Composite {
 				taskAssignEditItemPage.setText("Task Assign Edit Item");
 				AbstractEdit taskAssignEditItem = new AbstractEdit(
 						taskAssignEditItemPage, SWT.None, stringArrayItem,
-						signatureArrayItem, tableTaskAssign) {
+						signatureArrayItem) {
 					public void onLoad() {
 						for (int i = 0; i < stringArrayItem.length; i++) {
 							setData(tableTaskAssign.getItem(index).getText(i),
@@ -346,7 +346,7 @@ public class EventPlanning_PreEvent extends Composite {
 				taskAssignEditMemberPage.setText("Task Assign Edit Member");
 				AbstractEdit taskAssignEditMember = new AbstractEdit(
 						taskAssignEditMemberPage, SWT.None, stringArrayMember,
-						signatureArrayMember, tableCommittee) {
+						signatureArrayMember) {
 					// get data from table
 					public void onLoad() {
 						for (int i = 0; i < stringArrayMember.length; i++) {
