@@ -393,6 +393,22 @@ public class DatabaseReader {
 		}
 		return venues;
 	}
+	
+	public ArrayList<Venue> getVenuesByLocation(String location){
+		ArrayList<Venue> venuesAtSameLocation = new ArrayList<Venue>();
+		ResultSet rs = null;
+		try{
+			rs = SQLManager.getVenueDetails(connection, location);
+			while(rs.next()){
+				Venue venue = new Venue(rs.getInt(1), rs.getString(2),
+						location, rs.getString(4), rs.getInt(5));
+				venuesAtSameLocation.add(venue);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return venuesAtSameLocation;
+	}
 	public void insertVenue(Venue venue) {
 		int venueID = SQLManager.insertVenueDetails(connection,
 				venue.getName(), venue.getLocation(), venue.getType(), venue.getCapacity());
