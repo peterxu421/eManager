@@ -74,15 +74,15 @@ public class EventPlanning_PreEvent extends Composite {
 		tblclmnTask.setText("Task");
 
 		TableColumn tblclmnAssignedTo = new TableColumn(tableTaskAssign,
-				SWT.NONE);
+				SWT.CENTER);
 		tblclmnAssignedTo.setWidth(150);
 		tblclmnAssignedTo.setText("Assigned To");
 
-		TableColumn tblclmnDateDue = new TableColumn(tableTaskAssign, SWT.NONE);
+		TableColumn tblclmnDateDue = new TableColumn(tableTaskAssign, SWT.CENTER);
 		tblclmnDateDue.setWidth(120);
 		tblclmnDateDue.setText("Date Due");
 
-		TableColumn tblclmnDone = new TableColumn(tableTaskAssign, SWT.NONE);
+		TableColumn tblclmnDone = new TableColumn(tableTaskAssign, SWT.CENTER);
 		tblclmnDone.setWidth(80);
 		tblclmnDone.setText("Done");
 
@@ -144,19 +144,19 @@ public class EventPlanning_PreEvent extends Composite {
 		tableCommittee.setHeaderVisible(true);
 		tableCommittee.setLinesVisible(true);
 
-		TableColumn tblclmnName = new TableColumn(tableCommittee, SWT.NONE);
+		TableColumn tblclmnName = new TableColumn(tableCommittee, SWT.CENTER);
 		tblclmnName.setWidth(170);
 		tblclmnName.setText("Name");
 
-		TableColumn tblclmnYear = new TableColumn(tableCommittee, SWT.NONE);
+		TableColumn tblclmnYear = new TableColumn(tableCommittee, SWT.CENTER);
 		tblclmnYear.setWidth(60);
 		tblclmnYear.setText("Year");
 
-		TableColumn tblclmnFaculty = new TableColumn(tableCommittee, SWT.NONE);
+		TableColumn tblclmnFaculty = new TableColumn(tableCommittee, SWT.CENTER);
 		tblclmnFaculty.setWidth(120);
 		tblclmnFaculty.setText("Faculty");
 
-		TableColumn tblclmnPosition = new TableColumn(tableCommittee, SWT.NONE);
+		TableColumn tblclmnPosition = new TableColumn(tableCommittee, SWT.CENTER);
 		tblclmnPosition.setWidth(200);
 		tblclmnPosition.setText("Position");
 

@@ -34,38 +34,28 @@ public class eP_participants_packingList extends Composite {
 		toolkit.paintBordersFor(this);
 		this.event = event;
 		
-		Composite comp_eP_participants_packingList = new Composite(this, SWT.NONE);
-		comp_eP_participants_packingList.setBounds(10, 10, 630, 313);
-		toolkit.adapt(comp_eP_participants_packingList);
-		toolkit.paintBordersFor(comp_eP_participants_packingList);
-		
-		table_eP_participants_packingList = new Table(comp_eP_participants_packingList, SWT.BORDER | SWT.FULL_SELECTION);
+		table_eP_participants_packingList = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
 		table_eP_participants_packingList.setLinesVisible(true);
 		table_eP_participants_packingList.setHeaderVisible(true);
-		table_eP_participants_packingList.setBounds(10, 10, 509, 255);
+		table_eP_participants_packingList.setBounds(10, 10, 550, 400);
 		toolkit.adapt(table_eP_participants_packingList);
 		toolkit.paintBordersFor(table_eP_participants_packingList);
 		
 		TableColumn col_eP_participants_description = new TableColumn(table_eP_participants_packingList, SWT.CENTER);
-		col_eP_participants_description.setWidth(123);
+		col_eP_participants_description.setWidth(130);
 		col_eP_participants_description.setText("Category");
 		
 		TableColumn col_eP_participants_date = new TableColumn(table_eP_participants_packingList, SWT.CENTER);
-		col_eP_participants_date.setWidth(112);
+		col_eP_participants_date.setWidth(120);
 		col_eP_participants_date.setText("Item");
 		
 		TableColumn col_eP_participants_time = new TableColumn(table_eP_participants_packingList, SWT.CENTER);
-		col_eP_participants_time.setWidth(68);
+		col_eP_participants_time.setWidth(80);
 		col_eP_participants_time.setText("Quantity");
 		
 		TableColumn col_eP_participants_done = new TableColumn(table_eP_participants_packingList, SWT.CENTER);
-		col_eP_participants_done.setWidth(200);
+		col_eP_participants_done.setWidth(220);
 		col_eP_participants_done.setText("Remark");
-		
-		Button btn_eP_participants_print = new Button(comp_eP_participants_packingList, SWT.NONE);
-		btn_eP_participants_print.setText("Print");
-		btn_eP_participants_print.setBounds(525, 10, 80, 27);
-		toolkit.adapt(btn_eP_participants_print, true, true);
 		
 		fillTable();
 	}

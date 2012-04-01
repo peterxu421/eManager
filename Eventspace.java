@@ -20,6 +20,10 @@ class Eventspace extends Composite {
 	Composite right;
 	Label eventName;
 	Label eventDescription;
+	private String[] stringArrayRegistration = { "Name", "Matriculation",
+			"Year", "Faculty", "Event", "Applying for", "Food Type", "Allergy" };
+	private int[] signatureArrayRegistration = { MACRO.TEXT, MACRO.TEXT,
+			MACRO.INT, MACRO.FACULTY, MACRO.READONLY, MACRO.ROLES,MACRO.TEXT, MACRO.TEXT };
 	private String[] stringPassword = { "Original Password", "New Password",
 			"Confirm New Password" };
 	private int[] signaturePassword = { MACRO.PASSWORD, MACRO.PASSWORD,
@@ -135,7 +139,8 @@ class Eventspace extends Composite {
 
 	class SettingAdapter extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell settingShell = new Shell(getShell(), SWT.ON_TOP | SWT.NO_TRIM);
+			Shell settingShell = new Shell(getShell());
+			settingShell.setLocation(300,200);
 			AbstractEdit settingPage = new Setting(settingShell, SWT.None,
 					stringSetting, signatureSetting, new Table(getShell(),
 							SWT.None), stringButton);
@@ -148,30 +153,31 @@ class Eventspace extends Composite {
 	class Setting extends AbstractEdit {
 		public Setting(Shell settingShell, int type, String[] stringList,
 				int[] sigantureList, Table table, String[] stringButton) {
-			super(settingShell, type, stringList, sigantureList,
-					stringButton);
+			super(settingShell, type, stringList, sigantureList, stringButton);
 			// Create the setting page
 			Button btnOK = new Button(this, SWT.None);
 			btnOK.addSelectionListener(new SubmitHandler());
 			btnOK.setText(stringButton[0]);
-			btnOK.setLayoutData(new GridData(120, 30));
+			GridData gridData = new GridData(80, 40);
+			gridData.horizontalIndent = 25;
+			btnOK.setLayoutData(gridData);
 
 			Button btnCancel = new Button(this, SWT.None);
 			btnCancel.addSelectionListener(new CancelHandler());
 			btnCancel.setText(stringButton[1]);
-			btnCancel.setLayoutData(new GridData(120, 30));
+			btnCancel.setLayoutData(gridData);
 
 			Button btnOrganizerPassword = new Button(this, SWT.None);
 			btnOrganizerPassword
 					.addSelectionListener(new OrganizerPasswordPage());
 			btnOrganizerPassword.setText(stringButton[2]);
-			btnOrganizerPassword.setLayoutData(new GridData(120, 30));
+			btnOrganizerPassword.setLayoutData(new GridData(130, 40));
 
 			Button btnFacilitatorPassword = new Button(this, SWT.None);
 			btnFacilitatorPassword
 					.addSelectionListener(new FacilitatorPasswordPage());
 			btnFacilitatorPassword.setText(stringButton[3]);
-			btnFacilitatorPassword.setLayoutData(new GridData(120, 30));
+			btnFacilitatorPassword.setLayoutData(new GridData(130, 40));
 		}
 
 		// pop up organizer password page
@@ -180,6 +186,8 @@ class Eventspace extends Composite {
 
 			public void widgetSelected(SelectionEvent e) {
 				Shell organizerPaswordPage = new Shell(getShell());
+				organizerPaswordPage.setLocation(getShell().getLocation());
+				organizerPaswordPage.setSize(getShell().getSize());
 				event = SessionManager.getCurrentEvent();
 				AbstractEdit organizerPasword = new AbstractEdit(
 						organizerPaswordPage, SWT.None, stringPassword,
@@ -200,26 +208,29 @@ class Eventspace extends Composite {
 					// Override
 					public boolean additionalCheck() {
 						String[] stringList = getStringList();
-						boolean isValid=true;
+						boolean isValid = true;
 						// if the input password does not match the system one
-						if (!stringList[0].equals(event
-								.getOrganizerPassword())) {
-							isValid=false;
-							MessageBox warningPage = new MessageBox(getDisplay()
-									.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+						if (!stringList[0].equals(event.getOrganizerPassword())) {
+							isValid = false;
+							MessageBox warningPage = new MessageBox(
+									getDisplay().getActiveShell(), SWT.OK
+											| SWT.ICON_WARNING);
 							warningPage.setText("Warning!");
-							warningPage.setMessage("Original organizer password is wrong!");
+							warningPage
+									.setMessage("Original organizer password is wrong!");
 							warningPage.open();
 						}
 						// if the two input password does not match
 						else if (!stringList[1].equals(stringList[2])) {
-							isValid=false;
-							MessageBox warningPage = new MessageBox(getDisplay()
-									.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+							isValid = false;
+							MessageBox warningPage = new MessageBox(
+									getDisplay().getActiveShell(), SWT.OK
+											| SWT.ICON_WARNING);
 							warningPage.setText("Warning!");
-							warningPage.setMessage("The confirmed new passowrd for organizer does not match to new password!");
+							warningPage
+									.setMessage("The confirmed new passowrd for organizer does not match to new password!");
 							warningPage.open();
-						} 
+						}
 						return isValid;
 					}
 				};
@@ -235,6 +246,8 @@ class Eventspace extends Composite {
 
 			public void widgetSelected(SelectionEvent e) {
 				Shell facilitatorPaswordPage = new Shell(getShell());
+				facilitatorPaswordPage.setLocation(getShell().getLocation());
+				facilitatorPaswordPage.setSize(getShell().getSize());
 				event = SessionManager.getCurrentEvent();
 				AbstractEdit facilitatorPasword = new AbstractEdit(
 						facilitatorPaswordPage, SWT.None, stringPassword,
@@ -255,26 +268,30 @@ class Eventspace extends Composite {
 					// Override
 					public boolean additionalCheck() {
 						String[] stringList = getStringList();
-						boolean isValid=true;
+						boolean isValid = true;
 						// if the input password does not match the system one
 						if (!stringList[0].equals(event
 								.getFacilitatorPassword())) {
-							isValid=false;
-							MessageBox warningPage = new MessageBox(getDisplay()
-									.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+							isValid = false;
+							MessageBox warningPage = new MessageBox(
+									getDisplay().getActiveShell(), SWT.OK
+											| SWT.ICON_WARNING);
 							warningPage.setText("Warning!");
-							warningPage.setMessage("Original facilitator password is wrong!");
+							warningPage
+									.setMessage("Original facilitator password is wrong!");
 							warningPage.open();
 						}
 						// if the two input password does not match
 						else if (!stringList[1].equals(stringList[2])) {
-							isValid=false;
-							MessageBox warningPage = new MessageBox(getDisplay()
-									.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+							isValid = false;
+							MessageBox warningPage = new MessageBox(
+									getDisplay().getActiveShell(), SWT.OK
+											| SWT.ICON_WARNING);
 							warningPage.setText("Warning!");
-							warningPage.setMessage("The confirmed new passowrd for facilitator does not match to new password!");
+							warningPage
+									.setMessage("The confirmed new passowrd for facilitator does not match to new password!");
 							warningPage.open();
-						} 
+						}
 						return isValid;
 					}
 				};
@@ -304,7 +321,7 @@ class Eventspace extends Composite {
 			// update event name and event description
 			eventName.setText(stringList[0]);
 			eventDescription.setText(stringList[1]);
-			}
+		}
 
 		@Override
 		public boolean additionalCheck() {
@@ -352,7 +369,7 @@ class Eventspace extends Composite {
 				packing.pack();
 			} else if (name.equals("Event Registration")) {
 				eP_eventRegistration register = new eP_eventRegistration(right,
-						SWT.None, SessionManager.getCurrentEvent());
+						SWT.None, stringArrayRegistration,signatureArrayRegistration);
 				register.pack();
 			}
 			right.pack();

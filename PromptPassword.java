@@ -74,12 +74,12 @@ public class PromptPassword extends Composite {
 
 	public void CreateEventPage(boolean[] boolMode) {
 		Shell shell = new Shell(getDisplay(), SWT.None);
-		shell.setLocation(200, 100);
+		shell.setLocation(200, 50);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
 		shell.setText("eManager");
 		shell.setImage(icon);
 		Eventspace workspace = new Eventspace(shell, SWT.None, boolMode);
-		workspace.pack();
+		workspace.setSize(1000, 650);
 		shell.pack();
 		shell.open();
 		getParent().getShell().getParent().dispose();

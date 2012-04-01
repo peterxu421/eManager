@@ -38,7 +38,7 @@ public class EventPlanning_ActualEvent extends Composite {
 	private int[] signatureAllocationOfManpower = { MACRO.TEXT,
 			MACRO.FACILITATOR, MACRO.DATE, MACRO.CHECK };
 	private String[] stringArrayFacilitator = { "Name", "Year", "Faculty",
-			"Postion" };
+			"Food Type" };
 	private int[] signatureFacilitator = { MACRO.TEXT, MACRO.INT,
 			MACRO.FACULTY, MACRO.TEXT };
 	private String[] stringArrayParticipant = { "Name", "Year", "Faculty",
@@ -100,17 +100,17 @@ public class EventPlanning_ActualEvent extends Composite {
 				.setText("Description");
 
 		TableColumn col_eventPlanning_actualEvent__itinerary_date = new TableColumn(
-				table_eventPlanning_actualEvent_tableItinerary, SWT.NONE);
+				table_eventPlanning_actualEvent_tableItinerary, SWT.CENTER);
 		col_eventPlanning_actualEvent__itinerary_date.setWidth(120);
 		col_eventPlanning_actualEvent__itinerary_date.setText("Date");
 
 		TableColumn col_eventPlanning_actualEvent__itinerary_time = new TableColumn(
-				table_eventPlanning_actualEvent_tableItinerary, SWT.NONE);
+				table_eventPlanning_actualEvent_tableItinerary, SWT.CENTER);
 		col_eventPlanning_actualEvent__itinerary_time.setWidth(120);
 		col_eventPlanning_actualEvent__itinerary_time.setText("Time");
 
 		TableColumn col_eventPlanning_actualEvent__itinerary_done = new TableColumn(
-				table_eventPlanning_actualEvent_tableItinerary, SWT.NONE);
+				table_eventPlanning_actualEvent_tableItinerary, SWT.CENTER);
 		col_eventPlanning_actualEvent__itinerary_done.setWidth(80);
 		col_eventPlanning_actualEvent__itinerary_done.setText("Done");
 
@@ -166,19 +166,19 @@ public class EventPlanning_ActualEvent extends Composite {
 		col_eventPlanning_actualEvents_allocOfManpower_task.setText("Task");
 
 		TableColumn col_eventPlanning_actualEvents_allocOfManpower_assignedTo = new TableColumn(
-				table_eventPlanning_actualEvents_allocOfManpower, SWT.LEFT);
+				table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
 		col_eventPlanning_actualEvents_allocOfManpower_assignedTo.setWidth(120);
 		col_eventPlanning_actualEvents_allocOfManpower_assignedTo
 				.setText("Assigned To");
 
 		TableColumn col_eventPlanning_actualEvents_allocOfManpower_dateDue = new TableColumn(
-				table_eventPlanning_actualEvents_allocOfManpower, SWT.LEFT);
+				table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
 		col_eventPlanning_actualEvents_allocOfManpower_dateDue.setWidth(120);
 		col_eventPlanning_actualEvents_allocOfManpower_dateDue
 				.setText("Date Due");
 
 		TableColumn col_eventPlanning_actualEvents_allocOfManpower_done = new TableColumn(
-				table_eventPlanning_actualEvents_allocOfManpower, SWT.LEFT);
+				table_eventPlanning_actualEvents_allocOfManpower, SWT.CENTER);
 		col_eventPlanning_actualEvents_allocOfManpower_done.setWidth(80);
 		col_eventPlanning_actualEvents_allocOfManpower_done.setText("Done");
 
@@ -239,21 +239,21 @@ public class EventPlanning_ActualEvent extends Composite {
 		col_eventPlanning_actualEvents_facilitators_name.setText("Name");
 
 		TableColumn col_eventPlanning_actualEvents_facilitators_year = new TableColumn(
-				table_eventPlanning_actualEvents_facilitators, SWT.NONE);
+				table_eventPlanning_actualEvents_facilitators, SWT.CENTER);
 		col_eventPlanning_actualEvents_facilitators_year.setWidth(60);
 		col_eventPlanning_actualEvents_facilitators_year.setText("Year");
 
 		TableColumn col_eventPlanning_actualEvents_facilitators_interestedIn = new TableColumn(
-				table_eventPlanning_actualEvents_facilitators, SWT.NONE);
+				table_eventPlanning_actualEvents_facilitators, SWT.CENTER);
 		col_eventPlanning_actualEvents_facilitators_interestedIn.setWidth(120);
 		col_eventPlanning_actualEvents_facilitators_interestedIn
 				.setText("Faculty");
 
 		TableColumn col_eventPlanning_actualEvents_facilitators_status = new TableColumn(
-				table_eventPlanning_actualEvents_facilitators, SWT.NONE);
+				table_eventPlanning_actualEvents_facilitators, SWT.CENTER);
 		col_eventPlanning_actualEvents_facilitators_status.setWidth(200);
 		col_eventPlanning_actualEvents_facilitators_status
-				.setText("Interested In(Pos)");
+				.setText("Food Type");
 
 		Button btnFacilitatorsAddItem = new Button(
 				composite_eventPlanning_actualEvents_facilitators, SWT.NONE);
@@ -301,30 +301,30 @@ public class EventPlanning_ActualEvent extends Composite {
 		table_eventPlanning_actualEvent_participants.setLinesVisible(true);
 
 		TableColumn col_eventPlanning_actualEvent_participants_participants_name = new TableColumn(
-				table_eventPlanning_actualEvent_participants, SWT.NONE);
+				table_eventPlanning_actualEvent_participants, SWT.CENTER);
 		col_eventPlanning_actualEvent_participants_participants_name
-				.setWidth(141);
+				.setWidth(170);
 		col_eventPlanning_actualEvent_participants_participants_name
 				.setText("Name");
 
 		TableColumn col_eventPlanning_actualEvent_participants_participants_age = new TableColumn(
-				table_eventPlanning_actualEvent_participants, SWT.NONE);
+				table_eventPlanning_actualEvent_participants, SWT.CENTER);
 		col_eventPlanning_actualEvent_participants_participants_age
-				.setWidth(48);
+				.setWidth(60);
 		col_eventPlanning_actualEvent_participants_participants_age
 				.setText("Year");
 
 		TableColumn col_eventPlanning_actualEvent_participants_participants_faculty = new TableColumn(
-				table_eventPlanning_actualEvent_participants, SWT.NONE);
+				table_eventPlanning_actualEvent_participants, SWT.CENTER);
 		col_eventPlanning_actualEvent_participants_participants_faculty
-				.setWidth(115);
+				.setWidth(120);
 		col_eventPlanning_actualEvent_participants_participants_faculty
 				.setText("Faculty");
 
 		TableColumn col_eventPlanning_actualEvent_participants_participants_foodType = new TableColumn(
-				table_eventPlanning_actualEvent_participants, SWT.NONE);
+				table_eventPlanning_actualEvent_participants, SWT.CENTER);
 		col_eventPlanning_actualEvent_participants_participants_foodType
-				.setWidth(106);
+				.setWidth(200);
 		col_eventPlanning_actualEvent_participants_participants_foodType
 				.setText("Food Type");
 
@@ -419,7 +419,7 @@ public class EventPlanning_ActualEvent extends Composite {
 			temp.setText(0, facilitatorList.get(i).getName());
 			temp.setText(1, Integer.toString(facilitatorList.get(i).getYear()));
 			temp.setText(2, facilitatorList.get(i).getFaculty());
-			temp.setText(3, facilitatorList.get(i).getPosition());
+			temp.setText(3, facilitatorList.get(i).getFoodType());
 		}
 	}
 

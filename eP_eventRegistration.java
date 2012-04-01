@@ -3,6 +3,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -11,158 +12,73 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.custom.ScrolledComposite;
 
-public class eP_eventRegistration extends Composite {
+public class eP_eventRegistration extends AbstractForm {
 
-	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	private Text textName;
-	private Text textYearOfStudy;
-	private Text textFaculty;
-	private Text textEvent;
-	private Text textFoodType;
-	private Text textAllergy;
-	private Text textMatriculation;
-	private String[] stringArrayRegistration = { "Name", "Matriculation",
-			"Year", "Faculty", "Event", "Food Type", "Allergy" };
-	private int[] signatureArrayRegistration = { MACRO.TEXT, MACRO.INT,
-			MACRO.TEXT, MACRO.TEXT, MACRO.TEXT, MACRO.TEXT, MACRO.TEXT };
-	private Event event;
-	private Button btnClear;
+	Button btnClear;
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
-	public eP_eventRegistration(Composite parent, int style, Event event) {
-		super(parent, SWT.NONE);
-		addDisposeListener(new DisposeListener() {
-			public void widgetDisposed(DisposeEvent e) {
-				toolkit.dispose();
-			}
-		});
-		toolkit.adapt(this);
-		toolkit.paintBordersFor(this);
-		this.event = event;
-
-		ScrolledComposite scrolledCompositeRegistration = new ScrolledComposite(
-				this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledCompositeRegistration.setBounds(10, 10, 440, 326);
-		toolkit.adapt(scrolledCompositeRegistration);
-		toolkit.paintBordersFor(scrolledCompositeRegistration);
-		scrolledCompositeRegistration.setExpandHorizontal(true);
-		scrolledCompositeRegistration.setExpandVertical(true);
-
-		Composite compositeRegistration = new Composite(
-				scrolledCompositeRegistration, SWT.NONE);
-		toolkit.adapt(compositeRegistration);
-		toolkit.paintBordersFor(compositeRegistration);
-
-		Label lblFullName = new Label(compositeRegistration, SWT.NONE);
-		lblFullName.setBounds(10, 10, 165, 17);
-		toolkit.adapt(lblFullName, true, true);
-		lblFullName.setText("Full Name");
-
-		textName = new Text(compositeRegistration, SWT.BORDER);
-		textName.setBounds(10, 33, 165, 23);
-		toolkit.adapt(textName, true, true);
-
-		Label lblMatriculationNumber = new Label(compositeRegistration,
-				SWT.NONE);
-		lblMatriculationNumber.setText("Matriculation Number");
-		lblMatriculationNumber.setBounds(10, 62, 165, 17);
-		toolkit.adapt(lblMatriculationNumber, true, true);
-
-		textMatriculation = new Text(compositeRegistration, SWT.BORDER);
-		textMatriculation.setBounds(10, 85, 165, 23);
-		toolkit.adapt(textMatriculation, true, true);
-
-		Label lblYearOfStudy = new Label(compositeRegistration, SWT.NONE);
-		lblYearOfStudy.setText("Year of Study");
-		lblYearOfStudy.setBounds(10, 114, 165, 17);
-		toolkit.adapt(lblYearOfStudy, true, true);
-
-		textYearOfStudy = new Text(compositeRegistration, SWT.BORDER);
-		textYearOfStudy.setBounds(10, 137, 165, 23);
-		toolkit.adapt(textYearOfStudy, true, true);
-
-		Label lblFaculty = new Label(compositeRegistration, SWT.NONE);
-		lblFaculty.setText("Faculty");
-		lblFaculty.setBounds(10, 166, 165, 17);
-		toolkit.adapt(lblFaculty, true, true);
-
-		textFaculty = new Text(compositeRegistration, SWT.BORDER);
-		textFaculty.setBounds(10, 189, 165, 23);
-		toolkit.adapt(textFaculty, true, true);
-
-		Label lblEvent = new Label(compositeRegistration, SWT.NONE);
-		lblEvent.setText("Event Interested");
-		lblEvent.setBounds(10, 218, 165, 17);
-		toolkit.adapt(lblEvent, true, true);
-
-		textEvent = new Text(compositeRegistration, SWT.BORDER);
-		textEvent.setBounds(10, 241, 165, 23);
-		toolkit.adapt(textEvent, true, true);
-		textEvent.setText(event.getEventName());
-
-		Label lblFoodType = new Label(compositeRegistration, SWT.H_SCROLL);
-		lblFoodType.setText("Food Type");
-		lblFoodType.setBounds(10, 270, 165, 17);
-		toolkit.adapt(lblFoodType, true, true);
-
-		textFoodType = new Text(compositeRegistration, SWT.BORDER);
-		textFoodType.setBounds(10, 293, 165, 23);
-		toolkit.adapt(textFoodType, true, true);
-
-		Label lblAllergy = new Label(compositeRegistration, SWT.NONE);
-		lblAllergy.setText("Allergy (If any)");
-		lblAllergy.setBounds(10, 322, 165, 17);
-		toolkit.adapt(lblAllergy, true, true);
-
-		textAllergy = new Text(compositeRegistration, SWT.BORDER);
-		textAllergy.setBounds(10, 345, 165, 23);
-		toolkit.adapt(textAllergy, true, true);
-
-		Button btnSubmit = new Button(compositeRegistration, SWT.NONE);
-		btnSubmit.addSelectionListener(new RegistrationSubmit());
+	public eP_eventRegistration(Composite parent, int style,
+			String[] stringArrayRegistration, int[] signatureArrayRegistration) {
+		super(parent, style, stringArrayRegistration,
+				signatureArrayRegistration);
+		Button btnSubmit = new Button(this, SWT.None);
+		btnSubmit.addSelectionListener(new SubmitHandler());
 		btnSubmit.setText("Submit");
-		btnSubmit.setBounds(10, 374, 80, 27);
-		toolkit.adapt(btnSubmit, true, true);
+		GridData gridData = new GridData(80, 40);
+		gridData.horizontalIndent = 25;
+		btnSubmit.setLayoutData(gridData);
 
-		btnClear = new Button(compositeRegistration, SWT.NONE);
+		btnClear = new Button(this, SWT.None);
 		btnClear.addSelectionListener(new RegistrationClear());
-		btnClear.setBounds(95, 374, 80, 27);
-		toolkit.adapt(btnClear, true, true);
 		btnClear.setText("Clear");
+		btnClear.setLayoutData(gridData);
 
-		scrolledCompositeRegistration.setContent(compositeRegistration);
-		scrolledCompositeRegistration.setMinSize(compositeRegistration
-				.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-	}
-
-	public class RegistrationSubmit extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e) {
-			DatabaseReader db = new DatabaseReader();
-			Participant participant = new Participant();
-			participant.setName(textName.getText());
-			participant.setYear(Integer.parseInt(textYearOfStudy.getText()));
-			participant.setFaculty(textFaculty.getText());
-			participant.setFoodType(textFoodType.getText());
-			participant.setMatricNo(textMatriculation.getText());
-			db.insertParticipant(event, participant);
-			btnClear.notifyListeners(SWT.Selection, null);
-		}
 	}
 
 	public class RegistrationClear extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			textName.setText("");
-			textYearOfStudy.setText("");
-			textFaculty.setText("");
-			textFoodType.setText("");
-			textAllergy.setText("");
-			textMatriculation.setText("");
-
+			setEmpty();
 		}
+	}
+
+	@Override
+	// Do not want the parent shell to be disposed.
+	public boolean additionalRequirement() {
+		return false;
+	}
+
+	@Override
+	// Do nothing to onLoad()
+	public void onLoad() {
+	}
+
+	@Override
+	public void onSubmit() {
+		String[] tempList = getStringList();
+		if (tempList[5].equals("Participant")) {
+			Participant participant = new Participant();
+			participant.setName(tempList[0]);
+			participant.setMatricNo(tempList[1]);
+			participant.setYear(Integer.parseInt(tempList[2]));
+			participant.setFaculty(tempList[3]);
+			participant.setFoodType(tempList[6]);
+			participant.setMatricNo(tempList[7]);
+			db.insertParticipant(SessionManager.getCurrentEvent(), participant);
+		} else {
+			Facilitator facilitator = new Facilitator();
+			facilitator.setName(tempList[0]);
+			facilitator.setMatricNo(tempList[1]);
+			facilitator.setYear(Integer.parseInt(tempList[2]));
+			facilitator.setFaculty(tempList[3]);
+			facilitator.setFoodType(tempList[6]);
+			facilitator.setAllergy(tempList[7]);
+			db.insertFacilitator(SessionManager.getCurrentEvent(), facilitator);
+		}
+		btnClear.notifyListeners(SWT.Selection, null);
+	}
+
+	@Override
+	// Do nothing to additionalCheck
+	public boolean additionalCheck() {
+		return true;
 	}
 }

@@ -44,21 +44,22 @@ public class EventPlanning_FeedBack extends Composite {
 		
 				tableFeedBack = new Table(this, SWT.BORDER
 						| SWT.FULL_SELECTION);
+				tableFeedBack.setLocation(10, 10);
 				tableFeedBack.setSize(550, 400);
 				toolkit.adapt(tableFeedBack);
 				toolkit.paintBordersFor(tableFeedBack);
 				tableFeedBack.setHeaderVisible(true);
 				tableFeedBack.setLinesVisible(true);
 				
-						TableColumn tblclmnIssue = new TableColumn(tableFeedBack, SWT.NONE);
+						TableColumn tblclmnIssue = new TableColumn(tableFeedBack, SWT.CENTER);
 						tblclmnIssue.setWidth(300);
 						tblclmnIssue.setText("Issue");
 						
-								TableColumn tblclmDate = new TableColumn(tableFeedBack, SWT.NONE);
+								TableColumn tblclmDate = new TableColumn(tableFeedBack, SWT.CENTER);
 								tblclmDate.setWidth(120);
 								tblclmDate.setText("Date");
 								
-										TableColumn tblclmnTime = new TableColumn(tableFeedBack, SWT.NONE);
+										TableColumn tblclmnTime = new TableColumn(tableFeedBack, SWT.CENTER);
 										tblclmnTime.setWidth(120);
 										tblclmnTime.setText("Time");
 										

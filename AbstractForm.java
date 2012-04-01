@@ -23,6 +23,7 @@ public abstract class AbstractForm extends Composite {
 	protected String[] stringList; // to store input texts
 	protected String[] organizerArray;
 	protected String[] facilitatorArray;
+	protected String[] rolesArray={"Facilitator","Participant"}; 
 	protected String[] facultyArray = { "Arts and Social Sciences", "Business",
 			"Computing", "Dentistry", "Design and Environment", "Engineering",
 			"Law", "Medicine", "Music", "Science" };
@@ -59,7 +60,7 @@ public abstract class AbstractForm extends Composite {
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginLeft = 50;
 		gridLayout.marginRight = gridLayout.marginLeft;
-		gridLayout.marginTop = 50;
+		gridLayout.marginTop = 20;
 		gridLayout.marginBottom = gridLayout.marginTop;
 		gridLayout.marginWidth = 20;
 		gridLayout.marginHeight = 20;
@@ -71,6 +72,7 @@ public abstract class AbstractForm extends Composite {
 		for (int i = 0; i < labelList.length; i++) {
 			Label label = new Label(this, SWT.None);
 			label.setText(labelList[i]);
+			label.setLayoutData(new GridData(140, 20));
 			map.put(labelList[i], createInput(this, signature[i]));
 		}
 		/*
@@ -93,19 +95,26 @@ public abstract class AbstractForm extends Composite {
 		if (signature == MACRO.TEXT || signature == MACRO.INT
 				|| signature == MACRO.DOUBLE) {
 			input = new Text(parent, SWT.BORDER);
-			((Text) input).setLayoutData(new GridData(120, 20));
+			((Text) input).setLayoutData(new GridData(140, 20));
+		}
+		// Deal with read only text
+		else if (signature == MACRO.READONLY) {
+			input = new Text(parent, SWT.BORDER | SWT.READ_ONLY);
+			((Text) input).setText(SessionManager.getCurrentEvent()
+					.getEventName());
+			((Text) input).setLayoutData(new GridData(140, 20));
 		}
 		// Deal with Date
 		else if (signature == MACRO.DATE) {
 			input = new CalendarCombo(this, SWT.READ_ONLY);
 			((CalendarCombo) input).setDate(Calendar.getInstance());
-			((CalendarCombo) input).setLayoutData(new GridData(120, 30));
+			((CalendarCombo) input).setLayoutData(new GridData(140, 30));
 		}
 		// Deal with Time
 		else if (signature == MACRO.TIME) {
 			input = new DateTime(parent, SWT.TIME);
 			((DateTime) input).setTime(0, 0, 0);
-			((DateTime) input).setLayoutData(new GridData(120, 30));
+			((DateTime) input).setLayoutData(new GridData(140, 30));
 		}
 		// Deal with CheckBox
 		else if (signature == MACRO.CHECK) {
@@ -115,7 +124,7 @@ public abstract class AbstractForm extends Composite {
 		else if (signature == MACRO.TEXTBIG) {
 			input = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL
 					| SWT.MULTI);
-			((Text) input).setLayoutData(new GridData(120, 50));
+			((Text) input).setLayoutData(new GridData(140, 50));
 		}
 		// Make a drop down list for names, faculties, etc.
 		// Deal with Faculties
@@ -123,6 +132,14 @@ public abstract class AbstractForm extends Composite {
 
 			input = new Combo(parent, SWT.READ_ONLY);
 			((Combo) input).setItems(facultyArray);
+			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+					true, false, 1, 1));
+		}
+		//Deal with two different roles
+		else if (signature == MACRO.ROLES) {
+
+			input = new Combo(parent, SWT.READ_ONLY);
+			((Combo) input).setItems(rolesArray);
 			((Combo) input).setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 					true, false, 1, 1));
 		}
@@ -175,7 +192,7 @@ public abstract class AbstractForm extends Composite {
 		// Deal with password
 		else if (signature == MACRO.PASSWORD) {
 			input = new Text(parent, SWT.BORDER | SWT.PASSWORD);
-			((Text) input).setLayoutData(new GridData(120, 20));
+			((Text) input).setLayoutData(new GridData(140, 20));
 		}
 		return input;
 	}
@@ -185,6 +202,48 @@ public abstract class AbstractForm extends Composite {
 		return map.get(labelList[i]);
 	}
 
+	// Set everything to empty
+	protected void setEmpty() {
+		for (int i = 0; i < signature.length; i++) {
+			// Deal with Text, BigText, int and double except read only text
+			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT
+					|| signature[i] == MACRO.DOUBLE
+					|| signature[i] == MACRO.TEXTBIG
+					|| signature[i] == MACRO.PASSWORD) {
+				((Text) get(i)).setText("");
+			}
+			// Deal with Date
+			else if (signature[i] == MACRO.DATE) {
+				((CalendarCombo) get(i)).setDate(Calendar.getInstance());
+			}
+			// Deal with Time
+			else if (signature[i] == MACRO.TIME) {
+				((DateTime) get(i)).setTime(0, 0, 0);
+			}
+			// Deal with CheckBox
+			else if (signature[i] == MACRO.CHECK) {
+				// If selected, change to true; else change to false.
+				((Button) get(i)).setSelection(false);
+			}
+			// Deal with names, positions, faculties, etc(Combos).
+			// Do nothing to them
+			else if (signature[i] == MACRO.FACULTY
+					|| signature[i] == MACRO.ORGANIZER
+					|| signature[i] == MACRO.FACILITATOR
+					|| signature[i] == MACRO.VENUELOCATION
+					|| signature[i] == MACRO.VENUETYPE
+					|| signature[i] == MACRO.ROLES) {
+				((Combo) get(i)).setText("");
+			}
+		}
+	}
+
+	// If it returns true, then the parent shell will be disposed.
+	// Otherwise, the parent shell will not. 
+	// It gives the flexibility for children.
+	protected boolean additionalRequirement(){
+		return true;
+	}
 	// Pre-condition: there is no error for the input data.
 	// Cast all kinds of data type to string and return an array of string.
 	protected String[] getStringList() {
@@ -193,7 +252,8 @@ public abstract class AbstractForm extends Composite {
 			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT
 					|| signature[i] == MACRO.DOUBLE
 					|| signature[i] == MACRO.TEXTBIG
-					|| signature[i] == MACRO.PASSWORD) {
+					|| signature[i] == MACRO.PASSWORD
+					|| signature[i] == MACRO.READONLY) {
 				stringList[i] = ((Text) get(i)).getText();
 			}
 			// Deal with Date
@@ -220,7 +280,8 @@ public abstract class AbstractForm extends Composite {
 					|| signature[i] == MACRO.ORGANIZER
 					|| signature[i] == MACRO.FACILITATOR
 					|| signature[i] == MACRO.VENUELOCATION
-					|| signature[i] == MACRO.VENUETYPE) {
+					|| signature[i] == MACRO.VENUETYPE
+					|| signature[i]== MACRO.ROLES) {
 				stringList[i] = ((Combo) get(i)).getItem(((Combo) get(i))
 						.getSelectionIndex());
 			}
@@ -271,7 +332,8 @@ public abstract class AbstractForm extends Composite {
 					|| signature[i] == MACRO.ORGANIZER
 					|| signature[i] == MACRO.FACILITATOR
 					|| signature[i] == MACRO.VENUELOCATION
-					|| signature[i] == MACRO.VENUETYPE) {
+					|| signature[i] == MACRO.VENUETYPE
+					|| signature[i]== MACRO.ROLES) {
 				Combo combo = (Combo) get(i);
 				isValid = !combo.getText().isEmpty();
 			}
@@ -284,18 +346,20 @@ public abstract class AbstractForm extends Composite {
 		// no error
 		return -1;
 	}
-	
+
 	// Submit button handler
 	// When click submit button.
 	protected class SubmitHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (check() == -1) {
-				if(additionalCheck()){
+				if (additionalCheck()) {
 					onSubmit();
-					getParent().dispose();
+					if (additionalRequirement()) {
+						getParent().dispose();
+					}
 				}
-			} 
-			
+			}
+
 			else {
 				// Show messageBox if there is error in input data and specify
 				// where is the error.
