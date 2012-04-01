@@ -90,7 +90,7 @@ public class PromptPassword extends Composite {
 
 	public void CreateVenuePage(boolean[][] boolMode) {
 		Shell shell = new Shell(getDisplay());
-		shell.setLocation(200, 100);
+		shell.setLocation(200, 50);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
 		shell.setText("eManager");
 		shell.setImage(icon);

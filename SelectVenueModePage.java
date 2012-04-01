@@ -38,7 +38,7 @@ public class SelectVenueModePage extends Composite {
 		toolkit.paintBordersFor(composite);
 
 		Label lblPleaseSelectMode = new Label(composite, SWT.NONE);
-		lblPleaseSelectMode.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.NORMAL));
+		lblPleaseSelectMode.setFont(SWTResourceManager.getFont("Calibri", 13, SWT.NORMAL));
 		lblPleaseSelectMode.setBounds(96, 21, 127, 28);
 		toolkit.adapt(lblPleaseSelectMode, true, true);
 		lblPleaseSelectMode.setText("Please Select Mode");
@@ -71,7 +71,7 @@ public class SelectVenueModePage extends Composite {
 	class ApplicantListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell shell = new Shell(getShell(),SWT.NONE);
-			shell.setLocation(200,100);
+			shell.setLocation(200,50);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			shell.setText("Venue Manager");
 			shell.setImage(icon);

@@ -77,8 +77,8 @@ public class eManager{
 		version.addSelectionListener(new MenuVersionListener());
 
 		// welcome page
-		welcome_shell = new Shell(display, SWT.NO_TRIM);
-		welcome_shell.setLocation(400, 250);
+		welcome_shell = new Shell(display, SWT.NO_TRIM|SWT.ON_TOP);
+		welcome_shell.setLocation(400, 200);
 		welcome_page = new WelcomePage(welcome_shell, SWT.None);
 
 		welcome_page.setSize(400, 350);
@@ -94,11 +94,10 @@ public class eManager{
 	//opens Welcome page
 	class MenuOpenListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
-			welcome_shell = new Shell(display,SWT.NONE);
-			welcome_shell.setLocation(400, 250);
+			welcome_shell = new Shell(display, SWT.NO_TRIM|SWT.ON_TOP);
+			welcome_shell.setLocation(400, 200);
 			welcome_page = new WelcomePage(welcome_shell, SWT.NONE);
 			welcome_page.setSize(400, 350);
-			welcome_page.pack();
 			welcome_shell.pack();
 			welcome_shell.open();
 		}
@@ -115,7 +114,7 @@ public class eManager{
 	//opens Version page
 	class MenuVersionListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
-			Shell version_shell = new Shell(display,SWT.None);
+			Shell version_shell = new Shell(display, SWT.NO_TRIM|SWT.ON_TOP);
 			version_shell.setLocation(400, 250);
 			FileVersion version_page = new FileVersion(version_shell, SWT.None);
 			version_page.pack();
@@ -127,9 +126,10 @@ public class eManager{
 	class eventManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if(SessionManager.getCurrentIntMode() != MACRO.MANAGER) {
-				Shell mode_shell = new Shell(display, SWT.None);
+				Shell mode_shell = new Shell(display, SWT.NO_TRIM|SWT.ON_TOP);
+				mode_shell.setLocation(400, 200);
 				SelectEventPage newEventPage = new SelectEventPage(mode_shell, SWT.None);
-				newEventPage.pack();
+				newEventPage.setSize(500,400);
 				mode_shell.pack();
 				mode_shell.open();
 			}
@@ -138,7 +138,8 @@ public class eManager{
 	class MenuManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if(SessionManager.getCurrentIntMode() != MACRO.MANAGER) {
-				Shell mode_shell = new Shell(display, SWT.None);
+				Shell mode_shell = new Shell(display, SWT.NO_TRIM|SWT.ON_TOP);
+				mode_shell.setLocation(400,200);
 				PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None, MACRO.MANAGER);
 				mode_page.pack();
 				mode_shell.pack();
@@ -149,7 +150,8 @@ public class eManager{
 	class MenuApplicantListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if(SessionManager.getCurrentIntMode() != MACRO.APPLICANT) {
-				Shell mode_shell = new Shell(display, SWT.None);
+				Shell mode_shell = new Shell(display);
+				mode_shell.setLocation(200, 50);
 				Venuespace venuspace = new Venuespace(mode_shell, SWT.None, MACRO.APPLICANT_MODE);
 				venuspace.pack();
 				mode_shell.pack();

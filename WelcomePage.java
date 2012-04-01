@@ -73,7 +73,7 @@ public class WelcomePage extends Composite {
 			add_item_shell.setLocation(400, 200);
 			SelectVenueModePage add_new_item_page = new SelectVenueModePage(
 					add_item_shell, SWT.None);
-			add_new_item_page.setSize(500, 400);
+			add_new_item_page.setSize(400, 300);
 			add_item_shell.pack();
 			add_item_shell.open();
 			getShell().dispose();
