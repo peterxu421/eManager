@@ -71,7 +71,7 @@ public class WelcomePage extends Composite {
 			SessionManager.setCurrentMode(MACRO.MANAGER);
 			//Shell shell = new Shell(getDisplay(), SWT.NO_TRIM | SWT.ON_TOP);
 			Shell shell = new Shell(getDisplay());
-			shell.setLocation(200, 100);
+			shell.setLocation(150, 50);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			shell.setText("eManager");
 			shell.setImage(icon);
@@ -80,6 +80,7 @@ public class WelcomePage extends Composite {
 			ws2.pack();
 			shell.pack();
 			shell.open();
+			getShell().dispose();
 		}
 	}
 }

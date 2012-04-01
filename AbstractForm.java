@@ -104,6 +104,7 @@ public abstract class AbstractForm extends Composite {
 		// Deal with Time
 		else if (signature == MACRO.TIME) {
 			input = new DateTime(parent, SWT.TIME);
+			((DateTime) input).setTime(0, 0, 0);
 			((DateTime) input).setLayoutData(new GridData(120, 30));
 		}
 		// Deal with CheckBox
