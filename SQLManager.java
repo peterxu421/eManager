@@ -500,7 +500,22 @@ public class SQLManager {
 		}
 		return rs;
 	}
-
+	public static ResultSet getVenuesByLocation(Connection connection, String location){
+		String getVenueBookingDetailsByMatricNo = 
+				"SELECT * FROM VenueDetails " +
+				"WHERE Location=?";
+		PreparedStatement prep = null;
+		ResultSet rs = null;
+		try{
+			prep = connection.prepareStatement(getVenueBookingDetailsByMatricNo);
+			prep.setString(1, location);
+			rs = prep.executeQuery();
+		}catch(SQLException sqle){
+			sqle.printStackTrace();
+		}
+		return rs;
+	}
+	
 	/*--------------------------------------------------INSERT-----------------------------------------------------------*/
 	public static int insertEventDetails(Connection connection, String eventName, String eventDescription, String organizerPassword, String facilitatorPassword){
 		int eventID = 0;

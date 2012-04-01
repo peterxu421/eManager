@@ -56,7 +56,7 @@ class Venuespace extends Composite{
 	    //optionBar->
 	    Composite optionBar = new Composite(this, SWT.None);
 	    GridLayout optionBarLayout = new GridLayout();
-	    optionBarLayout.marginLeft = 154;
+	    optionBarLayout.marginLeft = 164;
 	    optionBarLayout.numColumns = 5;
 	    optionBar.setLayout(optionBarLayout);
 	   // optionBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
@@ -68,7 +68,7 @@ class Venuespace extends Composite{
 	    for(int i=0; i<num; i++)
 	    {
 	    	buttons[i] = new Button(optionBar, SWT.PUSH);
-	    	buttons[i].setLayoutData(new GridData(130, 40));
+	    	buttons[i].setLayoutData(new GridData(150, 40));
 	    	buttons[i].setText(optionMenu[i]);
 	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
 	    	buttons[i].setEnabled(boolMode[i]);
@@ -87,7 +87,7 @@ class Venuespace extends Composite{
 	   // left.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    right = new Composite(body, SWT.None);
 	 //   right.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-	    left.setLayoutData(new GridData(150,450));
+	    left.setLayoutData(new GridData(160,450));
 	    right.setLayoutData(new GridData(800,450));
 	    
 	    Label eventName = new Label(header, SWT.WRAP);
@@ -113,7 +113,7 @@ class Venuespace extends Composite{
 	    {
 	    	buttons[i] = new Button(left, SWT.PUSH);
 	    	buttons[i].setText(tabList[0][i]);
-	    	buttons[i].setLayoutData(new GridData(130, 40));
+	    	buttons[i].setLayoutData(new GridData(150, 40));
 	    	buttons[i].addSelectionListener(new TabSelectionAdapter());
 	    }
 	    
@@ -178,7 +178,7 @@ class Venuespace extends Composite{
 					{
 				    	Button button = new Button(left, SWT.PUSH);
 				    	button.setText(tabList[i][j]);
-				    	button.setLayoutData(new GridData(130,40));
+				    	button.setLayoutData(new GridData(150,40));
 				    	button.addSelectionListener(new TabSelectionAdapter());
 				    	if(j==0)button.notifyListeners(SWT.Selection, null); // to display the the first page of each component in the menu bar
  					}
