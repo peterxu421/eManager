@@ -63,13 +63,10 @@ class Eventspace extends Composite {
 		int height = 40;
 		Button[] buttons = new Button[num];
 		for (int i = 0; i < num; i++) {
-			System.out.println(num + " " + i);
-			System.out.println(num + " " + i);
 			buttons[i] = new Button(optionBar, SWT.PUSH);
 			buttons[i].setLayoutData(new GridData(width, height));
 			buttons[i].setText(optionList[i]);
 			buttons[i].addSelectionListener(new OptionSelectionAdapter());
-			System.out.println("bool" + boolMode[0]);
 			// buttons[i].setEnabled(boolMode[i]);
 		}
 		// setting button
@@ -78,7 +75,7 @@ class Eventspace extends Composite {
 		GridData settingData = new GridData(width - 50, height);
 		settingData.horizontalIndent = 150;
 		btnSetting.setLayoutData(settingData);
-		btnSetting.addSelectionListener(new SettingPage());
+		btnSetting.addSelectionListener(new SettingAdapter());
 
 		// body
 		GridData bodyData = new GridData(900, 450);
@@ -131,10 +128,9 @@ class Eventspace extends Composite {
 
 	}
 
-	class SettingPage extends SelectionAdapter {
-		public void widgetselected(SelectionEvent e) {
+	class SettingAdapter extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
 			Shell settingShell = new Shell(getShell(), SWT.ON_TOP | SWT.NO_TRIM);
-			System.out.println("YES");
 			AbstractEdit settingPage = new Setting(settingShell, SWT.None,
 					stringSetting, signatureSetting, new Table(getShell(),
 							SWT.None), stringButton);
