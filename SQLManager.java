@@ -183,7 +183,6 @@ public class SQLManager {
 		}
 		return connection;
 	}
-
 	public static Connection getConnection(){
 		return SessionManager.getConnection();
 	}
