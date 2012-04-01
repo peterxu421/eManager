@@ -82,6 +82,7 @@ class Eventspace extends Composite {
 		settingData.horizontalIndent = 150;
 		btnSetting.setLayoutData(settingData);
 		btnSetting.addSelectionListener(new SettingAdapter());
+		btnSetting.setEnabled(boolMode[5][0]);
 
 		// body
 		GridData bodyData = new GridData(900, 450);

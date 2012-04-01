@@ -42,8 +42,8 @@ public class PromptPassword extends Composite {
 		this.parent = parent;		
 
 
-		password = SessionManager.getCurrentEvent().getOrganizerPassword();
-		System.out.println(password);
+		//password = SessionManager.getCurrentEvent().getOrganizerPassword();
+		//System.out.println(password);
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(10, 10, 363, 243);
@@ -90,7 +90,6 @@ public class PromptPassword extends Composite {
 	}
 
 	public void CreateVenuePage(boolean[][] boolMode) { 
-		System.out.println("YES");
 		Shell shell = new Shell(getDisplay());
 		shell.setLocation(200, 100);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
@@ -133,18 +132,17 @@ public class PromptPassword extends Composite {
 					case SWT.CANCEL:
 						break;
 					}
-//=======
-//				} else if (textPassWord.getText().equals(password)) {
-//					CreateEventPage(MACRO.ORGANIZER_MODE);
-//				} else {
-//					MessageBox warningPage = new MessageBox(getDisplay()
-//							.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
-//					warningPage.setText("Warning!");
-//					warningPage.setMessage("Wrong Organizer Password!");
-//					warningPage.open();
-//>>>>>>> 1856a91a858f77e0e48f65cc5af8f17f23692e1d
-//				}
-			}
+					//				} else if (textPassWord.getText().equals(password)) {
+					//					CreateEventPage(MACRO.ORGANIZER_MODE);
+					//				} else {
+					//					MessageBox warningPage = new MessageBox(getDisplay()
+					//							.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+					//					warningPage.setText("Warning!");
+					//					warningPage.setMessage("Wrong Organizer Password!");
+					//					warningPage.open();
+					//>>>>>>> 1856a91a858f77e0e48f65cc5af8f17f23692e1d
+					//				}
+				}
 			}
 
 			if (changeToMode == MACRO.FACILITATOR) {
@@ -166,7 +164,19 @@ public class PromptPassword extends Composite {
 			}
 
 			if (changeToMode == MACRO.MANAGER) {
-				CreateVenuePage(MACRO.MANAGER_MODE);
+				if (password == null && textPassWord.getText().isEmpty()) {
+					CreateVenuePage(MACRO.MANAGER_MODE);
+					getShell().dispose();
+				} else if (textPassWord.getText().equals(password)) {
+					CreateVenuePage(MACRO.MANAGER_MODE);
+					getShell().dispose();
+				} else {
+					MessageBox warningPage = new MessageBox(getDisplay()
+							.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+					warningPage.setText("Warning!");
+					warningPage.setMessage("Wrong Manager Password!");
+					warningPage.open();
+				}
 			}
 
 			if (changeToMode == MACRO.APPLICANT) {

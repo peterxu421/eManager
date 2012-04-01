@@ -150,7 +150,6 @@ public class SelectEventPage extends Composite {
 					SessionManager.setCurrentMode(MACRO.ORGANIZER);
 					Eventspace eventspace = new Eventspace(shellEvent, SWT.None,
 							MACRO.ORGANIZER_MODE);
-					System.out.println(tempList[3]);
 					eventspace.pack();
 					shellEvent.pack();
 					shellEvent.open();

@@ -26,6 +26,7 @@ public class MACRO {
 		{ true, true, true,  true, true },
 		{ true },
 		{ true, true },
+		{ true },
 		{ true }
 	};
 	public static boolean[][] FACILITATOR_MODE = new boolean[][]{
@@ -33,18 +34,20 @@ public class MACRO {
 		{ false, false, false,  false, false },
 		{ true },
 		{ true, true },
-		{ true }
+		{ true },
+		{ false }
 	};
 	public static boolean[][] PARTICIPANT_MODE = new boolean[][]{
 		{ false, false, true, true },
 		{ false, false, false,  false, false },
 		{ false },
 		{ true, true },
-		{ true }
+		{ true },
+		{ false }
 	};
 	public static boolean [][] APPLICANT_MODE = new boolean[][] {
 		{ false, true } ,
-		{ true, false } ,
+		{ false, false } ,
 		{ true, true, true }
 	};
 	public static boolean [][] MANAGER_MODE = new boolean[][] {
