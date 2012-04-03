@@ -66,8 +66,8 @@ public abstract class AbstractEdit extends AbstractForm {
 				((Button) get(index)).setSelection(false);
 			}
 		}
-		// Deal with Faculty
-		else if (signature == MACRO.FACULTY||signature==MACRO.ORGANIZER||signature==MACRO.FACILITATOR) {
+		// Deal with Faculty, venueLocation (Combo) etc.
+		else if (signature == MACRO.FACULTY||signature==MACRO.ORGANIZER||signature==MACRO.FACILITATOR || signature==MACRO.VENUELOCATION || signature==MACRO.VENUETYPE) {
 			((Combo) get(index)).setText(string);
 		}
 	}

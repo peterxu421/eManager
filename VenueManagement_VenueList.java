@@ -17,8 +17,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 
@@ -26,13 +24,10 @@ public class VenueManagement_VenueList extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Table venueTable;
-	protected String[] venueLocationArray = { "Arts and Social Sciences",
-			"Business", "Computing", "Dentistry", "Design and Environment",
-			"Engineering", "Law", "Medicine", "Music", "Science",
-			"Central Library", "CFA", "PGP", "YIH", "SRC", "UCC", "Others" };
+	
 	private String[] venueInfoArray = { "Name", "Location", "Type", "Capacity" };
     private int[] venueInfoSignatureArray = { MACRO.TEXT, MACRO.VENUELOCATION, MACRO.VENUETYPE, MACRO.INT};
-    
+  
     private Date today = new Date();
 	/**
 	 * Create the composite.
@@ -51,14 +46,14 @@ public class VenueManagement_VenueList extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(0, 0, 800, 390);
+		composite.setBounds(0, 0, 800, 350);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		venueTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		venueTable.setLinesVisible(true);
 		venueTable.setHeaderVisible(true);
-		venueTable.setBounds(0, 40, 600, 350);
+		venueTable.setBounds(0, 0, 600, 350);
 		toolkit.adapt(venueTable);
 		toolkit.paintBordersFor(venueTable);
 		
@@ -101,19 +96,6 @@ public class VenueManagement_VenueList extends Composite {
 		btnView.setBounds(625, 160, 150, 30);
 		toolkit.adapt(btnView, true, true);
 		btnView.addSelectionListener(new viewBookingInfo());
-		
-		Label lblEnterLocation = new Label(composite, SWT.NONE);
-		lblEnterLocation.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
-		lblEnterLocation.setBounds(0, 0, 116, 30);
-		toolkit.adapt(lblEnterLocation, true, true);
-		lblEnterLocation.setText("Choose location");
-		
-		Combo comboLocation = new Combo(composite, SWT.NONE);
-		comboLocation.setBounds(130, 0, 100, 30);
-		toolkit.adapt(comboLocation);
-		toolkit.paintBordersFor(comboLocation);
-		comboLocation.setText("Location");
-		comboLocation.addSelectionListener(new chooseLocation());
 	   
 	    
 		Calendar calendar = Calendar.getInstance(); // today
@@ -125,17 +107,10 @@ public class VenueManagement_VenueList extends Composite {
 
 	}
 	
-	public class chooseLocation extends SelectionAdapter {
-		public void widgetSelected(SelectionEvent e) {
-			
-			
-		}
-	}
-	
 	public void importVenueListData() {
+		/* update the venue list table */
 		DatabaseReader db = new DatabaseReader();
 		ArrayList<Venue> venueList = db.getVenues();
-		/* update the venue list table */
 		for (int i=0; i<venueList.size(); i++){
 			TableItem temp = new TableItem(venueTable, SWT.None);
 			temp.setText(0, venueList.get(i).getName());
@@ -245,7 +220,7 @@ public class VenueManagement_VenueList extends Composite {
 						// update the database
 						db.updateVenue(venue);
 						// update the venue list table
-						TableItem temp = new TableItem(venueTable, SWT.None);
+						TableItem temp = venueTable.getItem(index);
 						for (int i=0; i<venueInfoArray.length; i++){
 							temp.setText(i, venueInfoList[i]);
 						}	
