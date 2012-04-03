@@ -21,12 +21,12 @@ public abstract class AbstractEdit extends AbstractForm {
 		Button btnAdd = new Button(this, SWT.None);
 		btnAdd.addSelectionListener(new SubmitHandler());
 		btnAdd.setText("Edit");
-		btnAdd.setLayoutData(new GridData(80, 30));
+		btnAdd.setLayoutData(new GridData(80, 40));
 
 		Button btnCancel = new Button(this, SWT.None);
 		btnCancel.addSelectionListener(new CancelHandler());
 		btnCancel.setText("Cancel");
-		btnCancel.setLayoutData(new GridData(80, 30));
+		btnCancel.setLayoutData(new GridData(80, 40));
 	}
 	public AbstractEdit(Composite parent, int style, String[] stringList,
 			int[] signature,String[] stringButton){

@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Button;
 public class SelectModePage extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-
+	Composite parent;
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -29,6 +29,7 @@ public class SelectModePage extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		this.parent = parent;
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(10, 10, 346, 225);
@@ -66,9 +67,10 @@ public class SelectModePage extends Composite {
 			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.ORGANIZER);
 			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None, MACRO.ORGANIZER);
-			pass_page.setSize(getShell().getSize());
+			pass_page.pack();
 			pass_shell.pack();
 			pass_shell.open();
+			
 		}
 	}
 	class FacilitatorListener extends SelectionAdapter {
@@ -77,7 +79,7 @@ public class SelectModePage extends Composite {
 			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.FACILITATOR);
 			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None, MACRO.FACILITATOR);
-			pass_page.setSize(getShell().getSize());
+			pass_page.pack();
 			pass_shell.pack();
 			pass_shell.open();
 		}

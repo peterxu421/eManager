@@ -18,8 +18,9 @@ public class PromptPassword extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Text textPassWord;
-	private String password = "123";
+	private String password = "";
 	private int changeToMode;
+	private Composite parent;
 
 	/**
 	 * Create the composite.
@@ -37,9 +38,10 @@ public class PromptPassword extends Composite {
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
 		this.changeToMode = changeToMode;
+		this.parent = parent;
 
-		password = SessionManager.getCurrentEvent().getOrganizerPassword();
-		System.out.println(password);
+		// password = SessionManager.getCurrentEvent().getOrganizerPassword();
+		// System.out.println(password);
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(10, 10, 363, 243);
@@ -47,7 +49,8 @@ public class PromptPassword extends Composite {
 		toolkit.paintBordersFor(composite);
 
 		Label lblPassword = new Label(composite, SWT.NONE);
-		lblPassword.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblPassword.setFont(SWTResourceManager.getFont("Calibri", 13,
+				SWT.NORMAL));
 		lblPassword.setText("Password");
 		lblPassword.setBounds(37, 60, 85, 26);
 		toolkit.adapt(lblPassword, true, true);
@@ -72,22 +75,22 @@ public class PromptPassword extends Composite {
 
 	}
 
-	public void CreateEventPage(boolean[] boolMode) {
-		Shell shell = new Shell(getDisplay(), SWT.None);
-		shell.setLocation(200, 100);
+	public void CreateEventPage(boolean[][] boolMode) {
+		Shell shell = new Shell(getDisplay());
+		shell.setLocation(200, 50);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
 		shell.setText("eManager");
 		shell.setImage(icon);
-		Eventspace workspace = new Eventspace(shell, SWT.None, boolMode);
-		workspace.pack();
+		Eventspace eventspace = new Eventspace(shell, SWT.None, boolMode);
+		eventspace.pack();
 		shell.pack();
 		shell.open();
 		getParent().getShell().getParent().dispose();
 	}
 
-	public void CreateVenuePage(boolean[] boolMode) {
-		Shell shell = new Shell(getDisplay(), SWT.None);
-		shell.setLocation(200, 100);
+	public void CreateVenuePage(boolean[][] boolMode) {
+		Shell shell = new Shell(getDisplay());
+		shell.setLocation(200, 50);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
 		shell.setText("eManager");
 		shell.setImage(icon);
@@ -108,8 +111,11 @@ public class PromptPassword extends Composite {
 		public void widgetSelected(SelectionEvent event) {
 			// Check whether their password is correct or not.
 			if (changeToMode == MACRO.ORGANIZER) {
+				password=SessionManager.getCurrentEvent().getOrganizerPassword();
 				if (password == null && textPassWord.getText().isEmpty()) {
 					CreateEventPage(MACRO.ORGANIZER_MODE);
+					parent.dispose();
+
 				} else if (textPassWord.getText().equals(password)) {
 					CreateEventPage(MACRO.ORGANIZER_MODE);
 				} else {
@@ -122,8 +128,10 @@ public class PromptPassword extends Composite {
 			}
 
 			if (changeToMode == MACRO.FACILITATOR) {
+				password=SessionManager.getCurrentEvent().getFacilitatorPassword();
 				if (password == null && textPassWord.getText().isEmpty()) {
 					CreateEventPage(MACRO.FACILITATOR_MODE);
+					parent.dispose();
 				} else if (textPassWord.getText().equals(password)) {
 					CreateEventPage(MACRO.FACILITATOR_MODE);
 				} else {
@@ -140,7 +148,19 @@ public class PromptPassword extends Composite {
 			}
 
 			if (changeToMode == MACRO.MANAGER) {
-				CreateVenuePage(MACRO.MANAGER_MODE);
+				if (password == null && textPassWord.getText().isEmpty()) {
+					CreateVenuePage(MACRO.MANAGER_MODE);
+					getShell().dispose();
+				} else if (textPassWord.getText().equals(password)) {
+					CreateVenuePage(MACRO.MANAGER_MODE);
+					getShell().dispose();
+				} else {
+					MessageBox warningPage = new MessageBox(getDisplay()
+							.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+					warningPage.setText("Warning!");
+					warningPage.setMessage("Wrong Manager Password!");
+					warningPage.open();
+				}
 			}
 
 			if (changeToMode == MACRO.APPLICANT) {

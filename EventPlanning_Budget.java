@@ -21,6 +21,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
 import com.ibm.icu.text.DecimalFormat;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class EventPlanning_Budget extends Composite {
 
@@ -71,15 +72,10 @@ public class EventPlanning_Budget extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
-		this.event = event; // access current event
+		this.event = event;
 
-		Composite BudgetComposite = new Composite(this, SWT.NONE);
-		BudgetComposite.setBounds(0, 0, 689, 430);
-		toolkit.adapt(BudgetComposite);
-		toolkit.paintBordersFor(BudgetComposite);
-
-		TabFolder tabFolder = new TabFolder(BudgetComposite, SWT.NONE);
-		tabFolder.setBounds(0, 0, 689, 320);
+		TabFolder tabFolder = new TabFolder(this, SWT.NONE);
+		tabFolder.setSize(673, 500);
 		toolkit.adapt(tabFolder);
 		toolkit.paintBordersFor(tabFolder);
 
@@ -94,18 +90,18 @@ public class EventPlanning_Budget extends Composite {
 				| SWT.FULL_SELECTION);
 		AllocationTable.setLinesVisible(true);
 		AllocationTable.setHeaderVisible(true);
-		AllocationTable.setBounds(10, 10, 542, 240);
+		AllocationTable.setBounds(10, 10, 550, 350);
 		toolkit.adapt(AllocationTable);
 		toolkit.paintBordersFor(AllocationTable);
 
 		TableColumn AllocationTableItemColumn = new TableColumn(
-				AllocationTable, SWT.NONE);
-		AllocationTableItemColumn.setWidth(211);
+				AllocationTable, SWT.CENTER);
+		AllocationTableItemColumn.setWidth(210);
 		AllocationTableItemColumn.setText("Item");
 
 		TableColumn AllocationTablePersonInChargeColumn = new TableColumn(
 				AllocationTable, SWT.CENTER);
-		AllocationTablePersonInChargeColumn.setWidth(123);
+		AllocationTablePersonInChargeColumn.setWidth(120);
 		AllocationTablePersonInChargeColumn.setText("Person in Charge");
 
 		TableColumn AllocationTableCostColumn = new TableColumn(
@@ -115,36 +111,38 @@ public class EventPlanning_Budget extends Composite {
 
 		TableColumn AllocationTableDateColumn = new TableColumn(
 				AllocationTable, SWT.CENTER);
-		AllocationTableDateColumn.setWidth(117);
+		AllocationTableDateColumn.setWidth(120);
 		AllocationTableDateColumn.setText("Date");
 
 		Button btnAllocationAdd = new Button(AllocationComposite, SWT.NONE);
-		btnAllocationAdd.setBounds(575, 49, 75, 25);
+		btnAllocationAdd.setBounds(570, 10, 80, 40);
 		toolkit.adapt(btnAllocationAdd, true, true);
 		btnAllocationAdd.setText("Add");
 		btnAllocationAdd.addSelectionListener(new AddAllocation());
 
+		Button btnAllocationDelete = new Button(AllocationComposite, SWT.NONE);
+		btnAllocationDelete.setBounds(570, 60, 80, 40);
+		toolkit.adapt(btnAllocationDelete, true, true);
+		btnAllocationDelete.setText("Delete");
+		btnAllocationDelete.addSelectionListener(new DeleteAllocation());
+		
 		Button btnAllocationEdit = new Button(AllocationComposite, SWT.NONE);
-		btnAllocationEdit.setBounds(575, 95, 75, 25);
+		btnAllocationEdit.setBounds(570, 110, 80, 40);
 		toolkit.adapt(btnAllocationEdit, true, true);
 		btnAllocationEdit.setText("Edit");
 		btnAllocationEdit.addSelectionListener(new EditAllocation());
 
-		Button btnAllocationDelete = new Button(AllocationComposite, SWT.NONE);
-		btnAllocationDelete.setBounds(575, 138, 75, 25);
-		toolkit.adapt(btnAllocationDelete, true, true);
-		btnAllocationDelete.setText("Delete");
-		btnAllocationDelete.addSelectionListener(new DeleteAllocation());
-
 		Label lblYouStillHave = new Label(AllocationComposite, SWT.NONE);
+		lblYouStillHave.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
 		lblYouStillHave.setAlignment(SWT.CENTER);
-		lblYouStillHave.setBounds(10, 256, 98, 15);
+		lblYouStillHave.setBounds(10, 380, 135, 30);
 		toolkit.adapt(lblYouStillHave, true, true);
 		lblYouStillHave.setText("Money Left ($)");
 
 		lblYouStillHave_Amount = new Label(AllocationComposite, SWT.BORDER);
+		lblYouStillHave_Amount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
 		lblYouStillHave_Amount.setAlignment(SWT.CENTER);
-		lblYouStillHave_Amount.setBounds(114, 256, 108, 15);
+		lblYouStillHave_Amount.setBounds(168, 380, 135, 30);
 		toolkit.adapt(lblYouStillHave_Amount, true, true);
 		lblYouStillHave_Amount.setText("0.0");
 
@@ -156,7 +154,7 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.paintBordersFor(CashFlowComposite);
 
 		TabFolder tabFolder_1 = new TabFolder(CashFlowComposite, SWT.NONE);
-		tabFolder_1.setBounds(0, 0, 736, 287);
+		tabFolder_1.setBounds(0, 0, 673, 470);
 		toolkit.adapt(tabFolder_1);
 		toolkit.paintBordersFor(tabFolder_1);
 
@@ -171,18 +169,18 @@ public class EventPlanning_Budget extends Composite {
 				| SWT.FULL_SELECTION);
 		InflowTable.setLinesVisible(true);
 		InflowTable.setHeaderVisible(true);
-		InflowTable.setBounds(10, 10, 551, 207);
+		InflowTable.setBounds(10, 10, 550, 350);
 		toolkit.adapt(InflowTable);
 		toolkit.paintBordersFor(InflowTable);
 
 		TableColumn InflowTableSponsorColumn = new TableColumn(InflowTable,
 				SWT.CENTER);
-		InflowTableSponsorColumn.setWidth(150);
+		InflowTableSponsorColumn.setWidth(120);
 		InflowTableSponsorColumn.setText("Sponsor");
 
 		TableColumn InflowTableAmountColumn = new TableColumn(InflowTable,
 				SWT.CENTER);
-		InflowTableAmountColumn.setWidth(72);
+		InflowTableAmountColumn.setWidth(120);
 		InflowTableAmountColumn.setText("Amount($)");
 
 		TableColumn InflowTableDateColumn = new TableColumn(InflowTable,
@@ -192,36 +190,38 @@ public class EventPlanning_Budget extends Composite {
 
 		TableColumn InflowTableRemarksColumn = new TableColumn(InflowTable,
 				SWT.CENTER);
-		InflowTableRemarksColumn.setWidth(261);
+		InflowTableRemarksColumn.setWidth(250);
 		InflowTableRemarksColumn.setText("Remarks");
 
 		Button btnInflowAdd = new Button(InflowComposite, SWT.NONE);
-		btnInflowAdd.setBounds(585, 28, 75, 25);
+		btnInflowAdd.setBounds(570, 10, 80, 40);
 		toolkit.adapt(btnInflowAdd, true, true);
 		btnInflowAdd.setText("Add");
 		btnInflowAdd.addSelectionListener(new AddInflow());
 
+		Button btnInflowDelete = new Button(InflowComposite, SWT.NONE);
+		btnInflowDelete.setBounds(570, 60, 80, 40);
+		toolkit.adapt(btnInflowDelete, true, true);
+		btnInflowDelete.setText("Delete");
+
 		Button btnInflowEdit = new Button(InflowComposite, SWT.NONE);
-		btnInflowEdit.setBounds(585, 77, 75, 25);
+		btnInflowEdit.setBounds(570, 110, 80, 40);
 		toolkit.adapt(btnInflowEdit, true, true);
 		btnInflowEdit.setText("Edit");
 		btnInflowEdit.addSelectionListener(new EditInflow());
 
-		Button btnInflowDelete = new Button(InflowComposite, SWT.NONE);
-		btnInflowDelete.setBounds(585, 128, 75, 25);
-		toolkit.adapt(btnInflowDelete, true, true);
-		btnInflowDelete.setText("Delete");
-
 		Label lblTotalMoneyReceived = new Label(InflowComposite, SWT.NONE);
+		lblTotalMoneyReceived.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
 		lblTotalMoneyReceived.setText("Money Received($):");
 		lblTotalMoneyReceived.setAlignment(SWT.CENTER);
-		lblTotalMoneyReceived.setBounds(10, 223, 139, 15);
+		lblTotalMoneyReceived.setBounds(10, 380, 180, 30);
 		toolkit.adapt(lblTotalMoneyReceived, true, true);
 
 		lblReceivedAmount = new Label(InflowComposite, SWT.BORDER);
+		lblReceivedAmount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
 		lblReceivedAmount.setText("0.0");
 		lblReceivedAmount.setAlignment(SWT.CENTER);
-		lblReceivedAmount.setBounds(168, 223, 85, 15);
+		lblReceivedAmount.setBounds(210, 380, 120, 30);
 		toolkit.adapt(lblReceivedAmount, true, true);
 		btnInflowDelete.addSelectionListener(new DeleteInflow());
 
@@ -231,99 +231,72 @@ public class EventPlanning_Budget extends Composite {
 		Composite OutflowComposite = new Composite(tabFolder_1, SWT.NONE);
 		tbtmOutflow.setControl(OutflowComposite);
 		toolkit.paintBordersFor(OutflowComposite);
-		OutflowComposite.setLayout(new FormLayout());
+		OutflowComposite.setLayout(null);
 
 		OutflowTable = new Table(OutflowComposite, SWT.BORDER
 				| SWT.FULL_SELECTION);
+		OutflowTable.setBounds(10, 10, 630, 350);
 		OutflowTable.setToolTipText("(dd/mm/yyyy)\r\n");
 		OutflowTable.setLinesVisible(true);
 		OutflowTable.setHeaderVisible(true);
-		FormData fd_OutflowTable = new FormData();
-		fd_OutflowTable.right = new FormAttachment(0, 586);
-		fd_OutflowTable.bottom = new FormAttachment(100, -43);
-		fd_OutflowTable.top = new FormAttachment(0, 10);
-		fd_OutflowTable.left = new FormAttachment(0, 10);
-		OutflowTable.setLayoutData(fd_OutflowTable);
 		toolkit.adapt(OutflowTable);
 		toolkit.paintBordersFor(OutflowTable);
 
 		TableColumn OutflowTableItemColumn = new TableColumn(OutflowTable,
 				SWT.CENTER);
-		OutflowTableItemColumn.setWidth(236);
+		OutflowTableItemColumn.setWidth(220);
 		OutflowTableItemColumn.setText("Item");
 
 		TableColumn OutflowTableQuantityColumn = new TableColumn(OutflowTable,
 				SWT.CENTER);
-		OutflowTableQuantityColumn.setWidth(90);
+		OutflowTableQuantityColumn.setWidth(100);
 		OutflowTableQuantityColumn.setText("Quantity");
 
 		TableColumn OutflowTableTypeColumn = new TableColumn(OutflowTable,
 				SWT.CENTER);
-		OutflowTableTypeColumn.setWidth(77);
+		OutflowTableTypeColumn.setWidth(100);
 		OutflowTableTypeColumn.setText("Type");
 
 		TableColumn OutflowTableDateColumn = new TableColumn(OutflowTable,
 				SWT.CENTER);
-		OutflowTableDateColumn.setWidth(96);
+		OutflowTableDateColumn.setWidth(120);
 		OutflowTableDateColumn.setToolTipText("(dd/mm/yyyy)");
 		OutflowTableDateColumn.setText("Purchase Date");
 
 		TableColumn OutflowTableCostColumn = new TableColumn(OutflowTable,
 				SWT.CENTER);
-		OutflowTableCostColumn.setWidth(86);
+		OutflowTableCostColumn.setWidth(100);
 		OutflowTableCostColumn.setText("Cost($)");
 
 		Button btnOutflowAdd = new Button(OutflowComposite, SWT.NONE);
-		FormData fd_btnOutflowAdd = new FormData();
-		fd_btnOutflowAdd.bottom = new FormAttachment(0, 57);
-		fd_btnOutflowAdd.top = new FormAttachment(0, 30);
-		fd_btnOutflowAdd.left = new FormAttachment(OutflowTable, 19);
-		fd_btnOutflowAdd.right = new FormAttachment(100, -67);
-		btnOutflowAdd.setLayoutData(fd_btnOutflowAdd);
+		btnOutflowAdd.setBounds(605, 30, 0, 27);
 		toolkit.adapt(btnOutflowAdd, true, true);
 		btnOutflowAdd.setText("Add");
 		btnOutflowAdd.addSelectionListener(new AddOutflow());
 
 		Button btnOutflowEdit = new Button(OutflowComposite, SWT.NONE);
-		FormData fd_btnOutflowEdit = new FormData();
-		fd_btnOutflowEdit.top = new FormAttachment(btnOutflowAdd, 12);
-		fd_btnOutflowEdit.right = new FormAttachment(100, -67);
-		fd_btnOutflowEdit.left = new FormAttachment(OutflowTable, 19);
-		btnOutflowEdit.setLayoutData(fd_btnOutflowEdit);
+		btnOutflowEdit.setBounds(605, 69, 0, 27);
 		toolkit.adapt(btnOutflowEdit, true, true);
 		btnOutflowEdit.setText("Edit");
 		btnOutflowEdit.addSelectionListener(new EditOutflow());
 
 		Button btnOutflowDelete = new Button(OutflowComposite, SWT.NONE);
-		fd_btnOutflowEdit.bottom = new FormAttachment(btnOutflowDelete, -13);
-		FormData fd_btnOutflowDelete = new FormData();
-		fd_btnOutflowDelete.right = new FormAttachment(100, -67);
-		fd_btnOutflowDelete.left = new FormAttachment(OutflowTable, 19);
-		fd_btnOutflowDelete.top = new FormAttachment(0, 109);
-		fd_btnOutflowDelete.bottom = new FormAttachment(100, -123);
-		btnOutflowDelete.setLayoutData(fd_btnOutflowDelete);
+		btnOutflowDelete.setBounds(605, 109, 0, 238);
 		toolkit.adapt(btnOutflowDelete, true, true);
 		btnOutflowDelete.setText("Delete");
 
 		Label lblTotalMoneySpent = new Label(OutflowComposite, SWT.NONE);
+		lblTotalMoneySpent.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblTotalMoneySpent.setBounds(10, 380, 180, 30);
 		lblTotalMoneySpent.setAlignment(SWT.CENTER);
-		lblTotalMoneySpent.setText("Money Spent($):");
-		FormData fd_lblTotalMoneySpent = new FormData();
-		fd_lblTotalMoneySpent.right = new FormAttachment(OutflowTable, 128);
-		fd_lblTotalMoneySpent.top = new FormAttachment(OutflowTable, 6);
-		fd_lblTotalMoneySpent.left = new FormAttachment(OutflowTable, 0,
-				SWT.LEFT);
-		lblTotalMoneySpent.setLayoutData(fd_lblTotalMoneySpent);
+		lblTotalMoneySpent.setText("Money Spent($)");
 		toolkit.adapt(lblTotalMoneySpent, true, true);
 
 		lblSpentAmount = new Label(OutflowComposite, SWT.BORDER);
+		lblSpentAmount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblSpentAmount.setBounds(210, 380, 120, 30);
 		lblSpentAmount.setText("0.0");
 		lblSpentAmount.setAlignment(SWT.CENTER);
-		FormData fd_lblSpentAmount = new FormData();
-		fd_lblSpentAmount.top = new FormAttachment(OutflowTable, 6);
-		fd_lblSpentAmount.left = new FormAttachment(lblTotalMoneySpent, 6);
-		fd_lblSpentAmount.right = new FormAttachment(100, -496);
-		lblSpentAmount.setLayoutData(fd_lblSpentAmount);
 		toolkit.adapt(lblSpentAmount, true, true);
 		btnOutflowDelete.addSelectionListener(new DeleteOutflow());
 
@@ -333,85 +306,62 @@ public class EventPlanning_Budget extends Composite {
 		Composite BudgetOverviewComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmBudgetOverview.setControl(BudgetOverviewComposite);
 		toolkit.paintBordersFor(BudgetOverviewComposite);
-		BudgetOverviewComposite.setLayout(new FormLayout());
+		BudgetOverviewComposite.setLayout(null);
 
 		Composite OverviewComposite = new Composite(BudgetOverviewComposite,
 				SWT.NONE);
-		FormData fd_OverviewComposite = new FormData();
-		fd_OverviewComposite.top = new FormAttachment(0, 10);
-		fd_OverviewComposite.bottom = new FormAttachment(100, -10);
-		fd_OverviewComposite.left = new FormAttachment(0, 10);
-		OverviewComposite.setLayoutData(fd_OverviewComposite);
+		OverviewComposite.setBounds(10, 10, 510, 450);
 		toolkit.adapt(OverviewComposite);
 		toolkit.paintBordersFor(OverviewComposite);
 
 		Label lblTotalMoneySpent1 = new Label(BudgetOverviewComposite, SWT.NONE);
-		fd_OverviewComposite.right = new FormAttachment(lblTotalMoneySpent1, -6);
+		lblTotalMoneySpent1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblTotalMoneySpent1.setBounds(525, 160, 130, 50);
 		lblTotalMoneySpent1.setAlignment(SWT.CENTER);
-		FormData fd_lblTotalMoneySpent1 = new FormData();
-		fd_lblTotalMoneySpent1.left = new FormAttachment(0, 524);
-		fd_lblTotalMoneySpent1.right = new FormAttachment(100, -10);
-		lblTotalMoneySpent1.setLayoutData(fd_lblTotalMoneySpent1);
 		toolkit.adapt(lblTotalMoneySpent1, true, true);
-		lblTotalMoneySpent1.setText(" Total Money Spent($):");
+		lblTotalMoneySpent1.setText(" Total Money Spent($)");
 
 		lblSpentAmount1 = new Label(BudgetOverviewComposite, SWT.BORDER);
+		lblSpentAmount1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblSpentAmount1.setBounds(525, 215, 130, 30);
 		lblSpentAmount1.setAlignment(SWT.CENTER);
 		lblSpentAmount1.setText("0.0");
-		FormData fd_lblSpentAmount1 = new FormData();
-		fd_lblSpentAmount1.left = new FormAttachment(OverviewComposite, 28);
-		fd_lblSpentAmount1.right = new FormAttachment(100, -32);
-		fd_lblSpentAmount1.top = new FormAttachment(lblTotalMoneySpent1, 6);
-		lblSpentAmount1.setLayoutData(fd_lblSpentAmount1);
 		toolkit.adapt(lblSpentAmount1, true, true);
 
 		Label lblRemainingBudget = new Label(BudgetOverviewComposite, SWT.NONE);
+		lblRemainingBudget.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblRemainingBudget.setBounds(526, 280, 130, 50);
 		lblRemainingBudget.setAlignment(SWT.CENTER);
-		lblRemainingBudget.setText("Remaining Budget($):");
-		FormData fd_lblRemainingBudget = new FormData();
-		fd_lblRemainingBudget.left = new FormAttachment(OverviewComposite, 6);
-		fd_lblRemainingBudget.right = new FormAttachment(100, -10);
-		fd_lblRemainingBudget.top = new FormAttachment(lblSpentAmount1, 36);
-		lblRemainingBudget.setLayoutData(fd_lblRemainingBudget);
+		lblRemainingBudget.setText("Remaining Budget($)");
 		toolkit.adapt(lblRemainingBudget, true, true);
 
 		lblRemainingAmount = new Label(BudgetOverviewComposite, SWT.BORDER);
+		lblRemainingAmount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblRemainingAmount.setBounds(525, 335, 130, 30);
 		lblRemainingAmount.setAlignment(SWT.CENTER);
 		lblRemainingAmount.setText("0.0");
-		FormData fd_lblRemainingAmount = new FormData();
-		fd_lblRemainingAmount.left = new FormAttachment(OverviewComposite, 28);
-		fd_lblRemainingAmount.right = new FormAttachment(100, -32);
-		fd_lblRemainingAmount.top = new FormAttachment(lblRemainingBudget, 6);
-		lblRemainingAmount.setLayoutData(fd_lblRemainingAmount);
 		toolkit.adapt(lblRemainingAmount, true, true);
 
 		Label lblTotalMoneyReceived1 = new Label(BudgetOverviewComposite,
 				SWT.NONE);
-		lblTotalMoneyReceived1.setText("Total Money Received($):");
+		lblTotalMoneyReceived1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblTotalMoneyReceived1.setBounds(525, 40, 130, 50);
+		lblTotalMoneyReceived1.setText("Total Money Received($)");
 		lblTotalMoneyReceived1.setAlignment(SWT.CENTER);
-		FormData fd_lblTotalMoneyReceived1 = new FormData();
-		fd_lblTotalMoneyReceived1.left = new FormAttachment(OverviewComposite,
-				7);
 
 		Label lblNewLabel = new Label(OverviewComposite, SWT.NONE);
+		lblNewLabel.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
 		lblNewLabel.setAlignment(SWT.CENTER);
-		lblNewLabel.setBounds(163, 113, 106, 15);
+		lblNewLabel.setBounds(163, 113, 179, 60);
 		toolkit.adapt(lblNewLabel, true, true);
 		lblNewLabel.setText("Budget Chart");
-		fd_lblTotalMoneyReceived1.right = new FormAttachment(100, -10);
-		fd_lblTotalMoneyReceived1.top = new FormAttachment(0, 43);
-		lblTotalMoneyReceived1.setLayoutData(fd_lblTotalMoneyReceived1);
 		toolkit.adapt(lblTotalMoneyReceived1, true, true);
 
 		lblReceivedAmount1 = new Label(BudgetOverviewComposite, SWT.BORDER);
-		fd_lblTotalMoneySpent1.top = new FormAttachment(lblReceivedAmount1, 39);
+		lblReceivedAmount1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblReceivedAmount1.setBounds(525, 95, 130, 30);
 		lblReceivedAmount1.setText("0.0");
 		lblReceivedAmount1.setAlignment(SWT.CENTER);
-		FormData fd_label = new FormData();
-		fd_label.top = new FormAttachment(lblTotalMoneyReceived1, 10);
-		fd_label.left = new FormAttachment(lblTotalMoneyReceived1, 21, SWT.LEFT);
-		fd_label.right = new FormAttachment(100, -32);
-		lblReceivedAmount1.setLayoutData(fd_label);
 		toolkit.adapt(lblReceivedAmount1, true, true);
 
 		importBudgetAllocationData();
@@ -592,7 +542,7 @@ public class EventPlanning_Budget extends Composite {
 
 					public void onSubmit() {
 						String[] tempList = getStringList();
-						
+
 						BudgetAllocation budgetAllocation = budgetAllocationList
 								.get(index);
 						budgetAllocation.setItem(tempList[0]);
@@ -638,7 +588,8 @@ public class EventPlanning_Budget extends Composite {
 			if (InflowTable.getSelectionCount() == 0) {
 				Shell add_inflow_shell = new Shell(getDisplay());
 				AbstractAdd add_inflow_page = new AbstractAdd(add_inflow_shell,
-						SWT.None, stringArrayInflow, signatureArrayInflow, InflowTable) {
+						SWT.None, stringArrayInflow, signatureArrayInflow,
+						InflowTable) {
 					public void onSubmit() {
 						// insert to database
 						String[] tempList = getStringList();

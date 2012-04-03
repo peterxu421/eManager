@@ -34,7 +34,7 @@ public class WelcomePage extends Composite {
 		setLayout(null);
 
 		Label lblEmanager = new Label(this, SWT.NONE);
-		lblEmanager.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblEmanager.setFont(SWTResourceManager.getFont("Calibri", 13, SWT.NORMAL));
 		lblEmanager.setBounds(110, 80, 105, 23);
 		toolkit.adapt(lblEmanager, true, true);
 		lblEmanager.setText("eManager");
@@ -68,18 +68,15 @@ public class WelcomePage extends Composite {
 
 	class venueManager extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			SessionManager.setCurrentMode(MACRO.MANAGER);
-			//Shell shell = new Shell(getDisplay(), SWT.NO_TRIM | SWT.ON_TOP);
-			Shell shell = new Shell(getDisplay());
-			shell.setLocation(200, 100);
-			Image icon = new Image(getDisplay(), "resources/eManager.png");
-			shell.setText("eManager");
-			shell.setImage(icon);
-			Venuespace ws2 = new Venuespace(shell, SWT.None,
-					MACRO.ORGANIZER_MODE);
-			ws2.pack();
-			shell.pack();
-			shell.open();
+			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM
+					| SWT.ON_TOP);
+			add_item_shell.setLocation(400, 200);
+			SelectVenueModePage add_new_item_page = new SelectVenueModePage(
+					add_item_shell, SWT.None);
+			add_new_item_page.setSize(400, 300);
+			add_item_shell.pack();
+			add_item_shell.open();
+			getShell().dispose();
 		}
 	}
 }

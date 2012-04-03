@@ -19,7 +19,6 @@ public class EventPlanning_FeedBack extends Composite {
 	private Table tableFeedBack;
 	private ArrayList<Feedback> feedbackList;
 	private Event event;
-	private Composite compositeFeedBack;
 	private String[] stringArray = { "Issue", "Date", "Time" };
 	private int[] signatureArray = { MACRO.TEXT, MACRO.DATE, MACRO.TIME };
 	private int index;
@@ -42,49 +41,48 @@ public class EventPlanning_FeedBack extends Composite {
 		this.event = event;
 		DatabaseReader db = new DatabaseReader();
 		this.feedbackList = db.getFeedback(event);
-
-		compositeFeedBack = new Composite(this, SWT.NONE);
-		compositeFeedBack.setBounds(0, 0, 488, 318);
-		toolkit.adapt(compositeFeedBack);
-		toolkit.paintBordersFor(compositeFeedBack);
-
-		tableFeedBack = new Table(compositeFeedBack, SWT.BORDER
-				| SWT.FULL_SELECTION);
-		tableFeedBack.setBounds(10, 10, 376, 273);
-		toolkit.adapt(tableFeedBack);
-		toolkit.paintBordersFor(tableFeedBack);
-		tableFeedBack.setHeaderVisible(true);
-		tableFeedBack.setLinesVisible(true);
-
-		TableColumn tblclmnIssue = new TableColumn(tableFeedBack, SWT.NONE);
-		tblclmnIssue.setWidth(241);
-		tblclmnIssue.setText("Issue");
-
-		TableColumn tblclmDate = new TableColumn(tableFeedBack, SWT.NONE);
-		tblclmDate.setWidth(65);
-		tblclmDate.setText("Date");
-
-		TableColumn tblclmnTime = new TableColumn(tableFeedBack, SWT.NONE);
-		tblclmnTime.setWidth(66);
-		tblclmnTime.setText("Time");
-
-		Button btnFeedBackAddItem = new Button(compositeFeedBack, SWT.NONE);
-		btnFeedBackAddItem.addSelectionListener(new FeedBackAddItemPage());
-		btnFeedBackAddItem.setBounds(398, 31, 80, 27);
-		toolkit.adapt(btnFeedBackAddItem, true, true);
-		btnFeedBackAddItem.setText("Add");
-
-		Button btnFeedBackDeleteItem = new Button(compositeFeedBack, SWT.NONE);
-		btnFeedBackDeleteItem.addSelectionListener(new FeedBackDeleteItem());
-		btnFeedBackDeleteItem.setBounds(398, 73, 80, 27);
-		toolkit.adapt(btnFeedBackDeleteItem, true, true);
-		btnFeedBackDeleteItem.setText("Delete ");
-
-		Button btnFeedBackEditItem = new Button(compositeFeedBack, SWT.NONE);
-		btnFeedBackEditItem.addSelectionListener(new FeedBackEditItemPage());
-		btnFeedBackEditItem.setBounds(398, 116, 80, 27);
-		toolkit.adapt(btnFeedBackEditItem, true, true);
-		btnFeedBackEditItem.setText("Edit ");
+		
+				tableFeedBack = new Table(this, SWT.BORDER
+						| SWT.FULL_SELECTION);
+				tableFeedBack.setLocation(10, 10);
+				tableFeedBack.setSize(550, 400);
+				toolkit.adapt(tableFeedBack);
+				toolkit.paintBordersFor(tableFeedBack);
+				tableFeedBack.setHeaderVisible(true);
+				tableFeedBack.setLinesVisible(true);
+				
+						TableColumn tblclmnIssue = new TableColumn(tableFeedBack, SWT.CENTER);
+						tblclmnIssue.setWidth(300);
+						tblclmnIssue.setText("Issue");
+						
+								TableColumn tblclmDate = new TableColumn(tableFeedBack, SWT.CENTER);
+								tblclmDate.setWidth(120);
+								tblclmDate.setText("Date");
+								
+										TableColumn tblclmnTime = new TableColumn(tableFeedBack, SWT.CENTER);
+										tblclmnTime.setWidth(120);
+										tblclmnTime.setText("Time");
+										
+												Button btnFeedBackAddItem = new Button(this, SWT.NONE);
+												btnFeedBackAddItem.setLocation(570, 10);
+												btnFeedBackAddItem.setSize(80, 40);
+												btnFeedBackAddItem.addSelectionListener(new FeedBackAddItemPage());
+												toolkit.adapt(btnFeedBackAddItem, true, true);
+												btnFeedBackAddItem.setText("Add");
+												
+														Button btnFeedBackDeleteItem = new Button(this, SWT.NONE);
+														btnFeedBackDeleteItem.setLocation(570, 60);
+														btnFeedBackDeleteItem.setSize(80, 40);
+														btnFeedBackDeleteItem.addSelectionListener(new FeedBackDeleteItem());
+														toolkit.adapt(btnFeedBackDeleteItem, true, true);
+														btnFeedBackDeleteItem.setText("Delete ");
+														
+																Button btnFeedBackEditItem = new Button(this, SWT.NONE);
+																btnFeedBackEditItem.setLocation(570, 110);
+																btnFeedBackEditItem.setSize(80, 40);
+																btnFeedBackEditItem.addSelectionListener(new FeedBackEditItemPage());
+																toolkit.adapt(btnFeedBackEditItem, true, true);
+																btnFeedBackEditItem.setText("Edit ");
 
 		fillTable();
 

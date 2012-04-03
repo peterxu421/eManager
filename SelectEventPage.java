@@ -45,12 +45,6 @@ public class SelectEventPage extends Composite {
 		btnCreateNewProject.setBounds(48, 30, 130, 40);
 		toolkit.adapt(btnCreateNewProject, true, true);
 		btnCreateNewProject.setText("Create New Event");
-		Label label = new Label(this, SWT.NONE);
-		label.setBounds(152, 30, 0, 17);
-		toolkit.adapt(label, true, true);
-		Label label_1 = new Label(this, SWT.NONE);
-		label_1.setBounds(152, 60, 0, 17);
-		toolkit.adapt(label_1, true, true);
 		btnCreateNewProject.addSelectionListener(new AddEventHandler());
 
 		list = new List(this, SWT.BORDER | SWT.V_SCROLL);
@@ -78,10 +72,10 @@ public class SelectEventPage extends Composite {
 		btnCancel.setText("Cancel");
 		btnCancel.addSelectionListener(new Cancel());
 
-		Label lblNewLabel = new Label(this, SWT.NONE);
-		lblNewLabel.setBounds(48, 8, 167, 17);
-		toolkit.adapt(lblNewLabel, true, true);
-		lblNewLabel.setText("Welcome to Event Planner!");
+		Label lblWelcom = new Label(this, SWT.NONE);
+		lblWelcom.setBounds(48, 8, 167, 17);
+		toolkit.adapt(lblWelcom, true, true);
+		lblWelcom.setText("Welcome to Event Planner!");
 
 		Label lblSelectProject = new Label(this, SWT.NONE);
 		lblSelectProject.setBounds(48, 79, 109, 40);
@@ -131,16 +125,15 @@ public class SelectEventPage extends Composite {
 
 	class AddEventHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell add_newEvent_shell = new Shell(getShell(), SWT.NO_TRIM
+			Shell add_newEvent_shell = new Shell(getDisplay(), SWT.NO_TRIM
 					| SWT.ON_TOP);
 			add_newEvent_shell.setLocation(getShell().getLocation());
 			AbstractAdd add_newEvent_page = new AbstractAdd(add_newEvent_shell,
 					SWT.None, stringArrayNames, signatureNames, new Table(
 							getShell(), SWT.None)) {
 				public void onSubmit() {
-					Shell shellEvent = new Shell(getShell(),SWT.NO_TRIM
-							| SWT.ON_TOP);
-					shellEvent.setLocation(300, 200);
+					Shell shellEvent = new Shell(getDisplay());
+					shellEvent.setLocation(200, 50);
 
 					String[] tempList = getStringList();
 					Event newEvent = new Event(tempList[0], tempList[1],
@@ -148,10 +141,10 @@ public class SelectEventPage extends Composite {
 					db.insertEvent(newEvent);
 					SessionManager.setCurrentEvent(newEvent);
 					SessionManager.setCurrentMode(MACRO.ORGANIZER);
-					Eventspace workspace = new Eventspace(shellEvent, SWT.None,
+					Eventspace eventspace = new Eventspace(shellEvent, SWT.None,
 							MACRO.ORGANIZER_MODE);
 					System.out.println(tempList[3]);
-					workspace.pack();
+					eventspace.setSize(1000,650);
 					shellEvent.pack();
 					shellEvent.open();
 					parent.dispose();
