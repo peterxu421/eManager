@@ -58,7 +58,7 @@ public class SelectVenueModePage extends Composite {
 
 	class ManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell pass_shell = new Shell(getShell(),SWT.NO_TRIM|SWT.ON_TOP);
+			Shell pass_shell = new Shell(getShell(), SWT.NONE/*SWT.NO_TRIM|SWT.ON_TOP*/);
 			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.MANAGER);
 			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None, MACRO.MANAGER);

@@ -38,7 +38,8 @@ public class VenueBooking_VenueWeekView extends Composite {
 	private Table weekViewTable;
 	private TableColumn tblclmnTimeSlot;
 	private TableColumn[] tblclmn = new TableColumn[7];
-	private Color cellColor;
+	private Color selectedCellColor;
+	private Color notAvailableCellColor;
 	private List selectedDateTimeList;
 	private CalendarCombo calendarCombo;
 	
@@ -55,7 +56,7 @@ public class VenueBooking_VenueWeekView extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public VenueBooking_VenueWeekView(Composite parent, int style, int venueIndex) {
+	public VenueBooking_VenueWeekView(Composite parent, int style, Venue selectedVenue) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
@@ -64,13 +65,12 @@ public class VenueBooking_VenueWeekView extends Composite {
 		});
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		this.selectedVenue = selectedVenue;
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(10, 0, 888, 496);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
-		
-		selectedVenue = db.getVenues().get(venueIndex);
 		
 		weekViewTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		weekViewTable.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
@@ -114,7 +114,8 @@ public class VenueBooking_VenueWeekView extends Composite {
 		
 		weekViewTable.addListener(SWT.MouseDoubleClick, new chooseTime());
 
-		cellColor = weekViewTable.getDisplay().getSystemColor(SWT.COLOR_LIST_SELECTION);
+		selectedCellColor = weekViewTable.getDisplay().getSystemColor(SWT.COLOR_LIST_SELECTION);
+		notAvailableCellColor = weekViewTable.getDisplay().getSystemColor(SWT.COLOR_RED);
 
 		weekViewTable.addListener(SWT.MouseDown, new Listener(){
 			public void handleEvent(Event event){
@@ -194,7 +195,8 @@ public class VenueBooking_VenueWeekView extends Composite {
 			tblclmnTimeSlot.setText("Time/Date");
 			for (int i = 6; i<23; i++){
 				TableItem item = new TableItem(weekViewTable, SWT.NULL);
-				item.setText(0, String.format("%02d", i) + ":00" + ":00");
+				//item.setText(0, String.format("%02d", i) + ":00" + ":00");
+				item.setText(0, String.format("%02d", i) + ":00" + " - " + String.format("%02d",i+1) + ":00");
 			}
 			
 			/* Get the preferred event date */
@@ -234,7 +236,7 @@ public class VenueBooking_VenueWeekView extends Composite {
 					if(Time.parseHour(item.getText(0)) == dt.getTimeStart().getHour()){ // locate the time row
 						for(int j=0; j<dateInAWeekList.size(); j++){
 							if(dateInAWeekList.get(j).isEqualTo(dt.getDate())){ // locate the date column
-								item.setBackground(j+1, cellColor);
+								item.setBackground(j+1, selectedCellColor);
 							}
 						}
 					}
@@ -254,6 +256,7 @@ public class VenueBooking_VenueWeekView extends Composite {
 					    			if(Time.parseHour(weekViewTable.getItem(k).getText(0)) == dateTime.getTimeStart().getHour()){ // find the booked time
 					    				for (int t=0; t<(dateTime.getTimeEnd().getHour()-dateTime.getTimeStart().getHour()); t++){
 					    					weekViewTable.getItem(k).setText(j+1, "Booked");
+					    					weekViewTable.getItem(k).setBackground(j+1, notAvailableCellColor);
 					    					k++; // move to the next hour in the week view time table
 					    				}
 					    			}
@@ -292,8 +295,8 @@ public class VenueBooking_VenueWeekView extends Composite {
 			  for (int i = 0; i < weekViewTable.getColumnCount(); i++) {
 				  Rectangle rect = item.getBounds(i);
 				  /* select a time slot and mark the cell*/
-			      if (rect.contains(pt) && item.getText(i).isEmpty() && !item.getBackground(i).equals(cellColor)){ // choose only the empty time slots
-			    	  item.setBackground(i, cellColor);
+			      if (rect.contains(pt) && item.getText(i).isEmpty() && !item.getBackground(i).equals(selectedCellColor)){ // choose only the empty time slots
+			    	  item.setBackground(i, selectedCellColor);
 			    	  weekViewTable.deselectAll();
 			    	  Time selectedTimeStart = new Time(Time.parseHour(item.getText(0)), 0, 0); // find the selected timeStart
 			    	  Time selectedTimeEnd = new Time(selectedTimeStart.getHour()+1, 0, 0); // fix the corresponding timeEnd;
@@ -303,7 +306,7 @@ public class VenueBooking_VenueWeekView extends Composite {
 			    	  bookedDateTimeList.add(selectedDateTime);
 			      }
 			      /* deselect a chosen time slot and unmark the cell */
-			      else if (rect.contains(pt)  && item.getBackground(i).equals(cellColor)){ // choose only the time slots with marked cell
+			      else if (rect.contains(pt)  && item.getBackground(i).equals(selectedCellColor)){ // choose only the time slots with marked cell
 			    	  item.setBackground(i, null);
 			    	  weekViewTable.deselectAll();
 			    	  Time deselectedTimeStart = new Time(Time.parseHour(item.getText(0)), 0, 0); // find the deselected timeStart
@@ -329,7 +332,7 @@ public class VenueBooking_VenueWeekView extends Composite {
 			for(int i=0; i<weekViewTable.getItemCount(); i++){
 				TableItem item = weekViewTable.getItem(i);
 				for(int j=0; j<weekViewTable.getColumnCount(); j++){
-					if(item.getBackground(j).equals(cellColor)){
+					if(item.getBackground(j).equals(selectedCellColor)){
 						item.setBackground(j, null);
 					}
 				}

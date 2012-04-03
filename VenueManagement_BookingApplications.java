@@ -46,27 +46,26 @@ public class VenueManagement_BookingApplications extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(684, 0, 108, 316);
+		composite.setBounds(0, 0, 800, 400);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		btnReject = new Button(composite, SWT.NONE);
 		btnReject.setText("Reject");
-		btnReject.setBounds(10, 10, 90, 35);
+		btnReject.setBounds(680, 0, 90, 35);
 		toolkit.adapt(btnReject, true, true);
 		btnReject.addSelectionListener(new reject());
 		
 		btnApprove = new Button(composite, SWT.NONE);
-		btnApprove.setBounds(10, 60, 90, 35);
+		btnApprove.setBounds(680, 50, 90, 35);
 		toolkit.adapt(btnApprove, true, true);
 		btnApprove.setText("Approve");
 		btnApprove.addSelectionListener(new approve());
 		
-		applicationTable = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
-		applicationTable.setLocation(0, 0);
-		applicationTable.setSize(678, 324);
+		applicationTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		applicationTable.setLinesVisible(true);
 		applicationTable.setHeaderVisible(true);
+		applicationTable.setBounds(0, 0, 650, 400);
 		toolkit.adapt(applicationTable);
 		toolkit.paintBordersFor(applicationTable);
 

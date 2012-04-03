@@ -41,13 +41,13 @@ public class VenueBooking_InstructionPage extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(0, 0, 690, 400);
+		composite.setBounds(0, 0, 800, 400);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		final List list = new List(composite, SWT.BORDER | SWT.V_SCROLL);
 		list.setFont(SWTResourceManager.getFont("Courier New", 11, SWT.NORMAL));
-		list.setBounds(0, 0, 690, 400);
+		list.setBounds(0, 0, 800, 400);
 		toolkit.adapt(list, true, true);
 		for (int i=0; i<lyrics.length; i++){
 			list.add(lyrics[i]);

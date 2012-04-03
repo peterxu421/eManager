@@ -48,7 +48,7 @@ public class VenueBooking_VenueList extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(0, 0, 800, 390);
+		composite.setBounds(0, 0, 800, 400);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
@@ -68,7 +68,7 @@ public class VenueBooking_VenueList extends Composite {
 		venueTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		venueTable.setLinesVisible(true);
 		venueTable.setHeaderVisible(true);
-		venueTable.setBounds(0, 40, 600, 350);
+		venueTable.setBounds(0, 40, 600, 360);
 		toolkit.adapt(venueTable);
 		toolkit.paintBordersFor(venueTable);
 		
@@ -89,7 +89,7 @@ public class VenueBooking_VenueList extends Composite {
 		tblclmnCapacity.setText("Capacity");
 		
 		Button btnCheckAvailability = new Button(composite, SWT.NONE);
-		btnCheckAvailability.setBounds(625, 0, 150, 30);
+		btnCheckAvailability.setBounds(624, 39, 150, 30);
 		toolkit.adapt(btnCheckAvailability, true, true);
 		btnCheckAvailability.setText("Check Availability");
 		btnCheckAvailability.addSelectionListener(new check());
@@ -127,7 +127,9 @@ public class VenueBooking_VenueList extends Composite {
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
 				venueWeekViewShell.setText("eManager");
 				venueWeekViewShell.setImage(icon);
-				VenueBooking_VenueWeekView venueWeekViewPage = new VenueBooking_VenueWeekView(venueWeekViewShell, SWT.None, index);
+				
+				Venue selectedVenue = venuesAtSameLocation.get(index);
+				VenueBooking_VenueWeekView venueWeekViewPage = new VenueBooking_VenueWeekView(venueWeekViewShell, SWT.None, selectedVenue);
 				venueWeekViewPage.pack();
 				venueWeekViewShell.pack();
 				venueWeekViewShell.open();

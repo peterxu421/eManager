@@ -18,7 +18,7 @@ public class PromptPassword extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Text textPassWord;
-	private String password = "";
+	private String password = "123";
 	private int changeToMode;
 	private Composite parent;
 

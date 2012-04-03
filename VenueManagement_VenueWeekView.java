@@ -165,7 +165,8 @@ public class VenueManagement_VenueWeekView extends Composite {
 			tblclmnTimeSlot.setText("Time Slot/Date");
 			for (int i = 6; i<23; i++){
 				TableItem item = new TableItem(weekViewTable, SWT.NULL);
-				item.setText(0, String.format("%02d", i) + ":00" + ":00");
+				//item.setText(0, String.format("%02d", i) + ":00" + ":00");
+				item.setText(0, String.format("%02d", i) + ":00" + " - " + String.format("%02d",i+1) + ":00");
 			}
 			
 			/* Get the preferred event date */

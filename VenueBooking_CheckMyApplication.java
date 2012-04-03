@@ -26,7 +26,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 	private Text matricNoInput;
 	
 	private ArrayList<VenueBookingApplication> bookingApplicationList = new ArrayList<VenueBookingApplication>(); // all booking applications from a person, regardless of his organization
-	                                                                   // such a person may be considered as different applicants if he booked for different organizations
+	                                                                   // such a person is considered as different applicants if he booked for different organizations
 	private Table applicationTable;
 
 	/**
