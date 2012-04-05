@@ -21,21 +21,18 @@ public class SessionManager {
 		}
 		return connection;
 	}
-
 	private static boolean isConnectedToDatabase() {
 		if (connection == null) {
 			return false;
 		}
 		return true;
 	}
-
 	private static void connect() throws SQLException {
 		String url = "jdbc:derby:database;";
 		connection = DriverManager.getConnection(url);
 		return;
 	}
-
-
+	
 	//Events
 	public static Event getCurrentEvent() {
 		return event;
@@ -43,7 +40,6 @@ public class SessionManager {
 	public static void setCurrentEvent(Event newEvent) {
 		event = newEvent;
 	}
-
 
 	//Mode
 	public static int getCurrentIntMode() {
@@ -62,7 +58,7 @@ public class SessionManager {
 		if(mode == 5)
 			boolMode = MACRO.MANAGER_MODE;
 	}
-
+	
 	//Mode
 	public static boolean[][] getCurrentBoolMode() {
 		return boolMode;
