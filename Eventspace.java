@@ -24,7 +24,8 @@ class Eventspace extends Composite {
 	private String[] stringArrayRegistration = { "Name", "Matriculation",
 			"Year", "Faculty", "Event", "Applying for", "Food Type", "Allergy" };
 	private int[] signatureArrayRegistration = { MACRO.TEXT, MACRO.TEXT,
-			MACRO.INT, MACRO.FACULTY, MACRO.READONLY, MACRO.ROLES,MACRO.TEXT, MACRO.TEXT };
+			MACRO.INT, MACRO.FACULTY, MACRO.READONLY, MACRO.ROLES, MACRO.TEXT,
+			MACRO.TEXT };
 	private String[] stringPassword = { "Original Password", "New Password",
 			"Confirm New Password" };
 	private int[] signaturePassword = { MACRO.PASSWORD, MACRO.PASSWORD,
@@ -135,19 +136,20 @@ class Eventspace extends Composite {
 
 		// body -> right panel
 		int mode = SessionManager.getCurrentIntMode();
-		if(mode==MACRO.ORGANIZER)
+		if (mode == MACRO.ORGANIZER)
 			options[0].notifyListeners(SWT.Selection, null);
-		else if(mode ==MACRO.FACILITATOR)
+		else if (mode == MACRO.FACILITATOR)
 			options[1].notifyListeners(SWT.Selection, null);
-		else if(mode == MACRO.PARTICIPANT)
+		else if (mode == MACRO.PARTICIPANT)
 			options[2].notifyListeners(SWT.Selection, null);
 
 	}
 
 	class SettingAdapter extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell settingShell = new Shell(getShell());
-			settingShell.setLocation(300,200);
+			Shell settingShell = new Shell(getShell(), SWT.APPLICATION_MODAL
+					| SWT.DIALOG_TRIM);
+			settingShell.setLocation(300, 200);
 			AbstractEdit settingPage = new Setting(settingShell, SWT.None,
 					stringSetting, signatureSetting, new Table(getShell(),
 							SWT.None), stringButton);
@@ -192,7 +194,8 @@ class Eventspace extends Composite {
 			Event event;
 
 			public void widgetSelected(SelectionEvent e) {
-				Shell organizerPaswordPage = new Shell(getShell());
+				Shell organizerPaswordPage = new Shell(getShell(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				organizerPaswordPage.setLocation(getShell().getLocation());
 				organizerPaswordPage.setSize(getShell().getSize());
 				event = SessionManager.getCurrentEvent();
@@ -252,7 +255,8 @@ class Eventspace extends Composite {
 			Event event;
 
 			public void widgetSelected(SelectionEvent e) {
-				Shell facilitatorPaswordPage = new Shell(getShell());
+				Shell facilitatorPaswordPage = new Shell(getShell(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				facilitatorPaswordPage.setLocation(getShell().getLocation());
 				facilitatorPaswordPage.setSize(getShell().getSize());
 				event = SessionManager.getCurrentEvent();
@@ -376,7 +380,8 @@ class Eventspace extends Composite {
 				packing.pack();
 			} else if (name.equals("Event Registration")) {
 				eP_eventRegistration register = new eP_eventRegistration(right,
-						SWT.None, stringArrayRegistration,signatureArrayRegistration);
+						SWT.None, stringArrayRegistration,
+						signatureArrayRegistration);
 				register.pack();
 			}
 			right.pack();

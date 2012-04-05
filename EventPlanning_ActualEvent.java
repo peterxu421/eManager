@@ -134,7 +134,8 @@ public class EventPlanning_ActualEvent extends Composite {
 				comp_eventPlanning_actualEvent_Itinerary, SWT.NONE);
 		btn_eventPlanning_actualEvent_Itinerary_edit
 				.addSelectionListener(new ItineraryEditItemPage());
-		btn_eventPlanning_actualEvent_Itinerary_edit.setBounds(570, 110, 80, 40);
+		btn_eventPlanning_actualEvent_Itinerary_edit
+				.setBounds(570, 110, 80, 40);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_edit, true, true);
 		btn_eventPlanning_actualEvent_Itinerary_edit.setText("Edit ");
 
@@ -207,8 +208,8 @@ public class EventPlanning_ActualEvent extends Composite {
 		btn_eventPlanning_actualEvent_AllocationManpower_edit
 				.addSelectionListener(new AllocOfManpowerEditItemPage());
 		btn_eventPlanning_actualEvent_AllocationManpower_edit.setText("Edit");
-		btn_eventPlanning_actualEvent_AllocationManpower_edit.setBounds(570, 110,
-				80, 40);
+		btn_eventPlanning_actualEvent_AllocationManpower_edit.setBounds(570,
+				110, 80, 40);
 		toolkit.adapt(btn_eventPlanning_actualEvent_AllocationManpower_edit,
 				true, true);
 
@@ -252,8 +253,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		TableColumn col_eventPlanning_actualEvents_facilitators_status = new TableColumn(
 				table_eventPlanning_actualEvents_facilitators, SWT.CENTER);
 		col_eventPlanning_actualEvents_facilitators_status.setWidth(200);
-		col_eventPlanning_actualEvents_facilitators_status
-				.setText("Food Type");
+		col_eventPlanning_actualEvents_facilitators_status.setText("Food Type");
 
 		Button btnFacilitatorsAddItem = new Button(
 				composite_eventPlanning_actualEvents_facilitators, SWT.NONE);
@@ -443,7 +443,8 @@ public class EventPlanning_ActualEvent extends Composite {
 	public class ItineraryAddItemPage extends SelectionAdapter {
 
 		public void widgetSelected(SelectionEvent e) {
-			Shell itineraryAddItemPage = new Shell(getDisplay());
+			Shell itineraryAddItemPage = new Shell(getDisplay(),
+					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 			AbstractAdd itineraryAddItem = new AbstractAdd(
 					itineraryAddItemPage, SWT.None, stringArrayItinerary,
 					signatureItinerary,
@@ -503,7 +504,8 @@ public class EventPlanning_ActualEvent extends Composite {
 					.getSelectionIndex();
 			if (index < table_eventPlanning_actualEvent_tableItinerary
 					.getItemCount() && index >= 0) {
-				Shell itineraryEditItemPage = new Shell(getDisplay());
+				Shell itineraryEditItemPage = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractEdit itineraryEditItem = new AbstractEdit(
 						itineraryEditItemPage, SWT.None, stringArrayItinerary,
 						signatureItinerary) {
@@ -546,7 +548,8 @@ public class EventPlanning_ActualEvent extends Composite {
 	public class AllocOfManpowerAddItemPage extends SelectionAdapter {
 
 		public void widgetSelected(SelectionEvent e) {
-			Shell allocOfManpowerAddItemPage = new Shell(getDisplay());
+			Shell allocOfManpowerAddItemPage = new Shell(getDisplay(),
+					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 			AbstractAdd allocOfManpowerAddItem = new AbstractAdd(
 					allocOfManpowerAddItemPage, SWT.None,
 					stringArrayAllocationOfManpower,
@@ -605,7 +608,8 @@ public class EventPlanning_ActualEvent extends Composite {
 					.getSelectionIndex();
 			if (index < table_eventPlanning_actualEvents_allocOfManpower
 					.getItemCount() && index >= 0) {
-				Shell allocOfManpowerEditItemPage = new Shell(getDisplay());
+				Shell allocOfManpowerEditItemPage = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractEdit allocOfManpowerEditItem = new AbstractEdit(
 						allocOfManpowerEditItemPage, SWT.None,
 						stringArrayAllocationOfManpower,
@@ -650,7 +654,8 @@ public class EventPlanning_ActualEvent extends Composite {
 	public class FacilitatorAddItemPage extends SelectionAdapter {
 
 		public void widgetSelected(SelectionEvent e) {
-			Shell facilitatorAddItemPage = new Shell(getDisplay());
+			Shell facilitatorAddItemPage = new Shell(getDisplay(),
+					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 			AbstractAdd facilitatorAddItem = new AbstractAdd(
 					facilitatorAddItemPage, SWT.None, stringArrayFacilitator,
 					signatureFacilitator,
@@ -703,7 +708,8 @@ public class EventPlanning_ActualEvent extends Composite {
 					.getSelectionIndex();
 			if (index < table_eventPlanning_actualEvents_facilitators
 					.getItemCount() && index >= 0) {
-				Shell facilitatorEditItemPage = new Shell(getDisplay());
+				Shell facilitatorEditItemPage = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractEdit facilitatorEditItem = new AbstractEdit(
 						facilitatorEditItemPage, SWT.None,
 						stringArrayFacilitator, signatureFacilitator) {
@@ -745,7 +751,8 @@ public class EventPlanning_ActualEvent extends Composite {
 	public class ParticipantAddItemPage extends SelectionAdapter {
 
 		public void widgetSelected(SelectionEvent e) {
-			Shell participantAddItemPage = new Shell(getDisplay());
+			Shell participantAddItemPage = new Shell(getDisplay(),
+					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 			AbstractAdd participantAddItem = new AbstractAdd(
 					participantAddItemPage, SWT.None, stringArrayParticipant,
 					signatureParticipant,
@@ -798,7 +805,8 @@ public class EventPlanning_ActualEvent extends Composite {
 					.getSelectionIndex();
 			if (index < table_eventPlanning_actualEvent_participants
 					.getItemCount() && index >= 0) {
-				Shell participantEditItemPage = new Shell(getDisplay());
+				Shell participantEditItemPage = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractEdit participantEditItem = new AbstractEdit(
 						participantEditItemPage, SWT.None,
 						stringArrayParticipant, signatureParticipant) {

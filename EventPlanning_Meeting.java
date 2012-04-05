@@ -124,7 +124,8 @@ public class EventPlanning_Meeting extends Composite {
 	class Add extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (table.getSelectionCount() == 0) {
-				Shell add_meeting_shell = new Shell(getDisplay());
+				Shell add_meeting_shell = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractAdd add_meeting_page = new AbstractAdd(
 						add_meeting_shell, SWT.None, stringArray,
 						signatureArray, table) {
@@ -173,7 +174,8 @@ public class EventPlanning_Meeting extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			index = table.getSelectionIndex();
 			if (table.getSelectionCount() != 0) {
-				Shell edit_meeting_shell = new Shell(getDisplay());
+				Shell edit_meeting_shell = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractEdit edit_meeting_page = new AbstractEdit(
 						edit_meeting_shell, SWT.None, stringArray,
 						signatureArray) {

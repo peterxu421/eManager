@@ -125,7 +125,7 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.adapt(btnAllocationDelete, true, true);
 		btnAllocationDelete.setText("Delete");
 		btnAllocationDelete.addSelectionListener(new DeleteAllocation());
-		
+
 		Button btnAllocationEdit = new Button(AllocationComposite, SWT.NONE);
 		btnAllocationEdit.setBounds(570, 110, 80, 40);
 		toolkit.adapt(btnAllocationEdit, true, true);
@@ -133,14 +133,16 @@ public class EventPlanning_Budget extends Composite {
 		btnAllocationEdit.addSelectionListener(new EditAllocation());
 
 		Label lblYouStillHave = new Label(AllocationComposite, SWT.NONE);
-		lblYouStillHave.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblYouStillHave.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+				SWT.NORMAL));
 		lblYouStillHave.setAlignment(SWT.CENTER);
 		lblYouStillHave.setBounds(10, 380, 135, 30);
 		toolkit.adapt(lblYouStillHave, true, true);
 		lblYouStillHave.setText("Money Left ($)");
 
 		lblYouStillHave_Amount = new Label(AllocationComposite, SWT.BORDER);
-		lblYouStillHave_Amount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblYouStillHave_Amount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+				SWT.NORMAL));
 		lblYouStillHave_Amount.setAlignment(SWT.CENTER);
 		lblYouStillHave_Amount.setBounds(168, 380, 135, 30);
 		toolkit.adapt(lblYouStillHave_Amount, true, true);
@@ -211,14 +213,16 @@ public class EventPlanning_Budget extends Composite {
 		btnInflowEdit.addSelectionListener(new EditInflow());
 
 		Label lblTotalMoneyReceived = new Label(InflowComposite, SWT.NONE);
-		lblTotalMoneyReceived.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblTotalMoneyReceived.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+				SWT.NORMAL));
 		lblTotalMoneyReceived.setText("Money Received($):");
 		lblTotalMoneyReceived.setAlignment(SWT.CENTER);
 		lblTotalMoneyReceived.setBounds(10, 380, 180, 30);
 		toolkit.adapt(lblTotalMoneyReceived, true, true);
 
 		lblReceivedAmount = new Label(InflowComposite, SWT.BORDER);
-		lblReceivedAmount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblReceivedAmount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+				SWT.NORMAL));
 		lblReceivedAmount.setText("0.0");
 		lblReceivedAmount.setAlignment(SWT.CENTER);
 		lblReceivedAmount.setBounds(210, 380, 120, 30);
@@ -286,14 +290,16 @@ public class EventPlanning_Budget extends Composite {
 		btnOutflowDelete.setText("Delete");
 
 		Label lblTotalMoneySpent = new Label(OutflowComposite, SWT.NONE);
-		lblTotalMoneySpent.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblTotalMoneySpent.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+				SWT.NORMAL));
 		lblTotalMoneySpent.setBounds(10, 380, 180, 30);
 		lblTotalMoneySpent.setAlignment(SWT.CENTER);
 		lblTotalMoneySpent.setText("Money Spent($)");
 		toolkit.adapt(lblTotalMoneySpent, true, true);
 
 		lblSpentAmount = new Label(OutflowComposite, SWT.BORDER);
-		lblSpentAmount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblSpentAmount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+				SWT.NORMAL));
 		lblSpentAmount.setBounds(210, 380, 120, 30);
 		lblSpentAmount.setText("0.0");
 		lblSpentAmount.setAlignment(SWT.CENTER);
@@ -315,28 +321,32 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.paintBordersFor(OverviewComposite);
 
 		Label lblTotalMoneySpent1 = new Label(BudgetOverviewComposite, SWT.NONE);
-		lblTotalMoneySpent1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblTotalMoneySpent1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+				SWT.NORMAL));
 		lblTotalMoneySpent1.setBounds(525, 160, 130, 50);
 		lblTotalMoneySpent1.setAlignment(SWT.CENTER);
 		toolkit.adapt(lblTotalMoneySpent1, true, true);
 		lblTotalMoneySpent1.setText(" Total Money Spent($)");
 
 		lblSpentAmount1 = new Label(BudgetOverviewComposite, SWT.BORDER);
-		lblSpentAmount1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblSpentAmount1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+				SWT.NORMAL));
 		lblSpentAmount1.setBounds(525, 215, 130, 30);
 		lblSpentAmount1.setAlignment(SWT.CENTER);
 		lblSpentAmount1.setText("0.0");
 		toolkit.adapt(lblSpentAmount1, true, true);
 
 		Label lblRemainingBudget = new Label(BudgetOverviewComposite, SWT.NONE);
-		lblRemainingBudget.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblRemainingBudget.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+				SWT.NORMAL));
 		lblRemainingBudget.setBounds(526, 280, 130, 50);
 		lblRemainingBudget.setAlignment(SWT.CENTER);
 		lblRemainingBudget.setText("Remaining Budget($)");
 		toolkit.adapt(lblRemainingBudget, true, true);
 
 		lblRemainingAmount = new Label(BudgetOverviewComposite, SWT.BORDER);
-		lblRemainingAmount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblRemainingAmount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+				SWT.NORMAL));
 		lblRemainingAmount.setBounds(525, 335, 130, 30);
 		lblRemainingAmount.setAlignment(SWT.CENTER);
 		lblRemainingAmount.setText("0.0");
@@ -344,7 +354,8 @@ public class EventPlanning_Budget extends Composite {
 
 		Label lblTotalMoneyReceived1 = new Label(BudgetOverviewComposite,
 				SWT.NONE);
-		lblTotalMoneyReceived1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblTotalMoneyReceived1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+				SWT.NORMAL));
 		lblTotalMoneyReceived1.setBounds(525, 40, 130, 50);
 		lblTotalMoneyReceived1.setText("Total Money Received($)");
 		lblTotalMoneyReceived1.setAlignment(SWT.CENTER);
@@ -358,7 +369,8 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.adapt(lblTotalMoneyReceived1, true, true);
 
 		lblReceivedAmount1 = new Label(BudgetOverviewComposite, SWT.BORDER);
-		lblReceivedAmount1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblReceivedAmount1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+				SWT.NORMAL));
 		lblReceivedAmount1.setBounds(525, 95, 130, 30);
 		lblReceivedAmount1.setText("0.0");
 		lblReceivedAmount1.setAlignment(SWT.CENTER);
@@ -456,7 +468,8 @@ public class EventPlanning_Budget extends Composite {
 	class AddAllocation extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (AllocationTable.getSelectionCount() == 0) {
-				Shell add_allocation_shell = new Shell(getDisplay());
+				Shell add_allocation_shell = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractAdd add_allocation_page = new AbstractAdd(
 						add_allocation_shell, SWT.None, stringArrayBudget,
 						signatureArrayBudget, AllocationTable) {
@@ -528,7 +541,8 @@ public class EventPlanning_Budget extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			index = AllocationTable.getSelectionIndex();
 			if (AllocationTable.getSelectionCount() != 0) {
-				Shell edit_allocation_shell = new Shell(getDisplay());
+				Shell edit_allocation_shell = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractEdit edit_allocation_page = new AbstractEdit(
 						edit_allocation_shell, SWT.None, stringArrayBudget,
 						signatureArrayBudget) {
@@ -586,7 +600,8 @@ public class EventPlanning_Budget extends Composite {
 	class AddInflow extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (InflowTable.getSelectionCount() == 0) {
-				Shell add_inflow_shell = new Shell(getDisplay());
+				Shell add_inflow_shell = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractAdd add_inflow_page = new AbstractAdd(add_inflow_shell,
 						SWT.None, stringArrayInflow, signatureArrayInflow,
 						InflowTable) {
@@ -654,7 +669,8 @@ public class EventPlanning_Budget extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			index = InflowTable.getSelectionIndex();
 			if (InflowTable.getSelectionCount() != 0) {
-				Shell edit_inflow_shell = new Shell(getDisplay());
+				Shell edit_inflow_shell = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractEdit edit_inflow_page = new AbstractEdit(
 						edit_inflow_shell, SWT.None, stringArrayInflow,
 						signatureArrayInflow) {
@@ -706,7 +722,8 @@ public class EventPlanning_Budget extends Composite {
 	class AddOutflow extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (OutflowTable.getSelectionCount() == 0) {
-				Shell add_outflow_shell = new Shell(getDisplay());
+				Shell add_outflow_shell = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractAdd add_outflow_page = new AbstractAdd(
 						add_outflow_shell, SWT.None, stringArrayOutflow,
 						signatureArrayOutflow, OutflowTable) {
@@ -779,7 +796,8 @@ public class EventPlanning_Budget extends Composite {
 	class EditOutflow extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (OutflowTable.getSelectionCount() != 0) {
-				Shell edit_outflow_shell = new Shell(getDisplay());
+				Shell edit_outflow_shell = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractEdit edit_outflow_page = new AbstractEdit(
 						edit_outflow_shell, SWT.None, stringArrayOutflow,
 						signatureArrayOutflow) {
