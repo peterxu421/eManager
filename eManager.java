@@ -117,6 +117,7 @@ public class eManager{
 			Shell version_shell = new Shell(display, SWT.NO_TRIM|SWT.ON_TOP);
 			version_shell.setLocation(400, 250);
 			FileVersion version_page = new FileVersion(version_shell, SWT.None);
+			SessionManager.disposeShells(display, version_shell);
 			version_page.pack();
 			version_shell.pack();
 			version_shell.open();
@@ -130,6 +131,7 @@ public class eManager{
 				mode_shell.setLocation(400, 200);
 				SelectEventPage newEventPage = new SelectEventPage(mode_shell, SWT.None);
 				newEventPage.setSize(500,400);
+				SessionManager.disposeShells(display, mode_shell);
 				mode_shell.pack();
 				mode_shell.open();
 			}
@@ -141,6 +143,7 @@ public class eManager{
 				Shell mode_shell = new Shell(display, SWT.NO_TRIM|SWT.ON_TOP);
 				mode_shell.setLocation(400,200);
 				PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None, MACRO.MANAGER);
+				SessionManager.disposeShells(display, mode_shell);
 				mode_page.pack();
 				mode_shell.pack();
 				mode_shell.open();
@@ -153,6 +156,7 @@ public class eManager{
 				Shell mode_shell = new Shell(display);
 				mode_shell.setLocation(200, 50);
 				Venuespace venuspace = new Venuespace(mode_shell, SWT.None, MACRO.APPLICANT_MODE);
+				SessionManager.disposeShells(display, mode_shell);
 				venuspace.pack();
 				mode_shell.pack();
 				mode_shell.open();
@@ -161,7 +165,7 @@ public class eManager{
 	}
 
 	public static void main(String[] args) {
-		eManager eManager = new eManager();
+		new eManager();
 	}
 
 }

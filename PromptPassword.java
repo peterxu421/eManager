@@ -85,7 +85,8 @@ public class PromptPassword extends Composite {
 		eventspace.pack();
 		shell.pack();
 		shell.open();
-		getParent().getShell().getParent().dispose();
+		SessionManager.disposeShells(getDisplay(), shell);
+		//getParent().getShell().getParent().dispose();
 	}
 
 	public void CreateVenuePage(boolean[][] boolMode) {

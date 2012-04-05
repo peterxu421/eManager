@@ -2,12 +2,37 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+
 public class SessionManager {
 	private static Connection connection = null;
 	private static Event event = null;
 	private static int intMode = 0;
 	public static boolean[][] boolMode; 
-
+	public static Shell[] shellList;
+	
+	//Dipose all the shell except the root shell and the shell that we indicate.
+	public static void disposeShells(Display display, Shell shell){
+		shellList=display.getShells();
+		for(int i=1; i<shellList.length;i++){
+			if(shellList[i].equals(shell)){
+				//do nothing
+			}
+			else
+				shellList[i].dispose();
+		}
+	}
+	public static void disposeShells(Display display, Shell shell1, Shell shell2){
+		shellList=display.getShells();
+		for(int i=1; i<shellList.length;i++){
+			if(shellList[i].equals(shell1)||shellList[i].equals(shell2)){
+				//do nothing
+			}
+			else
+				shellList[i].dispose();
+		}
+	}
 	//Connection
 	public static Connection getConnection() {
 		if (!isConnectedToDatabase()) {
