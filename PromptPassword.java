@@ -98,7 +98,12 @@ public class PromptPassword extends Composite {
 		venuespace.pack();
 		shell.pack();
 		shell.open();
-		getParent().getParent().dispose();
+		// Check whether parent.parent is null or not.
+		if (getParent().getParent() != null) {
+			getParent().getParent().dispose();
+		}
+		else
+			getParent().dispose();
 	}
 
 	private class CancelListener extends SelectionAdapter {
@@ -112,7 +117,8 @@ public class PromptPassword extends Composite {
 		public void widgetSelected(SelectionEvent event) {
 			// Check whether their password is correct or not.
 			if (changeToMode == MACRO.ORGANIZER) {
-				password=SessionManager.getCurrentEvent().getOrganizerPassword();
+				password = SessionManager.getCurrentEvent()
+						.getOrganizerPassword();
 				if (password == null && textPassWord.getText().isEmpty()) {
 					CreateEventPage(MACRO.ORGANIZER_MODE);
 					parent.dispose();
@@ -129,7 +135,8 @@ public class PromptPassword extends Composite {
 			}
 
 			if (changeToMode == MACRO.FACILITATOR) {
-				password=SessionManager.getCurrentEvent().getFacilitatorPassword();
+				password = SessionManager.getCurrentEvent()
+						.getFacilitatorPassword();
 				if (password == null && textPassWord.getText().isEmpty()) {
 					CreateEventPage(MACRO.FACILITATOR_MODE);
 					parent.dispose();
