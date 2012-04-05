@@ -98,6 +98,7 @@ public class PromptPassword extends Composite {
 		venuespace.pack();
 		shell.pack();
 		shell.open();
+		getParent().getParent().dispose();
 	}
 
 	private class CancelListener extends SelectionAdapter {
@@ -153,7 +154,6 @@ public class PromptPassword extends Composite {
 					getShell().dispose();
 				} else if (textPassWord.getText().equals(password)) {
 					CreateVenuePage(MACRO.MANAGER_MODE);
-					getShell().dispose();
 				} else {
 					MessageBox warningPage = new MessageBox(getDisplay()
 							.getActiveShell(), SWT.OK | SWT.ICON_WARNING);

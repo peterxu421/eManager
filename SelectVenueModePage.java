@@ -62,7 +62,6 @@ public class SelectVenueModePage extends Composite {
 			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.MANAGER);
 			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None, MACRO.MANAGER);
-			System.out.println("1");
 			pass_page.pack();
 			pass_shell.pack();
 			pass_shell.open();
