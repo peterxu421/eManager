@@ -134,9 +134,13 @@ class Eventspace extends Composite {
 		}
 
 		// body -> right panel
-		EventPlanning_PreEvent pre_event = new EventPlanning_PreEvent(right,
-				SWT.None, SessionManager.getCurrentEvent());
-		pre_event.pack();
+		int mode = SessionManager.getCurrentIntMode();
+		if(mode==MACRO.ORGANIZER)
+			buttons[0].notifyListeners(SWT.Selection, null);
+		else if(mode ==MACRO.FACILITATOR)
+			buttons[1].notifyListeners(SWT.Selection, null);
+		else if(mode == MACRO.PARTICIPANT)
+			buttons[2].notifyListeners(SWT.Selection, null);
 
 	}
 
