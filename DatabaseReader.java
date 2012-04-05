@@ -562,7 +562,7 @@ public class DatabaseReader {
 		VenueApplicant applicant = null;
 		ArrayList<VenueApplicant> venueApplicantList = new ArrayList<VenueApplicant>();
 		try {
-			rs = SQLManager.getVenueApplicantByMatricNo(connection, matricNo);
+			rs = SQLManager.getVenueApplicantByMatricNo(connection, matricNo.toUpperCase());
 			while (rs.next()) {
 				applicant = new VenueApplicant(rs.getInt("ApplicantID"), rs.getString("Name"),
 						matricNo,rs.getString("contact"), rs.getString("email"), rs.getString("organization"));
@@ -574,7 +574,7 @@ public class DatabaseReader {
 		return venueApplicantList;
 	}
 	public void insertVenueApplicant(VenueApplicant applicant){
-		int ID = SQLManager.insertVenueApplicant(connection, applicant.getName(), applicant.getMatricNo(), applicant.getContact(), applicant.getEmail(), applicant.getOrganization());
+		int ID = SQLManager.insertVenueApplicant(connection, applicant.getName(), applicant.getMatricNo().toUpperCase(), applicant.getContact(), applicant.getEmail(), applicant.getOrganization());
 		applicant.setID(ID);
 	}
 	public void deleteVenueApplicant(VenueApplicant applicant){
@@ -653,8 +653,8 @@ public class DatabaseReader {
 		SQLManager.deleteVenueBookingDetailsByVenue(connection, venue.getVenueId());
 	}
 	public void deleteVenueBookingInfo(VenueBookingApplication booking){
-		deleteVenueApplicant(booking.getApplicant());
 		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
+		deleteVenueApplicant(booking.getApplicant());
 	}
 	public VenueBookingApplication getVenueBookingInfo(VenueApplicant applicant){
 		ResultSet rs = null;

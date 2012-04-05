@@ -89,11 +89,11 @@ public class PreEvent_Publicity extends Composite{
 	}
 	private void addImage(final String path, final String filename){
 		String source = path + File.separator + filename;
-		String target = "Picture" + File.separator + filename; 
+		String target = "Pictures" + File.separator + filename; 
 		File sourceFile = new File(source);
 		File targetFile = new File(target);
 		FileUtil.copyFile(sourceFile, targetFile);
-		Image image = new Image(getDisplay(), new ImageData("Picture" + File.separator + filename));
+		Image image = new Image(getDisplay(), new ImageData("Pictures" + File.separator + filename));
 		if(image!=null){
 			GalleryItem item = new GalleryItem(group, SWT.None);
 			item.setImage(image);
