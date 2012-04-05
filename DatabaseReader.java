@@ -509,6 +509,7 @@ public class DatabaseReader {
 				facilitator.getAllergy(), facilitator.getPosition());
 		facilitator.setID(facilitatorID);
 	}
+	
 	public void insertParticipant(Event event, Participant participant) {
 		int participantID = SQLManager.insertParticipantDetails(connection,
 				event.getEventID(), participant.getName(),
@@ -580,6 +581,7 @@ public class DatabaseReader {
 	public void deleteVenueApplicant(VenueApplicant applicant){
 		SQLManager.deleteVenueApplicantDetails(connection, applicant.getID());
 	}
+	
 	/*VenueBookingApplication*/
 	public ArrayList<VenueBookingApplication> getVenueBookingInfo(Venue venue){
 		ArrayList<VenueBookingApplication> bookings = new ArrayList<VenueBookingApplication>();

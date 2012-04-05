@@ -59,47 +59,40 @@ class Venuespace extends Composite{
 	    optionBarLayout.marginLeft = 164;
 	    optionBarLayout.numColumns = 5;
 	    optionBar.setLayout(optionBarLayout);
-	   // optionBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    optionBar.setLayoutData(new GridData(1000, 50));
 	    
 	    //optionBar->options
 	    int num = optionMenu.length;
-	    Button[] buttons = new Button[num];
+	    Button[] options = new Button[num];
 	    for(int i=0; i<num; i++)
 	    {
-	    	buttons[i] = new Button(optionBar, SWT.PUSH);
-	    	buttons[i].setLayoutData(new GridData(150, 40));
-	    	buttons[i].setText(optionMenu[i]);
-	    	buttons[i].addSelectionListener(new OptionSelectionAdapter());
-	    	buttons[i].setEnabled(boolMode[0][i]);
+	    	options[i] = new Button(optionBar, SWT.PUSH);
+	    	options[i].setLayoutData(new GridData(150, 40));
+	    	options[i].setText(optionMenu[i]);
+	    	options[i].addSelectionListener(new OptionSelectionAdapter());
+	    	options[i].setEnabled(boolMode[0][i]);
 	    }
 	    
 	    //body->
 	    body = new Composite(this, SWT.None);
-	    //body.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    body.setLayoutData(new GridData(1000, 460));
-	    
 	    
 	    GridLayout bodyLayout = new GridLayout();
 	    bodyLayout.numColumns = 2;
 	    body.setLayout(bodyLayout);
 	    left = new Composite(body, SWT.None);
-	   // left.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    right = new Composite(body, SWT.None);
-	 //   right.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    left.setLayoutData(new GridData(160,450));
 	    right.setLayoutData(new GridData(800,450));
 	    
 	    Label eventName = new Label(header, SWT.WRAP);
 	    eventName.setFont(SWTResourceManager.getFont("Courier New", 11, SWT.NORMAL));
 	  //  eventName.setBounds(0, 10, 1000, 25);
-	   // eventName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-	    eventName.setText("NUS Office of Studnet Affairs\n© Copyright 2001-08 National University of Singapore. All Rights Reserved.");
+	    eventName.setText("NUS Office of Studnet Affairs\nCopyright 2001-08 National University of Singapore. All Rights Reserved.");
 	    
 	    Label eventDescription = new Label(header, SWT.WRAP);
 	    eventDescription.setFont(SWTResourceManager.getFont("Courier New", 11, SWT.NORMAL));
 	   // eventDescription.setBounds(0, 50, 1000, 40);
-	   // eventDescription.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 	    eventDescription.setText("We are committed to providing you with easy accessibility and responsiveness in our services.");
 	    
 	    //body->left panel
@@ -108,7 +101,7 @@ class Venuespace extends Composite{
 	    left.setLayout(leftLayout);
 	    
 	    num = tabList[0].length;
-	    buttons = new Button[num];
+	    Button[] buttons = new Button[num];
 	    for(int i=0; i<num; i++)
 	    {
 	    	buttons[i] = new Button(left, SWT.PUSH);
@@ -117,10 +110,12 @@ class Venuespace extends Composite{
 	    	buttons[i].addSelectionListener(new TabSelectionAdapter());
 	    	buttons[i].setEnabled(boolMode[1][i]);
 	    }
-	    
 	    //body -> right panel
-	    VenueManagement_VenueList vList  = new VenueManagement_VenueList(right, SWT.NONE);
-	    vList.pack();
+		int mode = SessionManager.getCurrentIntMode();
+		if(mode==MACRO.MANAGER)
+			options[0].notifyListeners(SWT.Selection, null);
+		else if(mode ==MACRO.APPLICANT)
+			options[1].notifyListeners(SWT.Selection, null);
 	}
 	class TabSelectionAdapter extends SelectionAdapter{
 		public void widgetSelected(SelectionEvent e){

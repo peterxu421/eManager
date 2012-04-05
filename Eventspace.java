@@ -71,13 +71,13 @@ class Eventspace extends Composite {
 		int num = optionList.length;
 		int width = 130;
 		int height = 40;
-		Button[] buttons = new Button[num];
+		Button[] options = new Button[num];
 		for (int i = 0; i < num; i++) {
-			buttons[i] = new Button(optionBar, SWT.PUSH);
-			buttons[i].setLayoutData(new GridData(width, height));
-			buttons[i].setText(optionList[i]);
-			buttons[i].addSelectionListener(new OptionSelectionAdapter());
-			buttons[i].setEnabled(boolMode[0][i]);
+			options[i] = new Button(optionBar, SWT.PUSH);
+			options[i].setLayoutData(new GridData(width, height));
+			options[i].setText(optionList[i]);
+			options[i].addSelectionListener(new OptionSelectionAdapter());
+			options[i].setEnabled(boolMode[0][i]);
 		}
 		// setting button
 		Button btnSetting = new Button(optionBar, SWT.PUSH);
@@ -124,7 +124,7 @@ class Eventspace extends Composite {
 		left.setLayout(leftLayout);
 
 		num = tabList[0].length;
-		buttons = new Button[num];
+		Button[] buttons = new Button[num];
 		for (int i = 0; i < num; i++) {
 			buttons[i] = new Button(left, SWT.PUSH);
 			buttons[i].setText(tabList[0][i]);
@@ -136,11 +136,11 @@ class Eventspace extends Composite {
 		// body -> right panel
 		int mode = SessionManager.getCurrentIntMode();
 		if(mode==MACRO.ORGANIZER)
-			buttons[0].notifyListeners(SWT.Selection, null);
+			options[0].notifyListeners(SWT.Selection, null);
 		else if(mode ==MACRO.FACILITATOR)
-			buttons[1].notifyListeners(SWT.Selection, null);
+			options[1].notifyListeners(SWT.Selection, null);
 		else if(mode == MACRO.PARTICIPANT)
-			buttons[2].notifyListeners(SWT.Selection, null);
+			options[2].notifyListeners(SWT.Selection, null);
 
 	}
 
