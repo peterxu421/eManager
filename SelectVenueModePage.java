@@ -69,6 +69,7 @@ public class SelectVenueModePage extends Composite {
 			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.MANAGER);
 			DatabaseReader db = new DatabaseReader();
+			// If they are the first time to use the software
 			if (db.getPassword() == null) {
 				Shell shell = new Shell(getShell(), SWT.NO_TRIM | SWT.ON_TOP);
 				shell.setLocation(getShell().getLocation());
@@ -81,23 +82,27 @@ public class SelectVenueModePage extends Composite {
 						// TODO Auto-generated method stub
 						String[] stringList = getStringList();
 						// update database
-						db.updatePassword(stringList[0]);
-						Shell venueManagerShell=new Shell(getDisplay());
+						db.insertPassword(stringList[0]);
+						Shell venueManagerShell = new Shell(getDisplay());
 						venueManagerShell.setLocation(200, 50);
-						Image icon = new Image(getDisplay(), "resources/eManager.png");
+						Image icon = new Image(getDisplay(),
+								"resources/eManager.png");
 						venueManagerShell.setText("Venue Management");
 						venueManagerShell.setImage(icon);
-						Venuespace venuespace = new Venuespace(venueManagerShell, SWT.None);
-						SessionManager.disposeShells(getDisplay(), venueManagerShell);
+						Venuespace venuespace = new Venuespace(
+								venueManagerShell, SWT.None);
+						SessionManager.disposeShells(getDisplay(),
+								venueManagerShell);
 						venuespace.pack();
 						venueManagerShell.pack();
 						venueManagerShell.open();
 					}
 
 					@Override
-					public boolean additionalRequirement(){
+					public boolean additionalRequirement() {
 						return false;
 					}
+
 					@Override
 					public boolean additionalCheck() {
 						String[] stringList = getStringList();
@@ -119,7 +124,9 @@ public class SelectVenueModePage extends Composite {
 				addPasswordVenue.setSize(getShell().getSize());
 				shell.pack();
 				shell.open();
-			} else {
+			}
+			// If they have already used the software at least for once
+			else {
 				PromptPassword pass_page = new PromptPassword(pass_shell,
 						SWT.None, MACRO.MANAGER);
 				pass_page.pack();

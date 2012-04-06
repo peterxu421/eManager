@@ -153,17 +153,20 @@ public class eManager {
 			SessionManager.setCurrentMode(MACRO.MANAGER);
 			DatabaseReader db = new DatabaseReader();
 			System.out.println(db.getPassword());
+			// If it is the first time to use the software
 			if (db.getPassword() == null) {
 				Shell shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
 				shell.setLocation(200, 100);
 				AbstractAdd addPasswordVenue = new AbstractAdd(shell, SWT.None,
-						stringPassword, signaturePassword, new Table(shell, SWT.None)) {
+						stringPassword, signaturePassword, new Table(shell,
+								SWT.None)) {
 
 					@Override
 					public void onSubmit() {
 						String[] stringList = getStringList();
 						// update database
-						db.updatePassword(stringList[0]);
+						db.insertPassword(stringList[0]);
+						// Create the venue shell
 						Shell venueManagerShell = new Shell(getDisplay());
 						venueManagerShell.setLocation(200, 50);
 						Image icon = new Image(getDisplay(),
@@ -206,7 +209,10 @@ public class eManager {
 				addPasswordVenue.setSize(450, 250);
 				shell.pack();
 				shell.open();
-			} else {
+			}
+			// If the password is not null. Meaning they have used the software
+			// at least once.
+			else {
 				Shell mode_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
 				mode_shell.setText("Venue Manager");
 				mode_shell.setLocation(400, 200);

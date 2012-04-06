@@ -16,9 +16,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-
 import com.ibm.icu.text.DecimalFormat;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.swtchart.Chart;
@@ -323,53 +320,57 @@ public class EventPlanning_Budget extends Composite {
 		OverviewComposite.setBounds(10, 10, 510, 450);
 		toolkit.adapt(OverviewComposite);
 		toolkit.paintBordersFor(OverviewComposite);
-//		GridLayout overviewLayout = new GridLayout();
-//		OverviewComposite.setLayout(overviewLayout);
-		
-		Label lblTotalMoneySpent_Overview = new Label(BudgetOverviewComposite, SWT.NONE);
-		lblTotalMoneySpent_Overview.setFont(SWTResourceManager.getFont("Calibri", 13,
-				SWT.NORMAL));
+		// GridLayout overviewLayout = new GridLayout();
+		// OverviewComposite.setLayout(overviewLayout);
+
+		Label lblTotalMoneySpent_Overview = new Label(BudgetOverviewComposite,
+				SWT.NONE);
+		lblTotalMoneySpent_Overview.setFont(SWTResourceManager.getFont(
+				"Calibri", 13, SWT.NORMAL));
 		lblTotalMoneySpent_Overview.setBounds(525, 160, 130, 50);
 		lblTotalMoneySpent_Overview.setAlignment(SWT.CENTER);
 		toolkit.adapt(lblTotalMoneySpent_Overview, true, true);
 		lblTotalMoneySpent_Overview.setText(" Total Money Spent($)");
 
 		lblSpentAmount_Overview = new Label(BudgetOverviewComposite, SWT.BORDER);
-		lblSpentAmount_Overview.setFont(SWTResourceManager.getFont("Calibri", 13,
-				SWT.NORMAL));
+		lblSpentAmount_Overview.setFont(SWTResourceManager.getFont("Calibri",
+				13, SWT.NORMAL));
 		lblSpentAmount_Overview.setBounds(525, 215, 130, 30);
 		lblSpentAmount_Overview.setAlignment(SWT.CENTER);
 		lblSpentAmount_Overview.setText("0.0");
 		toolkit.adapt(lblSpentAmount_Overview, true, true);
 
-		Label lblRemainingBudget_Overview = new Label(BudgetOverviewComposite, SWT.NONE);
-		lblRemainingBudget_Overview.setFont(SWTResourceManager.getFont("Calibri", 13,
-				SWT.NORMAL));
+		Label lblRemainingBudget_Overview = new Label(BudgetOverviewComposite,
+				SWT.NONE);
+		lblRemainingBudget_Overview.setFont(SWTResourceManager.getFont(
+				"Calibri", 13, SWT.NORMAL));
 		lblRemainingBudget_Overview.setBounds(526, 280, 130, 50);
 		lblRemainingBudget_Overview.setAlignment(SWT.CENTER);
 		lblRemainingBudget_Overview.setText("Remaining Budget($)");
 		toolkit.adapt(lblRemainingBudget_Overview, true, true);
 
-		lblRemainingAmount_Overview = new Label(BudgetOverviewComposite, SWT.BORDER);
-		lblRemainingAmount_Overview.setFont(SWTResourceManager.getFont("Calibri", 13,
-				SWT.NORMAL));
+		lblRemainingAmount_Overview = new Label(BudgetOverviewComposite,
+				SWT.BORDER);
+		lblRemainingAmount_Overview.setFont(SWTResourceManager.getFont(
+				"Calibri", 13, SWT.NORMAL));
 		lblRemainingAmount_Overview.setBounds(525, 335, 130, 30);
 		lblRemainingAmount_Overview.setAlignment(SWT.CENTER);
 		lblRemainingAmount_Overview.setText("0.0");
 		toolkit.adapt(lblRemainingAmount_Overview, true, true);
 
-		Label lblTotalMoneyReceived_Overview = new Label(BudgetOverviewComposite,
-				SWT.NONE);
-		lblTotalMoneyReceived_Overview.setFont(SWTResourceManager.getFont("Calibri",
-				13, SWT.NORMAL));
+		Label lblTotalMoneyReceived_Overview = new Label(
+				BudgetOverviewComposite, SWT.NONE);
+		lblTotalMoneyReceived_Overview.setFont(SWTResourceManager.getFont(
+				"Calibri", 13, SWT.NORMAL));
 		lblTotalMoneyReceived_Overview.setBounds(525, 40, 130, 50);
 		lblTotalMoneyReceived_Overview.setText("Total Money Received($)");
 		lblTotalMoneyReceived_Overview.setAlignment(SWT.CENTER);
 		toolkit.adapt(lblTotalMoneyReceived_Overview, true, true);
 
-		lblReceivedAmount_Overview = new Label(BudgetOverviewComposite, SWT.BORDER);
-		lblReceivedAmount_Overview.setFont(SWTResourceManager.getFont("Calibri", 13,
-				SWT.NORMAL));
+		lblReceivedAmount_Overview = new Label(BudgetOverviewComposite,
+				SWT.BORDER);
+		lblReceivedAmount_Overview.setFont(SWTResourceManager.getFont(
+				"Calibri", 13, SWT.NORMAL));
 		lblReceivedAmount_Overview.setBounds(525, 95, 130, 30);
 		lblReceivedAmount_Overview.setText("0.0");
 		lblReceivedAmount_Overview.setAlignment(SWT.CENTER);
@@ -378,36 +379,31 @@ public class EventPlanning_Budget extends Composite {
 		importBudgetAllocationData();
 		importBudgetInflowData();
 		importBudgetOutflowData();
-		
+
 		Chart chart = new Chart(OverviewComposite, SWT.None);
 		chart.setBounds(0, 0, 490, 400);
 		chart.getTitle().setText("Budget Chart");
 		chart.getAxisSet().getYAxes()[0].getTitle().setText("Amount");
-//		GridData chartData = new GridData(500,500);
-//		chart.setLayoutData(chartData);
-//		OverviewComposite.pack();
-		String[] categories = new String[]{
-				"Spent",
-				"Remaining",
-				"Received"
-		};
+		// GridData chartData = new GridData(500,500);
+		// chart.setLayoutData(chartData);
+		// OverviewComposite.pack();
+		String[] categories = new String[] { "Spent", "Remaining", "Received" };
 		IAxisSet axisSet = chart.getAxisSet();
 		IAxis xAxis = axisSet.getXAxis(0);
 		xAxis.setCategorySeries(categories);
 		xAxis.enableCategory(true);
-		
-		double[] amounts = new double[]{
+
+		double[] amounts = new double[] {
 				Double.parseDouble(lblSpentAmount_Overview.getText()),
 				Double.parseDouble(lblRemainingAmount_Overview.getText()),
-				Double.parseDouble(lblReceivedAmount_Overview.getText())
-		};
-		IBarSeries barSeries = (IBarSeries) chart.getSeriesSet()
-				.createSeries(SeriesType.BAR, "Amount");
+				Double.parseDouble(lblReceivedAmount_Overview.getText()) };
+		IBarSeries barSeries = (IBarSeries) chart.getSeriesSet().createSeries(
+				SeriesType.BAR, "Amount");
 		barSeries.setYSeries(amounts);
 		Color color = new Color(Display.getDefault(), 238, 221, 130);
 		barSeries.setBarColor(color);
 		chart.getAxisSet().adjustRange();
-		
+
 	}
 
 	public void importBudgetAllocationData() {
@@ -427,10 +423,10 @@ public class EventPlanning_Budget extends Composite {
 			totalCost += budgetAllocationList.get(i).getCost();
 		}
 
-		double currentAmount = Double
-				.parseDouble(lblYouStillHave_Amount
-						.getText());
-		lblYouStillHave_Amount.setText(String.valueOf(df.format(currentAmount - totalCost))); // update the notification box
+		double currentAmount = Double.parseDouble(lblYouStillHave_Amount
+				.getText());
+		lblYouStillHave_Amount.setText(String.valueOf(df.format(currentAmount
+				- totalCost))); // update the notification box
 
 		/* update budget overview section */
 		label();
@@ -451,14 +447,13 @@ public class EventPlanning_Budget extends Composite {
 
 			totalInflow += inflowList.get(i).getAmount();
 		}
-		double currentAmount = Double
-				.parseDouble(lblReceivedAmount.getText());
-		lblReceivedAmount.setText(String.valueOf(df
-				.format(currentAmount + totalInflow))); // the double value is
-														// formated to two
-														// decimal palces before
-														// being converted to a
-														// string
+		double currentAmount = Double.parseDouble(lblReceivedAmount.getText());
+		lblReceivedAmount.setText(String.valueOf(df.format(currentAmount
+				+ totalInflow))); // the double value is
+									// formated to two
+									// decimal palces before
+									// being converted to a
+									// string
 
 		/* update budget overview section */
 		label();
@@ -480,10 +475,9 @@ public class EventPlanning_Budget extends Composite {
 			totalOutflow += outflowList.get(i).getCost()
 					* outflowList.get(i).getQuantity();
 		}
-		double currentAmount = Double
-				.parseDouble(lblSpentAmount.getText());
-		lblSpentAmount.setText(String.valueOf(df
-				.format(currentAmount + totalOutflow)));
+		double currentAmount = Double.parseDouble(lblSpentAmount.getText());
+		lblSpentAmount.setText(String.valueOf(df.format(currentAmount
+				+ totalOutflow)));
 
 		/* update budget overview section */
 		label();
@@ -491,28 +485,21 @@ public class EventPlanning_Budget extends Composite {
 
 	// Use to refresh
 	public void label() {
-		double currentBudget = Double
-				.parseDouble(lblRemainingAmount_Overview.getText());
-		double moneyReceived = Double
-				.parseDouble(lblReceivedAmount.getText());
-		double moneySpent = Double
-				.parseDouble(lblSpentAmount.getText());
+		double currentBudget = Double.parseDouble(lblRemainingAmount_Overview
+				.getText());
+		double moneyReceived = Double.parseDouble(lblReceivedAmount.getText());
+		double moneySpent = Double.parseDouble(lblSpentAmount.getText());
 		double newBudget = moneyReceived - moneySpent;
 		double change = newBudget - currentBudget;
-		double stillHave = Double
-				.parseDouble(lblYouStillHave_Amount
-						.getText());
+		double stillHave = Double.parseDouble(lblYouStillHave_Amount.getText());
 
 		stillHave += change;
-		lblYouStillHave_Amount.setText(String.valueOf(df
-				.format(stillHave)));
-		lblRemainingAmount_Overview.setText(String.valueOf(df
-				.format(newBudget)));
+		lblYouStillHave_Amount.setText(String.valueOf(df.format(stillHave)));
+		lblRemainingAmount_Overview
+				.setText(String.valueOf(df.format(newBudget)));
 
-		lblReceivedAmount_Overview
-				.setText(lblReceivedAmount.getText());
-		lblSpentAmount_Overview
-				.setText(lblSpentAmount.getText());
+		lblReceivedAmount_Overview.setText(lblReceivedAmount.getText());
+		lblSpentAmount_Overview.setText(lblSpentAmount.getText());
 	}
 
 	// Budget Allocation

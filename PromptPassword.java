@@ -10,7 +10,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -22,7 +21,6 @@ public class PromptPassword extends Composite {
 	private String password = "";
 	private int changeToMode;
 	private Composite parent;
-
 
 	/**
 	 * Create the composite.
@@ -160,8 +158,8 @@ public class PromptPassword extends Composite {
 			}
 
 			if (changeToMode == MACRO.MANAGER) {
-				password = SessionManager.getCurrentEvent()
-						.getFacilitatorPassword();
+				DatabaseReader db = new DatabaseReader();
+				password = db.getPassword();
 				if (password == null && textPassWord.getText().isEmpty()) {
 					CreateVenuePage(MACRO.MANAGER_MODE);
 					parent.dispose();
