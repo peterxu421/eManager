@@ -36,7 +36,7 @@ public class EventPlanning_Budget extends Composite {
 	private DecimalFormat df = new DecimalFormat("#.00");
 
 	private Event event;
-	private ArrayList<BudgetAllocation> budgetAllocationList;
+	private ArrayList<BudgetPlanning> budgetAllocationList;
 	private ArrayList<Inflow> inflowList;
 	private ArrayList<Outflow> outflowList;
 	private String[] stringArrayBudget = { "Item", "Person in Charge",
@@ -48,7 +48,7 @@ public class EventPlanning_Budget extends Composite {
 	private int[] signatureArrayInflow = { MACRO.TEXT, MACRO.DOUBLE,
 			MACRO.DATE, MACRO.TEXTBIG };
 	private String[] stringArrayOutflow = { "Item", "Quantity", "Type",
-			"Purchase Date", "Cost" };
+			"Purchase Date", "Cost($)/Item" };
 	private int[] signatureArrayOutflow = { MACRO.TEXT, MACRO.INT, MACRO.TEXT,
 			MACRO.DATE, MACRO.DOUBLE };
 	private int index;
@@ -75,11 +75,11 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.adapt(tabFolder);
 		toolkit.paintBordersFor(tabFolder);
 
-		TabItem tbtmBudgetAllocation = new TabItem(tabFolder, SWT.NONE);
-		tbtmBudgetAllocation.setText("Budget Allocation");
+		TabItem tbtmBudgetPlanning = new TabItem(tabFolder, SWT.NONE);
+		tbtmBudgetPlanning.setText("Budget Planning");
 
 		Composite AllocationComposite = new Composite(tabFolder, SWT.NONE);
-		tbtmBudgetAllocation.setControl(AllocationComposite);
+		tbtmBudgetPlanning.setControl(AllocationComposite);
 		toolkit.paintBordersFor(AllocationComposite);
 
 		AllocationTable = new Table(AllocationComposite, SWT.BORDER
@@ -129,7 +129,7 @@ public class EventPlanning_Budget extends Composite {
 		btnAllocationEdit.addSelectionListener(new EditAllocation());
 
 		Label lblYouStillHave = new Label(AllocationComposite, SWT.NONE);
-		lblYouStillHave.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+		lblYouStillHave.setFont(SWTResourceManager.getFont("Calibri", 13,
 				SWT.NORMAL));
 		lblYouStillHave.setAlignment(SWT.CENTER);
 		lblYouStillHave.setBounds(10, 380, 135, 30);
@@ -137,8 +137,8 @@ public class EventPlanning_Budget extends Composite {
 		lblYouStillHave.setText("Money Left ($)");
 
 		lblYouStillHave_Amount = new Label(AllocationComposite, SWT.BORDER);
-		lblYouStillHave_Amount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
-				SWT.NORMAL));
+		lblYouStillHave_Amount.setFont(SWTResourceManager.getFont("Calibri",
+				13, SWT.NORMAL));
 		lblYouStillHave_Amount.setAlignment(SWT.CENTER);
 		lblYouStillHave_Amount.setBounds(168, 380, 135, 30);
 		toolkit.adapt(lblYouStillHave_Amount, true, true);
@@ -209,7 +209,7 @@ public class EventPlanning_Budget extends Composite {
 		btnInflowEdit.addSelectionListener(new EditInflow());
 
 		Label lblTotalMoneyReceived = new Label(InflowComposite, SWT.NONE);
-		lblTotalMoneyReceived.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+		lblTotalMoneyReceived.setFont(SWTResourceManager.getFont("Calibri", 13,
 				SWT.NORMAL));
 		lblTotalMoneyReceived.setText("Money Received($):");
 		lblTotalMoneyReceived.setAlignment(SWT.CENTER);
@@ -217,7 +217,7 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.adapt(lblTotalMoneyReceived, true, true);
 
 		lblReceivedAmount = new Label(InflowComposite, SWT.BORDER);
-		lblReceivedAmount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+		lblReceivedAmount.setFont(SWTResourceManager.getFont("Calibri", 13,
 				SWT.NORMAL));
 		lblReceivedAmount.setText("0.0");
 		lblReceivedAmount.setAlignment(SWT.CENTER);
@@ -235,7 +235,7 @@ public class EventPlanning_Budget extends Composite {
 
 		OutflowTable = new Table(OutflowComposite, SWT.BORDER
 				| SWT.FULL_SELECTION);
-		OutflowTable.setBounds(10, 10, 630, 350);
+		OutflowTable.setBounds(10, 10, 550, 350);
 		OutflowTable.setToolTipText("(dd/mm/yyyy)\r\n");
 		OutflowTable.setLinesVisible(true);
 		OutflowTable.setHeaderVisible(true);
@@ -244,12 +244,12 @@ public class EventPlanning_Budget extends Composite {
 
 		TableColumn OutflowTableItemColumn = new TableColumn(OutflowTable,
 				SWT.CENTER);
-		OutflowTableItemColumn.setWidth(220);
+		OutflowTableItemColumn.setWidth(150);
 		OutflowTableItemColumn.setText("Item");
 
 		TableColumn OutflowTableQuantityColumn = new TableColumn(OutflowTable,
 				SWT.CENTER);
-		OutflowTableQuantityColumn.setWidth(100);
+		OutflowTableQuantityColumn.setWidth(80);
 		OutflowTableQuantityColumn.setText("Quantity");
 
 		TableColumn OutflowTableTypeColumn = new TableColumn(OutflowTable,
@@ -266,27 +266,27 @@ public class EventPlanning_Budget extends Composite {
 		TableColumn OutflowTableCostColumn = new TableColumn(OutflowTable,
 				SWT.CENTER);
 		OutflowTableCostColumn.setWidth(100);
-		OutflowTableCostColumn.setText("Cost($)");
+		OutflowTableCostColumn.setText("Cost($)/Item");
 
 		Button btnOutflowAdd = new Button(OutflowComposite, SWT.NONE);
-		btnOutflowAdd.setBounds(605, 30, 0, 27);
+		btnOutflowAdd.setBounds(570, 10, 80, 40);
 		toolkit.adapt(btnOutflowAdd, true, true);
 		btnOutflowAdd.setText("Add");
 		btnOutflowAdd.addSelectionListener(new AddOutflow());
 
 		Button btnOutflowEdit = new Button(OutflowComposite, SWT.NONE);
-		btnOutflowEdit.setBounds(605, 69, 0, 27);
+		btnOutflowEdit.setBounds(570, 60, 80, 40);
 		toolkit.adapt(btnOutflowEdit, true, true);
 		btnOutflowEdit.setText("Edit");
 		btnOutflowEdit.addSelectionListener(new EditOutflow());
 
 		Button btnOutflowDelete = new Button(OutflowComposite, SWT.NONE);
-		btnOutflowDelete.setBounds(605, 109, 0, 238);
+		btnOutflowDelete.setBounds(570, 110, 80, 40);
 		toolkit.adapt(btnOutflowDelete, true, true);
 		btnOutflowDelete.setText("Delete");
 
 		Label lblTotalMoneySpent = new Label(OutflowComposite, SWT.NONE);
-		lblTotalMoneySpent.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+		lblTotalMoneySpent.setFont(SWTResourceManager.getFont("Calibri", 13,
 				SWT.NORMAL));
 		lblTotalMoneySpent.setBounds(10, 380, 180, 30);
 		lblTotalMoneySpent.setAlignment(SWT.CENTER);
@@ -294,7 +294,7 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.adapt(lblTotalMoneySpent, true, true);
 
 		lblSpentAmount = new Label(OutflowComposite, SWT.BORDER);
-		lblSpentAmount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+		lblSpentAmount.setFont(SWTResourceManager.getFont("Calibri", 13,
 				SWT.NORMAL));
 		lblSpentAmount.setBounds(210, 380, 120, 30);
 		lblSpentAmount.setText("0.0");
@@ -317,7 +317,7 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.paintBordersFor(OverviewComposite);
 
 		Label lblTotalMoneySpent1 = new Label(BudgetOverviewComposite, SWT.NONE);
-		lblTotalMoneySpent1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+		lblTotalMoneySpent1.setFont(SWTResourceManager.getFont("Calibri", 13,
 				SWT.NORMAL));
 		lblTotalMoneySpent1.setBounds(525, 160, 130, 50);
 		lblTotalMoneySpent1.setAlignment(SWT.CENTER);
@@ -325,7 +325,7 @@ public class EventPlanning_Budget extends Composite {
 		lblTotalMoneySpent1.setText(" Total Money Spent($)");
 
 		lblSpentAmount1 = new Label(BudgetOverviewComposite, SWT.BORDER);
-		lblSpentAmount1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+		lblSpentAmount1.setFont(SWTResourceManager.getFont("Calibri", 13,
 				SWT.NORMAL));
 		lblSpentAmount1.setBounds(525, 215, 130, 30);
 		lblSpentAmount1.setAlignment(SWT.CENTER);
@@ -333,7 +333,7 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.adapt(lblSpentAmount1, true, true);
 
 		Label lblRemainingBudget = new Label(BudgetOverviewComposite, SWT.NONE);
-		lblRemainingBudget.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+		lblRemainingBudget.setFont(SWTResourceManager.getFont("Calibri", 13,
 				SWT.NORMAL));
 		lblRemainingBudget.setBounds(526, 280, 130, 50);
 		lblRemainingBudget.setAlignment(SWT.CENTER);
@@ -341,7 +341,7 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.adapt(lblRemainingBudget, true, true);
 
 		lblRemainingAmount = new Label(BudgetOverviewComposite, SWT.BORDER);
-		lblRemainingAmount.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+		lblRemainingAmount.setFont(SWTResourceManager.getFont("Calibri", 13,
 				SWT.NORMAL));
 		lblRemainingAmount.setBounds(525, 335, 130, 30);
 		lblRemainingAmount.setAlignment(SWT.CENTER);
@@ -350,14 +350,15 @@ public class EventPlanning_Budget extends Composite {
 
 		Label lblTotalMoneyReceived1 = new Label(BudgetOverviewComposite,
 				SWT.NONE);
-		lblTotalMoneyReceived1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
-				SWT.NORMAL));
+		lblTotalMoneyReceived1.setFont(SWTResourceManager.getFont("Calibri",
+				13, SWT.NORMAL));
 		lblTotalMoneyReceived1.setBounds(525, 40, 130, 50);
 		lblTotalMoneyReceived1.setText("Total Money Received($)");
 		lblTotalMoneyReceived1.setAlignment(SWT.CENTER);
 
 		Label lblNewLabel = new Label(OverviewComposite, SWT.NONE);
-		lblNewLabel.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13, SWT.NORMAL));
+		lblNewLabel.setFont(SWTResourceManager.getFont("Calibri", 13,
+				SWT.NORMAL));
 		lblNewLabel.setAlignment(SWT.CENTER);
 		lblNewLabel.setBounds(163, 113, 179, 60);
 		toolkit.adapt(lblNewLabel, true, true);
@@ -365,7 +366,7 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.adapt(lblTotalMoneyReceived1, true, true);
 
 		lblReceivedAmount1 = new Label(BudgetOverviewComposite, SWT.BORDER);
-		lblReceivedAmount1.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 13,
+		lblReceivedAmount1.setFont(SWTResourceManager.getFont("Calibri", 13,
 				SWT.NORMAL));
 		lblReceivedAmount1.setBounds(525, 95, 130, 30);
 		lblReceivedAmount1.setText("0.0");
@@ -473,7 +474,7 @@ public class EventPlanning_Budget extends Composite {
 						// insert to database
 						String[] tempList = getStringList();
 						Date date = new Date(tempList[3]);
-						BudgetAllocation budgetAllocation = new BudgetAllocation(
+						BudgetPlanning budgetAllocation = new BudgetPlanning(
 								tempList[0], tempList[1],
 								Double.parseDouble(tempList[2]), date);
 						db.insertBudgetAllocation(event, budgetAllocation);
@@ -553,7 +554,7 @@ public class EventPlanning_Budget extends Composite {
 					public void onSubmit() {
 						String[] tempList = getStringList();
 
-						BudgetAllocation budgetAllocation = budgetAllocationList
+						BudgetPlanning budgetAllocation = budgetAllocationList
 								.get(index);
 						budgetAllocation.setItem(tempList[0]);
 						budgetAllocation.setPersonInCharge(tempList[1]);

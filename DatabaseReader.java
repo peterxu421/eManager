@@ -88,14 +88,14 @@ public class DatabaseReader {
 	}
 
 	/* BudgetAllocationDetails */
-	public ArrayList<BudgetAllocation> getBudgetAllocation(Event event) {
-		ArrayList<BudgetAllocation> budgets = new ArrayList<BudgetAllocation>();
+	public ArrayList<BudgetPlanning> getBudgetAllocation(Event event) {
+		ArrayList<BudgetPlanning> budgets = new ArrayList<BudgetPlanning>();
 		ResultSet rs = null;
 		try {
 			rs = SQLManager.getBudgetDetails(connection, event.getEventID());
 			while (rs.next()) {
 				Date date = Date.parseDate(rs.getDate("Date").toString());
-				BudgetAllocation budget = new BudgetAllocation(rs.getInt(1),
+				BudgetPlanning budget = new BudgetPlanning(rs.getInt(1),
 						rs.getString(3), rs.getString(4), rs.getDouble(5), date);
 				budgets.add(budget);
 			}
@@ -105,18 +105,18 @@ public class DatabaseReader {
 		return budgets;
 	}
 
-	public void insertBudgetAllocation(Event event, BudgetAllocation budget) {
+	public void insertBudgetAllocation(Event event, BudgetPlanning budget) {
 		int budgetID = SQLManager.insertBudgetDetails(connection, event
 				.getEventID(), budget.getItem(), budget.getPersonInCharge(),
 				budget.getCost(), budget.getDate().toString());
 		budget.setBudgetID(budgetID);
 	}
 
-	public void deleteBudgetAllocation(BudgetAllocation budget) {
+	public void deleteBudgetAllocation(BudgetPlanning budget) {
 		SQLManager.deleteBudgetDetails(connection, budget.getBudgetID());
 	}
 
-	public void updateBudgetAllocation(BudgetAllocation budget) {
+	public void updateBudgetAllocation(BudgetPlanning budget) {
 		SQLManager.updateBudgetDetails(connection, budget.getBudgetID(),
 				budget.getItem(), budget.getPersonInCharge(), budget.getCost(),
 				budget.getDate().toString());
