@@ -264,7 +264,12 @@ public abstract class AbstractForm extends Composite {
 			}
 			// Deal with Date
 			else if (signature[i] == MACRO.DATE) {
-				stringList[i] = ((CalendarCombo) get(i)).getDateAsString();
+				Calendar calendar = ((CalendarCombo) get(i)).getDate();
+				int year = calendar.get(Calendar.YEAR);
+				int month = calendar.get(Calendar.MONTH);
+				int day = calendar.get(Calendar.DATE);
+				Date date = new Date(year, month+1, day);
+				stringList[i] = date.toString();
 			}
 			// Deal with Time
 			else if (signature[i] == MACRO.TIME) {

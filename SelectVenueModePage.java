@@ -42,7 +42,7 @@ public class SelectVenueModePage extends Composite {
 		Label lblPleaseSelectMode = new Label(composite, SWT.NONE);
 		lblPleaseSelectMode.setFont(SWTResourceManager.getFont("Calibri", 13,
 				SWT.NORMAL));
-		lblPleaseSelectMode.setBounds(96, 21, 127, 28);
+		lblPleaseSelectMode.setBounds(96, 21, 184, 28);
 		toolkit.adapt(lblPleaseSelectMode, true, true);
 		lblPleaseSelectMode.setText("Please Select Mode");
 

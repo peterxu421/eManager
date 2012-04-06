@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
 
 class Eventspace extends Composite {
 
@@ -52,7 +51,7 @@ class Eventspace extends Composite {
 		this.setLayout(gridLayout);
 
 		// header
-		GridData headerData = new GridData(1000, 60);
+		GridData headerData = new GridData(1000, 100);
 		header = new Composite(this, SWT.None);
 		header.setLayoutData(headerData);
 
@@ -89,7 +88,7 @@ class Eventspace extends Composite {
 		btnSetting.setEnabled(boolMode[5][0]);
 
 		// body
-		GridData bodyData = new GridData(900, 450);
+		GridData bodyData = new GridData(1000, 460);
 		body = new Composite(this, SWT.None);
 		body.setLayoutData(bodyData);
 
@@ -150,8 +149,7 @@ class Eventspace extends Composite {
 					| SWT.DIALOG_TRIM);
 			settingShell.setLocation(400, 200);
 			AbstractEdit settingPage = new Setting(settingShell, SWT.None,
-					stringSetting, signatureSetting, new Table(getShell(),
-							SWT.None), stringButton);
+					stringSetting, signatureSetting, stringButton);
 			settingPage.pack();
 			settingShell.pack();
 			settingShell.open();
@@ -160,7 +158,7 @@ class Eventspace extends Composite {
 
 	class Setting extends AbstractEdit {
 		public Setting(Shell settingShell, int type, String[] stringList,
-				int[] sigantureList, Table table, String[] stringButton) {
+				int[] sigantureList, String[] stringButton) {
 			super(settingShell, type, stringList, sigantureList, stringButton);
 			// Create the setting page
 			Button btnOK = new Button(this, SWT.None);
