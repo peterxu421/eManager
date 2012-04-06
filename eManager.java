@@ -5,9 +5,13 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 
 public class eManager {
+	private String[] stringPassword = { "New Password", "Confirm New Password" };
+	private int[] signaturePassword = { MACRO.PASSWORD, MACRO.PASSWORD };
 	Shell rootShell;
 	Shell welcome_shell;
 	WelcomePage welcome_page;
@@ -145,16 +149,74 @@ public class eManager {
 
 	class MenuManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell mode_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
-			mode_shell.setText("Venue Manager");
-			mode_shell.setLocation(400, 200);
+
 			SessionManager.setCurrentMode(MACRO.MANAGER);
-			PromptPassword mode_page = new PromptPassword(mode_shell, SWT.None,
-					MACRO.MANAGER);
-			mode_page.pack();
-			mode_shell.pack();
-			mode_shell.open();
-			SessionManager.disposeShells(display, mode_shell);
+			DatabaseReader db = new DatabaseReader();
+			System.out.println(db.getPassword());
+			if (db.getPassword() == null) {
+				Shell shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+				shell.setLocation(200, 100);
+				AbstractAdd addPasswordVenue = new AbstractAdd(shell, SWT.None,
+						stringPassword, signaturePassword, new Table(shell, SWT.None)) {
+
+					@Override
+					public void onSubmit() {
+						String[] stringList = getStringList();
+						// update database
+						db.updatePassword(stringList[0]);
+						Shell venueManagerShell = new Shell(getDisplay());
+						venueManagerShell.setLocation(200, 50);
+						Image icon = new Image(getDisplay(),
+								"resources/eManager.png");
+						venueManagerShell.setText("Venue Management");
+						venueManagerShell.setImage(icon);
+						Venuespace venuespace = new Venuespace(
+								venueManagerShell, SWT.None);
+						SessionManager.disposeShells(getDisplay(),
+								venueManagerShell);
+						venuespace.pack();
+						venueManagerShell.pack();
+						venueManagerShell.open();
+					}
+
+					@Override
+					public boolean additionalRequirement() {
+						return false;
+					}
+
+					@Override
+					public boolean additionalCheck() {
+						String[] stringList = getStringList();
+						boolean isValid = true;
+						// if the two input password does not match
+						if (!stringList[0].equals(stringList[1])) {
+							isValid = false;
+							MessageBox warningPage = new MessageBox(
+									getDisplay().getActiveShell(), SWT.OK
+											| SWT.ICON_WARNING);
+							warningPage.setText("Warning!");
+							warningPage
+									.setMessage("The confirmed new passowrd for venue manager does not match to new password!");
+							warningPage.open();
+						}
+						return isValid;
+					}
+				};
+				SessionManager.disposeShells(display, shell);
+				addPasswordVenue.setSize(450, 250);
+				shell.pack();
+				shell.open();
+			} else {
+				Shell mode_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+				mode_shell.setText("Venue Manager");
+				mode_shell.setLocation(400, 200);
+				PromptPassword mode_page = new PromptPassword(mode_shell,
+						SWT.None, MACRO.MANAGER);
+				mode_page.pack();
+				mode_shell.pack();
+				mode_shell.open();
+				SessionManager.disposeShells(display, mode_shell);
+			}
 		}
 	}
 

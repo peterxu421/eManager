@@ -22,8 +22,7 @@ public class PromptPassword extends Composite {
 	private String password = "";
 	private int changeToMode;
 	private Composite parent;
-	private String[] stringPassword = { "New Password", "Confirm New Password" };
-	private int[] signaturePassword = { MACRO.PASSWORD, MACRO.PASSWORD };
+
 
 	/**
 	 * Create the composite.
@@ -161,62 +160,11 @@ public class PromptPassword extends Composite {
 			}
 
 			if (changeToMode == MACRO.MANAGER) {
-				System.out.println(password);
-				if (password == null) {
-					Shell shell = new Shell(getShell(), SWT.NO_TRIM
-							| SWT.ON_TOP);
-					shell.setLocation(getShell().getLocation());
-					AbstractAdd addPasswordVenue = new AbstractAdd(shell,
-							SWT.None, stringPassword, signaturePassword,
-							new Table(getShell(), SWT.None)) {
-
-						@Override
-						public void onSubmit() {
-							// TODO Auto-generated method stub
-							String[] stringList = getStringList();
-							// update database
-							db.updatePassword(stringList[0]);
-							Shell venueManagerShell = new Shell(getDisplay());
-							venueManagerShell.setLocation(200, 50);
-							Image icon = new Image(getDisplay(),
-									"resources/eManager.png");
-							venueManagerShell.setText("Venue Management");
-							venueManagerShell.setImage(icon);
-							Venuespace venuespace = new Venuespace(
-									venueManagerShell, SWT.None);
-							SessionManager.disposeShells(getDisplay(),
-									venueManagerShell);
-							venuespace.pack();
-							venueManagerShell.pack();
-							venueManagerShell.open();
-						}
-
-						@Override
-						public boolean additionalRequirement() {
-							return false;
-						}
-
-						@Override
-						public boolean additionalCheck() {
-							String[] stringList = getStringList();
-							boolean isValid = true;
-							// if the two input password does not match
-							if (!stringList[0].equals(stringList[1])) {
-								isValid = false;
-								MessageBox warningPage = new MessageBox(
-										getDisplay().getActiveShell(), SWT.OK
-												| SWT.ICON_WARNING);
-								warningPage.setText("Warning!");
-								warningPage
-										.setMessage("The confirmed new passowrd for venue manager does not match to new password!");
-								warningPage.open();
-							}
-							return isValid;
-						}
-					};
-					addPasswordVenue.setSize(getShell().getSize());
-					shell.pack();
-					shell.open();
+				password = SessionManager.getCurrentEvent()
+						.getFacilitatorPassword();
+				if (password == null && textPassWord.getText().isEmpty()) {
+					CreateVenuePage(MACRO.MANAGER_MODE);
+					parent.dispose();
 				} else if (textPassWord.getText().equals(password)) {
 					CreateVenuePage(MACRO.MANAGER_MODE);
 					parent.dispose();
