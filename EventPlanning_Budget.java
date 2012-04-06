@@ -376,6 +376,7 @@ public class EventPlanning_Budget extends Composite {
 		importBudgetAllocationData();
 		importBudgetInflowData();
 		importBudgetOutflowData();
+
 	}
 
 	public void importBudgetAllocationData() {
@@ -403,8 +404,8 @@ public class EventPlanning_Budget extends Composite {
 														// box
 
 		/* update budget overview section */
-		LabelCashFlow lbl = new LabelCashFlow();
-		lbl.label();
+		label();
+
 	}
 
 	public void importBudgetInflowData() {
@@ -431,8 +432,7 @@ public class EventPlanning_Budget extends Composite {
 														// string
 
 		/* update budget overview section */
-		LabelCashFlow lbl = new LabelCashFlow();
-		lbl.label();
+		label();
 	}
 
 	public void importBudgetOutflowData() {
@@ -457,8 +457,33 @@ public class EventPlanning_Budget extends Composite {
 				.format(currentAmount + totalOutflow)));
 
 		/* update budget overview section */
-		LabelCashFlow lbl = new LabelCashFlow();
-		lbl.label();
+		label();
+	}
+
+	// Use to refresh
+	public void label() {
+		double currentBudget = Double
+				.parseDouble(EventPlanning_Budget.lblRemainingAmount.getText());
+		double moneyReceived = Double
+				.parseDouble(EventPlanning_Budget.lblReceivedAmount.getText());
+		double moneySpent = Double
+				.parseDouble(EventPlanning_Budget.lblSpentAmount.getText());
+		double newBudget = moneyReceived - moneySpent;
+		double change = newBudget - currentBudget;
+		double stillHave = Double
+				.parseDouble(EventPlanning_Budget.lblYouStillHave_Amount
+						.getText());
+
+		stillHave += change;
+		EventPlanning_Budget.lblYouStillHave_Amount.setText(String.valueOf(df
+				.format(stillHave)));
+		EventPlanning_Budget.lblRemainingAmount.setText(String.valueOf(df
+				.format(newBudget)));
+
+		EventPlanning_Budget.lblReceivedAmount1
+				.setText(EventPlanning_Budget.lblReceivedAmount.getText());
+		EventPlanning_Budget.lblSpentAmount1
+				.setText(EventPlanning_Budget.lblSpentAmount.getText());
 	}
 
 	// Budget Allocation
@@ -494,8 +519,7 @@ public class EventPlanning_Budget extends Composite {
 								.format(currentAmount - addition)));
 
 						/* update budget overview section */
-						LabelCashFlow lbl = new LabelCashFlow();
-						lbl.label();
+						label();
 					}
 				};
 
@@ -527,8 +551,7 @@ public class EventPlanning_Budget extends Composite {
 					db.deleteBudgetAllocation(budgetAllocationList.get(index));
 
 					/* update budget overview section */
-					LabelCashFlow lbl = new LabelCashFlow();
-					lbl.label();
+					label();
 				}
 			}
 		}
@@ -579,8 +602,7 @@ public class EventPlanning_Budget extends Composite {
 									tempList[i]);
 						}
 						/* update budget overview section */
-						LabelCashFlow lbl = new LabelCashFlow();
-						lbl.label();
+						label();
 
 					}
 				};
@@ -623,8 +645,7 @@ public class EventPlanning_Budget extends Composite {
 						lblReceivedAmount.setText(String.valueOf(df
 								.format(currentAmount + addition)));
 						/* update budget overview section */
-						LabelCashFlow lbl = new LabelCashFlow();
-						lbl.label();
+						label();
 					}
 				};
 
@@ -655,8 +676,7 @@ public class EventPlanning_Budget extends Composite {
 					db.deleteInflow(inflowList.get(index));
 
 					/* update budget overview section */
-					LabelCashFlow lbl = new LabelCashFlow();
-					lbl.label();
+					label();
 				}
 			}
 		}
@@ -703,8 +723,7 @@ public class EventPlanning_Budget extends Composite {
 							InflowTable.getItem(index).setText(i, tempList[i]);
 						}
 						/* update budget overview section */
-						LabelCashFlow lbl = new LabelCashFlow();
-						lbl.label();
+						label();
 					}
 				};
 
@@ -748,8 +767,7 @@ public class EventPlanning_Budget extends Composite {
 								.format(currentAmount + addition)));
 
 						/* update budget overview section */
-						LabelCashFlow lbl = new LabelCashFlow();
-						lbl.label();
+						label();
 					}
 				};
 
@@ -783,8 +801,7 @@ public class EventPlanning_Budget extends Composite {
 					db.deleteOutflow(outflowList.get(index));
 
 					/* update budget overview section */
-					LabelCashFlow lbl = new LabelCashFlow();
-					lbl.label();
+					label();
 				}
 			}
 		}
@@ -836,8 +853,7 @@ public class EventPlanning_Budget extends Composite {
 							InflowTable.getItem(index).setText(i, tempList[i]);
 						}
 						/* update budget overview section */
-						LabelCashFlow lbl = new LabelCashFlow();
-						lbl.label();
+						label();
 					}
 				};
 
