@@ -9,31 +9,40 @@ public class SessionManager {
 	private static Connection connection = null;
 	private static Event event = null;
 	private static int intMode = 0;
-	public static boolean[][] boolMode; 
+	public static boolean[][] boolMode;
 	public static Shell[] shellList;
-	
-	//Dipose all the shell except the root shell and the shell that we indicate.
-	public static void disposeShells(Display display, Shell shell){
-		shellList=display.getShells();
-		for(int i=1; i<shellList.length;i++){
-			if(shellList[i].equals(shell)){
-				//do nothing
-			}
-			else
+
+	// Dipose any shells except root shell
+	public static void disposeShells(Display display) {
+		shellList = display.getShells();
+		for (int i = 1; i < shellList.length; i++) {
+			shellList[i].dispose();
+		}
+	}
+
+	// Dipose all the shell except the root shell and the shell that we
+	// indicate.
+	public static void disposeShells(Display display, Shell shell) {
+		shellList = display.getShells();
+		for (int i = 1; i < shellList.length; i++) {
+			if (shellList[i].equals(shell)) {
+				// do nothing
+			} else
 				shellList[i].dispose();
 		}
 	}
-	public static void disposeShells(Display display, Shell shell1, Shell shell2){
-		shellList=display.getShells();
-		for(int i=1; i<shellList.length;i++){
-			if(shellList[i].equals(shell1)||shellList[i].equals(shell2)){
-				//do nothing
-			}
-			else
+
+	public static void disposeShells(Display display, Shell shell1, Shell shell2) {
+		shellList = display.getShells();
+		for (int i = 1; i < shellList.length; i++) {
+			if (shellList[i].equals(shell1) || shellList[i].equals(shell2)) {
+				// do nothing
+			} else
 				shellList[i].dispose();
 		}
 	}
-	//Connection
+
+	// Connection
 	public static Connection getConnection() {
 		if (!isConnectedToDatabase()) {
 			try {
@@ -46,45 +55,49 @@ public class SessionManager {
 		}
 		return connection;
 	}
+
 	private static boolean isConnectedToDatabase() {
 		if (connection == null) {
 			return false;
 		}
 		return true;
 	}
+
 	private static void connect() throws SQLException {
 		String url = "jdbc:derby:database;";
 		connection = DriverManager.getConnection(url);
 		return;
 	}
-	
-	//Events
+
+	// Events
 	public static Event getCurrentEvent() {
 		return event;
 	}
+
 	public static void setCurrentEvent(Event newEvent) {
 		event = newEvent;
 	}
 
-	//Mode
+	// Mode
 	public static int getCurrentIntMode() {
 		return intMode;
 	}
+
 	public static void setCurrentMode(int mode) {
 		intMode = mode;
-		if(mode == 1)
+		if (mode == 1)
 			boolMode = MACRO.ORGANIZER_MODE;
-		if(mode == 2)
+		if (mode == 2)
 			boolMode = MACRO.FACILITATOR_MODE;
-		if(mode == 3)
+		if (mode == 3)
 			boolMode = MACRO.PARTICIPANT_MODE;
-		if(mode == 4)
+		if (mode == 4)
 			boolMode = MACRO.APPLICANT_MODE;
-		if(mode == 5)
+		if (mode == 5)
 			boolMode = MACRO.MANAGER_MODE;
 	}
-	
-	//Mode
+
+	// Mode
 	public static boolean[][] getCurrentBoolMode() {
 		return boolMode;
 	}
