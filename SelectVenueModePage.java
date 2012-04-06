@@ -8,12 +8,16 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 public class SelectVenueModePage extends Composite {
 
+	private String[] stringPassword = { "New Password", "Confirm New Password" };
+	private int[] signaturePassword = { MACRO.PASSWORD, MACRO.PASSWORD };
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	Composite parent;
 
@@ -64,6 +68,39 @@ public class SelectVenueModePage extends Composite {
 			Shell pass_shell = new Shell(getShell(), SWT.NO_TRIM | SWT.ON_TOP);
 			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.MANAGER);
+			DatabaseReader db = new DatabaseReader();
+			if (db.getPassword() == null) {
+				AbstractAdd addPasswordVenue = new AbstractAdd(pass_shell,
+						SWT.None, stringPassword, signaturePassword, new Table(
+								getShell(), SWT.None)) {
+
+					@Override
+					public void onSubmit() {
+						// TODO Auto-generated method stub
+						String[] stringList = getStringList();
+						// update database
+						db.updatePassword(stringList[0]);
+					}
+					@Override
+					public boolean additionalCheck(){
+						boolean isValid=true;
+						// if the two input password does not match
+						if (!stringList[0].equals(stringList[1])) {
+							isValid = false;
+							MessageBox warningPage = new MessageBox(getDisplay()
+									.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+							warningPage.setText("Warning!");
+							warningPage
+									.setMessage("The confirmed new passowrd for venue manager does not match to new password!");
+							warningPage.open();
+						}
+						return isValid;
+					}
+				};
+				addPasswordVenue.pack();
+				pass_shell.pack();
+				pass_shell.open();
+			}
 			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None,
 					MACRO.MANAGER);
 			pass_page.pack();

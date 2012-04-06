@@ -14,7 +14,7 @@ public class SessionManager {
 	public static Shell[] shellList;
 	private static HashMap<String, Shell> shellMap = new HashMap<String, Shell>();
 
-	// Dipose any shells except root shell
+	// Dispose any shells except root shell
 	public static void disposeShells(Display display) {
 		shellList = display.getShells();
 		for (int i = 1; i < shellList.length; i++) {

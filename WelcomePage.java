@@ -15,6 +15,7 @@ public class WelcomePage extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 
+
 	/**
 	 * Create the composite.
 	 * 
@@ -49,7 +50,7 @@ public class WelcomePage extends Composite {
 		btnVenueManagement.setBounds(110, 194, 188, 60);
 		toolkit.adapt(btnVenueManagement, true, true);
 		btnVenueManagement.setText("Venue Management");
-		btnVenueManagement.addSelectionListener(new venueManager());
+		btnVenueManagement.addSelectionListener(new VenueManager());
 	}
 
 	class EventPlanner extends SelectionAdapter {
@@ -66,7 +67,8 @@ public class WelcomePage extends Composite {
 		}
 	}
 
-	class venueManager extends SelectionAdapter {
+	class VenueManager extends SelectionAdapter {
+
 		public void widgetSelected(SelectionEvent e) {
 			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM
 					| SWT.ON_TOP);

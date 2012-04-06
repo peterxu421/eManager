@@ -6,6 +6,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -59,7 +60,8 @@ public abstract class AbstractForm extends Composite {
 		this.reverseMap = new HashMap<Object, String>();
 		stringList = new String[signature.length]; // initiate the input text
 													// string array
-		
+		Image icon = new Image(getDisplay(), "resources/eManager.png");
+		parent.getShell().setImage(icon);
 		/* Layout */
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginLeft = 50;

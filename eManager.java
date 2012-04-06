@@ -57,7 +57,7 @@ public class eManager {
 		// shell
 		Image image = new Image(display, "resources/bg.png");
 		rootShell.setMaximized(true);
-		rootShell.setText("eManagerV1.0");
+		rootShell.setText("eManagerV0.2");
 		rootShell.setBackgroundImage(image);
 		rootShell.open();
 

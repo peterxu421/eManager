@@ -51,7 +51,7 @@ class Eventspace extends Composite {
 		this.setLayout(gridLayout);
 
 		// header
-		GridData headerData = new GridData(1000, 100);
+		GridData headerData = new GridData(1000, 70);
 		header = new Composite(this, SWT.None);
 		header.setLayoutData(headerData);
 
@@ -238,6 +238,7 @@ class Eventspace extends Composite {
 									.setMessage("The confirmed new passowrd for organizer does not match to new password!");
 							warningPage.open();
 						}
+
 						return isValid;
 					}
 				};

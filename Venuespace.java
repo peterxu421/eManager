@@ -139,10 +139,8 @@ class Venuespace extends Composite {
 				// Override
 				public void onSubmit() {
 					String[] stringList = getStringList();
-					// reset
-					event.setOrganizerPassword(stringList[1]);
-					// update database
-					db.updateEvent(event);
+					//update the database
+					db.updatePassword(stringList[1]);
 				}
 
 				// Override
@@ -150,7 +148,8 @@ class Venuespace extends Composite {
 					String[] stringList = getStringList();
 					boolean isValid = true;
 					// if the input password does not match the system one
-					if (!stringList[0].equals(db.getPassword())) {
+					if (!stringList[0].equals(db.getPassword())
+							&& stringList[0] != null) {
 						isValid = false;
 						MessageBox warningPage = new MessageBox(getDisplay()
 								.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
