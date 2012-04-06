@@ -4,7 +4,6 @@ public class Date {
 	private int day;
 
 	public Date() {
-		super();
 	}
 
 	public Date(int year, int month, int day) {
@@ -14,6 +13,7 @@ public class Date {
 	}
 
 	public Date(String date) {
+		date = date.replaceAll("/", "-");
 		String[] contents = date.split("-");
 		this.year = Integer.parseInt(contents[0]);
 		this.month = Integer.parseInt(contents[1]);
@@ -55,23 +55,23 @@ public class Date {
 				Integer.parseInt(dates[1]), Integer.parseInt(dates[2]));
 		return date;
 	}
-	
-	public boolean isEqualTo(Date date){
-		if(this.day == date.getDay() &&
-		        this.month == date.getMonth() &&
-				this.year == date.getYear()){
-			return true;	
-		}
-		else return false;	
-	}
-	
-	public boolean isNotEarlierThan(Date date) {
-		if (year > date.getYear() ||
-				year == date.getYear() && month > date.getMonth() ||
-				year == date.getYear() && month == date.getMonth() && day > date.getDay() ||
-				year == date.getYear() && month == date.getMonth() && day == date.getDay()){
+
+	public boolean isEqualTo(Date date) {
+		if (this.day == date.getDay() && this.month == date.getMonth()
+				&& this.year == date.getYear()) {
 			return true;
-		}
-		else return false;
+		} else
+			return false;
+	}
+
+	public boolean isNotEarlierThan(Date date) {
+		if (year > date.getYear() || year == date.getYear()
+				&& month > date.getMonth() || year == date.getYear()
+				&& month == date.getMonth() && day > date.getDay()
+				|| year == date.getYear() && month == date.getMonth()
+				&& day == date.getDay()) {
+			return true;
+		} else
+			return false;
 	}
 }

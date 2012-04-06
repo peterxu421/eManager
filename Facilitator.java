@@ -1,17 +1,20 @@
-
 public class Facilitator extends Member {
 	private String position;
-	public Facilitator(){
-		
+
+	public Facilitator() {
+
 	}
-	public Facilitator(String name, int year, String faculty, String foodType){
+
+	public Facilitator(String name, int year, String faculty, String foodType) {
 		this.name = name;
 		this.year = year;
 		this.faculty = faculty;
-		this.foodType=foodType;
+		this.foodType = foodType;
 	}
+
 	public Facilitator(String name, String matricNo, String faculty, int year,
-			String contact, String email, String foodType, String allergy, String position) {
+			String contact, String email, String foodType, String allergy,
+			String position) {
 		this.name = name;
 		this.matricNo = matricNo;
 		this.faculty = faculty;
@@ -24,7 +27,7 @@ public class Facilitator extends Member {
 	}
 	public Facilitator(int ID, String name, String matricNo, String faculty, int year,
 			String contact, String email, String foodType, String allergy, String position) {
-		this.ID = ID;
+		this.memberID = ID;
 		this.name = name;
 		this.matricNo = matricNo;
 		this.faculty = faculty;
@@ -35,12 +38,15 @@ public class Facilitator extends Member {
 		this.allergy = allergy;
 		this.position = position;
 	}
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
+
 	public String getPosition() {
 		return position;
 	}
+
 	public void setPosition(String position) {
 		this.position = position;
 	}

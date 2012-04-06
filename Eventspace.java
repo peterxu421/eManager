@@ -148,7 +148,7 @@ class Eventspace extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell settingShell = new Shell(getShell(), SWT.APPLICATION_MODAL
 					| SWT.DIALOG_TRIM);
-			settingShell.setLocation(300, 200);
+			settingShell.setLocation(400, 200);
 			AbstractEdit settingPage = new Setting(settingShell, SWT.None,
 					stringSetting, signatureSetting, new Table(getShell(),
 							SWT.None), stringButton);

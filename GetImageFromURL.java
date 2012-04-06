@@ -1,4 +1,5 @@
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -6,12 +7,12 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
+import org.eclipse.nebula.widgets.gallery.GalleryItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
@@ -20,33 +21,30 @@ import org.eclipse.swt.widgets.Button;
 
 public class GetImageFromURL extends Shell {
 	private Text url;
+	private GalleryItem group;
 
 	/**
 	 * Launch the application.
 	 * @param args
 	 */
-	public static void main(String args[]) {
-		try {
-			Display display = Display.getDefault();
-			GetImageFromURL shell = new GetImageFromURL(display);
-			shell.open();
-			shell.layout();
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	//	public static void main(String args[]) {
+	//		try {
+	//			Display display = Display.getDefault();
+	//			GetImageFromURL shell = new GetImageFromURL(display);
+	//			shell.open();
+	//			shell.layout();
+	//			while (!shell.isDisposed()) {
+	//				if (!display.readAndDispatch()) {
+	//					display.sleep();
+	//				}
+	//			}
+	//		} catch (Exception e) {
+	//			e.printStackTrace();
+	//		}
+	//	}
 
-	/**
-	 * Create the shell.
-	 * @param display
-	 */
-	public GetImageFromURL(Display display) {
-		super(display, SWT.SHELL_TRIM);
+	public GetImageFromURL(Shell shell, int style, GalleryItem group) {
+		super(shell, style);
 
 		Label lblImageUrl = new Label(this, SWT.NONE);
 		lblImageUrl.setBounds(21, 29, 70, 14);
@@ -100,17 +98,10 @@ public class GetImageFromURL extends Shell {
 				warningPage.open(); 
 			} 
 			else {
-				System.out.println(link);
 				String host = link.substring(0, link.indexOf("/"));
-				System.out.println(host);
-
 				String filePath = link.substring(link.indexOf("/"));
-				System.out.println(filePath);
-
 				String fileName = link.substring(link.lastIndexOf("/")+1);
-				System.out.println(fileName);
-
-				String path = "/Users/niwde/Documents/workspace/CS2105/";
+				String path = "Pictures";
 				int port = 80;
 
 				// Create a TCP socket and connect to the host:port.
@@ -122,7 +113,7 @@ public class GetImageFromURL extends Shell {
 					socket.setSoTimeout(100000);
 
 					PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-					fos = new FileOutputStream(path+fileName, true);
+					fos = new FileOutputStream(path + File.separator + fileName, true);
 
 					out.println("GET " + filePath + " HTTP/1.1" + "\r\n" + "Host: " + host + "\r\n\r\n");
 					out.flush();
@@ -167,6 +158,9 @@ public class GetImageFromURL extends Shell {
 					warningPage.open(); 
 					// Close the I/O streams.
 					fos.close();
+					Image image = new Image(getDisplay(),path + File.separator + fileName);
+					GalleryItem item = new GalleryItem(group, SWT.None);
+					item.setImage(image);
 				} catch (UnknownHostException e1) {
 					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
 					warningPage.setText("Warning!");
@@ -191,7 +185,6 @@ public class GetImageFromURL extends Shell {
 			}
 		}
 	}
-
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
