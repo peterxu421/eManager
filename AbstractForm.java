@@ -296,8 +296,7 @@ public abstract class AbstractForm extends Composite {
 
 	// Error checking.
 	// If there is no error, then return -1;
-	// If there exist error, then return the index or -2 to indicate duplicate
-	// input
+	// If there exist error, then return the index of input;
 	protected int check() {
 		boolean isValid = true;
 		int index = -1;
@@ -374,7 +373,7 @@ public abstract class AbstractForm extends Composite {
 					}
 				}
 			}
-
+			
 			else {
 				// Show messageBox if there is error in input data and specify
 				// where is the error.
