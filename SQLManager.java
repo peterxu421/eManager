@@ -1472,13 +1472,15 @@ public class SQLManager {
 		}
 	}
 
-	public static void updatePassword(Connection connection, int ID) {
-		String updatePassword = "UPDATE PasswordTable SET Password=? "
-				+ "WHERE ID=?";
+	public static void updatePassword(Connection connection, int ID, String password) {
+		String updatePassword = 
+				"UPDATE PasswordTable SET Password=? "+
+				"WHERE ID=?";
 		PreparedStatement prep = null;
 		try {
 			prep = connection.prepareStatement(updatePassword);
-			prep.setInt(1, ID);
+			prep.setString(1, password);
+			prep.setInt(2, ID);
 			prep.execute();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();

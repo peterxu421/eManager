@@ -788,8 +788,8 @@ public class DatabaseReader {
 		return password;
 	}
 
-	public void updatePassword() {
-		SQLManager.updatePassword(connection, MACRO.MANAGER);
+	public void updatePassword(String password) {
+		SQLManager.updatePassword(connection, MACRO.MANAGER, password);
 	}
 
 	public static void main(String[] args) {

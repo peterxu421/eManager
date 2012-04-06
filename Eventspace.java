@@ -9,9 +9,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.forms.widgets.FormToolkit;
 
 class Eventspace extends Composite {
-
+	private final FormToolkit toolkit = new FormToolkit(getDisplay().getCurrent());
 	Composite header;
 	Composite optionBar;
 	Composite body;
@@ -42,7 +43,10 @@ class Eventspace extends Composite {
 			{ "Pre-Event", "Actual-Event", "Meeting", "Budget", "Feedback" },
 			{ "Manpower Allocation" }, { "Itinerary", "Packing List" },
 			{ "Event Registration" } };
-
+	
+	public Button[] getButtons(){
+		return (Button[]) left.getChildren();
+	}
 	// Constructor
 	public Eventspace(Composite parent, int style) {
 		super(parent, style);
@@ -100,11 +104,11 @@ class Eventspace extends Composite {
 		// body->left & right panel
 		GridData leftData = new GridData(150, 450);
 		GridData rightData = new GridData(800, 450);
-		left = new Composite(body, SWT.None);
+		left = new Composite(body, SWT.BORDER);
 		right = new Composite(body, SWT.None);
 		left.setLayoutData(leftData);
 		right.setLayoutData(rightData);
-
+		
 		// header->
 		FillLayout headerLayout = new FillLayout();
 		headerLayout.marginHeight = 20;
@@ -121,7 +125,6 @@ class Eventspace extends Composite {
 		GridLayout leftLayout = new GridLayout();
 		leftLayout.numColumns = 1;
 		left.setLayout(leftLayout);
-
 		num = tabList[0].length;
 		Button[] buttons = new Button[num];
 		for (int i = 0; i < num; i++) {
@@ -132,7 +135,7 @@ class Eventspace extends Composite {
 			buttons[i].setEnabled(boolMode[1][i]);
 		}
 
-		// body -> right panel
+//		 body -> right panel
 		int mode = SessionManager.getCurrentIntMode();
 		if (mode == MACRO.ORGANIZER)
 			options[0].notifyListeners(SWT.Selection, null);
@@ -140,7 +143,6 @@ class Eventspace extends Composite {
 			options[1].notifyListeners(SWT.Selection, null);
 		else if (mode == MACRO.PARTICIPANT)
 			options[2].notifyListeners(SWT.Selection, null);
-
 	}
 
 	class SettingAdapter extends SelectionAdapter {
