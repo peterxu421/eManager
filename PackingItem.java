@@ -1,49 +1,49 @@
 public class PackingItem {
-	private int ItemID;
-	private String Category;
-	private String Name;
+	private int itemID;
+	private String category;
+	private String name;
 	private int quantity;
-	private String Remarks;
+	private String remarks;
 
 	public PackingItem(String category, String name, int quantity,
 			String remarks) {
-		Category = category;
-		Name = name;
+		this.category = category;
+		this.name = name;
 		this.quantity = quantity;
-		Remarks = remarks;
+		this.remarks = remarks;
 	}
 
 	public PackingItem(int itemID, String category, String name, int quantity,
 			String remarks) {
-		ItemID = itemID;
-		Category = category;
-		Name = name;
+		this.itemID = itemID;
+		this.category = category;
+		this.name = name;
 		this.quantity = quantity;
-		Remarks = remarks;
+		this.remarks = remarks;
 	}
 
 	public int getItemID() {
-		return ItemID;
+		return itemID;
 	}
 
 	public void setItemID(int itemID) {
-		ItemID = itemID;
+		this.itemID = itemID;
 	}
 
 	public String getCategory() {
-		return Category;
+		return category;
 	}
 
 	public void setCategory(String category) {
-		Category = category;
+		this.category = category;
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
 	public int getQuantity() {
@@ -55,11 +55,11 @@ public class PackingItem {
 	}
 
 	public String getRemarks() {
-		return Remarks;
+		return remarks;
 	}
 
 	public void setRemarks(String remarks) {
-		Remarks = remarks;
+		this.remarks = remarks;
 	}
 
 }
