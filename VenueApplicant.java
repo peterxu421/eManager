@@ -12,7 +12,7 @@ public class VenueApplicant extends Member {
 	}
 	public VenueApplicant(int ID, String name, String matricNo,
 			String contact, String email, String organization) {
-		this.ID = ID;
+		this.memberID = ID;
 		this.name = name;
 		this.matricNo = matricNo;
 		this.contact = contact;

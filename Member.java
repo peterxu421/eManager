@@ -1,5 +1,5 @@
 public abstract class Member {
-	protected int ID;
+	protected int memberID;
 	protected String name;
 	protected String matricNo;
 	protected String faculty;
@@ -9,10 +9,10 @@ public abstract class Member {
 	protected String foodType;
 	protected String allergy;
 	public int getID() {
-		return ID;
+		return memberID;
 	}
 	public void setID(int iD) {
-		ID = iD;
+		memberID = iD;
 	}
 	public String getName() {
 		return name;

@@ -20,7 +20,7 @@ public class Organizer extends Member {
 		this.position = position;
 	}
 	public Organizer(int ID, String name, String matricNo, String faculty, int year, String contact, String email, String foodType, String allergy, String position) {
-		this.ID = ID;
+		this.memberID = ID;
 		this.name = name;
 		this.matricNo = matricNo;
 		this.faculty = faculty;

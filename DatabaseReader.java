@@ -643,10 +643,10 @@ public class DatabaseReader {
 		int id = SQLManager.insertVenueBookingDetails(connection, booking.getVenue().getVenueId(), 
 				booking.getApplicant().getID(), booking.getDateTime().getDate().toString(), 
 				booking.getDateTime().getTimeStart().toString(), booking.getDateTime().getTimeEnd().toString(), booking.getStatus());
-		booking.setVenueBookingInfoID(id);
+		booking.setVenueBookingApplicationID(id);
 	}
 	public void updateVenueBookingInfo(VenueBookingApplication booking){
-		SQLManager.updateVenueBookingDetails(connection, booking.getVenueBookingInfoID(), 
+		SQLManager.updateVenueBookingDetails(connection, booking.getVenueBookingApplicationID(), 
 				booking.getApplicant().getID(), booking.getDateTime().getDate().toString(),
 				booking.getDateTime().getTimeStart().toString(),
 				booking.getDateTime().getTimeEnd().toString(), booking.getStatus());
@@ -660,7 +660,7 @@ public class DatabaseReader {
 		}
 	}
 	public void deleteVenueBookingInfo(VenueBookingApplication booking){
-		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
+		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingApplicationID());
 		deleteVenueApplicant(booking.getApplicant());
 	}
 	public VenueBookingApplication getVenueBookingInfo(VenueApplicant applicant){

@@ -45,7 +45,7 @@ public class BookedDateTime implements Comparable<BookedDateTime> {
 				+ timeEnd.toString();
 	}
 
-	public static BookedDateTime parseBookingDateTime(String dateTimeStr) {
+	public static BookedDateTime parseBookedDateTime(String dateTimeStr) {
 		StringTokenizer st = new StringTokenizer(dateTimeStr);
 		String _date = st.nextToken(); // get date
 		String _timeStart = st.nextToken(); // get timeStart

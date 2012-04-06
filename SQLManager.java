@@ -138,7 +138,7 @@ public class SQLManager {
 			"Organization VARCHAR(30))";
 	private static String createPasswordTable = 
 			"CREATE TABLE PasswordTable(" +
-			"ID INTEGER," +
+			"memberID INTEGER," +
 			"Password VARCHAR(50))";
 	
 	public static Connection createDatabase(){
@@ -488,7 +488,7 @@ public class SQLManager {
 	public static ResultSet getPassword(Connection connection, int ID){
 		String getVenueBookingDetailsByMatricNo = 
 				"SELECT Password FROM PasswordTable " +
-				"WHERE ID=?";
+				"WHERE memberID=?";
 		PreparedStatement prep = null;
 		ResultSet rs = null;
 		try{
@@ -1415,7 +1415,7 @@ public class SQLManager {
 	public static void updatePassword(Connection connection, int ID){
 		String updatePassword =
 				"UPDATE PasswordTable SET Password=? " +
-				"WHERE ID=?";
+				"WHERE memberID=?";
 		PreparedStatement prep = null;
 		try{
 			prep = connection.prepareStatement(updatePassword);
@@ -1425,7 +1425,7 @@ public class SQLManager {
 			sqle.printStackTrace();
 		}
 	}
-	/*Get Object By ID*/
+	/*Get Object By memberID*/
 	public static ResultSet getVenueByID(Connection connection, int venueID){
 		String query = 
 				"SELECT * FROM VenueDetails " +

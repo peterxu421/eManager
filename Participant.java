@@ -23,7 +23,7 @@ public class Participant extends Member {
 	}
 	public Participant(int ID, String name, String matricNo, String faculty, int year,
 			String contact, String email, String foodType, String allergy) {
-		this.ID = ID;
+		this.memberID = ID;
 		this.name = name;
 		this.matricNo = matricNo;
 		this.faculty = faculty;
