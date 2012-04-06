@@ -41,48 +41,47 @@ public class EventPlanning_FeedBack extends Composite {
 		this.event = event;
 		DatabaseReader db = new DatabaseReader();
 		this.feedbackList = db.getFeedback(event);
-		
-				tableFeedBack = new Table(this, SWT.BORDER
-						| SWT.FULL_SELECTION);
-				tableFeedBack.setLocation(10, 10);
-				tableFeedBack.setSize(550, 400);
-				toolkit.adapt(tableFeedBack);
-				toolkit.paintBordersFor(tableFeedBack);
-				tableFeedBack.setHeaderVisible(true);
-				tableFeedBack.setLinesVisible(true);
-				
-						TableColumn tblclmnIssue = new TableColumn(tableFeedBack, SWT.CENTER);
-						tblclmnIssue.setWidth(300);
-						tblclmnIssue.setText("Issue");
-						
-								TableColumn tblclmDate = new TableColumn(tableFeedBack, SWT.CENTER);
-								tblclmDate.setWidth(120);
-								tblclmDate.setText("Date");
-								
-										TableColumn tblclmnTime = new TableColumn(tableFeedBack, SWT.CENTER);
-										tblclmnTime.setWidth(120);
-										tblclmnTime.setText("Time");
-										
-												Button btnFeedBackAddItem = new Button(this, SWT.NONE);
-												btnFeedBackAddItem.setLocation(570, 10);
-												btnFeedBackAddItem.setSize(80, 40);
-												btnFeedBackAddItem.addSelectionListener(new FeedBackAddItemPage());
-												toolkit.adapt(btnFeedBackAddItem, true, true);
-												btnFeedBackAddItem.setText("Add");
-												
-														Button btnFeedBackDeleteItem = new Button(this, SWT.NONE);
-														btnFeedBackDeleteItem.setLocation(570, 60);
-														btnFeedBackDeleteItem.setSize(80, 40);
-														btnFeedBackDeleteItem.addSelectionListener(new FeedBackDeleteItem());
-														toolkit.adapt(btnFeedBackDeleteItem, true, true);
-														btnFeedBackDeleteItem.setText("Delete ");
-														
-																Button btnFeedBackEditItem = new Button(this, SWT.NONE);
-																btnFeedBackEditItem.setLocation(570, 110);
-																btnFeedBackEditItem.setSize(80, 40);
-																btnFeedBackEditItem.addSelectionListener(new FeedBackEditItemPage());
-																toolkit.adapt(btnFeedBackEditItem, true, true);
-																btnFeedBackEditItem.setText("Edit ");
+
+		tableFeedBack = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
+		tableFeedBack.setLocation(10, 10);
+		tableFeedBack.setSize(550, 400);
+		toolkit.adapt(tableFeedBack);
+		toolkit.paintBordersFor(tableFeedBack);
+		tableFeedBack.setHeaderVisible(true);
+		tableFeedBack.setLinesVisible(true);
+
+		TableColumn tblclmnIssue = new TableColumn(tableFeedBack, SWT.CENTER);
+		tblclmnIssue.setWidth(300);
+		tblclmnIssue.setText("Issue");
+
+		TableColumn tblclmDate = new TableColumn(tableFeedBack, SWT.CENTER);
+		tblclmDate.setWidth(120);
+		tblclmDate.setText("Date");
+
+		TableColumn tblclmnTime = new TableColumn(tableFeedBack, SWT.CENTER);
+		tblclmnTime.setWidth(120);
+		tblclmnTime.setText("Time");
+
+		Button btnFeedBackAddItem = new Button(this, SWT.NONE);
+		btnFeedBackAddItem.setLocation(570, 10);
+		btnFeedBackAddItem.setSize(80, 40);
+		btnFeedBackAddItem.addSelectionListener(new FeedBackAddItemPage());
+		toolkit.adapt(btnFeedBackAddItem, true, true);
+		btnFeedBackAddItem.setText("Add");
+
+		Button btnFeedBackDeleteItem = new Button(this, SWT.NONE);
+		btnFeedBackDeleteItem.setLocation(570, 60);
+		btnFeedBackDeleteItem.setSize(80, 40);
+		btnFeedBackDeleteItem.addSelectionListener(new FeedBackDeleteItem());
+		toolkit.adapt(btnFeedBackDeleteItem, true, true);
+		btnFeedBackDeleteItem.setText("Delete ");
+
+		Button btnFeedBackEditItem = new Button(this, SWT.NONE);
+		btnFeedBackEditItem.setLocation(570, 110);
+		btnFeedBackEditItem.setSize(80, 40);
+		btnFeedBackEditItem.addSelectionListener(new FeedBackEditItemPage());
+		toolkit.adapt(btnFeedBackEditItem, true, true);
+		btnFeedBackEditItem.setText("Edit ");
 
 		fillTable();
 
@@ -99,26 +98,18 @@ public class EventPlanning_FeedBack extends Composite {
 		}
 	}
 
-	/*
-	 * public static void main(String[] args) { Display display = new Display();
-	 * Shell shell = new Shell(display); EventPlanning_FeedBack calc = new
-	 * EventPlanning_FeedBack(shell, SWT.NONE); calc.pack(); shell.pack();
-	 * shell.open(); while (!shell.isDisposed()) { if
-	 * (!display.readAndDispatch()) display.sleep(); } }
-	 */
-
 	public class FeedBackAddItemPage extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell feedbackAddItemPage = new Shell(getDisplay());
+			Shell feedbackAddItemPage = new Shell(getDisplay(),
+					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 			AbstractAdd feedbackAddItem = new AbstractAdd(feedbackAddItemPage,
-					SWT.None, stringArray,signatureArray, tableFeedBack) {
+					SWT.None, stringArray, signatureArray, tableFeedBack) {
 				public void onSubmit() {
 					// insert to database
-					String[] tempList=getStringList();
+					String[] tempList = getStringList();
 					Date date = new Date(tempList[1]);
 					Time time = new Time(tempList[2]);
-					Feedback feedback = new Feedback(tempList[0],
-							date, time);
+					Feedback feedback = new Feedback(tempList[0], date, time);
 					db.insertFeedback(event, feedback);
 					feedbackList.add(feedback);
 					// update the table
@@ -153,19 +144,21 @@ public class EventPlanning_FeedBack extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			index = tableFeedBack.getSelectionIndex();
 			if (index < tableFeedBack.getItemCount() && index >= 0) {
-				Shell feedbackEditItemPage = new Shell(getDisplay());
+				Shell feedbackEditItemPage = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractEdit feedbackEditItem = new AbstractEdit(
-						feedbackEditItemPage, SWT.None, stringArray,signatureArray) {
+						feedbackEditItemPage, SWT.None, stringArray,
+						signatureArray) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArray.length; i++) {
-							setData(tableFeedBack.getItem(index)
-									.getText(i),signatureArray[i],i);
+							setData(tableFeedBack.getItem(index).getText(i),
+									signatureArray[i], i);
 						}
 					}
 
 					public void onSubmit() {
-						String[] tempList=getStringList();
+						String[] tempList = getStringList();
 						Feedback feedback = feedbackList.get(index);
 						feedback.setFeedbackDetails(tempList[0]);
 						feedback.setDate(new Date(tempList[1]));
@@ -174,8 +167,8 @@ public class EventPlanning_FeedBack extends Composite {
 						db.updateFeedback(feedback);
 						// update the table
 						for (int i = 0; i < stringArray.length; i++) {
-							tableFeedBack.getItem(index).setText(i,
-									tempList[i]);
+							tableFeedBack.getItem(index)
+									.setText(i, tempList[i]);
 						}
 					}
 				};

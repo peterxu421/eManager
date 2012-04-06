@@ -49,7 +49,8 @@ public class EventPlanning_PreEvent extends Composite {
 		TabFolder tabFolderPreEvent = new TabFolder(this, SWT.NONE);
 		tabFolderPreEvent.setLocation(0, 0);
 		tabFolderPreEvent.setSize(600, 540);
-		tabFolderPreEvent.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+		tabFolderPreEvent.setBackground(SWTResourceManager
+				.getColor(SWT.COLOR_BLACK));
 		tabFolderPreEvent.setToolTipText("Task Assignment");
 		toolkit.adapt(tabFolderPreEvent);
 		toolkit.paintBordersFor(tabFolderPreEvent);
@@ -78,7 +79,8 @@ public class EventPlanning_PreEvent extends Composite {
 		tblclmnAssignedTo.setWidth(150);
 		tblclmnAssignedTo.setText("Assigned To");
 
-		TableColumn tblclmnDateDue = new TableColumn(tableTaskAssign, SWT.CENTER);
+		TableColumn tblclmnDateDue = new TableColumn(tableTaskAssign,
+				SWT.CENTER);
 		tblclmnDateDue.setWidth(120);
 		tblclmnDateDue.setText("Date Due");
 
@@ -156,7 +158,8 @@ public class EventPlanning_PreEvent extends Composite {
 		tblclmnFaculty.setWidth(120);
 		tblclmnFaculty.setText("Faculty");
 
-		TableColumn tblclmnPosition = new TableColumn(tableCommittee, SWT.CENTER);
+		TableColumn tblclmnPosition = new TableColumn(tableCommittee,
+				SWT.CENTER);
 		tblclmnPosition.setWidth(200);
 		tblclmnPosition.setText("Position");
 
@@ -212,7 +215,8 @@ public class EventPlanning_PreEvent extends Composite {
 	public class TaskAssignAddItemPage extends SelectionAdapter {
 
 		public void widgetSelected(SelectionEvent e) {
-			Shell taskAssignAddItemPage = new Shell(getDisplay());
+			Shell taskAssignAddItemPage = new Shell(getDisplay(),
+					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 			taskAssignAddItemPage.setText("Task Assign Add Item");
 			AbstractAdd taskAssignAddItem = new AbstractAdd(
 					taskAssignAddItemPage, SWT.None, stringArrayItem,
@@ -241,7 +245,8 @@ public class EventPlanning_PreEvent extends Composite {
 	public class TaskAssignAddMemberPage extends SelectionAdapter {
 
 		public void widgetSelected(SelectionEvent e) {
-			Shell taskAssignAddMemberPage = new Shell(getDisplay());
+			Shell taskAssignAddMemberPage = new Shell(getDisplay(),
+					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 			taskAssignAddMemberPage.setText("Task Assign Add Member");
 			AbstractAdd taskAssignAddMember = new AbstractAdd(
 					taskAssignAddMemberPage, SWT.None, stringArrayMember,
@@ -302,7 +307,8 @@ public class EventPlanning_PreEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			index = tableTaskAssign.getSelectionIndex();
 			if (index < tableTaskAssign.getItemCount() && index >= 0) {
-				Shell taskAssignEditItemPage = new Shell(getDisplay());
+				Shell taskAssignEditItemPage = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				taskAssignEditItemPage.setText("Task Assign Edit Item");
 				AbstractEdit taskAssignEditItem = new AbstractEdit(
 						taskAssignEditItemPage, SWT.None, stringArrayItem,
@@ -342,7 +348,8 @@ public class EventPlanning_PreEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			index = tableCommittee.getSelectionIndex();
 			if (index < tableCommittee.getItemCount() && index >= 0) {
-				Shell taskAssignEditMemberPage = new Shell(getDisplay());
+				Shell taskAssignEditMemberPage = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				taskAssignEditMemberPage.setText("Task Assign Edit Member");
 				AbstractEdit taskAssignEditMember = new AbstractEdit(
 						taskAssignEditMemberPage, SWT.None, stringArrayMember,
