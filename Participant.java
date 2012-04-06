@@ -21,11 +21,9 @@ public class Participant extends Member {
 		this.foodType = foodType;
 		this.allergy = allergy;
 	}
-
-	public Participant(int ID, String name, String matricNo, String faculty,
-			int year, String contact, String email, String foodType,
-			String allergy) {
-		this.ID = ID;
+	public Participant(int ID, String name, String matricNo, String faculty, int year,
+			String contact, String email, String foodType, String allergy) {
+		this.memberID = ID;
 		this.name = name;
 		this.matricNo = matricNo;
 		this.faculty = faculty;

@@ -258,8 +258,7 @@ public class VenueBooking_VenueWeekView extends Composite {
 			 * date and time
 			 */
 			for (int k = 0; k < selectedDateTimeList.getItemCount(); k++) {
-				BookedDateTime dt = BookedDateTime
-						.parseBookingDateTime(selectedDateTimeList.getItem(k));
+				BookedDateTime dt = BookedDateTime.parseBookedDateTime(selectedDateTimeList.getItem(k));
 				for (int i = 0; i < weekViewTable.getItemCount(); i++) {
 					TableItem item = weekViewTable.getItem(i);
 					if (Time.parseHour(item.getText(0)) == dt.getTimeStart()

@@ -175,7 +175,19 @@ public class VenueManagement_VenueList extends Composite {
 							MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
 							warningPage.setText("Warning!");
 							warningPage.setMessage("Please clear its application log before removing a venue!");
-							warningPage.open(); 
+							int choice = warningPage.open(); 
+							switch (choice){
+							case SWT.OK:
+								Shell viewBookingInfoShell = new Shell(getDisplay(),SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
+								Image icon = new Image(getDisplay(), "resources/eManager.png");
+								viewBookingInfoShell.setText("eManager");
+								viewBookingInfoShell.setImage(icon);
+								
+								VenueManagement_ApplicationLog viewBookingInfoPage = new VenueManagement_ApplicationLog(viewBookingInfoShell, SWT.None, venueToBeDeleted);
+								viewBookingInfoPage.pack();
+								viewBookingInfoShell.pack();
+								viewBookingInfoShell.open();
+							}
 						}
 					}
 					

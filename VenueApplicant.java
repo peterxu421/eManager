@@ -10,10 +10,9 @@ public class VenueApplicant extends Member {
 		this.email = email;
 		this.organization = organization;
 	}
-
-	public VenueApplicant(int ID, String name, String matricNo, String contact,
-			String email, String organization) {
-		this.ID = ID;
+	public VenueApplicant(int ID, String name, String matricNo,
+			String contact, String email, String organization) {
+		this.memberID = ID;
 		this.name = name;
 		this.matricNo = matricNo;
 		this.contact = contact;

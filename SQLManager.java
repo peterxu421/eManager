@@ -140,21 +140,17 @@ public class SQLManager {
 			statement.execute();
 			statement = connection.prepareStatement(createFeedbackDetailsTable);
 			statement.execute();
-			statement = connection
-					.prepareStatement(createAllocationDetailsTable);
+			statement = connection.prepareStatement(createAllocationDetailsTable);
 			statement.execute();
-			statement = connection
-					.prepareStatement(createItineraryDetailsTable);
+			statement = connection.prepareStatement(createItineraryDetailsTable);
 			statement.execute();
 			statement = connection.prepareStatement(createPackingDetailsTable);
 			statement.execute();
 			statement = connection.prepareStatement(createVenueDetailsTable);
 			statement.execute();
-			statement = connection
-					.prepareStatement(createApplicantDetailsTable);
+			statement = connection.prepareStatement(createApplicantDetailsTable);
 			statement.execute();
-			statement = connection
-					.prepareStatement(createVenueBookingDetailsTable);
+			statement = connection.prepareStatement(createVenueBookingDetailsTable);
 			statement.execute();
 			statement = connection.prepareStatement(createPasswordTable);
 			statement.execute();

@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
@@ -189,7 +190,10 @@ public class VenueBooking_BookingPage extends Composite {
 							bookedDateTimeIntervalList.get(i));
 					db.insertVenueBookingInfo(newBookingApp);
 				}
-				getParent().dispose();
+				Shell[] shellList = getDisplay().getShells();
+				int size = shellList.length;
+				shellList[size-1].dispose(); // dispose the booking page
+				shellList[size-3].dispose(); // dispose the venue week view page
 			}
 		}
 	}

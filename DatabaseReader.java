@@ -346,39 +346,36 @@ public class DatabaseReader {
 						.getDate().toString(), manpowerAllocation.isDone());
 	}
 
-	/* FileDetails */
-	public ArrayList<EventFile> getFiles(Event event) {
-		ArrayList<EventFile> files = new ArrayList<EventFile>();
-		ResultSet rs = null;
-		try {
-			rs = SQLManager.getFileDetails(connection, event.getEventID());
-			while (rs.next()) {
-				EventFile file = new EventFile(rs.getInt(1), rs.getString(3),
-						rs.getString(4), rs.getString(5));
-				files.add(file);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return files;
-	}
-
-	public void insertFile(Event event, EventFile eventFile) {
-		int id = SQLManager.insertFileDetails(connection, event.getEventID(),
-				eventFile.getFileName(), eventFile.getFileDirectory(),
-				eventFile.getFileDescription());
-		eventFile.setFileID(id);
-	}
-
-	public void deleteFile(EventFile file) {
-		SQLManager.deleteFileDetails(connection, file.getFileID());
-	}
-
-	public void updateFile(EventFile file) {
-		SQLManager.updateFileDetails(connection, file.getFileID(),
-				file.getFileName(), file.getFileDirectory(),
-				file.getFileDescription());
-	}
+//	/* FileDetails */
+//	public ArrayList<EventFile> getFiles(Event event) {
+//		ArrayList<EventFile> files = new ArrayList<EventFile>();
+//		ResultSet rs = null;
+//		try {
+//			rs = SQLManager.getFileDetails(connection, event.getEventID());
+//			while (rs.next()) {
+//				EventFile file = new EventFile(rs.getInt(1), rs.getString(3),
+//						rs.getString(4), rs.getString(5));
+//				files.add(file);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return files;
+//	}
+//	public void insertFile(Event event, EventFile eventFile) {
+//		int id = SQLManager.insertFileDetails(connection, event.getEventID(),
+//				eventFile.getFileName(), eventFile.getFileDirectory(),
+//				eventFile.getFileDescription());
+//		eventFile.setFileID(id);
+//	}
+//	public void deleteFile(EventFile file) {
+//		SQLManager.deleteFileDetails(connection, file.getFileID());
+//	}
+//	public void updateFile(EventFile file) {
+//		SQLManager.updateFileDetails(connection, file.getFileID(),
+//				file.getFileName(), file.getFileDirectory(),
+//				file.getFileDescription());
+//	}
 
 	/* PackingDetails */
 	public ArrayList<PackingItem> getPackingItems(Event event) {
@@ -729,22 +726,16 @@ public class DatabaseReader {
 
 	public void insertVenueBookingInfo(VenueBookingApplication booking) {
 		insertVenueApplicant(booking.getApplicant());
-		int id = SQLManager.insertVenueBookingDetails(connection, booking
-				.getVenue().getVenueId(), booking.getApplicant().getID(),
-				booking.getDateTime().getDate().toString(), booking
-						.getDateTime().getTimeStart().toString(), booking
-						.getDateTime().getTimeEnd().toString(), booking
-						.getStatus());
-		booking.setVenueBookingInfoID(id);
+		int id = SQLManager.insertVenueBookingDetails(connection, booking.getVenue().getVenueId(), 
+				booking.getApplicant().getID(), booking.getDateTime().getDate().toString(), 
+				booking.getDateTime().getTimeStart().toString(), booking.getDateTime().getTimeEnd().toString(), booking.getStatus());
+		booking.setVenueBookingApplicationID(id);
 	}
-
-	public void updateVenueBookingInfo(VenueBookingApplication booking) {
-		SQLManager.updateVenueBookingDetails(connection,
-				booking.getVenueBookingInfoID(),
-				booking.getApplicant().getID(), booking.getDateTime().getDate()
-						.toString(), booking.getDateTime().getTimeStart()
-						.toString(), booking.getDateTime().getTimeEnd()
-						.toString(), booking.getStatus());
+	public void updateVenueBookingInfo(VenueBookingApplication booking){
+		SQLManager.updateVenueBookingDetails(connection, booking.getVenueBookingApplicationID(), 
+				booking.getApplicant().getID(), booking.getDateTime().getDate().toString(),
+				booking.getDateTime().getTimeStart().toString(),
+				booking.getDateTime().getTimeEnd().toString(), booking.getStatus());
 	}
 
 	public void deleteVenueBookingInfo(Venue venue) {
@@ -756,10 +747,8 @@ public class DatabaseReader {
 			deleteVenueApplicant(applicant);
 		}
 	}
-
-	public void deleteVenueBookingInfo(VenueBookingApplication booking) {
-		SQLManager.deleteVenueBookingDetails(connection,
-				booking.getVenueBookingInfoID());
+	public void deleteVenueBookingInfo(VenueBookingApplication booking){
+		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingApplicationID());
 		deleteVenueApplicant(booking.getApplicant());
 	}
 

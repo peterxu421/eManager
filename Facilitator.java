@@ -25,11 +25,9 @@ public class Facilitator extends Member {
 		this.allergy = allergy;
 		this.position = position;
 	}
-
-	public Facilitator(int ID, String name, String matricNo, String faculty,
-			int year, String contact, String email, String foodType,
-			String allergy, String position) {
-		this.ID = ID;
+	public Facilitator(int ID, String name, String matricNo, String faculty, int year,
+			String contact, String email, String foodType, String allergy, String position) {
+		this.memberID = ID;
 		this.name = name;
 		this.matricNo = matricNo;
 		this.faculty = faculty;
