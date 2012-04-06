@@ -55,28 +55,36 @@ public class BookedDateTime implements Comparable<BookedDateTime> {
 				Time.parseTime(_timeStart), Time.parseTime(_timeEnd));
 		return dateTime;
 	}
-	
+
 	public int compareTo(BookedDateTime dateTime) {
-		if(date.getYear() > dateTime.getDate().getYear() ||
-				date.getYear() == dateTime.getDate().getYear() && date.getMonth() > dateTime.getDate().getMonth() ||
-				date.getYear() == dateTime.getDate().getYear() && date.getMonth() == dateTime.getDate().getMonth() && date.getDay() > dateTime.getDate().getDay() ||
-						date.getYear() == dateTime.getDate().getYear() && date.getMonth() == dateTime.getDate().getMonth() && date.getDay() == dateTime.getDate().getDay() && timeStart.getHour() > dateTime.getTimeStart().getHour()){
+		if (date.getYear() > dateTime.getDate().getYear()
+				|| date.getYear() == dateTime.getDate().getYear()
+				&& date.getMonth() > dateTime.getDate().getMonth()
+				|| date.getYear() == dateTime.getDate().getYear()
+				&& date.getMonth() == dateTime.getDate().getMonth()
+				&& date.getDay() > dateTime.getDate().getDay()
+				|| date.getYear() == dateTime.getDate().getYear()
+				&& date.getMonth() == dateTime.getDate().getMonth()
+				&& date.getDay() == dateTime.getDate().getDay()
+				&& timeStart.getHour() > dateTime.getTimeStart().getHour()) {
 			return 1; // greater than
 		}
-		
-		else if(date.getYear() == dateTime.getDate().getYear() && 
-				date.getMonth() == dateTime.getDate().getMonth() && 
-				date.getDay() == dateTime.getDate().getDay() && 
-				timeStart.getHour() == dateTime.getTimeStart().getHour()){
+
+		else if (date.getYear() == dateTime.getDate().getYear()
+				&& date.getMonth() == dateTime.getDate().getMonth()
+				&& date.getDay() == dateTime.getDate().getDay()
+				&& timeStart.getHour() == dateTime.getTimeStart().getHour()) {
 			return 0; // equal
-		}
-		else return -1; // less than 
+		} else
+			return -1; // less than
 	}
-	
-	public boolean isEqualTo(BookedDateTime dateTime){
-		if(date.isEqualTo(dateTime.getDate()) && timeStart.isEqualTo(dateTime.getTimeStart()) && timeEnd.isEqualTo(dateTime.getTimeEnd())){
+
+	public boolean isEqualTo(BookedDateTime dateTime) {
+		if (date.isEqualTo(dateTime.getDate())
+				&& timeStart.isEqualTo(dateTime.getTimeStart())
+				&& timeEnd.isEqualTo(dateTime.getTimeEnd())) {
 			return true;
-		}
-		else return false;
+		} else
+			return false;
 	}
 }
