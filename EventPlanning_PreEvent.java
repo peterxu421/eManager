@@ -58,7 +58,7 @@ public class EventPlanning_PreEvent extends Composite {
 
 		TabItem tbtmTaskAssigned = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskAssigned.setText("Task Assigned");
-
+		
 
 		Composite composite_1 = new Composite(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskAssigned.setControl(composite_1);
