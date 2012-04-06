@@ -233,7 +233,7 @@ public abstract class AbstractForm extends Composite {
 					|| signature[i] == MACRO.VENUELOCATION
 					|| signature[i] == MACRO.VENUETYPE
 					|| signature[i] == MACRO.ROLES) {
-				((Combo) get(i)).setText("");
+				((Combo) get(i)).deselectAll();
 			}
 		}
 	}
@@ -256,7 +256,11 @@ public abstract class AbstractForm extends Composite {
 					|| signature[i] == MACRO.PASSWORD
 					|| signature[i] == MACRO.READONLY) {
 				stringList[i] = ((Text) get(i)).getText();
-				stringList[i] = stringList[i].replaceAll("\\s+", " "); // remove extra white space input
+				stringList[i] = stringList[i].replaceAll("\\s+", " "); // remove
+																		// extra
+																		// white
+																		// space
+																		// input
 			}
 			// Deal with Date
 			else if (signature[i] == MACRO.DATE) {
@@ -337,12 +341,12 @@ public abstract class AbstractForm extends Composite {
 					|| signature[i] == MACRO.VENUETYPE
 					|| signature[i] == MACRO.ROLES) {
 				Combo combo = (Combo) get(i);
-				System.out.println(combo);
 				isValid = !combo.getText().isEmpty();
 			}
 			// Deal with calendar combo
 			else if (signature[i] == MACRO.DATE) {
-				CalendarCombo calendar = (CalendarCombo) get(i);
+				CalendarCombo calendarCombo = (CalendarCombo) get(i);
+				Calendar calendar = calendarCombo.getDate();
 				if (calendar == null) {
 					isValid = false;
 				} else {
