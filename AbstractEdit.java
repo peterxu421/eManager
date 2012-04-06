@@ -18,6 +18,7 @@ public abstract class AbstractEdit extends AbstractForm {
 		super(parent, style, stringList, signature);
 		// TODO Auto-generated constructor stub
 		// Set buttons
+		parent.getShell().setText("Edit");
 		Button btnAdd = new Button(this, SWT.None);
 		btnAdd.addSelectionListener(new SubmitHandler());
 		btnAdd.setText("Edit");

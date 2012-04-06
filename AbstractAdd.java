@@ -1,6 +1,4 @@
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -21,7 +19,7 @@ public abstract class AbstractAdd extends AbstractForm {
 		
 		// get the table with stored input information
 		this.table = table;
-		
+		parent.getShell().setText("Add");
 		// Set buttons
 		Button btnAdd = new Button(this, SWT.None);
 		btnAdd.addSelectionListener(new SubmitHandler());

@@ -75,7 +75,7 @@ public class SelectVenueModePage extends Composite {
 			shell.setText("Venue Manager");
 			shell.setImage(icon);
 			SessionManager.setCurrentMode(MACRO.APPLICANT);
-			Venuespace eventSpace = new Venuespace(shell, SWT.None, MACRO.APPLICANT_MODE);
+			Venuespace eventSpace = new Venuespace(shell, SWT.None);
 			eventSpace.pack();
 			shell.pack();
 			shell.open();
