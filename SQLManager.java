@@ -1086,6 +1086,18 @@ public class SQLManager {
 			e.printStackTrace();
 		}
 	}
+	public static void deleteApplicantDetailsByVenue(Connection connection, int venueID){
+		String deleteVenueDetails = 
+				"DELETE FROM ApplicantDetails " +
+				"WHERE venueID=?";
+		try {
+			PreparedStatement prep = connection.prepareStatement(deleteVenueDetails);
+			prep.setInt(1, venueID);
+			prep.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	public static void deleteMemberDetails(Connection connection, int memberID){
 		String deletePackingDetails = 
 				"DELETE FROM MemberDetails " +

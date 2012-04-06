@@ -652,7 +652,12 @@ public class DatabaseReader {
 				booking.getDateTime().getTimeEnd().toString(), booking.getStatus());
 	}
 	public void deleteVenueBookingInfo(Venue venue){
+		ArrayList<VenueBookingApplication> list = getVenueBookingInfo(venue);
 		SQLManager.deleteVenueBookingDetailsByVenue(connection, venue.getVenueId());
+		for(int i=0; i<list.size(); i++){
+			VenueApplicant applicant = 	list.get(i).getApplicant();
+			deleteVenueApplicant(applicant);
+		}
 	}
 	public void deleteVenueBookingInfo(VenueBookingApplication booking){
 		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingInfoID());
