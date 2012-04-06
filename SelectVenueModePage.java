@@ -16,8 +16,10 @@ public class SelectVenueModePage extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	Composite parent;
+
 	/**
 	 * Create the composite.
+	 * 
 	 * @param parent
 	 * @param style
 	 */
@@ -38,7 +40,8 @@ public class SelectVenueModePage extends Composite {
 		toolkit.paintBordersFor(composite);
 
 		Label lblPleaseSelectMode = new Label(composite, SWT.NONE);
-		lblPleaseSelectMode.setFont(SWTResourceManager.getFont("Calibri", 13, SWT.NORMAL));
+		lblPleaseSelectMode.setFont(SWTResourceManager.getFont("Calibri", 13,
+				SWT.NORMAL));
 		lblPleaseSelectMode.setBounds(96, 21, 127, 28);
 		toolkit.adapt(lblPleaseSelectMode, true, true);
 		lblPleaseSelectMode.setText("Please Select Mode");
@@ -58,19 +61,21 @@ public class SelectVenueModePage extends Composite {
 
 	class ManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell pass_shell = new Shell(getShell(), SWT.NO_TRIM|SWT.ON_TOP);
+			Shell pass_shell = new Shell(getShell(), SWT.NO_TRIM | SWT.ON_TOP);
 			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.MANAGER);
-			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None, MACRO.MANAGER);
+			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None,
+					MACRO.MANAGER);
 			pass_page.pack();
 			pass_shell.pack();
 			pass_shell.open();
 		}
 	}
+
 	class ApplicantListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell shell = new Shell(getShell(),SWT.NONE);
-			shell.setLocation(200,50);
+			Shell shell = new Shell(getShell(), SWT.NONE);
+			shell.setLocation(200, 50);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			shell.setText("Venue Manager");
 			shell.setImage(icon);

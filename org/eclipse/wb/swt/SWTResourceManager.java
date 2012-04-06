@@ -48,11 +48,11 @@ public class SWTResourceManager {
 	////////////////////////////////////////////////////////////////////////////
 	private static Map<RGB, Color> m_colorMap = new HashMap<RGB, Color>();
 	/**
-	 * Returns the system {@link Color} matching the specific ID.
+	 * Returns the system {@link Color} matching the specific memberID.
 	 * 
 	 * @param systemColorID
-	 *            the ID value for the color
-	 * @return the system {@link Color} matching the specific ID
+	 *            the memberID value for the color
+	 * @return the system {@link Color} matching the specific memberID
 	 */
 	public static Color getColor(int systemColorID) {
 		Display display = Display.getCurrent();
@@ -405,11 +405,11 @@ public class SWTResourceManager {
 	 */
 	private static Map<Integer, Cursor> m_idToCursorMap = new HashMap<Integer, Cursor>();
 	/**
-	 * Returns the system cursor matching the specific ID.
+	 * Returns the system cursor matching the specific memberID.
 	 * 
 	 * @param id
-	 *            int The ID value for the cursor
-	 * @return Cursor The system cursor matching the specific ID
+	 *            int The memberID value for the cursor
+	 * @return Cursor The system cursor matching the specific memberID
 	 */
 	public static Cursor getCursor(int id) {
 		Integer key = Integer.valueOf(id);

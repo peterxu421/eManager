@@ -13,7 +13,7 @@ public class SessionManager {
 	public static boolean[][] boolMode;
 	public static Shell[] shellList;
 	private static HashMap<String, Shell> shellMap = new HashMap<String, Shell>();
-	
+
 	// Dipose any shells except root shell
 	public static void disposeShells(Display display) {
 		shellList = display.getShells();
@@ -104,12 +104,12 @@ public class SessionManager {
 	public static boolean[][] getCurrentBoolMode() {
 		return boolMode;
 	}
-	
-	public static void addShell(Shell shell){
+
+	public static void addShell(Shell shell) {
 		shellMap.put(shell.getText(), shell);
 	}
-	
-	public static Shell getShell(String key){
+
+	public static Shell getShell(String key) {
 		Shell shell = shellMap.get(key);
 		return shell;
 	}

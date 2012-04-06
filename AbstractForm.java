@@ -59,6 +59,7 @@ public abstract class AbstractForm extends Composite {
 		this.reverseMap = new HashMap<Object, String>();
 		stringList = new String[signature.length]; // initiate the input text
 													// string array
+		
 		/* Layout */
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginLeft = 50;
@@ -371,7 +372,7 @@ public abstract class AbstractForm extends Composite {
 					}
 				}
 			}
-			
+
 			else {
 				// Show messageBox if there is error in input data and specify
 				// where is the error.

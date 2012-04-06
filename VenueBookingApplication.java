@@ -1,15 +1,15 @@
 
 public class VenueBookingApplication {
-	private int venueBookingInfoID;
+	private int venueBookingApplicationID;
 	private Venue venue;
 	private VenueApplicant applicant;
 	private BookedDateTime dateTime;
 	private int status;
 	
-	public VenueBookingApplication(int venueBookingInfoID, Venue venue,
+	public VenueBookingApplication(int venueBookingApplicationID, Venue venue,
 			VenueApplicant applicant, BookedDateTime dateTime, int status) {
 		super();
-		this.venueBookingInfoID = venueBookingInfoID;
+		this.venueBookingApplicationID = venueBookingApplicationID;
 		this.venue = venue;
 		this.applicant = applicant;
 		this.dateTime = dateTime;
@@ -31,12 +31,12 @@ public class VenueBookingApplication {
 		super();
 	}
 
-	public int getVenueBookingInfoID() {
-		return venueBookingInfoID;
+	public int getVenueBookingApplicationID() {
+		return venueBookingApplicationID;
 	}
 
-	public void setVenueBookingInfoID(int venueBookingInfoID) {
-		this.venueBookingInfoID = venueBookingInfoID;
+	public void setVenueBookingApplicationID(int venueBookingApplicationID) {
+		this.venueBookingApplicationID = venueBookingApplicationID;
 	}
 
 	public Venue getVenue() {

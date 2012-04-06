@@ -1,17 +1,10 @@
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.swt.custom.ScrolledComposite;
 
 public class eP_eventRegistration extends AbstractForm {
 
@@ -77,8 +70,8 @@ public class eP_eventRegistration extends AbstractForm {
 		MessageBox successPage = new MessageBox(getDisplay().getActiveShell(),
 				SWT.OK | SWT.ICON_WORKING);
 		successPage.setText("Success");
-		successPage.setMessage("Event registration to " + tempList[4]
-				+ " as "+tempList[5]+" is successful!");
+		successPage.setMessage("Event registration to " + tempList[4] + " as "
+				+ tempList[5] + " is successful!");
 		int choice = successPage.open(); // indicates the user's choice
 		switch (choice) {
 		case SWT.OK:
