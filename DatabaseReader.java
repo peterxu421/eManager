@@ -791,7 +791,10 @@ public class DatabaseReader {
 	public void updatePassword(String password) {
 		SQLManager.updatePassword(connection, MACRO.MANAGER, password);
 	}
-
+	
+	public void insertPassword(String password){
+		SQLManager.insertPassword(connection, MACRO.MANAGER, password);
+	}
 	public static void main(String[] args) {
 		DatabaseReader db = new DatabaseReader();
 		Event event = db.getEvents().get(0);
