@@ -31,16 +31,16 @@ public class SQLManager {
 			"MemberID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
 			"EventID INTEGER NOT NULL REFERENCES EventDetails(EventID)," +
 			"Name VARCHAR(50)," +
-			"MatricNo VARCHAR(10)," +
+			"MatricNo VARCHAR(50)," +
 			"Faculty VARCHAR(50)," +
-			"Year INTEGER," +
-			"Contact VARCHAR(20)," +
-			"Email VARCHAR(20)," +
-			"FoodType VARCHAR(10)," +
-			"Allergy VARCHAR(20)," +
+			"SchoolYear INTEGER," +
+			"Contact VARCHAR(50)," +
+			"Email VARCHAR(50)," +
+			"FoodType VARCHAR(50)," +
+			"Allergy VARCHAR(50)," +
 			"Role SMALLINT," +
-			"Position VARCHAR(20)," +
-			"Organization VARCHAR(20))";
+			"Position VARCHAR(50)," +
+			"Organization VARCHAR(50))";
 	private static String createMeetingDetailsTable =
 			"CREATE TABLE MeetingDetails(" +
 			"MeetingID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
@@ -49,13 +49,13 @@ public class SQLManager {
 			"Date DATE," +
 			"Time TIME," +
 			"Done SMALLINT)";
-	private static String createFileDetailsTable =
-			"CREATE TABLE FileDetails(" +
-			"FileID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
-			"EventID INTEGER NOT NULL REFERENCES EventDetails(EventID)," +
-			"FileName VARCHAR(255)," +
-			"FileDirectory VARCHAR(255)," +
-			"FileDescription VARCHAR(255))";
+//	private static String createFileDetailsTable =
+//			"CREATE TABLE FileDetails(" +
+//			"FileID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
+//			"EventID INTEGER NOT NULL REFERENCES EventDetails(EventID)," +
+//			"FileName VARCHAR(255)," +
+//			"FileDirectory VARCHAR(255)," +
+//			"FileDescription VARCHAR(255))";
 	private static String createBudgetDetailsTable =
 			"CREATE TABLE BudgetDetails(" +
 			"BudgetID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
@@ -78,7 +78,7 @@ public class SQLManager {
 			"EventID INTEGER NOT NULL REFERENCES EventDetails(EventID)," +
 			"Item VARCHAR(50)," +
 			"Quantity INTEGER," +
-			"Type VARCHAR(20)," +
+			"Type VARCHAR(50)," +
 			"Date DATE," +
 			"Cost DOUBLE)";
 	private static String createFeedbackDetailsTable =
@@ -111,13 +111,13 @@ public class SQLManager {
 			"Category VARCHAR(50)," +
 			"Item VARCHAR(50)," +
 			"Quantity INTEGER," +
-			"Remarks VARCHAR(50))";
+			"Remarks VARCHAR(255))";
 	private static String createVenueDetailsTable = 
 			"CREATE TABLE VenueDetails(" +
 			"VenueID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
-			"Name VARCHAR(20)," +
+			"Name VARCHAR(50)," +
 			"Location VARCHAR(50)," +
-			"Type VARCHAR(20)," +
+			"Type VARCHAR(50)," +
 			"Capacity INTEGER)";
 	private static String createVenueBookingDetailsTable = 
 			"CREATE TABLE VenueBookingDetails(" +
@@ -131,11 +131,11 @@ public class SQLManager {
 	private static String createApplicantDetailsTable =
 			"CREATE TABLE ApplicantDetails(" +
 			"ApplicantID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY," +
-			"Name VARCHAR(20)," +
-			"MatricNo VARCHAR(20)," +
-			"Contact VARCHAR(20)," +
-			"Email VARCHAR(20)," +
-			"Organization VARCHAR(30))";
+			"Name VARCHAR(50)," +
+			"MatricNo VARCHAR(50)," +
+			"Contact VARCHAR(50)," +
+			"Email VARCHAR(50)," +
+			"Organization VARCHAR(50))";
 	private static String createPasswordTable = 
 			"CREATE TABLE PasswordTable(" +
 			"ID INTEGER," +
@@ -154,8 +154,8 @@ public class SQLManager {
 			statement.execute();
 			statement = connection.prepareStatement(createMeetingDetailsTable);
 			statement.execute();
-			statement = connection.prepareStatement(createFileDetailsTable);
-			statement.execute();
+//			statement = connection.prepareStatement(createFileDetailsTable);
+//			statement.execute();
 			statement = connection.prepareStatement(createBudgetDetailsTable);
 			statement.execute();
 			statement = connection.prepareStatement(createInflowDetailsTable);
@@ -172,9 +172,9 @@ public class SQLManager {
 			statement.execute();
 			statement = connection.prepareStatement(createVenueDetailsTable);
 			statement.execute();
-			statement = connection.prepareStatement(createVenueBookingDetailsTable);
-			statement.execute();
 			statement = connection.prepareStatement(createApplicantDetailsTable);
+			statement.execute();
+			statement = connection.prepareStatement(createVenueBookingDetailsTable);
 			statement.execute();
 			statement = connection.prepareStatement(createPasswordTable);
 			statement.execute();
@@ -1077,18 +1077,6 @@ public class SQLManager {
 	public static void deleteVenueDetails(Connection connection, int venueID){
 		String deleteVenueDetails = 
 				"DELETE FROM VenueDetails " +
-				"WHERE venueID=?";
-		try {
-			PreparedStatement prep = connection.prepareStatement(deleteVenueDetails);
-			prep.setInt(1, venueID);
-			prep.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	public static void deleteApplicantDetailsByVenue(Connection connection, int venueID){
-		String deleteVenueDetails = 
-				"DELETE FROM ApplicantDetails " +
 				"WHERE venueID=?";
 		try {
 			PreparedStatement prep = connection.prepareStatement(deleteVenueDetails);
