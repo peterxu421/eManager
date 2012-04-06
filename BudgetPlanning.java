@@ -1,11 +1,11 @@
-public class BudgetAllocation {
+public class BudgetPlanning {
 	private int budgetID;
 	private String item;
 	private String personInCharge;
 	private double cost;
 	private Date date;
 
-	public BudgetAllocation(int budgetID, String item, String personInCharge,
+	public BudgetPlanning(int budgetID, String item, String personInCharge,
 			double cost, Date date) {
 		this.budgetID = budgetID;
 		this.item = item;
@@ -14,7 +14,7 @@ public class BudgetAllocation {
 		this.date = date;
 	}
 
-	public BudgetAllocation(String item, String personInCharge, double cost,
+	public BudgetPlanning(String item, String personInCharge, double cost,
 			Date date) {
 		this.item = item;
 		this.personInCharge = personInCharge;

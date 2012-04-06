@@ -57,6 +57,7 @@ public class EventPlanning_PreEvent extends Composite {
 
 		TabItem tbtmTaskAssigned = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskAssigned.setText("Task Assigned");
+		
 
 		Composite composite_1 = new Composite(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskAssigned.setControl(composite_1);
@@ -110,7 +111,6 @@ public class EventPlanning_PreEvent extends Composite {
 
 		TabItem tbtmTaskChart = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskChart.setText("Task Chart");
-
 		Composite composite_2 = new Composite(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskChart.setControl(composite_2);
 		toolkit.paintBordersFor(composite_2);
@@ -215,7 +215,7 @@ public class EventPlanning_PreEvent extends Composite {
 	public class TaskAssignAddItemPage extends SelectionAdapter {
 
 		public void widgetSelected(SelectionEvent e) {
-			Shell taskAssignAddItemPage = new Shell(getDisplay(),
+			Shell taskAssignAddItemPage = new Shell(getShell(),
 					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 			AbstractAdd taskAssignAddItem = new AbstractAdd(
 					taskAssignAddItemPage, SWT.None, stringArrayItem,

@@ -71,6 +71,12 @@ public class PreEvent_Publicity extends Composite {
 		importPic.setLayoutData(importPicData);
 		importPic.setText("Import");
 		importPic.addSelectionListener(new ImportAdapter());
+		
+		Button fromURL = new Button(right, SWT.PUSH);
+		GridData fromURLData = new GridData(130, 50);
+		fromURL.setText("From URL");
+		fromURL.setLayoutData(fromURLData);
+		fromURL.addSelectionListener(new FromURLAdatper());
 
 		Button edit = new Button(right, SWT.PUSH);
 		GridData editData = new GridData(130, 50);
@@ -97,10 +103,9 @@ public class PreEvent_Publicity extends Composite {
 		if (image != null) {
 			GalleryItem item = new GalleryItem(group, SWT.None);
 			item.setImage(image);
-			item.setText(filename);
+			//item.setText(filename);
 		}
 	}
-
 	private void fillImages() {
 		File imageDirectory = new File("Pictures");
 		if (!imageDirectory.exists())
@@ -113,7 +118,6 @@ public class PreEvent_Publicity extends Composite {
 			if (image != null) {
 				GalleryItem item = new GalleryItem(group, SWT.None);
 				item.setImage(image);
-				item.setText(images[i]);
 			}
 		}
 	}
@@ -164,6 +168,13 @@ public class PreEvent_Publicity extends Composite {
 					file.delete();
 				}
 			}
+		}
+	}
+	private class FromURLAdatper extends SelectionAdapter{
+		public void widgetSelected(SelectionEvent e){
+			Shell shell = new GetImageFromURL(getShell(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM, group);
+			shell.setLocation(400, 200);
+			shell.open();
 		}
 	}
 }

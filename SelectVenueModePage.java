@@ -8,12 +8,16 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 public class SelectVenueModePage extends Composite {
 
+	private String[] stringPassword = { "New Password", "Confirm New Password" };
+	private int[] signaturePassword = { MACRO.PASSWORD, MACRO.PASSWORD };
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	Composite parent;
 
@@ -42,7 +46,7 @@ public class SelectVenueModePage extends Composite {
 		Label lblPleaseSelectMode = new Label(composite, SWT.NONE);
 		lblPleaseSelectMode.setFont(SWTResourceManager.getFont("Calibri", 13,
 				SWT.NORMAL));
-		lblPleaseSelectMode.setBounds(96, 21, 127, 28);
+		lblPleaseSelectMode.setBounds(96, 21, 184, 28);
 		toolkit.adapt(lblPleaseSelectMode, true, true);
 		lblPleaseSelectMode.setText("Please Select Mode");
 
@@ -61,25 +65,86 @@ public class SelectVenueModePage extends Composite {
 
 	class ManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell pass_shell = new Shell(getShell(), SWT.NO_TRIM | SWT.ON_TOP);
+			Shell pass_shell = new Shell(getDisplay(), SWT.NO_TRIM | SWT.ON_TOP);
 			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.MANAGER);
-			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None,
-					MACRO.MANAGER);
-			pass_page.pack();
-			pass_shell.pack();
-			pass_shell.open();
+			DatabaseReader db = new DatabaseReader();
+			// If they are the first time to use the software
+			if (db.getPassword() == null) {
+				Shell shell = new Shell(getShell(), SWT.NO_TRIM | SWT.ON_TOP);
+				shell.setLocation(getShell().getLocation());
+				AbstractAdd addPasswordVenue = new AbstractAdd(shell, SWT.None,
+						stringPassword, signaturePassword, new Table(
+								getShell(), SWT.None)) {
+
+					@Override
+					public void onSubmit() {
+						// TODO Auto-generated method stub
+						String[] stringList = getStringList();
+						// update database
+						db.insertPassword(stringList[0]);
+						Shell venueManagerShell = new Shell(getDisplay());
+						venueManagerShell.setLocation(200, 50);
+						Image icon = new Image(getDisplay(),
+								"resources/eManager.png");
+						venueManagerShell.setText("Venue Management");
+						venueManagerShell.setImage(icon);
+						Venuespace venuespace = new Venuespace(
+								venueManagerShell, SWT.None);
+						SessionManager.disposeShells(getDisplay(),
+								venueManagerShell);
+						venuespace.pack();
+						venueManagerShell.pack();
+						venueManagerShell.open();
+					}
+
+					@Override
+					public boolean additionalRequirement() {
+						return false;
+					}
+
+					@Override
+					public boolean additionalCheck() {
+						String[] stringList = getStringList();
+						boolean isValid = true;
+						// if the two input password does not match
+						if (!stringList[0].equals(stringList[1])) {
+							isValid = false;
+							MessageBox warningPage = new MessageBox(
+									getDisplay().getActiveShell(), SWT.OK
+											| SWT.ICON_WARNING);
+							warningPage.setText("Warning!");
+							warningPage
+									.setMessage("The confirmed new passowrd for venue manager does not match to new password!");
+							warningPage.open();
+						}
+						return isValid;
+					}
+				};
+				addPasswordVenue.setSize(getShell().getSize());
+				shell.pack();
+				shell.open();
+			}
+			// If they have already used the software at least for once
+			else {
+				PromptPassword pass_page = new PromptPassword(pass_shell,
+						SWT.None, MACRO.MANAGER);
+				pass_page.pack();
+				pass_shell.pack();
+				pass_shell.open();
+			}
 		}
 	}
 
 	class ApplicantListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell shell = new Shell(getShell(), SWT.NONE);
+			Shell shell = new Shell(getDisplay());
 			shell.setLocation(200, 50);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			shell.setText("Venue Manager");
 			shell.setImage(icon);
 			SessionManager.setCurrentMode(MACRO.APPLICANT);
+			SessionManager.disposeShells(getDisplay(), shell);
 			Venuespace eventSpace = new Venuespace(shell, SWT.None);
 			eventSpace.pack();
 			shell.pack();

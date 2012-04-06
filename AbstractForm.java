@@ -4,6 +4,9 @@ import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -37,6 +40,7 @@ public abstract class AbstractForm extends Composite {
 			"Central Library", "CFA", "PGP", "YIH", "SRC", "UCC", "Others" };
 
 	private HashMap<String, Object> map;
+	private HashMap<Object, String> reverseMap;
 
 	public abstract void onLoad();
 
@@ -53,9 +57,11 @@ public abstract class AbstractForm extends Composite {
 		this.signature = signature;
 		this.db = new DatabaseReader();
 		this.map = new HashMap<String, Object>();
+		this.reverseMap = new HashMap<Object, String>();
 		stringList = new String[signature.length]; // initiate the input text
 													// string array
-		
+		Image icon = new Image(getDisplay(), "resources/eManager.png");
+		parent.getShell().setImage(icon);
 		/* Layout */
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginLeft = 50;
@@ -73,19 +79,11 @@ public abstract class AbstractForm extends Composite {
 			Label label = new Label(this, SWT.None);
 			label.setText(labelList[i]);
 			label.setLayoutData(new GridData(140, 20));
-			map.put(labelList[i], createInput(this, signature[i]));
+			Object input = createInput(this, signature[i]);
+			map.put(labelList[i], input);
+			reverseMap.put(input, labelList[i]);
 		}
-		/*
-		 * Buttons
-		 */
 		onLoad();
-	}
-
-	// Another type of constructor.
-	public AbstractForm(Composite parent, int style, String[] labelList,
-			int[] signature, int[] sizeList) {
-		super(parent, style);
-		// use this constructor when size of each box is specified
 	}
 
 	// Set the input format given the key: labelList.
@@ -96,6 +94,7 @@ public abstract class AbstractForm extends Composite {
 				|| signature == MACRO.DOUBLE) {
 			input = new Text(parent, SWT.BORDER);
 			((Text) input).setLayoutData(new GridData(140, 20));
+			((Text) input).addVerifyListener(new TextVerifyListener(50));
 		}
 		// Deal with read only text
 		else if (signature == MACRO.READONLY) {
@@ -125,6 +124,7 @@ public abstract class AbstractForm extends Composite {
 			input = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL
 					| SWT.MULTI);
 			((Text) input).setLayoutData(new GridData(140, 50));
+			((Text) input).addVerifyListener(new TextVerifyListener(255));
 		}
 		// Make a drop down list for names, faculties, etc.
 		// Deal with Faculties
@@ -193,6 +193,7 @@ public abstract class AbstractForm extends Composite {
 		else if (signature == MACRO.PASSWORD) {
 			input = new Text(parent, SWT.BORDER | SWT.PASSWORD);
 			((Text) input).setLayoutData(new GridData(140, 20));
+			((Text) input).addVerifyListener(new TextVerifyListener(50));
 		}
 		return input;
 	}
@@ -253,18 +254,23 @@ public abstract class AbstractForm extends Composite {
 			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT
 					|| signature[i] == MACRO.DOUBLE
 					|| signature[i] == MACRO.TEXTBIG
-					|| signature[i] == MACRO.PASSWORD
 					|| signature[i] == MACRO.READONLY) {
 				stringList[i] = ((Text) get(i)).getText();
-				stringList[i] = stringList[i].replaceAll("\\s+", " "); // remove
-																		// extra
-																		// white
-																		// space
-																		// input
+				// remove extra white space input
+				stringList[i] = stringList[i].replaceAll("\\s+", " ");
+			} 
+			// Deal with password
+			else if (signature[i] == MACRO.PASSWORD) {
+				stringList[i] = ((Text) get(i)).getText();
 			}
 			// Deal with Date
 			else if (signature[i] == MACRO.DATE) {
-				stringList[i] = ((CalendarCombo) get(i)).getDateAsString();
+				Calendar calendar = ((CalendarCombo) get(i)).getDate();
+				int year = calendar.get(Calendar.YEAR);
+				int month = calendar.get(Calendar.MONTH);
+				int day = calendar.get(Calendar.DATE);
+				Date date = new Date(year, month + 1, day);
+				stringList[i] = date.toString();
 			}
 			// Deal with Time
 			else if (signature[i] == MACRO.TIME) {
@@ -396,6 +402,29 @@ public abstract class AbstractForm extends Composite {
 	protected class CancelHandler extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			getParent().dispose();
+		}
+	}
+
+	protected class TextVerifyListener implements VerifyListener {
+		private int length = 0;
+
+		public TextVerifyListener(int length) {
+			super();
+			this.length = length;
+		}
+
+		public void verifyText(VerifyEvent e) {
+			String name = (String) reverseMap.get(e.getSource());
+			Text text = (Text) e.getSource();
+			if (text.getText().length() > length) {
+				MessageBox messageBox = new MessageBox(getShell(), SWT.OK
+						| SWT.ICON_ERROR);
+				messageBox.setText("ERROR");
+				messageBox.setMessage("Input in " + name
+						+ " is more than 50 characters");
+				messageBox.open();
+				e.text = "";
+			}
 		}
 	}
 }

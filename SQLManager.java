@@ -43,14 +43,6 @@ public class SQLManager {
 			+ "Date DATE,"
 			+ "Time TIME,"
 			+ "Done SMALLINT)";
-	// private static String createFileDetailsTable =
-	// "CREATE TABLE FileDetails(" +
-	// "FileID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
-	// +
-	// "EventID INTEGER NOT NULL REFERENCES EventDetails(EventID)," +
-	// "FileName VARCHAR(255)," +
-	// "FileDirectory VARCHAR(255)," +
-	// "FileDescription VARCHAR(255))";
 	private static String createBudgetDetailsTable = "CREATE TABLE BudgetDetails("
 			+ "BudgetID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
 			+ "EventID INTEGER NOT NULL REFERENCES EventDetails(EventID),"
@@ -974,7 +966,20 @@ public class SQLManager {
 		}
 		return memberID;
 	}
-
+	
+	public static void insertPassword(Connection connection, int ID, String password){
+		String insertPassword = 
+				"INSERT INTO PasswordTable (ID, Password) VALUES (?,?)";
+		PreparedStatement prep = null;
+		try {
+			prep = connection.prepareStatement(insertPassword);
+			prep.setInt(1, ID);
+			prep.setString(2, password);
+			prep.execute();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+	}
 	/*-------------------------------------------------------DELETE----------------------------------------------------------------------------------*/
 	public static void deleteEventDetails(Connection connection, int eventID) {
 		String deleteEvent = "DELETE FROM EventDetails " + "WHERE EventID=?";
@@ -1472,19 +1477,20 @@ public class SQLManager {
 		}
 	}
 
-	public static void updatePassword(Connection connection, int ID) {
-		String updatePassword = "UPDATE PasswordTable SET Password=? "
-				+ "WHERE ID=?";
+	public static void updatePassword(Connection connection, int ID, String password) {
+		String updatePassword = 
+				"UPDATE PasswordTable SET Password=? "+
+				"WHERE ID=?";
 		PreparedStatement prep = null;
 		try {
 			prep = connection.prepareStatement(updatePassword);
-			prep.setInt(1, ID);
+			prep.setString(1, password);
+			prep.setInt(2, ID);
 			prep.execute();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}
 	}
-
 	/* Get Object By ID */
 	public static ResultSet getVenueByID(Connection connection, int venueID) {
 		String query = "SELECT * FROM VenueDetails " + "WHERE VenueID=?";
@@ -1499,7 +1505,7 @@ public class SQLManager {
 		}
 		return rs;
 	}
-
+	
 	public static ResultSet getVenueApplicantByID(Connection connection,
 			int memberID) {
 		String query = "SELECT * FROM ApplicantDetails "

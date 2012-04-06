@@ -5,9 +5,13 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 
 public class eManager {
+	private String[] stringPassword = { "New Password", "Confirm New Password" };
+	private int[] signaturePassword = { MACRO.PASSWORD, MACRO.PASSWORD };
 	Shell rootShell;
 	Shell welcome_shell;
 	WelcomePage welcome_page;
@@ -40,7 +44,7 @@ public class eManager {
 		Menu modeItem = new Menu(rootShell, SWT.DROP_DOWN);
 		mode.setMenu(modeItem);
 		MenuItem eventManager = new MenuItem(modeItem, SWT.PUSH);
-		eventManager.setText("Event Manager");
+		eventManager.setText("Select Events");
 		MenuItem manager = new MenuItem(modeItem, SWT.PUSH);
 		manager.setText("Venue Manager Mode");
 		MenuItem applicant = new MenuItem(modeItem, SWT.PUSH);
@@ -57,7 +61,7 @@ public class eManager {
 		// shell
 		Image image = new Image(display, "resources/bg.png");
 		rootShell.setMaximized(true);
-		rootShell.setText("eManagerV1.0");
+		rootShell.setText("eManagerV0.2");
 		rootShell.setBackgroundImage(image);
 		rootShell.open();
 
@@ -66,7 +70,7 @@ public class eManager {
 		quit.addSelectionListener(new MenuQuitListener());
 
 		// menu->mode
-		eventManager.addSelectionListener(new eventManagerListener());
+		eventManager.addSelectionListener(new EventManagerListener());
 		manager.addSelectionListener(new MenuManagerListener());
 		applicant.addSelectionListener(new MenuApplicantListener());
 
@@ -92,13 +96,15 @@ public class eManager {
 	// opens Welcome page
 	class MenuOpenListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
-			welcome_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+			welcome_shell = new Shell(display, SWT.APPLICATION_MODAL
+					| SWT.DIALOG_TRIM);
 			welcome_shell.setText("Welcome to eManagerV0.2");
 			welcome_shell.setLocation(400, 200);
 			welcome_page = new WelcomePage(welcome_shell, SWT.NONE);
 			welcome_page.setSize(400, 350);
 			welcome_shell.pack();
 			welcome_shell.open();
+			SessionManager.disposeShells(display, welcome_shell);
 		}
 	}
 
@@ -112,7 +118,8 @@ public class eManager {
 	// opens Version page
 	class MenuVersionListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
-			Shell version_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+			Shell version_shell = new Shell(display, SWT.APPLICATION_MODAL
+					| SWT.DIALOG_TRIM);
 			version_shell.setText("File Version");
 			version_shell.setLocation(400, 250);
 			FileVersion version_page = new FileVersion(version_shell, SWT.None);
@@ -123,29 +130,92 @@ public class eManager {
 		}
 	}
 
-	class eventManagerListener extends SelectionAdapter {
+	class EventManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if (SessionManager.getCurrentIntMode() != MACRO.MANAGER) {
-				Shell mode_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
-				mode_shell.setText("Event Manager");
-				mode_shell.setLocation(400, 200);
-				SelectEventPage newEventPage = new SelectEventPage(mode_shell,
-						SWT.None);
-				newEventPage.setSize(500, 400);
-				mode_shell.pack();
-				mode_shell.open();
-				SessionManager.disposeShells(display, mode_shell);
-			}
+			Shell mode_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+			mode_shell.setText("Event Manager");
+			mode_shell.setLocation(400, 200);
+			SessionManager.setCurrentMode(MACRO.ORGANIZER);
+			SelectEventPage newEventPage = new SelectEventPage(mode_shell,
+					SWT.None);
+			newEventPage.setSize(500, 400);
+			System.out.println("Reach here1!");
+			mode_shell.pack();
+			mode_shell.open();
+			System.out.println("Reach here2!");
+			SessionManager.disposeShells(display, mode_shell);
 		}
 	}
 
 	class MenuManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if (SessionManager.getCurrentIntMode() != MACRO.MANAGER) {
+
+			SessionManager.setCurrentMode(MACRO.MANAGER);
+			DatabaseReader db = new DatabaseReader();
+			System.out.println(db.getPassword());
+			// If it is the first time to use the software
+			if (db.getPassword() == null) {
+				Shell shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+				shell.setLocation(200, 100);
+				AbstractAdd addPasswordVenue = new AbstractAdd(shell, SWT.None,
+						stringPassword, signaturePassword, new Table(shell,
+								SWT.None)) {
+
+					@Override
+					public void onSubmit() {
+						String[] stringList = getStringList();
+						// update database
+						db.insertPassword(stringList[0]);
+						// Create the venue shell
+						Shell venueManagerShell = new Shell(getDisplay());
+						venueManagerShell.setLocation(200, 50);
+						Image icon = new Image(getDisplay(),
+								"resources/eManager.png");
+						venueManagerShell.setText("Venue Management");
+						venueManagerShell.setImage(icon);
+						Venuespace venuespace = new Venuespace(
+								venueManagerShell, SWT.None);
+						SessionManager.disposeShells(getDisplay(),
+								venueManagerShell);
+						venuespace.pack();
+						venueManagerShell.pack();
+						venueManagerShell.open();
+					}
+
+					@Override
+					public boolean additionalRequirement() {
+						return false;
+					}
+
+					@Override
+					public boolean additionalCheck() {
+						String[] stringList = getStringList();
+						boolean isValid = true;
+						// if the two input password does not match
+						if (!stringList[0].equals(stringList[1])) {
+							isValid = false;
+							MessageBox warningPage = new MessageBox(
+									getDisplay().getActiveShell(), SWT.OK
+											| SWT.ICON_WARNING);
+							warningPage.setText("Warning!");
+							warningPage
+									.setMessage("The confirmed new passowrd for venue manager does not match to new password!");
+							warningPage.open();
+						}
+						return isValid;
+					}
+				};
+				SessionManager.disposeShells(display, shell);
+				addPasswordVenue.setSize(450, 250);
+				shell.pack();
+				shell.open();
+			}
+			// If the password is not null. Meaning they have used the software
+			// at least once.
+			else {
 				Shell mode_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
 				mode_shell.setText("Venue Manager");
 				mode_shell.setLocation(400, 200);
-				SessionManager.setCurrentMode(MACRO.MANAGER);
 				PromptPassword mode_page = new PromptPassword(mode_shell,
 						SWT.None, MACRO.MANAGER);
 				mode_page.pack();
@@ -158,17 +228,15 @@ public class eManager {
 
 	class MenuApplicantListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			if (SessionManager.getCurrentIntMode() != MACRO.APPLICANT) {
-				Shell mode_shell = new Shell(display);
-				mode_shell.setText("Venue Applicant");
-				mode_shell.setLocation(200, 50);
-				SessionManager.setCurrentMode(MACRO.APPLICANT);
-				Venuespace venuspace = new Venuespace(mode_shell, SWT.None);
-				venuspace.pack();
-				mode_shell.pack();
-				mode_shell.open();
-				SessionManager.disposeShells(display, mode_shell);
-			}
+			Shell mode_shell = new Shell(display);
+			mode_shell.setText("Venue Applicant");
+			mode_shell.setLocation(200, 50);
+			SessionManager.setCurrentMode(MACRO.APPLICANT);
+			Venuespace venuspace = new Venuespace(mode_shell, SWT.None);
+			venuspace.pack();
+			mode_shell.pack();
+			mode_shell.open();
+			SessionManager.disposeShells(display, mode_shell);
 		}
 	}
 
