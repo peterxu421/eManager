@@ -74,6 +74,12 @@ public class PreEvent_Publicity extends Composite{
 		importPic.setText("Import");
 		importPic.addSelectionListener(new ImportAdapter());
 		
+		Button fromURL = new Button(right, SWT.PUSH);
+		GridData fromURLData = new GridData(130, 50);
+		fromURL.setText("From URL");
+		fromURL.setLayoutData(fromURLData);
+		fromURL.addSelectionListener(new FromURLAdatper());
+		
 		Button edit = new Button(right, SWT.PUSH);
 		GridData editData = new GridData(130,50);
 		edit.setText("Edit");
@@ -97,8 +103,12 @@ public class PreEvent_Publicity extends Composite{
 		if(image!=null){
 			GalleryItem item = new GalleryItem(group, SWT.None);
 			item.setImage(image);
-			item.setText(filename);
+			//item.setText(filename);
 		}
+	}
+	public void addImage(Image image){
+		GalleryItem item = new GalleryItem(group, SWT.None);
+		item.setImage(image);
 	}
 	private void fillImages(){
 		File imageDirectory = new File("Pictures");
@@ -110,7 +120,6 @@ public class PreEvent_Publicity extends Composite{
 			if(image!=null){
 				GalleryItem item = new GalleryItem(group, SWT.None);
 				item.setImage(image);
-				item.setText(images[i]);
 			}
 		}
 	}
@@ -125,10 +134,8 @@ public class PreEvent_Publicity extends Composite{
 			
 			String[] filenames = browser.getFileNames();
 			String path = browser.getFilterPath();
-			String targetPath = "Pictures";
 			
 			for(int i=0; i<filenames.length; i++){
-				String target = targetPath + File.separator + filenames[i];
 				addImage(path, filenames[i]);
 
 			}
@@ -161,7 +168,13 @@ public class PreEvent_Publicity extends Composite{
 			}
 		}
 	}
-	
+	private class FromURLAdatper extends SelectionAdapter{
+		public void widgetSelected(SelectionEvent e){
+			Shell shell = new GetImageFromURL(getShell(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM, group);
+			shell.setLocation(400, 200);
+			shell.open();
+		}
+	}
 	public static void main(String[] args){
 		Display display = new Display();
 		Shell shell = new Shell(display);
