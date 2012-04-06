@@ -18,7 +18,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
 
-
 public class GetImageFromURL extends Shell {
 	private Text url;
 
@@ -59,7 +58,7 @@ public class GetImageFromURL extends Shell {
 		Button btnGetImage = new Button(this, SWT.NONE);
 		btnGetImage.setBounds(21, 63, 94, 28);
 		btnGetImage.setText("Get Image");
-		
+
 		Button btnCancel = new Button(this, SWT.NONE);
 		btnCancel.setBounds(150, 63, 94, 28);
 		btnCancel.setText("Cancel");
@@ -84,6 +83,7 @@ public class GetImageFromURL extends Shell {
 	}
 
 	class getImage extends SelectionAdapter {
+		@SuppressWarnings("deprecation")
 		public void widgetSelected(SelectionEvent e) {
 
 			String link = "";
@@ -93,7 +93,7 @@ public class GetImageFromURL extends Shell {
 			} else {
 				link = url.getText().trim();
 			}
-			if(link.equals("") || !link.contains("www.") || !link.contains("/")) {
+			if(link.equals("") || !link.contains("/")) {
 				MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
 				warningPage.setText("Warning!");
 				warningPage.setMessage("Please input a valid URL.");
@@ -119,10 +119,10 @@ public class GetImageFromURL extends Shell {
 
 				try {
 					socket = new Socket(host, port);
-					socket.setSoTimeout(10000);
+					socket.setSoTimeout(100000);
 
 					PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-					fos = new FileOutputStream(path + fileName);
+					fos = new FileOutputStream(path+fileName, true);
 
 					out.println("GET " + filePath + " HTTP/1.1" + "\r\n" + "Host: " + host + "\r\n\r\n");
 					out.flush();
@@ -132,25 +132,39 @@ public class GetImageFromURL extends Shell {
 					byte[] byteArray;
 					String lengthOfArray = "";
 					String checker = "";
+					int arrayLength = 0;
 					//get the length of the whole thing
 					while((checker = dis.readLine()) != null) {
+						if(checker.contains("Not Found")) {
+							MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
+							warningPage.setText("Warning!");
+							warningPage.setMessage("File not found, please enter URL again.");
+							warningPage.open(); 
+							break;
+						}
 						if(checker.contains("Content-Length")) {
 							lengthOfArray = checker.substring(checker.indexOf(" ") + 1, checker.length());
-
-							byteArray = new byte[Integer.parseInt(lengthOfArray)];
+							System.out.println(lengthOfArray);
+							arrayLength = Integer.parseInt(lengthOfArray);
 
 							//skip two lines beacuse of the Content-type header
 							checker = dis.readLine();
-							checker = dis.readLine();
-
+						}
+						if(checker.contains("Content-Type: ")) {
+							dis.readLine();
+							byteArray = new byte[arrayLength];
 							//reads in everything
 							dis.readFully(byteArray);
-
 							//write the byteArray into the file
 							fos.write(byteArray);
 							fos.flush();
 						}
+						System.out.println("fsdfsdfsdfsdf " + checker);
 					}
+					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
+					warningPage.setText("Thanks for waiting...");
+					warningPage.setMessage("Image downloaded!");
+					warningPage.open(); 
 					// Close the I/O streams.
 					fos.close();
 				} catch (UnknownHostException e1) {
@@ -166,7 +180,7 @@ public class GetImageFromURL extends Shell {
 				} catch (SocketTimeoutException e1) {
 					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
 					warningPage.setText("Warning!");
-					warningPage.setMessage("Time taken to download image too long or the image does not exist, please input another URL.");
+					warningPage.setMessage("File is either too big or the connection is too slow, please input another image link.");
 					warningPage.open(); 
 				} catch (IOException e1) {
 					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
@@ -177,8 +191,6 @@ public class GetImageFromURL extends Shell {
 			}
 		}
 	}
-
-
 
 	@Override
 	protected void checkSubclass() {
