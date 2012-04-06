@@ -15,6 +15,7 @@ class Venuespace extends Composite{
 	Composite left;
 	Composite right;
 	Composite header;
+	boolean[][] boolMode=SessionManager.getCurrentBoolMode();
 	
 	private String[] optionMenu = new String[]{
 		"Venue Management",
@@ -33,7 +34,7 @@ class Venuespace extends Composite{
 	};
 
 	//Constructor
-	public Venuespace(Composite parent, int style, boolean[][] boolMode){
+	public Venuespace(Composite parent, int style){
 		super(parent, style);
 		//setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		GridLayout gridLayout = new GridLayout();
@@ -89,7 +90,7 @@ class Venuespace extends Composite{
 	    eventName.setFont(SWTResourceManager.getFont("Courier New", 11, SWT.NORMAL));
 	  //  eventName.setBounds(0, 10, 1000, 25);
 	   // eventName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-	    eventName.setText("NUS Office of Studnet Affairs\n© Copyright National University of Singapore.\nAll Rights Reserved.");
+	    eventName.setText("NUS Office of Studnet Affairs\n Copyright National University of Singapore.\nAll Rights Reserved.");
 	    
 	    Label eventDescription = new Label(header, SWT.WRAP);
 	    eventDescription.setFont(SWTResourceManager.getFont("Courier New", 11, SWT.NORMAL));

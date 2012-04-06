@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -11,6 +12,7 @@ public class SessionManager {
 	private static int intMode = 0;
 	public static boolean[][] boolMode;
 	public static Shell[] shellList;
+	private static HashMap<String, Shell> shellMap = new HashMap<String, Shell>();
 
 	// Dipose any shells except root shell
 	public static void disposeShells(Display display) {
@@ -25,6 +27,7 @@ public class SessionManager {
 	public static void disposeShells(Display display, Shell shell) {
 		shellList = display.getShells();
 		for (int i = 1; i < shellList.length; i++) {
+			System.out.println(shellList[i]);
 			if (shellList[i].equals(shell)) {
 				// do nothing
 			} else
@@ -100,5 +103,14 @@ public class SessionManager {
 	// Mode
 	public static boolean[][] getCurrentBoolMode() {
 		return boolMode;
+	}
+
+	public static void addShell(Shell shell) {
+		shellMap.put(shell.getText(), shell);
+	}
+
+	public static Shell getShell(String key) {
+		Shell shell = shellMap.get(key);
+		return shell;
 	}
 }

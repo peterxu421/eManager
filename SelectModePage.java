@@ -91,14 +91,13 @@ public class SelectModePage extends Composite {
 
 	class ParticipantListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell shell = new Shell(getShell());
+			Shell shell = new Shell(getDisplay());
 			shell.setLocation(200, 100);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			shell.setText("eManager");
 			shell.setImage(icon);
 			SessionManager.setCurrentMode(MACRO.PARTICIPANT);
-			Eventspace eventSpace = new Eventspace(shell, SWT.None,
-					MACRO.PARTICIPANT_MODE);
+			Eventspace eventSpace = new Eventspace(shell, SWT.None);
 			System.out.println(getDisplay().getShells().length);
 			SessionManager.disposeShells(getDisplay(), shell);
 			eventSpace.pack();

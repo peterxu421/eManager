@@ -217,7 +217,6 @@ public class EventPlanning_PreEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddItemPage = new Shell(getDisplay(),
 					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
-			taskAssignAddItemPage.setText("Task Assign Add Item");
 			AbstractAdd taskAssignAddItem = new AbstractAdd(
 					taskAssignAddItemPage, SWT.None, stringArrayItem,
 					signatureArrayItem, tableTaskAssign) {
@@ -247,7 +246,6 @@ public class EventPlanning_PreEvent extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			Shell taskAssignAddMemberPage = new Shell(getDisplay(),
 					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
-			taskAssignAddMemberPage.setText("Task Assign Add Member");
 			AbstractAdd taskAssignAddMember = new AbstractAdd(
 					taskAssignAddMemberPage, SWT.None, stringArrayMember,
 					signatureArrayMember, tableCommittee) {

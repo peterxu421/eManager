@@ -18,7 +18,7 @@ public class PromptPassword extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Text textPassWord;
-	private String password = "123";
+	private String password = "";
 	private int changeToMode;
 	private Composite parent;
 
@@ -81,12 +81,11 @@ public class PromptPassword extends Composite {
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
 		shell.setText("eManager");
 		shell.setImage(icon);
-		Eventspace eventspace = new Eventspace(shell, SWT.None, boolMode);
+		Eventspace eventspace = new Eventspace(shell, SWT.None);
 		eventspace.pack();
 		shell.pack();
 		shell.open();
 		SessionManager.disposeShells(getDisplay(), shell);
-		//getParent().getShell().getParent().dispose();
 	}
 
 	public void CreateVenuePage(boolean[][] boolMode) {
@@ -95,16 +94,16 @@ public class PromptPassword extends Composite {
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
 		shell.setText("eManager");
 		shell.setImage(icon);
-		Venuespace venuespace = new Venuespace(shell, SWT.None, boolMode);
+		Venuespace venuespace = new Venuespace(shell, SWT.None);
 		venuespace.pack();
 		shell.pack();
 		shell.open();
+		SessionManager.disposeShells(getDisplay(), shell);
 		// Check whether parent.parent is null or not.
-		if (getParent().getParent() != null) {
-			getParent().getParent().dispose();
-		}
-		else
-			getParent().dispose();
+//		if (getParent().getParent() != null) {
+//			getParent().getParent().dispose();
+//		} else
+//			getParent().dispose();
 	}
 
 	private class CancelListener extends SelectionAdapter {

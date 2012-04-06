@@ -12,12 +12,17 @@ import org.eclipse.swt.widgets.Text;
 // Abstract Edit page inherits from AbstractForm
 public abstract class AbstractEdit extends AbstractForm {
 	Button[] buttonList;
+
 	public AbstractEdit(Composite parent, int style, String[] stringList,
 			int[] signature) {
 		// Inherit AbstractForm constructor.
 		super(parent, style, stringList, signature);
 		// TODO Auto-generated constructor stub
 		// Set buttons
+		parent.getShell().setText("Edit");
+		//Set shell's location
+		parent.getShell().setLocation(400, 200);
+
 		Button btnAdd = new Button(this, SWT.None);
 		btnAdd.addSelectionListener(new SubmitHandler());
 		btnAdd.setText("Edit");
@@ -28,12 +33,14 @@ public abstract class AbstractEdit extends AbstractForm {
 		btnCancel.setText("Cancel");
 		btnCancel.setLayoutData(new GridData(80, 40));
 	}
+
 	public AbstractEdit(Composite parent, int style, String[] stringList,
-			int[] signature,String[] stringButton){
+			int[] signature, String[] stringButton) {
 		super(parent, style, stringList, signature);
 	}
-	//Do nothing about the additionalCheck()
-	public boolean additionalCheck(){
+
+	// Do nothing about the additionalCheck()
+	public boolean additionalCheck() {
 		return true;
 	}
 
@@ -67,7 +74,10 @@ public abstract class AbstractEdit extends AbstractForm {
 			}
 		}
 		// Deal with Faculty, venueLocation (Combo) etc.
-		else if (signature == MACRO.FACULTY||signature==MACRO.ORGANIZER||signature==MACRO.FACILITATOR || signature==MACRO.VENUELOCATION || signature==MACRO.VENUETYPE) {
+		else if (signature == MACRO.FACULTY || signature == MACRO.ORGANIZER
+				|| signature == MACRO.FACILITATOR
+				|| signature == MACRO.VENUELOCATION
+				|| signature == MACRO.VENUETYPE) {
 			((Combo) get(index)).setText(string);
 		}
 	}

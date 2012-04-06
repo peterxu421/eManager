@@ -55,7 +55,7 @@ public abstract class AbstractForm extends Composite {
 		this.map = new HashMap<String, Object>();
 		stringList = new String[signature.length]; // initiate the input text
 													// string array
-
+		
 		/* Layout */
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginLeft = 50;
@@ -297,8 +297,7 @@ public abstract class AbstractForm extends Composite {
 
 	// Error checking.
 	// If there is no error, then return -1;
-	// If there exist error, then return the index or -2 to indicate duplicate
-	// input
+	// If there exist error, then return the index of input;
 	protected int check() {
 		boolean isValid = true;
 		int index = -1;
