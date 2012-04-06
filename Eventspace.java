@@ -9,10 +9,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.forms.widgets.FormToolkit;
 
 class Eventspace extends Composite {
-	private final FormToolkit toolkit = new FormToolkit(getDisplay().getCurrent());
 	Composite header;
 	Composite optionBar;
 	Composite body;
@@ -43,10 +41,11 @@ class Eventspace extends Composite {
 			{ "Pre-Event", "Actual-Event", "Meeting", "Budget", "Feedback" },
 			{ "Manpower Allocation" }, { "Itinerary", "Packing List" },
 			{ "Event Registration" } };
-	
-	public Button[] getButtons(){
+
+	public Button[] getButtons() {
 		return (Button[]) left.getChildren();
 	}
+
 	// Constructor
 	public Eventspace(Composite parent, int style) {
 		super(parent, style);
@@ -108,7 +107,7 @@ class Eventspace extends Composite {
 		right = new Composite(body, SWT.None);
 		left.setLayoutData(leftData);
 		right.setLayoutData(rightData);
-		
+
 		// header->
 		FillLayout headerLayout = new FillLayout();
 		headerLayout.marginHeight = 20;
@@ -135,7 +134,7 @@ class Eventspace extends Composite {
 			buttons[i].setEnabled(boolMode[1][i]);
 		}
 
-//		 body -> right panel
+		// body -> right panel
 		int mode = SessionManager.getCurrentIntMode();
 		if (mode == MACRO.ORGANIZER)
 			options[0].notifyListeners(SWT.Selection, null);

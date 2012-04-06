@@ -85,6 +85,7 @@ public abstract class AbstractForm extends Composite {
 		}
 		onLoad();
 	}
+
 	// Set the input format given the key: labelList.
 	private Object createInput(Composite parent, int signature) {
 		Object input = null;
@@ -253,14 +254,14 @@ public abstract class AbstractForm extends Composite {
 			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT
 					|| signature[i] == MACRO.DOUBLE
 					|| signature[i] == MACRO.TEXTBIG
-					|| signature[i] == MACRO.PASSWORD
 					|| signature[i] == MACRO.READONLY) {
 				stringList[i] = ((Text) get(i)).getText();
-				stringList[i] = stringList[i].replaceAll("\\s+", " "); // remove
-																		// extra
-																		// white
-																		// space
-																		// input
+				// remove extra white space input
+				stringList[i] = stringList[i].replaceAll("\\s+", " ");
+			} 
+			// Deal with password
+			else if (signature[i] == MACRO.PASSWORD) {
+				stringList[i] = ((Text) get(i)).getText();
 			}
 			// Deal with Date
 			else if (signature[i] == MACRO.DATE) {
@@ -268,7 +269,7 @@ public abstract class AbstractForm extends Composite {
 				int year = calendar.get(Calendar.YEAR);
 				int month = calendar.get(Calendar.MONTH);
 				int day = calendar.get(Calendar.DATE);
-				Date date = new Date(year, month+1, day);
+				Date date = new Date(year, month + 1, day);
 				stringList[i] = date.toString();
 			}
 			// Deal with Time
@@ -403,19 +404,24 @@ public abstract class AbstractForm extends Composite {
 			getParent().dispose();
 		}
 	}
-	protected class TextVerifyListener implements VerifyListener{
+
+	protected class TextVerifyListener implements VerifyListener {
 		private int length = 0;
-		public TextVerifyListener(int length){
+
+		public TextVerifyListener(int length) {
 			super();
 			this.length = length;
 		}
+
 		public void verifyText(VerifyEvent e) {
 			String name = (String) reverseMap.get(e.getSource());
 			Text text = (Text) e.getSource();
-			if(text.getText().length() > length){
-				MessageBox messageBox = new MessageBox(getShell(), SWT.OK|SWT.ICON_ERROR);
+			if (text.getText().length() > length) {
+				MessageBox messageBox = new MessageBox(getShell(), SWT.OK
+						| SWT.ICON_ERROR);
 				messageBox.setText("ERROR");
-				messageBox.setMessage("Input in " + name + " is more than 50 characters");
+				messageBox.setMessage("Input in " + name
+						+ " is more than 50 characters");
 				messageBox.open();
 				e.text = "";
 			}
