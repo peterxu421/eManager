@@ -52,7 +52,7 @@ class Venuespace extends Composite {
 		// optionBar->
 		Composite optionBar = new Composite(this, SWT.None);
 		GridLayout optionBarLayout = new GridLayout();
-		optionBarLayout.marginLeft = 150;
+		optionBarLayout.marginLeft = 165;
 		optionBarLayout.numColumns = 5;
 		optionBar.setLayout(optionBarLayout);
 		optionBar.setLayoutData(new GridData(1000, 50));
@@ -72,8 +72,8 @@ class Venuespace extends Composite {
 		// setting button
 		Button btnSetting = new Button(optionBar, SWT.PUSH);
 		btnSetting.setText("Setting");
-		GridData settingData = new GridData(width - 50, height);
-		settingData.horizontalIndent = 400;
+		GridData settingData = new GridData(width-50, height);
+		settingData.horizontalIndent = 190;
 		btnSetting.setLayoutData(settingData);
 		btnSetting.addSelectionListener(new SettingAdapter());
 		btnSetting.setEnabled(boolMode[3][0]);

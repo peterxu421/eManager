@@ -23,18 +23,10 @@ public class VenueBooking_CheckMyApplication extends Composite {
 	private DatabaseReader db = new DatabaseReader();
 	private Text matricNoInput;
 
-	private ArrayList<VenueBookingApplication> bookingApplicationList = new ArrayList<VenueBookingApplication>(); // all
-																													// booking
-																													// applications
-																													// from
-																													// a
-																													// person,
-																													// regardless
-																													// of
-																													// his
-																													// organization
-	// such a person is considered as different applicants if he booked for
-	// different organizations
+	private ArrayList<VenueBookingApplication> bookingApplicationList = new ArrayList<VenueBookingApplication>(); 
+	                              // all booking applications from a person, regardless of his organization
+	                              // such a person is considered as different applicants if he booked for different organizations
+	
 	private Table applicationTable;
 
 	/**
@@ -59,17 +51,14 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		toolkit.paintBordersFor(composite);
 
 		Label lblEnterYourMatriculation = new Label(composite, SWT.NONE);
-		lblEnterYourMatriculation.setFont(SWTResourceManager.getFont(
-				"Segoe UI", 12, SWT.NORMAL));
-		lblEnterYourMatriculation.setBackground(SWTResourceManager
-				.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
+		lblEnterYourMatriculation.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
+		lblEnterYourMatriculation.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_LIGHT_SHADOW));
 		lblEnterYourMatriculation.setBounds(0, 0, 200, 30);
 		toolkit.adapt(lblEnterYourMatriculation, true, true);
 		lblEnterYourMatriculation.setText("Enter your Matriculation No:");
 
 		matricNoInput = new Text(composite, SWT.BORDER);
-		matricNoInput.setFont(SWTResourceManager.getFont("Segoe UI", 12,
-				SWT.NORMAL));
+		matricNoInput.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		matricNoInput.setBounds(200, 0, 200, 30);
 		toolkit.adapt(matricNoInput, true, true);
 
@@ -78,8 +67,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		toolkit.adapt(btnCheck, true, true);
 		btnCheck.setText("Check");
 
-		applicationTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION
-				| SWT.VIRTUAL);
+		applicationTable = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
 		applicationTable.setBounds(0, 40, 800, 310);
 		toolkit.adapt(applicationTable);
 		toolkit.paintBordersFor(applicationTable);
@@ -90,8 +78,7 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		tblclmnName.setWidth(100);
 		tblclmnName.setText("Name");
 
-		TableColumn tblclmnOrganization = new TableColumn(applicationTable,
-				SWT.CENTER);
+		TableColumn tblclmnOrganization = new TableColumn(applicationTable,SWT.CENTER);
 		tblclmnOrganization.setWidth(100);
 		tblclmnOrganization.setText("Organization");
 
@@ -99,13 +86,11 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		tblclmnVenue.setWidth(200);
 		tblclmnVenue.setText("Venue");
 
-		TableColumn tblclmnDateAndTime = new TableColumn(applicationTable,
-				SWT.CENTER);
+		TableColumn tblclmnDateAndTime = new TableColumn(applicationTable,SWT.CENTER);
 		tblclmnDateAndTime.setWidth(300);
 		tblclmnDateAndTime.setText("Date and Time");
 
-		TableColumn tblclmnStatus = new TableColumn(applicationTable,
-				SWT.CENTER);
+		TableColumn tblclmnStatus = new TableColumn(applicationTable,SWT.CENTER);
 		tblclmnStatus.setWidth(100);
 		tblclmnStatus.setText("Status");
 		btnCheck.addSelectionListener(new check());
@@ -116,23 +101,29 @@ public class VenueBooking_CheckMyApplication extends Composite {
 		btnWithdrawAll.setText("Withdraw all");
 		btnWithdrawAll.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				MessageBox warningPage = new MessageBox(getDisplay()
-						.getActiveShell(), SWT.YES | SWT.NO | SWT.ICON_WARNING);
-				warningPage.setText("Warning!");
-				warningPage
-						.setMessage("Are you sure you want to withdraw from all your applications?");
-				int choice = warningPage.open(); // indicates the user's choice
-				switch (choice) {
-				case SWT.YES:
-					/* update the database */
-					for (int i = 0; i < bookingApplicationList.size(); i++) {
-						db.deleteVenueBookingInfo(bookingApplicationList.get(i));
+				if(applicationTable.getItemCount() == 0){
+					MessageBox warningPage = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+					warningPage.setText("Warning!");
+					warningPage.setMessage("No booking applications found!");
+					warningPage.open();
+				}
+				else{
+					MessageBox warningPage = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.NO | SWT.ICON_WARNING);
+					warningPage.setText("Warning!");
+					warningPage.setMessage("Are you sure you want to withdraw from all your applications?");
+					int choice = warningPage.open(); // indicates the user's choice
+					switch (choice) {
+					case SWT.YES:
+						/* update the database */
+						for (int i = 0; i < bookingApplicationList.size(); i++) {
+							db.deleteVenueBookingInfo(bookingApplicationList.get(i));
+						}
+						/* update the table */
+						applicationTable.removeAll();
+						break;
+					case SWT.NO:
+						break;
 					}
-					/* update the table */
-					applicationTable.removeAll();
-					break;
-				case SWT.NO:
-					break;
 				}
 			}
 		});
@@ -145,19 +136,16 @@ public class VenueBooking_CheckMyApplication extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				int index = applicationTable.getSelectionIndex();
 				if (index >= 0 && index < applicationTable.getItemCount()) {
-					MessageBox warningPage = new MessageBox(getDisplay()
-							.getActiveShell(), SWT.YES | SWT.NO
-							| SWT.ICON_WARNING);
+					MessageBox warningPage = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.NO | SWT.ICON_WARNING);
 					warningPage.setText("Warning!");
-					warningPage
-							.setMessage("Are you sure you want to withdraw this application?");
+					warningPage.setMessage("Are you sure you want to withdraw this application?");
 					int choice = warningPage.open(); // indicates the user's
 														// choice
 					switch (choice) {
 					case SWT.YES:
 						/* update the database */
-						db.deleteVenueBookingInfo(bookingApplicationList
-								.get(index));
+						db.deleteVenueBookingInfo(bookingApplicationList.get(index));
+						bookingApplicationList.remove(index);
 						/* update the application table */
 						applicationTable.remove(index);
 						break;
@@ -165,11 +153,9 @@ public class VenueBooking_CheckMyApplication extends Composite {
 						break;
 					}
 				} else {
-					MessageBox noSelectionWarning = new MessageBox(getDisplay()
-							.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+					MessageBox noSelectionWarning = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
 					noSelectionWarning.setText("Warning!");
-					noSelectionWarning
-							.setMessage("Please select an application entry to withdraw!");
+					noSelectionWarning.setMessage("Please select an application entry to withdraw!");
 					noSelectionWarning.open();
 				}
 			}
@@ -190,15 +176,12 @@ public class VenueBooking_CheckMyApplication extends Composite {
 															// applicants in
 															// such case
 			if (matricNo.isEmpty()) {
-				MessageBox noInputWarning = new MessageBox(getDisplay()
-						.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+				MessageBox noInputWarning = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
 				noInputWarning.setText("Warning!");
-				noInputWarning
-						.setMessage("Please enter your matriculation number!");
+				noInputWarning.setMessage("Please enter your matriculation number!");
 				noInputWarning.open();
 			} else if (venueApplicantList.isEmpty()) {
-				MessageBox noMatchWarning = new MessageBox(getDisplay()
-						.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+				MessageBox noMatchWarning = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
 				noMatchWarning.setText("Warning!");
 				noMatchWarning.setMessage("No booking applications found!");
 				noMatchWarning.open();
@@ -214,23 +197,16 @@ public class VenueBooking_CheckMyApplication extends Composite {
 			ArrayList<VenueApplicant> venueApplicantList) {
 		bookingApplicationList.clear(); // clear the list for check
 		for (int i = 0; i < venueApplicantList.size(); i++) {
-			System.out.println(venueApplicantList.size() + "");
-			System.out.println(venueApplicantList.get(i).getName() + "" + "   "
-					+ i);
-			bookingApplicationList.add(db
-					.getVenueBookingInfo(venueApplicantList.get(i)));
+			bookingApplicationList.add(db.getVenueBookingInfo(venueApplicantList.get(i)));
 		}
 		for (int j = 0; j < bookingApplicationList.size(); j++) {
-			String name = bookingApplicationList.get(j).getApplicant()
-					.getName();
-			String organization = bookingApplicationList.get(j).getApplicant()
-					.getOrganization();
+			String name = bookingApplicationList.get(j).getApplicant().getName();
+			String organization = bookingApplicationList.get(j).getApplicant().getOrganization();
 			String venue = bookingApplicationList.get(j).getVenue().getName()
 					+ "("
 					+ bookingApplicationList.get(j).getVenue().getLocation()
 					+ ")";
-			BookedDateTime dateTime = bookingApplicationList.get(j)
-					.getDateTime();
+			BookedDateTime dateTime = bookingApplicationList.get(j).getDateTime();
 			int statusIndex = bookingApplicationList.get(j).getStatus();
 			String status = "";
 			if (statusIndex == MACRO.APPROVED) {
@@ -239,6 +215,8 @@ public class VenueBooking_CheckMyApplication extends Composite {
 				status = "Pending";
 			} else if (statusIndex == MACRO.REJECTED) {
 				status = "Rejected";
+			} else if (statusIndex == MACRO.PERMANENTLYREJECTED){
+				status = "Permanently Rejected";
 			}
 
 			TableItem item = new TableItem(applicationTable, SWT.NULL);

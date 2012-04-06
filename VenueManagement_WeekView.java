@@ -261,15 +261,17 @@ public class VenueManagement_WeekView extends Composite {
 	
 	public class viewAllApplications extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
-			Shell viewBookingInfoShell = new Shell(getDisplay(),SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
+			Shell viewAllApplicationsShell = new Shell(getDisplay(),SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
-			viewBookingInfoShell.setText("eManager");
-			viewBookingInfoShell.setImage(icon);
+			viewAllApplicationsShell.setText("eManager - Application Log");
+			viewAllApplicationsShell.setImage(icon);
 			
-			VenueManagement_ApplicationLog viewBookingInfoPage = new VenueManagement_ApplicationLog(viewBookingInfoShell, SWT.None, selectedVenue, weekViewTable);
-			viewBookingInfoPage.pack();
-			viewBookingInfoShell.pack();
-			viewBookingInfoShell.open();
+			VenueManagement_ApplicationLog viewAllApplicationsPage = new VenueManagement_ApplicationLog(viewAllApplicationsShell, SWT.None, selectedVenue, weekViewTable);
+			
+			viewAllApplicationsPage.pack();
+			viewAllApplicationsShell.setLocation(300, 150);
+			viewAllApplicationsShell.pack();
+			viewAllApplicationsShell.open();
 		}
 	}
 }

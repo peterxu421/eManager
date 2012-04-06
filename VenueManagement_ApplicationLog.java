@@ -27,6 +27,7 @@ public class VenueManagement_ApplicationLog extends Composite {
 	 * Create the composite.
 	 * @param parent
 	 * @param style
+	 * @wbp.parser.constructor
 	 */
 	public VenueManagement_ApplicationLog(Composite parent, int style, final Venue venue, final Table weekViewTable) {
 		super(parent, style);
@@ -39,14 +40,14 @@ public class VenueManagement_ApplicationLog extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(0, 0, 634, 527);
+		composite.setBounds(0, 0, 700, 530);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		Label lblVenueBookingStatus = new Label(composite, SWT.NONE);
 		lblVenueBookingStatus.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblVenueBookingStatus.setAlignment(SWT.CENTER);
-		lblVenueBookingStatus.setBounds(10, 35, 614, 15);
+		lblVenueBookingStatus.setBounds(10, 35, 680, 15);
 		toolkit.adapt(lblVenueBookingStatus, true, true);
 		lblVenueBookingStatus.setText("Booking Applications for <" + venue.getName()+ ">");
 		
@@ -54,14 +55,11 @@ public class VenueManagement_ApplicationLog extends Composite {
 		listBookingStatus = new List(composite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		listBookingStatus.setItems(new String[] {});
 		listBookingStatus.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
-		listBookingStatus.setBounds(10, 60, 614, 415);
+		listBookingStatus.setBounds(10, 60, 680, 420);
 		toolkit.adapt(listBookingStatus, true, true);
 		
-
-		
-		
 		Button btnClearAllApplications = new Button(composite, SWT.NONE);
-		btnClearAllApplications.setBounds(249, 492, 121, 25);
+		btnClearAllApplications.setBounds(290, 490, 120, 30);
 		toolkit.adapt(btnClearAllApplications, true, true);
 		btnClearAllApplications.setText("Clear the log");
 		btnClearAllApplications.addSelectionListener(new SelectionAdapter(){
@@ -84,10 +82,6 @@ public class VenueManagement_ApplicationLog extends Composite {
 						listBookingStatus.add("---Not Booked---");
 						/* update the weekViewTable */
 						weekViewTable.removeAll();
-						for (int i = 6; i<23; i++){
-							TableItem item = new TableItem(weekViewTable, SWT.NULL);
-							item.setText(0, String.format("%02d", i) + ":00" + ":00");
-						} 
 						break;
 					case SWT.CANCEL:
 						break;
@@ -117,14 +111,14 @@ public class VenueManagement_ApplicationLog extends Composite {
 		toolkit.paintBordersFor(this);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(0, 0, 634, 527);
+		composite.setBounds(0, 0, 700, 530);
 		toolkit.adapt(composite);
 		toolkit.paintBordersFor(composite);
 		
 		Label lblVenueBookingStatus = new Label(composite, SWT.NONE);
 		lblVenueBookingStatus.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblVenueBookingStatus.setAlignment(SWT.CENTER);
-		lblVenueBookingStatus.setBounds(10, 35, 614, 15);
+		lblVenueBookingStatus.setBounds(10, 35, 680, 15);
 		toolkit.adapt(lblVenueBookingStatus, true, true);
 		lblVenueBookingStatus.setText("Booking Applications for <" + venue.getName()+ ">");
 		
@@ -132,14 +126,12 @@ public class VenueManagement_ApplicationLog extends Composite {
 		listBookingStatus = new List(composite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		listBookingStatus.setItems(new String[] {});
 		listBookingStatus.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
-		listBookingStatus.setBounds(10, 60, 614, 415);
+		listBookingStatus.setBounds(10, 60, 680, 420);
 		toolkit.adapt(listBookingStatus, true, true);
-		
-
 		
 		
 		Button btnClearAllApplications = new Button(composite, SWT.NONE);
-		btnClearAllApplications.setBounds(249, 492, 121, 25);
+		btnClearAllApplications.setBounds(290, 490, 120, 30);
 		toolkit.adapt(btnClearAllApplications, true, true);
 		btnClearAllApplications.setText("Clear the log");
 		btnClearAllApplications.addSelectionListener(new SelectionAdapter(){
@@ -199,6 +191,9 @@ public class VenueManagement_ApplicationLog extends Composite {
 			    }
 			    else if(statusIndex == MACRO.REJECTED){
 			    	status = "Rejected";
+			    }
+			    else if(statusIndex == MACRO.PERMANENTLYREJECTED){
+			    	status = "Permanently Rejected";
 			    }
 			    String bookingInfo[] = {name, organization, 
 			                         dateTime.getDate().toString() + " From " + 

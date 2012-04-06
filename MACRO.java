@@ -22,6 +22,7 @@ public class MACRO {
 	public static int PASSWORD = 19;
 	public static int READONLY = 20;
 	public static int ROLES = 21;
+	public static int PERMANENTLYREJECTED = 22;
 
 	public static boolean[][] ORGANIZER_MODE = new boolean[][] {
 			{ true, true, true, true }, { true, true, true, true, true },

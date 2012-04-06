@@ -159,8 +159,11 @@ public class VenueManagement_VenueList extends Composite {
 					if(!vBookingAppList.isEmpty()){
 						boolean deletable = true;
 						for (int i=0; i<vBookingAppList.size(); i++){
-							if(vBookingAppList.get(i).getDateTime().getDate().isNotEarlierThan(today) &&
-									vBookingAppList.get(i).getStatus() != MACRO.REJECTED){
+							if(vBookingAppList.get(i).getDateTime().getDate().isNotEarlierThan(today) 
+									&&
+									vBookingAppList.get(i).getStatus() != MACRO.REJECTED
+									&& 
+									vBookingAppList.get(i).getStatus() != MACRO.PERMANENTLYREJECTED){
 								deletable = false;
 								break;
 							}
@@ -178,15 +181,16 @@ public class VenueManagement_VenueList extends Composite {
 							int choice = warningPage.open(); 
 							switch (choice){
 							case SWT.OK:
-								Shell viewBookingInfoShell = new Shell(getDisplay(),SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
+								Shell viewAllApplicationsShell = new Shell(getDisplay(),SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 								Image icon = new Image(getDisplay(), "resources/eManager.png");
-								viewBookingInfoShell.setText("eManager");
-								viewBookingInfoShell.setImage(icon);
+								viewAllApplicationsShell.setText("eManager - Application Log");
+								viewAllApplicationsShell.setImage(icon);
 								
-								VenueManagement_ApplicationLog viewBookingInfoPage = new VenueManagement_ApplicationLog(viewBookingInfoShell, SWT.None, venueToBeDeleted);
-								viewBookingInfoPage.pack();
-								viewBookingInfoShell.pack();
-								viewBookingInfoShell.open();
+								VenueManagement_ApplicationLog viewAllApplicationsPage = new VenueManagement_ApplicationLog(viewAllApplicationsShell, SWT.None, venueToBeDeleted);
+								viewAllApplicationsShell.setLocation(300, 150);
+								viewAllApplicationsPage.pack();
+								viewAllApplicationsShell.pack();
+								viewAllApplicationsShell.open();
 							}
 						}
 					}
@@ -252,10 +256,12 @@ public class VenueManagement_VenueList extends Composite {
 			if(index >=0 && index < venueTable.getItemCount()){
 				Shell venueWeekViewShell = new Shell(getDisplay(),SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
-				venueWeekViewShell.setText("eManager");
+				venueWeekViewShell.setText("eManager - Venue Availability Week View");
 				venueWeekViewShell.setImage(icon);
 				VenueManagement_WeekView venueWeekViewPage = new VenueManagement_WeekView(venueWeekViewShell, SWT.None, index);
+				
 				venueWeekViewPage.pack();
+				venueWeekViewShell.setLocation(250, 150);
 				venueWeekViewShell.pack();
 				venueWeekViewShell.open();
 			}

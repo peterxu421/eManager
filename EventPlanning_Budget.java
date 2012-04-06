@@ -42,13 +42,8 @@ public class EventPlanning_Budget extends Composite {
 
 	private Event event;
 	private ArrayList<BudgetPlanning> budgetAllocationList;
-<<<<<<< HEAD
 	private ArrayList<BudgetInflow> inflowList;
 	private ArrayList<BudgetOutflow> outflowList;
-=======
-	private ArrayList<Inflow> inflowList;
-	private ArrayList<Outflow> outflowList;
->>>>>>> 7a591cbc066d9f3eea5c93fad86b99125a47d87f
 	private String[] stringArrayBudget = { "Item", "Person in Charge",
 			"Cost($)", "Date" };
 	private int[] signatureArrayBudget = { MACRO.TEXT, MACRO.ORGANIZER,
@@ -520,11 +515,7 @@ public class EventPlanning_Budget extends Composite {
 						// insert to database
 						String[] tempList = getStringList();
 						Date date = new Date(tempList[3]);
-<<<<<<< HEAD
 						BudgetPlanning budgetPlanning = new BudgetPlanning(
-=======
-						BudgetPlanning budgetAllocation = new BudgetPlanning(
->>>>>>> 7a591cbc066d9f3eea5c93fad86b99125a47d87f
 								tempList[0], tempList[1],
 								Double.parseDouble(tempList[2]), date);
 						db.insertBudgetAllocation(event, budgetPlanning);
@@ -602,12 +593,7 @@ public class EventPlanning_Budget extends Composite {
 					public void onSubmit() {
 						String[] tempList = getStringList();
 
-<<<<<<< HEAD
-						BudgetPlanning budgetPlanning = budgetAllocationList
-=======
-						BudgetPlanning budgetAllocation = budgetAllocationList
->>>>>>> 7a591cbc066d9f3eea5c93fad86b99125a47d87f
-								.get(index);
+						BudgetPlanning budgetPlanning = budgetAllocationList.get(index);
 						budgetPlanning.setItem(tempList[0]);
 						budgetPlanning.setPersonInCharge(tempList[1]);
 						budgetPlanning.setCost(Double

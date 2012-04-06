@@ -71,8 +71,7 @@ public class VenueManagement_BookingApplications extends Composite {
 		toolkit.adapt(applicationTable);
 		toolkit.paintBordersFor(applicationTable);
 
-		TableColumn tblclmnVenueName = new TableColumn(applicationTable,
-				SWT.NONE);
+		TableColumn tblclmnVenueName = new TableColumn(applicationTable,SWT.NONE);
 		tblclmnVenueName.setWidth(98);
 		tblclmnVenueName.setText("Booked Venue");
 
@@ -80,33 +79,27 @@ public class VenueManagement_BookingApplications extends Composite {
 		tblclmnName.setWidth(80);
 		tblclmnName.setText("Name");
 
-		TableColumn tblclmnMatricNo = new TableColumn(applicationTable,
-				SWT.CENTER);
+		TableColumn tblclmnMatricNo = new TableColumn(applicationTable,SWT.CENTER);
 		tblclmnMatricNo.setWidth(100);
 		tblclmnMatricNo.setText("Matric No.");
 
-		TableColumn tblclmnOrganization = new TableColumn(applicationTable,
-				SWT.CENTER);
+		TableColumn tblclmnOrganization = new TableColumn(applicationTable,SWT.CENTER);
 		tblclmnOrganization.setWidth(88);
 		tblclmnOrganization.setText("Organization");
 
-		TableColumn tblclmnContact = new TableColumn(applicationTable,
-				SWT.CENTER);
+		TableColumn tblclmnContact = new TableColumn(applicationTable,SWT.CENTER);
 		tblclmnContact.setWidth(100);
 		tblclmnContact.setText("Contact No.");
 
-		TableColumn tblclmnNewEmail = new TableColumn(applicationTable,
-				SWT.CENTER);
+		TableColumn tblclmnNewEmail = new TableColumn(applicationTable,SWT.CENTER);
 		tblclmnNewEmail.setWidth(106);
 		tblclmnNewEmail.setText("Eamil");
 
-		TableColumn tblclmnDateAndTime = new TableColumn(applicationTable,
-				SWT.CENTER);
+		TableColumn tblclmnDateAndTime = new TableColumn(applicationTable,SWT.CENTER);
 		tblclmnDateAndTime.setWidth(181);
 		tblclmnDateAndTime.setText("Date and Time");
 
-		TableColumn tblclmnApproval = new TableColumn(applicationTable,
-				SWT.CENTER);
+		TableColumn tblclmnApproval = new TableColumn(applicationTable,SWT.CENTER);
 		tblclmnApproval.setWidth(100);
 		tblclmnApproval.setText("Status");
 
@@ -121,6 +114,13 @@ public class VenueManagement_BookingApplications extends Composite {
 
 	public void importApplicationData() {
 		bookingAppList = db.getVenueBookingInfoFromToday(today);
+		// remove those who are permanently rejected
+        for(int i=0; i<bookingAppList.size(); i++){
+        	if(bookingAppList.get(i).getStatus() == MACRO.PERMANENTLYREJECTED){
+        		bookingAppList.remove(i);
+        		i--; // size - 1
+        	}
+        }
 		// show only the pending and rejected applications
 		for (int i = 0; i < bookingAppList.size(); i++) {
 			if (bookingAppList.get(i).getStatus() != MACRO.APPROVED) {
@@ -130,11 +130,9 @@ public class VenueManagement_BookingApplications extends Composite {
 		if (!notApprovedBookingAppList.isEmpty()) {
 			for (int j = 0; j < notApprovedBookingAppList.size(); j++) {
 				TableItem item = new TableItem(applicationTable, SWT.NULL);
-				item.setText(0, notApprovedBookingAppList.get(j).getVenue()
-						.getName()
+				item.setText(0, notApprovedBookingAppList.get(j).getVenue().getName()
 						+ " at "
-						+ notApprovedBookingAppList.get(j).getVenue()
-								.getLocation());
+						+ notApprovedBookingAppList.get(j).getVenue().getLocation());
 				item.setText(1, notApprovedBookingAppList.get(j).getApplicant()
 						.getName());
 				item.setText(2, notApprovedBookingAppList.get(j).getApplicant()
@@ -163,14 +161,12 @@ public class VenueManagement_BookingApplications extends Composite {
 			if (index >= 0 && index <= applicationTable.getItemCount()) {
 				/* update the application table */
 				TableItem item = applicationTable.getItem(index);
-				item.setBackground(null); // get rid of the conflict reminder if
-											// there is any
+				item.setBackground(null); // get rid of the conflict color reminder if there is any
 				item.setText(7, "Rejected");
 
 				/* update the database */
 				DatabaseReader db = new DatabaseReader();
-				VenueBookingApplication bookingInfo = notApprovedBookingAppList
-						.get(index);
+				VenueBookingApplication bookingInfo = notApprovedBookingAppList.get(index);
 				bookingInfo.setStatus(MACRO.REJECTED);
 				db.updateVenueBookingInfo(bookingInfo);
 			}
@@ -185,75 +181,74 @@ public class VenueManagement_BookingApplications extends Composite {
 			int index = applicationTable.getSelectionIndex();
 
 			if (index >= 0 && index <= applicationTable.getItemCount()) {
-				VenueBookingApplication selectedBookingApp = notApprovedBookingAppList
-						.get(index);
+				VenueBookingApplication selectedBookingApp = notApprovedBookingAppList.get(index);
 				TableItem item = applicationTable.getItem(index);
 				for (int i = 0; i < bookingAppList.size(); i++) {
 					if (bookingAppList.get(i).getVenue()
-							.isSameAs(selectedBookingApp.getVenue()) // same
-																		// venue
+							.isSameAs(selectedBookingApp.getVenue()) // same venue
 							&& bookingAppList
-									.get(i)
+							        .get(i)
 									.getDateTime()
 									.getDate()
 									.isEqualTo(
-											selectedBookingApp.getDateTime()
-													.getDate())
+											selectedBookingApp.getDateTime().getDate()) // locate the selected application in the list of applications with valid dates
 							&& bookingAppList
 									.get(i)
 									.getDateTime()
 									.getTimeStart()
 									.isEarlierThan(
-											selectedBookingApp.getDateTime()
-													.getTimeEnd())
+											selectedBookingApp.getDateTime().getTimeEnd())
 							&& bookingAppList
 									.get(i)
 									.getDateTime()
 									.getTimeEnd()
 									.isLaterThan(
-											selectedBookingApp.getDateTime()
-													.getTimeStart()) // conflicted
-																		// time
-							&& i != index
-									+ (bookingAppList.size() - notApprovedBookingAppList
-											.size())
-					// locate the selected application in the list of
-					// applications with valid dates
-					// no conflict with itself
+											selectedBookingApp.getDateTime().getTimeStart()) // conflicted time
+						    && bookingAppList.get(i)
+						            .getVenueBookingApplicationID() 
+						            != selectedBookingApp
+						            .getVenueBookingApplicationID() // no conflict with itself
 					) {
 						if (bookingAppList.get(i).getStatus() == MACRO.APPROVED) {
 							conflictWithApprovedApp = true;
+							break;
 						}
 						if (bookingAppList.get(i).getStatus() == MACRO.PENDING) {
 							conflictedAppList.add(bookingAppList.get(i));
-							int conflictIndex = i
-									- (bookingAppList.size() - notApprovedBookingAppList
-											.size());
-							// locate the conflict in the table
-							conflictIndexList.add(conflictIndex);
+							System.out.println("Here");
+							System.out.println(bookingAppList.get(i).getVenue().getName() + bookingAppList.get(i).getDateTime().toString());
+							
+							for(int j=0; j<notApprovedBookingAppList.size(); j++){
+								if(notApprovedBookingAppList.get(j).getVenueBookingApplicationID() 
+										== bookingAppList.get(i).getVenueBookingApplicationID()){
+									conflictIndexList.add(j); // locate the conflict in the table
+								}
+							}
 						}
 					}
 				}
 
 				// warning page for conflict with approved applications
 				if (conflictWithApprovedApp == true) {
-					MessageBox warningPage = new MessageBox(getDisplay()
-							.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+					MessageBox warningPage = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.NO | SWT.ICON_WARNING);
 					warningPage.setText("Warning!");
-					warningPage
-							.setMessage("Conflict with approved applications! ");
-					warningPage.open();
+					warningPage.setMessage("Conflict with approved application(s)! Remove it from the table?");
+					int choice = warningPage.open();
+					switch (choice){
+					case SWT.NO:
+						break;
+					case SWT.YES:
+						applicationTable.remove(index);
+						selectedBookingApp.setStatus(MACRO.PERMANENTLYREJECTED);
+						db.updateVenueBookingInfo(selectedBookingApp);
+					}
 				}
 				// warning page for conflict with pending applications
 				else if (!conflictedAppList.isEmpty()) {
-					MessageBox warningPage = new MessageBox(getDisplay()
-							.getActiveShell(), SWT.YES | SWT.NO
-							| SWT.ICON_WARNING);
+					MessageBox warningPage = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.NO| SWT.ICON_WARNING);
 					warningPage.setText("Warning!");
-					warningPage
-							.setMessage("Conflicted pending application(s) will be rejected automatically. Do you want to review it(them) before proceeding? ");
-					int choice = warningPage.open(); // indicates the user's
-														// choice
+					warningPage.setMessage("Conflicted pending application(s) will be rejected automatically. Do you want to review it(them) before proceeding? ");
+					int choice = warningPage.open(); // indicates the user's choice
 					switch (choice) {
 					case SWT.NO:
 						/* update the database */
@@ -268,16 +263,17 @@ public class VenueManagement_BookingApplications extends Composite {
 							TableItem tempItem = applicationTable
 									.getItem(conflictIndexList.get(i));
 							tempItem.setText(7, "Rejected");
+							tempItem.setBackground(null); // remove the color highlighting
 						}
 						item.setText(7, "Approved");
 						break;
 					case SWT.YES:
 						/* highlight conflicts in the table */
-						Color conflictedColor = applicationTable.getDisplay()
-								.getSystemColor(SWT.COLOR_RED);
+						Color conflictedColor = applicationTable.getDisplay().getSystemColor(SWT.COLOR_RED);
 						for (int i = 0; i < conflictIndexList.size(); i++) {
-							TableItem tempItem = applicationTable
-									.getItem(conflictIndexList.get(i));
+							System.out.printf("%d           %d\n", applicationTable.getItemCount(), conflictedAppList.size());
+							System.out.println(conflictedAppList.get(0).getVenue().getName());
+							TableItem tempItem = applicationTable.getItem(conflictIndexList.get(i));
 							tempItem.setBackground(conflictedColor);
 						}
 						break;
@@ -290,6 +286,7 @@ public class VenueManagement_BookingApplications extends Composite {
 					db.updateVenueBookingInfo(selectedBookingApp);
 					/* update the application table */
 					item.setText(7, "Approved");
+					item.setBackground(null); // get rid of the conflict color reminder if there is any
 				}
 			}
 		}

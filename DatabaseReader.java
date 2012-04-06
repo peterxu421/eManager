@@ -346,40 +346,6 @@ public class DatabaseReader {
 						.getDate().toString(), manpowerAllocation.isDone());
 	}
 
-<<<<<<< HEAD
-=======
-//	/* FileDetails */
-//	public ArrayList<EventFile> getFiles(Event event) {
-//		ArrayList<EventFile> files = new ArrayList<EventFile>();
-//		ResultSet rs = null;
-//		try {
-//			rs = SQLManager.getFileDetails(connection, event.getEventID());
-//			while (rs.next()) {
-//				EventFile file = new EventFile(rs.getInt(1), rs.getString(3),
-//						rs.getString(4), rs.getString(5));
-//				files.add(file);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return files;
-//	}
-//	public void insertFile(Event event, EventFile eventFile) {
-//		int id = SQLManager.insertFileDetails(connection, event.getEventID(),
-//				eventFile.getFileName(), eventFile.getFileDirectory(),
-//				eventFile.getFileDescription());
-//		eventFile.setFileID(id);
-//	}
-//	public void deleteFile(EventFile file) {
-//		SQLManager.deleteFileDetails(connection, file.getFileID());
-//	}
-//	public void updateFile(EventFile file) {
-//		SQLManager.updateFileDetails(connection, file.getFileID(),
-//				file.getFileName(), file.getFileDirectory(),
-//				file.getFileDescription());
-//	}
-
->>>>>>> 7a591cbc066d9f3eea5c93fad86b99125a47d87f
 	/* PackingDetails */
 	public ArrayList<PackingItem> getPackingItems(Event event) {
 		ArrayList<PackingItem> packings = new ArrayList<PackingItem>();
