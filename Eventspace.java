@@ -18,6 +18,7 @@ class Eventspace extends Composite {
 	Composite body;
 	Composite left;
 	Composite right;
+	boolean[][] boolMode = SessionManager.getCurrentBoolMode();
 
 	Label eventName;
 	Label eventDescription;
@@ -38,15 +39,13 @@ class Eventspace extends Composite {
 	private String[] optionList = new String[] { "Organizer", "Facilitator",
 			"Participants", "Event Registration" };
 
-	private boolean[] booleanList = new boolean[] { true, true, true, true };
-
 	private String[][] tabList = new String[][] {
 			{ "Pre-Event", "Actual-Event", "Meeting", "Budget", "Feedback" },
 			{ "Manpower Allocation" }, { "Itinerary", "Packing List" },
 			{ "Event Registration" } };
 
 	// Constructor
-	public Eventspace(Composite parent, int style, boolean[][] boolMode) {
+	public Eventspace(Composite parent, int style) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 1;

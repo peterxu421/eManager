@@ -55,7 +55,6 @@ public abstract class AbstractForm extends Composite {
 		this.map = new HashMap<String, Object>();
 		stringList = new String[signature.length]; // initiate the input text
 													// string array
-
 		/* Layout */
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginLeft = 50;

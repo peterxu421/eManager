@@ -21,7 +21,7 @@ public abstract class AbstractAdd extends AbstractForm {
 		
 		// get the table with stored input information
 		this.table = table;
-		
+		parent.getShell().setText("Add");
 		// Set buttons
 		Button btnAdd = new Button(this, SWT.None);
 		btnAdd.addSelectionListener(new SubmitHandler());
