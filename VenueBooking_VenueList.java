@@ -123,13 +123,13 @@ public class VenueBooking_VenueList extends Composite {
 		public void widgetSelected(SelectionEvent e){
 			int index = venueTable.getSelectionIndex();
 			if(index >=0 && index < venueTable.getItemCount()){
-				Shell venueWeekViewShell = new Shell(getDisplay());
+				Shell venueWeekViewShell = new Shell(getDisplay(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
 				venueWeekViewShell.setText("eManager");
 				venueWeekViewShell.setImage(icon);
 				
 				Venue selectedVenue = venuesAtSameLocation.get(index);
-				VenueBooking_VenueWeekView venueWeekViewPage = new VenueBooking_VenueWeekView(venueWeekViewShell, SWT.None, selectedVenue);
+				VenueBooking_WeekView venueWeekViewPage = new VenueBooking_WeekView(venueWeekViewShell, SWT.None, selectedVenue);
 				venueWeekViewPage.pack();
 				venueWeekViewShell.pack();
 				venueWeekViewShell.open();

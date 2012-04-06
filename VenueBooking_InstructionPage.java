@@ -15,7 +15,7 @@ public class VenueBooking_InstructionPage extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private String[] lyrics = { "Eligibility" ,
-			"The bookings are only for NUS Students Staff.",
+			"The bookings are only for NUS Students and Staff.",
 			"     ", 
 			"Terms and Conditions", 
 			"<to be set by the venue manager>",

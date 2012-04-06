@@ -256,6 +256,7 @@ public abstract class AbstractForm extends Composite {
 					|| signature[i] == MACRO.PASSWORD
 					|| signature[i] == MACRO.READONLY) {
 				stringList[i] = ((Text) get(i)).getText();
+				stringList[i] = stringList[i].replaceAll("\\s+", " "); // remove extra white space input
 			}
 			// Deal with Date
 			else if (signature[i] == MACRO.DATE) {
