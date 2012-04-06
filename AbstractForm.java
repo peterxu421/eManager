@@ -79,6 +79,7 @@ public abstract class AbstractForm extends Composite {
 		 * Buttons
 		 */
 		onLoad();
+		Text text = new Text(this, SWT.None);
 	}
 
 	// Another type of constructor.

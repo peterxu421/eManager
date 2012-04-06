@@ -1,3 +1,5 @@
+import java.util.StringTokenizer;
+
 public class Date {
 	private int year;
 	private int month;
@@ -14,6 +16,7 @@ public class Date {
 	}
 
 	public Date(String date) {
+		date = date.replaceAll("/", "-");
 		String[] contents = date.split("-");
 		this.year = Integer.parseInt(contents[0]);
 		this.month = Integer.parseInt(contents[1]);
