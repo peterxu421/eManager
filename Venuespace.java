@@ -88,12 +88,14 @@ class Venuespace extends Composite{
 	    Label eventName = new Label(header, SWT.WRAP);
 	    eventName.setFont(SWTResourceManager.getFont("Courier New", 11, SWT.NORMAL));
 	  //  eventName.setBounds(0, 10, 1000, 25);
-	    eventName.setText("NUS Office of Studnet Affairs\nCopyright 2001-08 National University of Singapore. All Rights Reserved.");
+	   // eventName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+	    eventName.setText("NUS Office of Studnet Affairs\n© Copyright National University of Singapore.\nAll Rights Reserved.");
 	    
 	    Label eventDescription = new Label(header, SWT.WRAP);
 	    eventDescription.setFont(SWTResourceManager.getFont("Courier New", 11, SWT.NORMAL));
 	   // eventDescription.setBounds(0, 50, 1000, 40);
-	    eventDescription.setText("We are committed to providing you with easy accessibility and responsiveness in our services.");
+	   // eventDescription.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+	    eventDescription.setText("Better service, better univeristy.");
 	    
 	    //body->left panel
 	    GridLayout leftLayout = new GridLayout();

@@ -123,7 +123,7 @@ public class VenueManagement_VenueList extends Composite {
 	public class add extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			venueTable.deselectAll();
-			Shell addVenueShell = new Shell(getDisplay());
+			Shell addVenueShell = new Shell(getDisplay(),SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			addVenueShell.setText("eManager - Add a venue");
 			addVenueShell.setImage(icon);
@@ -195,7 +195,7 @@ public class VenueManagement_VenueList extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			final int index = venueTable.getSelectionIndex();
 			if(index >=0 && index < venueTable.getItemCount()){
-				Shell editVenueShell = new Shell(getDisplay());
+				Shell editVenueShell = new Shell(getDisplay(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
 				editVenueShell.setText("eManager - Edit a venue");
 				editVenueShell.setImage(icon);
@@ -238,11 +238,11 @@ public class VenueManagement_VenueList extends Composite {
 		public void widgetSelected(SelectionEvent e){
 			int index = venueTable.getSelectionIndex();
 			if(index >=0 && index < venueTable.getItemCount()){
-				Shell venueWeekViewShell = new Shell(getDisplay());
+				Shell venueWeekViewShell = new Shell(getDisplay(),SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
 				venueWeekViewShell.setText("eManager");
 				venueWeekViewShell.setImage(icon);
-				VenueManagement_VenueWeekView venueWeekViewPage = new VenueManagement_VenueWeekView(venueWeekViewShell, SWT.None, index);
+				VenueManagement_WeekView venueWeekViewPage = new VenueManagement_WeekView(venueWeekViewShell, SWT.None, index);
 				venueWeekViewPage.pack();
 				venueWeekViewShell.pack();
 				venueWeekViewShell.open();

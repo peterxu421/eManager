@@ -98,12 +98,14 @@ public abstract class AbstractAdd extends AbstractForm {
 		for (int i = 0; i < stringList.length; i++) {
 			inputStr += stringList[i];
 		}
+		inputStr = inputStr.replaceAll("\\s", ""); // remove while spaces and non-visible characters such as \n
 		for (int i = 0; i < table.getItemCount(); i++) {
 			TableItem item = table.getItem(i);
 			String tableStr = "";
 			for (int j = 0; j < table.getColumnCount(); j++) {
 				tableStr += item.getText(j);
 			}
+			tableStr = tableStr.replaceAll("\\s", ""); // remove while spaces and non-visible characters such as \n
 			if (inputStr.equalsIgnoreCase(tableStr)) {
 				MessageBox warningPage = new MessageBox(getDisplay()
 						.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
