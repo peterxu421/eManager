@@ -202,8 +202,8 @@ public class DatabaseReader {
 			rs = SQLManager.getOutflowDetails(connection, event.getEventID());
 			while (rs.next()) {
 				Date date = Date.parseDate(rs.getDate("Date").toString());
-				BudgetOutflow budgetOutflow = new BudgetOutflow(rs.getInt(1), rs.getString(7),
-						rs.getInt(3), rs.getString(4), date, rs.getDouble(6));
+				BudgetOutflow budgetOutflow = new BudgetOutflow(rs.getInt("OutflowID"), rs.getString("Item"),
+						rs.getInt("Quantity"), rs.getString("Type"), date, rs.getDouble("Cost"));
 				budgetOutflows.add(budgetOutflow);
 			}
 		} catch (SQLException e) {

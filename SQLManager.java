@@ -216,8 +216,9 @@ public class SQLManager {
 	}
 
 	public static ResultSet getOutflowDetails(Connection connection, int eventID) {
-		String getOutflowDetails = "SELECT * FROM OutflowDetails "
-				+ "WHERE EventID=?";
+		String getOutflowDetails = 
+				"SELECT * FROM OutflowDetails "	+ 
+				"WHERE EventID=?";
 		PreparedStatement prep = null;
 		ResultSet rs = null;
 		try {
