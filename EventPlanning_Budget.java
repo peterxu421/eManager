@@ -279,16 +279,16 @@ public class EventPlanning_Budget extends Composite {
 		btnOutflowAdd.setText("Add");
 		btnOutflowAdd.addSelectionListener(new AddOutflow());
 
+		Button btnOutflowDelete = new Button(OutflowComposite, SWT.NONE);
+		btnOutflowDelete.setBounds(570, 60, 80, 40);
+		toolkit.adapt(btnOutflowDelete, true, true);
+		btnOutflowDelete.setText("Delete");
+
 		Button btnOutflowEdit = new Button(OutflowComposite, SWT.NONE);
-		btnOutflowEdit.setBounds(570, 60, 80, 40);
+		btnOutflowEdit.setBounds(570, 110, 80, 40);
 		toolkit.adapt(btnOutflowEdit, true, true);
 		btnOutflowEdit.setText("Edit");
 		btnOutflowEdit.addSelectionListener(new EditOutflow());
-
-		Button btnOutflowDelete = new Button(OutflowComposite, SWT.NONE);
-		btnOutflowDelete.setBounds(570, 110, 80, 40);
-		toolkit.adapt(btnOutflowDelete, true, true);
-		btnOutflowDelete.setText("Delete");
 
 		Label lblTotalMoneySpent = new Label(OutflowComposite, SWT.NONE);
 		lblTotalMoneySpent.setFont(SWTResourceManager.getFont("Calibri", 13,

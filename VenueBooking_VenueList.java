@@ -58,7 +58,7 @@ public class VenueBooking_VenueList extends Composite {
 		lblNewLabel.setText("Choose location");
 
 		comboLocation = new Combo(composite, SWT.READ_ONLY);
-		comboLocation.setBounds(123, 0, 100, 30);
+		comboLocation.setBounds(123, 0, 200, 30);
 		toolkit.adapt(comboLocation);
 		toolkit.paintBordersFor(comboLocation);
 		comboLocation.setItems(venueLocationArray);
@@ -124,8 +124,9 @@ public class VenueBooking_VenueList extends Composite {
 			if (index >= 0 && index < venueTable.getItemCount()) {
 				Shell venueWeekViewShell = new Shell(getDisplay(),
 						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
+				venueWeekViewShell.setLocation(200, 100);
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
-				venueWeekViewShell.setText("eManager");
+				venueWeekViewShell.setText("Check Availablity");
 				venueWeekViewShell.setImage(icon);
 
 				Venue selectedVenue = venuesAtSameLocation.get(index);

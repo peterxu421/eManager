@@ -77,19 +77,19 @@ public class VenueManagement_VenueList extends Composite {
 		btnAdd.setText("Add");
 		btnAdd.setBounds(655, 0, 90, 30);
 		toolkit.adapt(btnAdd, true, true);
-		btnAdd.addSelectionListener(new add());
+		btnAdd.addSelectionListener(new AddVenue());
 		
 		Button btnDelete = new Button(composite, SWT.NONE);
 		btnDelete.setText("Delete");
 		btnDelete.setBounds(655, 40, 90, 30);
 		toolkit.adapt(btnDelete, true, true);
-		btnDelete.addSelectionListener(new delete());
+		btnDelete.addSelectionListener(new DeleteVenue());
 		
 		Button btnEdit = new Button(composite, SWT.NONE);
 		btnEdit.setText("Edit");
 		btnEdit.setBounds(655, 80, 90, 30);
 		toolkit.adapt(btnEdit, true, true);
-		btnEdit.addSelectionListener(new edit());
+		btnEdit.addSelectionListener(new EditVenue());
 		
 		Button btnView = new Button(composite, SWT.NONE);
 		btnView.setText("View Booking Applications");
@@ -120,7 +120,7 @@ public class VenueManagement_VenueList extends Composite {
 			}
 	}
 	
-	public class add extends SelectionAdapter {
+	public class AddVenue extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			venueTable.deselectAll();
 			Shell addVenueShell = new Shell(getDisplay(),SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
@@ -147,7 +147,7 @@ public class VenueManagement_VenueList extends Composite {
 		}
 	}
 	
-	public class delete extends SelectionAdapter {
+	public class DeleteVenue extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (venueTable.getItemCount() != 0) {
 				int index = venueTable.getSelectionIndex();
@@ -203,7 +203,7 @@ public class VenueManagement_VenueList extends Composite {
 		}
 	}
 	
-	public class edit extends SelectionAdapter {
+	public class EditVenue extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			final int index = venueTable.getSelectionIndex();
 			if(index >=0 && index < venueTable.getItemCount()){
@@ -251,8 +251,9 @@ public class VenueManagement_VenueList extends Composite {
 			int index = venueTable.getSelectionIndex();
 			if(index >=0 && index < venueTable.getItemCount()){
 				Shell venueWeekViewShell = new Shell(getDisplay(),SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
+				venueWeekViewShell.setLocation(400, 100);
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
-				venueWeekViewShell.setText("eManager");
+				venueWeekViewShell.setText("View Booking Applications");
 				venueWeekViewShell.setImage(icon);
 				VenueManagement_WeekView venueWeekViewPage = new VenueManagement_WeekView(venueWeekViewShell, SWT.None, index);
 				venueWeekViewPage.pack();

@@ -125,7 +125,10 @@ public class PreEvent_Publicity extends Composite {
 	private class ImportAdapter extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell open = new Shell(getDisplay());
-
+			open.setLocation(300, 150);
+			open.setText("Open Image");
+			Image icon = new Image(getDisplay(), "resources/eManager.png");
+			open.setImage(icon);
 			FileDialog browser = new FileDialog(open, SWT.OPEN | SWT.MULTI);
 			browser.setFilterExtensions(new String[] { "*.jpg", "*.png",
 					"*.bmp", "*.*" });
@@ -143,8 +146,11 @@ public class PreEvent_Publicity extends Composite {
 
 	private class EditAdapter extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell shell = new Shell(getShell(), SWT.None);
-			shell.setLocation(300, 150);
+			Shell shell = new Shell(getDisplay());
+			shell.setText("Edit Image");
+			Image icon = new Image(getDisplay(), "resources/eManager.png");
+			shell.setImage(icon);
+			shell.setLocation(300, 100);
 			if (gallery.getSelection().length != 0) {
 				Image image = gallery.getSelection()[0].getImage();
 				PhotoEditorPage page = new PhotoEditorPage(shell, SWT.NONE,
@@ -173,6 +179,8 @@ public class PreEvent_Publicity extends Composite {
 	private class FromURLAdatper extends SelectionAdapter{
 		public void widgetSelected(SelectionEvent e){
 			Shell shell = new GetImageFromURL(getShell(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM, group);
+			Image icon = new Image(getDisplay(), "resources/eManager.png");
+			shell.setImage(icon);
 			shell.setLocation(400, 200);
 			shell.open();
 		}

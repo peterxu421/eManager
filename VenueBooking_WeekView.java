@@ -154,7 +154,7 @@ public class VenueBooking_WeekView extends Composite {
 		btnGoBooking.setBounds(727, 249, 151, 25);
 		toolkit.adapt(btnGoBooking, true, true);
 		btnGoBooking.setText("Go to the booking page");
-		btnGoBooking.addSelectionListener(new goBooking());
+		btnGoBooking.addSelectionListener(new BookingPage());
 		
 		Label lblNotePleaseSelect = new Label(composite, SWT.NONE);
 		lblNotePleaseSelect.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
@@ -340,10 +340,11 @@ public class VenueBooking_WeekView extends Composite {
 		}	
 	}
 	
-	public class goBooking extends SelectionAdapter {
+	public class BookingPage extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
 			if(selectedDateTimeList.getItemCount()!= 0){ // at least one time slot is selected
 				Shell vBookingShell = new Shell(getDisplay(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
+				vBookingShell.setLocation(400, 100);
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
 				vBookingShell.setText("eManager");
 				vBookingShell.setImage(icon);

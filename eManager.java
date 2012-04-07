@@ -63,6 +63,8 @@ public class eManager {
 		rootShell.setMaximized(true);
 		rootShell.setText("eManagerV0.2");
 		rootShell.setBackgroundImage(image);
+		Image icon = new Image(display, "resources/eManager.png");
+		rootShell.setImage(icon);
 		rootShell.open();
 
 		// menu->file
@@ -96,8 +98,7 @@ public class eManager {
 	// opens Welcome page
 	class MenuOpenListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
-			welcome_shell = new Shell(display, SWT.APPLICATION_MODAL
-					| SWT.DIALOG_TRIM);
+			welcome_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
 			welcome_shell.setText("Welcome to eManagerV0.2");
 			welcome_shell.setLocation(400, 200);
 			welcome_page = new WelcomePage(welcome_shell, SWT.NONE);
@@ -139,20 +140,19 @@ public class eManager {
 			SelectEventPage newEventPage = new SelectEventPage(mode_shell,
 					SWT.None);
 			newEventPage.setSize(500, 400);
-			System.out.println("Reach here1!");
 			mode_shell.pack();
 			mode_shell.open();
-			System.out.println("Reach here2!");
 			SessionManager.disposeShells(display, mode_shell);
 		}
 	}
 
+	// Take care of the special case:
+	// When they use the software at first time
 	class MenuManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 
 			SessionManager.setCurrentMode(MACRO.MANAGER);
 			DatabaseReader db = new DatabaseReader();
-			System.out.println(db.getPassword());
 			// If it is the first time to use the software
 			if (db.getPassword() == null) {
 				Shell shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);

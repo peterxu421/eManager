@@ -40,9 +40,6 @@ public class PromptPassword extends Composite {
 		this.changeToMode = changeToMode;
 		this.parent = parent;
 
-		// password = SessionManager.getCurrentEvent().getOrganizerPassword();
-		// System.out.println(password);
-
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(10, 10, 363, 243);
 		toolkit.adapt(composite);
@@ -99,11 +96,6 @@ public class PromptPassword extends Composite {
 		shell.pack();
 		shell.open();
 		SessionManager.disposeShells(getDisplay(), shell);
-		// Check whether parent.parent is null or not.
-		// if (getParent().getParent() != null) {
-		// getParent().getParent().dispose();
-		// } else
-		// getParent().dispose();
 	}
 
 	private class CancelListener extends SelectionAdapter {

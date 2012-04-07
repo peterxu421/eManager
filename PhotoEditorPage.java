@@ -88,6 +88,9 @@ public class PhotoEditorPage extends Composite {
 		auto.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				Shell shell = new Shell(getShell());
+				Image icon = new Image(getDisplay(), "resources/eManager.png");
+				shell.setImage(icon);
+				shell.setLocation(400, 200);
 				shell.setText("Auto Generate");
 				Composite auto = new AutoGenerate(shell, SWT.None);
 				auto.pack();
@@ -117,8 +120,9 @@ public class PhotoEditorPage extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				ImageLoader imageLoader = new ImageLoader();
 				imageLoader.data = new ImageData[] { newImage.getImageData() };
-				FileDialog fileDialog = new FileDialog(new Shell(getDisplay()),
-						SWT.SAVE);
+				Shell shell = new Shell(getDisplay());
+				shell.setLocation(300, 150);
+				FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
 				fileDialog.setFilterExtensions(new String[] { "*.jpg" });
 				String filePath = fileDialog.open();
 				if (filePath != null)

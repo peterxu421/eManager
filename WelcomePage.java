@@ -3,6 +3,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -58,6 +59,9 @@ public class WelcomePage extends Composite {
 			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM
 					| SWT.ON_TOP);
 			add_item_shell.setLocation(400, 200);
+			Image icon = new Image(getDisplay(),
+					"resources/eManager.png");
+			add_item_shell.setImage(icon);
 			SelectEventPage add_new_item_page = new SelectEventPage(
 					add_item_shell, SWT.None);
 			add_new_item_page.setSize(500, 400);
@@ -73,6 +77,9 @@ public class WelcomePage extends Composite {
 			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM
 					| SWT.ON_TOP);
 			add_item_shell.setLocation(400, 200);
+			Image icon = new Image(getDisplay(),
+					"resources/eManager.png");
+			add_item_shell.setImage(icon);
 			SelectVenueModePage add_new_item_page = new SelectVenueModePage(
 					add_item_shell, SWT.None);
 			add_new_item_page.setSize(400, 300);
