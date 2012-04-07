@@ -106,6 +106,7 @@ public class PreEvent_Publicity extends Composite {
 		if (image != null) {
 			GalleryItem item = new GalleryItem(group, SWT.None);
 			item.setImage(image);
+			item.setText(filename);
 		}
 	}
 	
@@ -123,6 +124,7 @@ public class PreEvent_Publicity extends Composite {
 				if (image != null) {
 					GalleryItem item = new GalleryItem(group, SWT.None);
 					item.setImage(image);
+					item.setText(images[i]);
 				}
 			}
 		}
@@ -174,8 +176,9 @@ public class PreEvent_Publicity extends Composite {
 				GalleryItem[] images = gallery.getSelection();
 				for (int i = 0; i < length; i++) {
 					group.remove(images[i]);
-					File file = new File("Pictures" + File.separator
+					File file = new File(pictureDirectory + File.separator
 							+ images[i].getText());
+					System.out.println(file);
 					file.delete();
 				}
 			}
