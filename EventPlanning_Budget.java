@@ -797,7 +797,7 @@ public class EventPlanning_Budget extends Composite {
 	class DeleteOutflow extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (OutflowTable.getItemCount() != 0) {
-				int index = OutflowTable.getSelectionIndex();
+				index = OutflowTable.getSelectionIndex();
 				if (index >= 0 && index < OutflowTable.getItemCount()) {
 					/* update budget outflow table */
 					double amount = Double.parseDouble(OutflowTable.getItem(
@@ -825,6 +825,7 @@ public class EventPlanning_Budget extends Composite {
 	class EditOutflow extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (OutflowTable.getSelectionCount() != 0) {
+				index = OutflowTable.getSelectionIndex();
 				Shell edit_outflow_shell = new Shell(getDisplay(),
 						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractEdit edit_outflow_page = new AbstractEdit(
@@ -833,7 +834,7 @@ public class EventPlanning_Budget extends Composite {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayOutflow.length; i++) {
-							setData(InflowTable.getItem(index).getText(i),
+							setData(OutflowTable.getItem(index).getText(i),
 									signatureArrayOutflow[i], i);
 						}
 					}
@@ -865,7 +866,7 @@ public class EventPlanning_Budget extends Composite {
 
 						// update the table
 						for (int i = 0; i < stringArrayOutflow.length; i++) {
-							InflowTable.getItem(index).setText(i, tempList[i]);
+							OutflowTable.getItem(index).setText(i, tempList[i]);
 						}
 						/* update budget overview section */
 						label();
