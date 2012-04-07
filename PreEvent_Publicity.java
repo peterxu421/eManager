@@ -19,11 +19,15 @@ import org.eclipse.swt.widgets.Shell;
 public class PreEvent_Publicity extends Composite {
 	protected Composite left;
 	protected Composite right;
-	Gallery gallery;
+	protected Gallery gallery;
 	private GalleryItem group;
-
+	private String eventName; 
+	private String pictureDirectory;
 	public PreEvent_Publicity(Composite parent, int style) {
 		super(parent, style);
+		
+		eventName = SessionManager.getCurrentEvent().getEventName();
+		pictureDirectory = "Pictures" + File.separator + eventName;
 		// Background
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2;
@@ -94,30 +98,32 @@ public class PreEvent_Publicity extends Composite {
 
 	private void addImage(final String path, final String filename) {
 		String source = path + File.separator + filename;
-		String target = "Pictures" + File.separator + filename;
+		String target = pictureDirectory + File.separator + filename;
 		File sourceFile = new File(source);
 		File targetFile = new File(target);
 		FileUtil.copyFile(sourceFile, targetFile);
-		Image image = new Image(getDisplay(), new ImageData("Pictures"
-				+ File.separator + filename));
+		Image image = new Image(getDisplay(), new ImageData(target));
 		if (image != null) {
 			GalleryItem item = new GalleryItem(group, SWT.None);
 			item.setImage(image);
-			//item.setText(filename);
 		}
 	}
+	
+	/*Directory is created here*/
 	private void fillImages() {
-		File imageDirectory = new File("Pictures");
+		File imageDirectory = new File(pictureDirectory);
 		if (!imageDirectory.exists())
 			imageDirectory.mkdir();
 
 		String[] images = imageDirectory.list();
+		
 		for (int i = 0; i < images.length; i++) {
-			Image image = new Image(getDisplay(), new ImageData("Pictures"
-					+ File.separator + images[i]));
-			if (image != null) {
-				GalleryItem item = new GalleryItem(group, SWT.None);
-				item.setImage(image);
+			if(images[i].contains(".jpg") || images[i].contains(".png") || images[i].contains(".bmp")){
+				Image image = new Image(getDisplay(), new ImageData(pictureDirectory + File.separator + images[i]));
+				if (image != null) {
+					GalleryItem item = new GalleryItem(group, SWT.None);
+					item.setImage(image);
+				}
 			}
 		}
 	}
@@ -161,7 +167,6 @@ public class PreEvent_Publicity extends Composite {
 			}
 		}
 	}
-
 	private class DeleteAdapter extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (gallery.getSelectionCount() != 0) {

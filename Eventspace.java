@@ -103,7 +103,7 @@ class Eventspace extends Composite {
 		// body->left & right panel
 		GridData leftData = new GridData(150, 450);
 		GridData rightData = new GridData(800, 450);
-		left = new Composite(body, SWT.BORDER);
+		left = new Composite(body, SWT.None);
 		right = new Composite(body, SWT.None);
 		left.setLayoutData(leftData);
 		right.setLayoutData(rightData);

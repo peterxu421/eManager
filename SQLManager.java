@@ -109,6 +109,7 @@ public class SQLManager {
 	private static String createPasswordTable = "CREATE TABLE PasswordTable("
 			+ "ID INTEGER," + "Password VARCHAR(50))";
 
+
 	public static Connection createDatabase() {
 		Connection connection = null;
 		PreparedStatement statement = null;
