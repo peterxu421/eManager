@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -15,6 +17,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -154,8 +157,11 @@ public class VenueBooking_WeekView extends Composite {
 		@Override
 		public void dateChanged(Calendar date) {
 			/* Clear the week view time table before start a new bookingInfo check */
-			weekViewTable.removeAll();
-			
+			weekViewTable.removeAll(); // remove table items
+			for(int i=0; i<weekViewTable.getColumnCount(); i++){
+				weekViewTable.getColumn(i).setText("");
+			}
+		
 			if (date != null){
 				
 				/*Fill up time slots in the table */
@@ -228,6 +234,7 @@ public class VenueBooking_WeekView extends Composite {
 					}
 				}	
 			}
+
 		}
 
 		@Override
@@ -236,6 +243,7 @@ public class VenueBooking_WeekView extends Composite {
 		}
 		@Override
 		public void popupClosed() {
+
 
 		}
 		
@@ -296,18 +304,26 @@ public class VenueBooking_WeekView extends Composite {
 	
 	public class clear extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e){
-			/* clear table highlighting */
-			for(int i=0; i<weekViewTable.getItemCount(); i++){
-				TableItem item = weekViewTable.getItem(i);
-				for(int j=0; j<weekViewTable.getColumnCount(); j++){
-					if(item.getBackground(j).equals(selectedCellColor)){
-						item.setBackground(j, null);
+			if (selectedDateTimeList.getItemCount()!=0){
+				/* clear table highlighting */
+				for(int i=0; i<weekViewTable.getItemCount(); i++){
+					TableItem item = weekViewTable.getItem(i);
+					for(int j=0; j<weekViewTable.getColumnCount(); j++){
+						if(item.getBackground(j).equals(selectedCellColor)){
+							item.setBackground(j, null);
+						}
 					}
 				}
+				/* update the bookedDateTimelist to be passed to the venue booking page */
+				selectedDateTimeList.removeAll();
+				bookedDateTimeList.clear();
 			}
-			/* update the bookedDateTimelist to be passed to the venue booking page */
-			selectedDateTimeList.removeAll();
-			bookedDateTimeList.clear();
+			else {
+				MessageBox noInputWarning = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+				noInputWarning.setText("Warning!");
+				noInputWarning.setMessage("No timeslot chosen!");
+				noInputWarning.open();
+			}
 		}	
 	}
 	
@@ -317,13 +333,19 @@ public class VenueBooking_WeekView extends Composite {
 				Shell vBookingShell = new Shell(getDisplay(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				vBookingShell.setLocation(400, 100);
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
-				vBookingShell.setText("eManager - Booking Registration");
+				vBookingShell.setText("eManager - Registration");
 				vBookingShell.setImage(icon);
 				VenueBooking_BookingPage vBookingPage  = new VenueBooking_BookingPage(vBookingShell, SWT.None, selectedVenue, bookedDateTimeList);
 				vBookingPage.pack();
 				vBookingShell.setLocation(400,200);
 				vBookingShell.pack();
 				vBookingShell.open();
+			}
+			else {
+				MessageBox noInputWarning = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+				noInputWarning.setText("Warning!");
+				noInputWarning.setMessage("No timeslot chosen!");
+				noInputWarning.open();
 			}
 		}
 	}

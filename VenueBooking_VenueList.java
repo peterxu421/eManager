@@ -99,7 +99,6 @@ public class VenueBooking_VenueList extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			int index = comboLocation.getSelectionIndex();
 			String location = comboLocation.getItem(index);
-			System.out.println(location);
 			DatabaseReader db = new DatabaseReader();
 			venuesAtSameLocation = db.getVenuesByLocation(location);
 			venueTable.removeAll(); // clear the table to load new information
@@ -126,7 +125,7 @@ public class VenueBooking_VenueList extends Composite {
 						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				venueWeekViewShell.setLocation(200, 100);
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
-				venueWeekViewShell.setText("eManager - Venue Application Week View");
+				venueWeekViewShell.setText("eManager - Venue Availability Week View");
 				venueWeekViewShell.setImage(icon);
 
 				Venue selectedVenue = venuesAtSameLocation.get(index);

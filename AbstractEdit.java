@@ -19,7 +19,7 @@ public abstract class AbstractEdit extends AbstractForm {
 		super(parent, style, stringList, signature);
 		// TODO Auto-generated constructor stub
 		// Set buttons
-		parent.getShell().setText("Edit");
+		parent.getShell().setText("eManager - Edit");
 		//Set shell's location
 		parent.getShell().setLocation(400, 200);
 

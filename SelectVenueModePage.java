@@ -141,7 +141,7 @@ public class SelectVenueModePage extends Composite {
 			Shell shell = new Shell(getDisplay());
 			shell.setLocation(200, 50);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
-			shell.setText("Venue Manager");
+			shell.setText("eManager - Venue Registration");
 			shell.setImage(icon);
 			SessionManager.setCurrentMode(MACRO.APPLICANT);
 			SessionManager.disposeShells(getDisplay(), shell);

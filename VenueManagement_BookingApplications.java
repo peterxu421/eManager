@@ -159,16 +159,26 @@ public class VenueManagement_BookingApplications extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			int index = applicationTable.getSelectionIndex();
 			if (index >= 0 && index <= applicationTable.getItemCount()) {
-				/* update the application table */
-				TableItem item = applicationTable.getItem(index);
-				item.setBackground(null); // get rid of the conflict color reminder if there is any
-				item.setText(7, "Rejected");
+				MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.NO | SWT.ICON_WARNING );
+				warningPage.setText("Warning!");
+				warningPage.setMessage("Are you sure to reject this application?");
+				int choice = warningPage.open(); 
+				switch (choice){
+				case SWT.YES:
+					/* update the application table */
+					TableItem item = applicationTable.getItem(index);
+					item.setBackground(null); // get rid of the conflict color reminder if there is any
+					item.setText(7, "Rejected");
 
-				/* update the database */
-				DatabaseReader db = new DatabaseReader();
-				VenueBookingApplication bookingInfo = notApprovedBookingAppList.get(index);
-				bookingInfo.setStatus(MACRO.REJECTED);
-				db.updateVenueBookingInfo(bookingInfo);
+					/* update the database */
+					DatabaseReader db = new DatabaseReader();
+					VenueBookingApplication bookingInfo = notApprovedBookingAppList.get(index);
+					bookingInfo.setStatus(MACRO.REJECTED);
+					db.updateVenueBookingInfo(bookingInfo);
+					break;
+				case SWT.NO:
+					break;
+				}
 			}
 		}
 	}
@@ -281,12 +291,22 @@ public class VenueManagement_BookingApplications extends Composite {
 				}
 				// no conflict
 				else {
-					/* update the database */
-					selectedBookingApp.setStatus(MACRO.APPROVED);
-					db.updateVenueBookingInfo(selectedBookingApp);
-					/* update the application table */
-					item.setText(7, "Approved");
-					item.setBackground(null); // get rid of the conflict color reminder if there is any
+					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.NO | SWT.ICON_WARNING );
+					warningPage.setText("Warning!");
+					warningPage.setMessage("Are you sure to approve this application?");
+					int choice = warningPage.open(); 
+					switch (choice){
+					case SWT.YES:
+						/* update the database */
+						selectedBookingApp.setStatus(MACRO.APPROVED);
+						db.updateVenueBookingInfo(selectedBookingApp);
+						/* update the application table */
+						item.setText(7, "Approved");
+						item.setBackground(null); // get rid of the conflict color reminder if there is any
+						break;
+					case SWT.NO:
+						break;
+					}
 				}
 			}
 		}

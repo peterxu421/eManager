@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -107,12 +106,6 @@ public class VenueManagement_WeekView extends Composite {
 		lblVenueName.setText("<" + selectedVenue.getName() + " @ " + selectedVenue.getLocation() + ">");
 		
 		
-//		Button btnCheck = new Button(composite, SWT.NONE);
-//		btnCheck.setBounds(240, 22, 75, 25);
-//		toolkit.adapt(btnCheck, true, true);
-//		btnCheck.setText("Check");
-//		btnCheck.addSelectionListener(new checkBookingInfo());
-		
 		btnViewAllApplications = new Button(composite, SWT.NONE);
 		btnViewAllApplications.setBounds(10, 444, 124, 25);
 		toolkit.adapt(btnViewAllApplications, true, true);
@@ -123,7 +116,6 @@ public class VenueManagement_WeekView extends Composite {
 		calendarCombo.setBounds(90, 25, 100, 25);
 		toolkit.adapt(calendarCombo);
 		toolkit.paintBordersFor(calendarCombo);
-		calendarCombo.setDate(Calendar.getInstance());
 		calendarCombo.addCalendarListener(new checkBookingInfo());
 		
 		lblApproved = new Label(composite, SWT.NONE);
@@ -152,27 +144,13 @@ public class VenueManagement_WeekView extends Composite {
 	public class checkBookingInfo implements ICalendarListener {
 		@Override
 		public void dateChanged(Calendar date) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void dateRangeChanged(Calendar start, Calendar end) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void popupClosed() {
 			/* Clear the week view time table before start a new bookingInfo check */
-			weekViewTable.removeAll();
-
-			/* Get the preferred event date */
-			Calendar calendar = new GregorianCalendar();
-			calendar.clear();
-			calendar = calendarCombo.getDate();
+			weekViewTable.removeAll(); // remove table items
+			for(int i=0; i<weekViewTable.getColumnCount(); i++){
+				weekViewTable.getColumn(i).setText("");
+			}
 			
-			if(calendar != null){
+			if(date != null){
 				
 				/*Fill up time slots in the table */
 				tblclmnTimeSlot.setText("Time Slot/Date");
@@ -190,19 +168,19 @@ public class VenueManagement_WeekView extends Composite {
 					dateInAWeekList.add(new Date(0,0,0)); // initialize the arraylist
 				}
 				for(int i=3; i<7; i++){ // right hand side half
-					day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
-					tblclmnTextFill(day_of_week, calendar, tblclmn[i]);
-					Date date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH)); // MONTH+1 because MONTH starts from 0 in default
-					dateInAWeekList.set(i, date);
-					calendar.add(Calendar.DAY_OF_MONTH, 1);  // roll the date forward
+					day_of_week = date.get(Calendar.DAY_OF_WEEK);
+					tblclmnTextFill(day_of_week, date, tblclmn[i]);
+					Date _date = new Date(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1, date.get(Calendar.DAY_OF_MONTH)); // MONTH+1 because MONTH starts from 0 in default
+					dateInAWeekList.set(i, _date);
+					date.add(Calendar.DAY_OF_MONTH, 1);  // roll the date forward
 				} 
-				calendar.add(Calendar.DAY_OF_MONTH, -4); // roll back to the selected date
+				date.add(Calendar.DAY_OF_MONTH, -4); // roll back to the selected date
 				for(int i=3; i>=0; i--){
-					day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
-					tblclmnTextFill(day_of_week, calendar, tblclmn[i]);
-					Date date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH)); // MONTH+1 because MONTH starts from 0 in default
-					dateInAWeekList.set(i, date);
-					calendar.add(Calendar.DAY_OF_MONTH, -1); // roll the date backward
+					day_of_week = date.get(Calendar.DAY_OF_WEEK);
+					tblclmnTextFill(day_of_week, date, tblclmn[i]);
+					Date _date = new Date(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1, date.get(Calendar.DAY_OF_MONTH)); // MONTH+1 because MONTH starts from 0 in default
+					dateInAWeekList.set(i, _date);
+					date.add(Calendar.DAY_OF_MONTH, -1); // roll the date backward
 				}
 				
 				
@@ -238,18 +216,28 @@ public class VenueManagement_WeekView extends Composite {
 					}
 				}
 			}
-	
+		}
+
+		@Override
+		public void dateRangeChanged(Calendar start, Calendar end) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void popupClosed() {
+			
 		}
 		
-		public void tblclmnTextFill(int day_of_week, Calendar calendar, TableColumn tblclmn){
+		public void tblclmnTextFill(int day_of_week, Calendar date, TableColumn tblclmn){
 			switch (day_of_week){
-			case 1: tblclmn.setText("Sun " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
-			case 2: tblclmn.setText("Mon " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
-			case 3: tblclmn.setText("Tue " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
-			case 4: tblclmn.setText("Wed " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
-			case 5: tblclmn.setText("Thu " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
-			case 6: tblclmn.setText("Fri " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
-			case 7: tblclmn.setText("Sat " + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)); break;
+			case 1: tblclmn.setText("Sun " + (date.get(Calendar.MONTH)+1) + "/" + date.get(Calendar.DAY_OF_MONTH)); break;
+			case 2: tblclmn.setText("Mon " + (date.get(Calendar.MONTH)+1) + "/" + date.get(Calendar.DAY_OF_MONTH)); break;
+			case 3: tblclmn.setText("Tue " + (date.get(Calendar.MONTH)+1) + "/" + date.get(Calendar.DAY_OF_MONTH)); break;
+			case 4: tblclmn.setText("Wed " + (date.get(Calendar.MONTH)+1) + "/" + date.get(Calendar.DAY_OF_MONTH)); break;
+			case 5: tblclmn.setText("Thu " + (date.get(Calendar.MONTH)+1) + "/" + date.get(Calendar.DAY_OF_MONTH)); break;
+			case 6: tblclmn.setText("Fri " + (date.get(Calendar.MONTH)+1) + "/" + date.get(Calendar.DAY_OF_MONTH)); break;
+			case 7: tblclmn.setText("Sat " + (date.get(Calendar.MONTH)+1) + "/" + date.get(Calendar.DAY_OF_MONTH)); break;
 			}
 			
 		}

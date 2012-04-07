@@ -206,9 +206,15 @@ public class VenueBooking_BookingPage extends Composite {
 				}
 				Shell[] shellList = getDisplay().getShells();
 				int size = shellList.length;
-				shellList[size-1].dispose(); // dispose the booking page
-				shellList[size-3].dispose(); // dispose the venue week view page
-			}
+				for(int i=0; i<size; i++){
+					if(shellList[i].getText().equalsIgnoreCase("eManager - Venue Availability Week View")){
+						shellList[i].dispose();// dispose the venue week view page
+					}
+					else if (shellList[i].getText().equalsIgnoreCase("eManager - Registration")){
+						shellList[i].dispose();// dispose the booking page
+					}
+				}
+		    }
 		}
 	}
 	

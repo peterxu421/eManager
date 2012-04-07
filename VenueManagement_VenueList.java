@@ -124,9 +124,6 @@ public class VenueManagement_VenueList extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			venueTable.deselectAll();
 			Shell addVenueShell = new Shell(getDisplay(),SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
-			Image icon = new Image(getDisplay(), "resources/eManager.png");
-			addVenueShell.setText("eManager - Add a venue");
-			addVenueShell.setImage(icon);
 			AbstractAdd addVenuePage = new AbstractAdd(addVenueShell, SWT.None, venueInfoArray, venueInfoSignatureArray, venueTable){
 				// submit info
 				public void onSubmit() {
@@ -141,6 +138,10 @@ public class VenueManagement_VenueList extends Composite {
 					}
 				}
 			};
+			
+			Image icon = new Image(getDisplay(), "resources/eManager.png");
+			addVenueShell.setText("eManager - Add a venue");
+			addVenueShell.setImage(icon);
 			addVenuePage.pack();
 			addVenueShell.pack();
 			addVenueShell.open();
@@ -191,18 +192,34 @@ public class VenueManagement_VenueList extends Composite {
 								viewAllApplicationsPage.pack();
 								viewAllApplicationsShell.pack();
 								viewAllApplicationsShell.open();
+								break;
 							}
 						}
 					}
 					
 					else{
-						/* update the venue list table */
-						venueTable.remove(index);
-						/* update the database */
-						db.deleteVenue(db.getVenues().get(index));
-						
+						MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.YES | SWT.NO | SWT.ICON_WARNING );
+						warningPage.setText("Warning!");
+						warningPage.setMessage("Are you sure to delete this venue?");
+						int choice = warningPage.open(); 
+						switch (choice){
+						case SWT.YES:
+							/* update the venue list table */
+							venueTable.remove(index);
+							/* update the database */
+							db.deleteVenue(db.getVenues().get(index));
+							break;
+						case SWT.NO:
+							break;
+						}
 					}
 				}
+			}
+			else {
+				MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
+				warningPage.setText("Warning!");
+				warningPage.setMessage("Please select a venue to delete!");
+				warningPage.open(); 
 			}
 		}
 	}
@@ -212,9 +229,6 @@ public class VenueManagement_VenueList extends Composite {
 			final int index = venueTable.getSelectionIndex();
 			if(index >=0 && index < venueTable.getItemCount()){
 				Shell editVenueShell = new Shell(getDisplay(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
-				Image icon = new Image(getDisplay(), "resources/eManager.png");
-				editVenueShell.setText("eManager - Edit a venue");
-				editVenueShell.setImage(icon);
 				AbstractEdit editVenuePage = new AbstractEdit(editVenueShell, SWT.None, 
 						venueInfoArray, venueInfoSignatureArray){
 					// get data from table selection
@@ -243,6 +257,9 @@ public class VenueManagement_VenueList extends Composite {
 					}
 				};
 				
+				Image icon = new Image(getDisplay(), "resources/eManager.png");
+				editVenueShell.setText("eManager - Edit a venue");
+				editVenueShell.setImage(icon);
 				editVenuePage.pack();
 				editVenueShell.pack();
 				editVenueShell.open();
@@ -257,7 +274,7 @@ public class VenueManagement_VenueList extends Composite {
 				Shell venueWeekViewShell = new Shell(getDisplay(),SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				venueWeekViewShell.setLocation(400, 100);
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
-				venueWeekViewShell.setText("eManager - Venue Availability Week View");
+				venueWeekViewShell.setText("eManager - Venue Application Week View");
 				venueWeekViewShell.setImage(icon);
 				VenueManagement_WeekView venueWeekViewPage = new VenueManagement_WeekView(venueWeekViewShell, SWT.None, index);
 				
