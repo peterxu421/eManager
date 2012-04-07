@@ -833,7 +833,7 @@ public class EventPlanning_Budget extends Composite {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayOutflow.length; i++) {
-							setData(InflowTable.getItem(index).getText(i),
+							setData(OutflowTable.getItem(index).getText(i),
 									signatureArrayOutflow[i], i);
 						}
 					}
