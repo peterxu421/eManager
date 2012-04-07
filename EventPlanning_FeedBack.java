@@ -20,7 +20,7 @@ public class EventPlanning_FeedBack extends Composite {
 	private ArrayList<Feedback> feedbackList;
 	private Event event;
 	private String[] stringArray = { "Issue", "Date", "Time" };
-	private int[] signatureArray = { MACRO.TEXT, MACRO.DATE, MACRO.TIME };
+	private int[] signatureArray = { MACRO.TEXTBIG, MACRO.DATE, MACRO.TIME };
 	private int index;
 
 	/**

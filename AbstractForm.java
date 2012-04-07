@@ -91,7 +91,7 @@ public abstract class AbstractForm extends Composite {
 		Object input = null;
 		// Deal with Text, int and double
 		if (signature == MACRO.TEXT || signature == MACRO.INT
-				|| signature == MACRO.DOUBLE) {
+				|| signature == MACRO.YEAR || signature == MACRO.DOUBLE) {
 			input = new Text(parent, SWT.BORDER);
 			((Text) input).setLayoutData(new GridData(140, 20));
 			((Text) input).addVerifyListener(new TextVerifyListener(50));
@@ -208,6 +208,7 @@ public abstract class AbstractForm extends Composite {
 		for (int i = 0; i < signature.length; i++) {
 			// Deal with Text, BigText, int and double except read only text
 			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT
+					|| signature[i] == MACRO.YEAR
 					|| signature[i] == MACRO.DOUBLE
 					|| signature[i] == MACRO.TEXTBIG
 					|| signature[i] == MACRO.PASSWORD) {
@@ -252,6 +253,7 @@ public abstract class AbstractForm extends Composite {
 		for (int i = 0; i < signature.length; i++) {
 			// Deal with Text, BigText, int and double
 			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.INT
+					|| signature[i] == MACRO.YEAR
 					|| signature[i] == MACRO.DOUBLE
 					|| signature[i] == MACRO.TEXTBIG
 					|| signature[i] == MACRO.READONLY) {
@@ -259,7 +261,7 @@ public abstract class AbstractForm extends Composite {
 				// remove extra white space input
 				stringList[i] = stringList[i].replaceAll("\\s+", " ");
 				stringList[i] = stringList[i].trim();
-			} 
+			}
 			// Deal with password
 			else if (signature[i] == MACRO.PASSWORD) {
 				stringList[i] = ((Text) get(i)).getText();
@@ -305,15 +307,39 @@ public abstract class AbstractForm extends Composite {
 	// Error checking.
 	// If there is no error, then return -1;
 	// If there exist error, then return the index of input;
+	// If there is error in year, then return -2;
 	protected int check() {
 		boolean isValid = true;
 		int index = -1;
 		for (int i = 0; i < labelList.length; i++) {
+			index = i;
 			// Deal with Text and BigText
 			if (signature[i] == MACRO.TEXT || signature[i] == MACRO.TEXTBIG
 					|| signature[i] == MACRO.PASSWORD) {
 				Text text = (Text) get(i);
 				isValid = !text.getText().isEmpty();
+			}
+			// Deal with Year, can only be in range 1-10;
+			// Year 6-10for graduate students
+			else if (signature[i] == MACRO.YEAR) {
+				Text text = (Text) map.get(labelList[i]);
+				String tempInt = text.getText();
+				// Catch the exception if string is not integer.
+				try {
+					if (Integer.parseInt(tempInt) > 0
+							&& Integer.parseInt(tempInt) <= 10) {
+						isValid = true;
+					}
+					// If the year is greater than 10
+					// Return -2, indicate he is too old in school
+					else if (Integer.parseInt(tempInt) > 10) {
+						isValid = false;
+						index = -2;
+					} else
+						isValid = false;
+				} catch (NumberFormatException e) {
+					isValid = false;
+				}
 			}
 			// Deal with integer
 			else if (signature[i] == MACRO.INT) {
@@ -321,8 +347,10 @@ public abstract class AbstractForm extends Composite {
 				String tempInt = text.getText();
 				// Catch the exception if string is not integer.
 				try {
-					Integer.parseInt(tempInt);
-					isValid = true;
+					if (Integer.parseInt(tempInt) > 0) {
+						isValid = true;
+					} else
+						isValid = false;
 				} catch (NumberFormatException e) {
 					isValid = false;
 				}
@@ -333,8 +361,10 @@ public abstract class AbstractForm extends Composite {
 				String tempDouble = text.getText();
 				// Catch the exception if string is not double.
 				try {
-					Double.parseDouble(tempDouble);
-					isValid = true;
+					if (Double.parseDouble(tempDouble) > 0) {
+						isValid = true;
+					} else
+						isValid = false;
 				} catch (NumberFormatException e) {
 					isValid = false;
 				}
@@ -359,7 +389,7 @@ public abstract class AbstractForm extends Composite {
 					isValid = true;
 				}
 			}
-			index = i;
+
 			// If isValid is false, return directly return false.
 			if (!isValid) {
 				return index;
@@ -380,9 +410,16 @@ public abstract class AbstractForm extends Composite {
 						getParent().dispose();
 					}
 				}
-			}
-
-			else {
+			} else if (check() == -2) {
+				// Show the fun massage box:)
+				MessageBox warningPage = new MessageBox(getDisplay()
+						.getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+				warningPage.setText("Warning!");
+				warningPage
+						.setMessage("Please concentrate on your study and graduate asap!\n"
+								+ "Our software cannot support you any more! Sorry!");
+				warningPage.open();
+			} else {
 				// Show messageBox if there is error in input data and specify
 				// where is the error.
 				MessageBox warningPage = new MessageBox(getDisplay()

@@ -43,23 +43,18 @@ public class EventPlanning_Itineray extends Composite {
 
 		TableColumn col_eP_participants_description = new TableColumn(
 				table_eP_participants_itinerary, SWT.CENTER);
-		col_eP_participants_description.setWidth(250);
+		col_eP_participants_description.setWidth(300);
 		col_eP_participants_description.setText("Description");
 
 		TableColumn col_eP_participants_date = new TableColumn(
 				table_eP_participants_itinerary, SWT.CENTER);
-		col_eP_participants_date.setWidth(110);
+		col_eP_participants_date.setWidth(120);
 		col_eP_participants_date.setText("Date");
 
 		TableColumn col_eP_participants_time = new TableColumn(
 				table_eP_participants_itinerary, SWT.CENTER);
-		col_eP_participants_time.setWidth(110);
+		col_eP_participants_time.setWidth(120);
 		col_eP_participants_time.setText("Time");
-
-		TableColumn col_eP_participants_done = new TableColumn(
-				table_eP_participants_itinerary, SWT.NONE);
-		col_eP_participants_done.setWidth(80);
-		col_eP_participants_done.setText("Done");
 
 		importItineraryData();
 
@@ -75,10 +70,6 @@ public class EventPlanning_Itineray extends Composite {
 			temp.setText(0, itineraryList.get(i).getItineraryDetails());
 			temp.setText(1, itineraryList.get(i).getDate().toString());
 			temp.setText(2, itineraryList.get(i).getTime().toString());
-			if (itineraryList.get(i).isDone() == true)
-				temp.setText(3, "true");
-			else
-				temp.setText(3, "false");
 		}
 	}
 

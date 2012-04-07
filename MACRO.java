@@ -23,6 +23,7 @@ public class MACRO {
 	public static int READONLY = 20;
 	public static int ROLES = 21;
 	public static int PERMANENTLYREJECTED = 22;
+	public static int YEAR = 23;
 
 	public static boolean[][] ORGANIZER_MODE = new boolean[][] {
 			{ true, true, true, true }, { true, true, true, true, true },
@@ -35,7 +36,7 @@ public class MACRO {
 			{ false, false, false, false, false }, { false }, { true, true },
 			{ true }, { false } };
 	public static boolean[][] APPLICANT_MODE = new boolean[][] {
-			{ false, true }, { false, false }, { true, true, true },{false} };
+			{ false, true }, { false, false }, { true, true, true }, { false } };
 	public static boolean[][] MANAGER_MODE = new boolean[][] { { true, true },
-			{ true, true }, { true, true, true } ,{true}};
+			{ true, true }, { true, true, true }, { true } };
 }
