@@ -22,9 +22,11 @@ public class EventPlanning_ActualEvent extends Composite {
 	private Table table_eventPlanning_actualEvent_participants;
 	private Table table_eventPlanning_actualEvents_allocOfManpower;
 	private Table table_eventPlanning_actualEvents_facilitators;
+	private Table table_eventPlanning_actualEvents_packingList;
 	private Event event;
 	private ArrayList<Itinerary> itineraryList;
 	private ArrayList<ManpowerAllocation> manpowerList;
+	private ArrayList<PackingItem> packingList;
 	private ArrayList<Facilitator> facilitatorList;
 	private ArrayList<Participant> participantList;
 	private int index;
@@ -33,17 +35,21 @@ public class EventPlanning_ActualEvent extends Composite {
 			"Done" };
 	private int[] signatureItinerary = { MACRO.TEXTBIG, MACRO.DATE, MACRO.TIME,
 			MACRO.CHECK };
+	private String[] stringArrayPackingList = { "Category", "Item", "Quantity",
+			"Remarks" };
+	private int[] signaturePackingList = { MACRO.TEXT, MACRO.TEXT, MACRO.INT,
+			MACRO.TEXTBIG };
 	private String[] stringArrayAllocationOfManpower = { "Task", "Assigned To",
 			"Date", "Done" };
 	private int[] signatureAllocationOfManpower = { MACRO.TEXT,
 			MACRO.FACILITATOR, MACRO.DATE, MACRO.CHECK };
 	private String[] stringArrayFacilitator = { "Name", "Year", "Faculty",
 			"Food Type" };
-	private int[] signatureFacilitator = { MACRO.TEXT, MACRO.INT,
+	private int[] signatureFacilitator = { MACRO.TEXT, MACRO.YEAR,
 			MACRO.FACULTY, MACRO.TEXT };
 	private String[] stringArrayParticipant = { "Name", "Year", "Faculty",
 			"Food Type" };
-	private int[] signatureParticipant = { MACRO.TEXT, MACRO.INT,
+	private int[] signatureParticipant = { MACRO.TEXT, MACRO.YEAR,
 			MACRO.FACULTY, MACRO.TEXT };
 
 	/**
@@ -138,6 +144,63 @@ public class EventPlanning_ActualEvent extends Composite {
 				.setBounds(570, 110, 80, 40);
 		toolkit.adapt(btn_eventPlanning_actualEvent_Itinerary_edit, true, true);
 		btn_eventPlanning_actualEvent_Itinerary_edit.setText("Edit ");
+
+		TabItem tbtmPackingList = new TabItem(folder_eventPlanning_actualEvent,
+				SWT.NONE);
+		tbtmPackingList.setText("Packing List");
+
+		Composite compositePackingList = new Composite(
+				folder_eventPlanning_actualEvent, SWT.NONE);
+		tbtmPackingList.setControl(compositePackingList);
+		toolkit.paintBordersFor(compositePackingList);
+
+		// PackingList
+		table_eventPlanning_actualEvents_packingList = new Table(
+				compositePackingList, SWT.BORDER | SWT.FULL_SELECTION);
+		table_eventPlanning_actualEvents_packingList
+				.setBounds(10, 10, 550, 400);
+		toolkit.adapt(table_eventPlanning_actualEvents_packingList);
+		toolkit.paintBordersFor(table_eventPlanning_actualEvents_packingList);
+		table_eventPlanning_actualEvents_packingList.setHeaderVisible(true);
+		table_eventPlanning_actualEvents_packingList.setLinesVisible(true);
+
+		TableColumn tblclmnCategory = new TableColumn(
+				table_eventPlanning_actualEvents_packingList, SWT.CENTER);
+		tblclmnCategory.setWidth(150);
+		tblclmnCategory.setText("Category");
+
+		TableColumn tblclmnItem = new TableColumn(
+				table_eventPlanning_actualEvents_packingList, SWT.CENTER);
+		tblclmnItem.setWidth(100);
+		tblclmnItem.setText("Item");
+
+		TableColumn tblclmnQuantity = new TableColumn(
+				table_eventPlanning_actualEvents_packingList, SWT.CENTER);
+		tblclmnQuantity.setWidth(80);
+		tblclmnQuantity.setText("Quantity");
+
+		TableColumn tblclmnRemark = new TableColumn(
+				table_eventPlanning_actualEvents_packingList, SWT.CENTER);
+		tblclmnRemark.setWidth(220);
+		tblclmnRemark.setText("Remark");
+
+		Button btnPackingListAdd = new Button(compositePackingList, SWT.NONE);
+		btnPackingListAdd.addSelectionListener(new PackingListAddItemPage());
+		btnPackingListAdd.setText("Add");
+		btnPackingListAdd.setBounds(570, 10, 80, 40);
+		toolkit.adapt(btnPackingListAdd, true, true);
+
+		Button btnPackingListDelete = new Button(compositePackingList, SWT.NONE);
+		btnPackingListDelete.addSelectionListener(new PackingListDeleteItem());
+		btnPackingListDelete.setText("Delete");
+		btnPackingListDelete.setBounds(570, 60, 80, 40);
+		toolkit.adapt(btnPackingListDelete, true, true);
+
+		Button btnPackingListEdit = new Button(compositePackingList, SWT.NONE);
+		btnPackingListEdit.addSelectionListener(new PackingListEditItemPage());
+		btnPackingListEdit.setText("Edit");
+		btnPackingListEdit.setBounds(570, 110, 80, 40);
+		toolkit.adapt(btnPackingListEdit, true, true);
 
 		// alloc of manpower
 		TabItem tab_eventPlanning_actualEvent_allocOfManpower = new TabItem(
@@ -366,6 +429,7 @@ public class EventPlanning_ActualEvent extends Composite {
 
 		// Fill up all the table
 		importItineraryData();
+		importPackingListData();
 		importManpowerAllocationData();
 		importFacilitorData();
 		importParticipantData();
@@ -390,12 +454,27 @@ public class EventPlanning_ActualEvent extends Composite {
 		}
 	}
 
+	// Fill up PackingList table
+	public void importPackingListData() {
+		DatabaseReader db = new DatabaseReader();
+		packingList = db.getPackingItems(event);
+
+		for (int i = 0; i < packingList.size(); i++) {
+			TableItem temp = new TableItem(
+					table_eventPlanning_actualEvents_packingList, SWT.NULL);
+			temp.setText(0, packingList.get(i).getCategory());
+			temp.setText(1, packingList.get(i).getName());
+			temp.setText(2, Integer.toString(packingList.get(i).getQuantity()));
+			temp.setText(3, packingList.get(i).getRemarks());
+		}
+	}
+
 	// Fill up ManpowerAllocation table
 	public void importManpowerAllocationData() {
 		DatabaseReader db = new DatabaseReader();
 		manpowerList = db.getManpowerAllocation(event);
 
-		for (int i = 0; i < manpowerList.size(); i++) {
+		for (int i = 0; i < packingList.size(); i++) {
 			TableItem temp = new TableItem(
 					table_eventPlanning_actualEvents_allocOfManpower, SWT.NULL);
 			temp.setText(0, manpowerList.get(i).getTaskDescription());
@@ -543,6 +622,108 @@ public class EventPlanning_ActualEvent extends Composite {
 	}
 
 	// Itinerary end
+
+	// PackingList start
+	// Add item page
+	public class PackingListAddItemPage extends SelectionAdapter {
+
+		public void widgetSelected(SelectionEvent e) {
+			Shell packingListAddItemPage = new Shell(getDisplay(),
+					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
+			AbstractAdd packingListAddItem = new AbstractAdd(
+					packingListAddItemPage, SWT.None, stringArrayPackingList,
+					signaturePackingList,
+					table_eventPlanning_actualEvents_packingList) {
+				public void onSubmit() {
+					// insert to database
+					String[] tempList = getStringList();
+					PackingItem packingItem = new PackingItem(tempList[0],
+							tempList[1], Integer.parseInt(tempList[2]),
+							tempList[3]);
+					db.insertPackingItem(event, packingItem);
+					packingList.add(packingItem);
+					// update the table
+					TableItem item = new TableItem(
+							table_eventPlanning_actualEvents_packingList,
+							SWT.NULL);
+					for (int i = 0; i < stringArrayItinerary.length; i++) {
+						item.setText(i, tempList[i]);
+					}
+				}
+			};
+			packingListAddItem.pack();
+			packingListAddItemPage.pack();
+			packingListAddItemPage.open();
+		}
+	}
+
+	// Delete table item
+	public class PackingListDeleteItem extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
+			if (table_eventPlanning_actualEvents_packingList.getColumnCount() != 0) {
+				int index = table_eventPlanning_actualEvents_packingList
+						.getSelectionIndex();
+				if (index < 0
+						|| index >= table_eventPlanning_actualEvents_packingList
+								.getItemCount()) {
+					// Do nothing.
+				} else {
+					/* update the itinerary table */
+					table_eventPlanning_actualEvents_packingList.remove(index);
+					/* update the database */
+					DatabaseReader db = new DatabaseReader();
+					db.deletePackingItem(packingList.get(index));
+					packingList.remove(index);
+				}
+			}
+		}
+	}
+
+	// Edit table item
+	public class PackingListEditItemPage extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
+			index = table_eventPlanning_actualEvents_packingList
+					.getSelectionIndex();
+			if (index < table_eventPlanning_actualEvents_packingList
+					.getItemCount() && index >= 0) {
+				Shell packingListEditItemPage = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
+				AbstractEdit packingListEditItem = new AbstractEdit(
+						packingListEditItemPage, SWT.None,
+						stringArrayItinerary, signatureItinerary) {
+					// setText
+					public void onLoad() {
+						for (int i = 0; i < stringArrayPackingList.length; i++) {
+							setData(table_eventPlanning_actualEvents_packingList
+									.getItem(index).getText(i),
+									signaturePackingList[i], i);
+						}
+					}
+
+					public void onSubmit() {
+						String[] tempList = getStringList();
+						PackingItem packingItem = packingList.get(index);
+						packingItem.setCategory(tempList[0]);
+						packingItem.setName(tempList[1]);
+						packingItem.setQuantity(Integer.parseInt(tempList[2]));
+						packingItem.setRemarks(tempList[3]);
+						// update database
+						db.updatePackingItem(packingItem);
+						// update the table
+						for (int i = 0; i < stringArrayPackingList.length; i++) {
+							table_eventPlanning_actualEvents_packingList
+									.getItem(index).setText(i, tempList[i]);
+						}
+					}
+				};
+				packingListEditItem.pack();
+				packingListEditItemPage.pack();
+				packingListEditItemPage.open();
+			}
+		}
+	}
+
+	// PackingList end
 
 	// AllocOfManpower start
 	public class AllocOfManpowerAddItemPage extends SelectionAdapter {
@@ -841,6 +1022,4 @@ public class EventPlanning_ActualEvent extends Composite {
 			}
 		}
 	}
-	// Participants end
-
 }

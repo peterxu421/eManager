@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Label;
 
@@ -21,7 +22,7 @@ public class SelectEventPage extends Composite {
 	private List list;
 	private Button btnSelect;
 	private String[] stringArrayNames = { "Event Name", "Description",
-			"Password for Manager", "Password for Facilitator" };
+			"Password for Organizer", "Password for Facilitator" };
 	private int[] signatureNames = { MACRO.TEXT, MACRO.TEXTBIG, MACRO.PASSWORD,
 			MACRO.PASSWORD };
 	Composite parent;
@@ -133,7 +134,8 @@ public class SelectEventPage extends Composite {
 				public void onSubmit() {
 					Shell shellEvent = new Shell(getDisplay());
 					shellEvent.setLocation(200, 50);
-
+					Image icon = new Image(getDisplay(), "resources/eManager.png");
+					shellEvent.setImage(icon);
 					String[] tempList = getStringList();
 					Event newEvent = new Event(tempList[0], tempList[1],
 							tempList[2], tempList[3]);
@@ -141,7 +143,6 @@ public class SelectEventPage extends Composite {
 					SessionManager.setCurrentEvent(newEvent);
 					SessionManager.setCurrentMode(MACRO.ORGANIZER);
 					Eventspace eventspace = new Eventspace(shellEvent, SWT.None);
-					System.out.println(tempList[3]);
 					eventspace.setSize(1000, 650);
 					shellEvent.pack();
 					shellEvent.open();

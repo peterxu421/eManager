@@ -26,9 +26,12 @@ public class EventPlanning_PreEvent extends Composite {
 	private ArrayList<Task> taskList;
 	private ArrayList<Organizer> memberList;
 	private String[] stringArrayItem = { "Task", "Assigned To", "Date", "Done" };
-	private int[] signatureArrayItem = { MACRO.TEXT, MACRO.ORGANIZER, MACRO.DATE, MACRO.CHECK };
-	private String[] stringArrayMember = { "Name", "Year", "Faculty","Position" };
-	private int[] signatureArrayMember = { MACRO.TEXT, MACRO.INT, MACRO.FACULTY, MACRO.TEXT };
+	private int[] signatureArrayItem = { MACRO.TEXT, MACRO.ORGANIZER,
+			MACRO.DATE, MACRO.CHECK };
+	private String[] stringArrayMember = { "Name", "Year", "Faculty",
+			"Position" };
+	private int[] signatureArrayMember = { MACRO.TEXT, MACRO.YEAR,
+			MACRO.FACULTY, MACRO.TEXT };
 	private int index;
 
 	public EventPlanning_PreEvent(Composite parent, int style, Event event) {
@@ -54,7 +57,6 @@ public class EventPlanning_PreEvent extends Composite {
 
 		TabItem tbtmTaskAssigned = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskAssigned.setText("Task Assigned");
-		
 
 		Composite composite_1 = new Composite(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskAssigned.setControl(composite_1);

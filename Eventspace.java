@@ -23,7 +23,7 @@ class Eventspace extends Composite {
 	private String[] stringArrayRegistration = { "Name", "Matriculation",
 			"Year", "Faculty", "Event", "Applying for", "Food Type", "Allergy" };
 	private int[] signatureArrayRegistration = { MACRO.TEXT, MACRO.TEXT,
-			MACRO.INT, MACRO.FACULTY, MACRO.READONLY, MACRO.ROLES, MACRO.TEXT,
+			MACRO.YEAR, MACRO.FACULTY, MACRO.READONLY, MACRO.ROLES, MACRO.TEXT,
 			MACRO.TEXT };
 	private String[] stringPassword = { "Original Password", "New Password",
 			"Confirm New Password" };
