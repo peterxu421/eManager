@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -180,11 +181,20 @@ public class PhotoEditorPage extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				width = Integer.parseInt(widthText.getText());
 				height = Integer.parseInt(heightText.getText());
-				getParent().setSize(width + 200, height);
-				left.setLayoutData(new GridData(width, height));
-				getComposite().pack();
-				getParent().pack();
-				canvas.redraw();
+				if(width <= 1400 && height <=900) {
+					getParent().setSize(width + 200, height);
+					left.setLayoutData(new GridData(width, height));
+					getComposite().pack();
+					getParent().pack();
+					canvas.redraw();
+				}
+				else{
+					MessageBox messageBox = new MessageBox(getShell(), SWT.OK
+							| SWT.ICON_ERROR);
+					messageBox.setText("ERROR");
+					messageBox.setMessage("Size too large, not supported!");
+					messageBox.open();
+				}
 			}
 		});
 	}

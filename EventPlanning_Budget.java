@@ -1,10 +1,22 @@
 import java.util.ArrayList;
+
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -28,15 +40,15 @@ public class EventPlanning_Budget extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 
-	public Table OutflowTable;
-	public Table InflowTable;
-	public Table AllocationTable;
-	public Label lblReceivedAmount;
-	public Label lblSpentAmount;
-	public Label lblYouStillHave_Amount;
-	public Label lblSpentAmount_Overview;
-	public Label lblRemainingAmount_Overview;
-	public Label lblReceivedAmount_Overview;
+	private Table OutflowTable;
+	private Table InflowTable;
+	private Table AllocationTable;
+	private Label lblReceivedAmount;
+	private Label lblSpentAmount;
+	private Label lblYouStillHave_Amount;
+	private Label lblSpentAmount_Overview;
+	private Label lblRemainingAmount_Overview;
+	private Label lblReceivedAmount_Overview;
 	// To format a double to two decimal places
 	private DecimalFormat df = new DecimalFormat("#.00");
 
@@ -51,6 +63,7 @@ public class EventPlanning_Budget extends Composite {
 	private String[] stringArrayOutflow = { "Item", "Quantity", "Type", "Purchase Date", "Cost($)/Item" };
 	private int[] signatureArrayOutflow = { MACRO.TEXT, MACRO.INT, MACRO.TEXT, MACRO.DATE, MACRO.DOUBLE };
 	private int index;
+	private Chart chart;
 
 	/**
 	 * Create the composite.
@@ -308,12 +321,17 @@ public class EventPlanning_Budget extends Composite {
 		tbtmBudgetOverview.setControl(BudgetOverviewComposite);
 		toolkit.paintBordersFor(BudgetOverviewComposite);
 		BudgetOverviewComposite.setLayout(null);
-
+		
 		Composite OverviewComposite = new Composite(BudgetOverviewComposite,
 				SWT.NONE);
 		OverviewComposite.setBounds(10, 10, 510, 450);
 		toolkit.adapt(OverviewComposite);
 		toolkit.paintBordersFor(OverviewComposite);
+		OverviewComposite.addPaintListener(new PaintListener(){
+			public void paintControl(PaintEvent e) {
+				drawChart();
+			}
+		});
 		// GridLayout overviewLayout = new GridLayout();
 		// OverviewComposite.setLayout(overviewLayout);
 
@@ -374,29 +392,18 @@ public class EventPlanning_Budget extends Composite {
 		importBudgetInflowData();
 		importBudgetOutflowData();
 
-		Chart chart = new Chart(OverviewComposite, SWT.None);
+		chart = new Chart(OverviewComposite, SWT.None);
 		chart.setBounds(0, 0, 490, 400);
 		chart.getTitle().setText("Budget Chart");
 		chart.getAxisSet().getYAxes()[0].getTitle().setText("Amount");
-		// GridData chartData = new GridData(500,500);
-		// chart.setLayoutData(chartData);
-		// OverviewComposite.pack();
+
 		String[] categories = new String[] { "Spent", "Remaining", "Received" };
 		IAxisSet axisSet = chart.getAxisSet();
 		IAxis xAxis = axisSet.getXAxis(0);
 		xAxis.setCategorySeries(categories);
 		xAxis.enableCategory(true);
 
-		double[] amounts = new double[] {
-				Double.parseDouble(lblSpentAmount_Overview.getText()),
-				Double.parseDouble(lblRemainingAmount_Overview.getText()),
-				Double.parseDouble(lblReceivedAmount_Overview.getText()) };
-		IBarSeries barSeries = (IBarSeries) chart.getSeriesSet().createSeries(
-				SeriesType.BAR, "Amount");
-		barSeries.setYSeries(amounts);
-		Color color = new Color(Display.getDefault(), 238, 221, 130);
-		barSeries.setBarColor(color);
-		chart.getAxisSet().adjustRange();
+		drawChart();
 
 	}
 
@@ -494,6 +501,21 @@ public class EventPlanning_Budget extends Composite {
 
 		lblReceivedAmount_Overview.setText(lblReceivedAmount.getText());
 		lblSpentAmount_Overview.setText(lblSpentAmount.getText());
+	}
+	
+	private void drawChart(){
+		double[] amounts = new double[] {
+				Double.parseDouble(lblSpentAmount_Overview.getText()),
+				Double.parseDouble(lblRemainingAmount_Overview.getText()),
+				Double.parseDouble(lblReceivedAmount_Overview.getText()) };
+		IBarSeries barSeries = (IBarSeries) chart.getSeriesSet().createSeries(
+				SeriesType.BAR, "Amount");
+		barSeries.setYSeries(amounts);
+
+		Color color = new Color(Display.getDefault(), 238, 221, 130);
+		barSeries.setBarColor(color);
+		chart.getAxisSet().adjustRange();
+		chart.redraw();
 	}
 
 	// Budget Allocation
