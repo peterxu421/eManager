@@ -6,11 +6,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.MessageBox;
 
-public class eP_eventRegistration extends AbstractForm {
+public class EventPlanning_EventRegistration extends AbstractForm {
 
 	Button btnClear;
 
-	public eP_eventRegistration(Composite parent, int style,
+	public EventPlanning_EventRegistration(Composite parent, int style,
 			String[] stringArrayRegistration, int[] signatureArrayRegistration) {
 		super(parent, style, stringArrayRegistration,
 				signatureArrayRegistration);

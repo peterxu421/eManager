@@ -76,7 +76,7 @@ public class PromptPassword extends Composite {
 		Shell shell = new Shell(getDisplay());
 		shell.setLocation(200, 50);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
-		shell.setText("Event Planning");
+		shell.setText("eManager - Event Planning");
 		shell.setImage(icon);
 		Eventspace eventspace = new Eventspace(shell, SWT.None);
 		eventspace.pack();
@@ -89,7 +89,7 @@ public class PromptPassword extends Composite {
 		Shell shell = new Shell(getDisplay());
 		shell.setLocation(200, 50);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
-		shell.setText("Venue Management");
+		shell.setText("eMananger - Venue Management");
 		shell.setImage(icon);
 		Venuespace venuespace = new Venuespace(shell, SWT.None);
 		venuespace.pack();

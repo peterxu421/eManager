@@ -94,7 +94,7 @@ public class SelectModePage extends Composite {
 			Shell shell = new Shell(getDisplay());
 			shell.setLocation(200, 100);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
-			shell.setText("eManager");
+			shell.setText("eManager - Participant");
 			shell.setImage(icon);
 			SessionManager.setCurrentMode(MACRO.PARTICIPANT);
 			Eventspace eventSpace = new Eventspace(shell, SWT.None);

@@ -258,6 +258,7 @@ public abstract class AbstractForm extends Composite {
 				stringList[i] = ((Text) get(i)).getText();
 				// remove extra white space input
 				stringList[i] = stringList[i].replaceAll("\\s+", " ");
+				stringList[i] = stringList[i].trim();
 			} 
 			// Deal with password
 			else if (signature[i] == MACRO.PASSWORD) {

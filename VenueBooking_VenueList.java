@@ -126,13 +126,14 @@ public class VenueBooking_VenueList extends Composite {
 						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				venueWeekViewShell.setLocation(200, 100);
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
-				venueWeekViewShell.setText("Check Availablity");
+				venueWeekViewShell.setText("eManager - Venue Application Week View");
 				venueWeekViewShell.setImage(icon);
 
 				Venue selectedVenue = venuesAtSameLocation.get(index);
 				VenueBooking_WeekView venueWeekViewPage = new VenueBooking_WeekView(
 						venueWeekViewShell, SWT.None, selectedVenue);
 				venueWeekViewPage.pack();
+				venueWeekViewShell.setLocation(250, 150);
 				venueWeekViewShell.pack();
 				venueWeekViewShell.open();
 			}

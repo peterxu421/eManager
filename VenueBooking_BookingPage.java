@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
@@ -104,17 +105,10 @@ public class VenueBooking_BookingPage extends Composite {
 		listDateTime = new List(composite, SWT.BORDER | SWT.V_SCROLL);
 		listDateTime.setBounds(10, 285, 232, 98);
 		toolkit.adapt(listDateTime, true, true);
-		Collections.sort(bookedDateTimeList); // sort the list in the order of
-												// real date and time
+		Collections.sort(bookedDateTimeList); // sort the list in the order of  real date and time
 		for (int i = 0; i < bookedDateTimeList.size(); i++) {
 			Date date = bookedDateTimeList.get(i).getDate();
-			Time timeStart = bookedDateTimeList.get(i).getTimeStart(); // find
-																		// the
-																		// start
-																		// of
-																		// the
-																		// time
-																		// interval
+			Time timeStart = bookedDateTimeList.get(i).getTimeStart(); // find the start of the time interval
 			while (i < bookedDateTimeList.size() - 1
 					&& bookedDateTimeList.get(i).getDate()
 							.isEqualTo(bookedDateTimeList.get(i + 1).getDate())) {
@@ -126,13 +120,9 @@ public class VenueBooking_BookingPage extends Composite {
 				} else
 					break;
 			}
-			Time timeEnd = bookedDateTimeList.get(i).getTimeEnd(); // find the
-																	// end of
-																	// the time
-																	// interval
+			Time timeEnd = bookedDateTimeList.get(i).getTimeEnd(); //find the end of the time interval
 			BookedDateTime timeInterval = new BookedDateTime(date, timeStart,
-					timeEnd); // a whole time interval which puts together
-								// consecutive time slots
+					timeEnd); // a whole time interval which puts together consecutive time slots
 			bookedDateTimeIntervalList.add(timeInterval);
 			listDateTime.add(timeInterval.getDate().toString() + "    From "
 					+ timeInterval.getTimeStart().toString() + " to "
@@ -160,21 +150,45 @@ public class VenueBooking_BookingPage extends Composite {
 			String _contact = "";
 			String _email = "";
 
-			if (!name.getText().isEmpty()) {
-				_name = name.getText();
+			while(true){
+				if (!name.getText().isEmpty()) {
+					_name = name.getText();
+				}
+				else{
+					noInputWarning("Full Name");
+					break;
+				}
+				if (!matricNo.getText().isEmpty()) {
+					_matricNo = matricNo.getText();
+				}
+				else{
+					noInputWarning("Matriculation Number");
+					break;
+				}
+				if (!organization.getText().isEmpty()) {
+					_organization = organization.getText();
+				}
+				else{
+					noInputWarning("Organization");
+					break;
+				}
+				if (!contact.getText().isEmpty()) {
+					_contact = contact.getText();
+				}
+				else {
+					noInputWarning("Contact Number");
+					break;
+				}
+				if (!email.getText().isEmpty()) {
+					_email = email.getText();
+				}
+				else {
+					noInputWarning("Email");
+					break;
+				}
+				break; // exit the while loop if all blanks are filled
 			}
-			if (!matricNo.getText().isEmpty()) {
-				_matricNo = matricNo.getText();
-			}
-			if (!organization.getText().isEmpty()) {
-				_organization = organization.getText();
-			}
-			if (!contact.getText().isEmpty()) {
-				_contact = contact.getText();
-			}
-			if (!email.getText().isEmpty()) {
-				_email = email.getText();
-			}
+
 
 			/* Update the database with the booking application */
 			if (!name.getText().isEmpty() && !matricNo.getText().isEmpty()
@@ -196,6 +210,13 @@ public class VenueBooking_BookingPage extends Composite {
 				shellList[size-3].dispose(); // dispose the venue week view page
 			}
 		}
+	}
+	
+	public void noInputWarning(String item){
+		MessageBox warningpage = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
+		warningpage.setText("Warning!");
+		warningpage.setMessage(item + " is empty!");
+		warningpage.open();
 	}
 
 	public class reset extends SelectionAdapter {

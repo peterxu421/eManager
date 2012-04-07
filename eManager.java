@@ -121,8 +121,10 @@ public class eManager {
 		public void widgetSelected(SelectionEvent event) {
 			Shell version_shell = new Shell(display, SWT.APPLICATION_MODAL
 					| SWT.DIALOG_TRIM);
-			version_shell.setText("File Version");
+			version_shell.setText("eManager - File Version");
 			version_shell.setLocation(400, 250);
+			Image icon = new Image(display, "resources/eManager.png");
+			version_shell.setImage(icon);
 			FileVersion version_page = new FileVersion(version_shell, SWT.None);
 			version_page.pack();
 			version_shell.pack();
@@ -134,7 +136,7 @@ public class eManager {
 	class EventManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell mode_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
-			mode_shell.setText("Event Manager");
+			mode_shell.setText("eManager - Event Management");
 			mode_shell.setLocation(400, 200);
 			SessionManager.setCurrentMode(MACRO.ORGANIZER);
 			SelectEventPage newEventPage = new SelectEventPage(mode_shell,
@@ -171,7 +173,7 @@ public class eManager {
 						venueManagerShell.setLocation(200, 50);
 						Image icon = new Image(getDisplay(),
 								"resources/eManager.png");
-						venueManagerShell.setText("Venue Management");
+						venueManagerShell.setText("eManager - Venue Management");
 						venueManagerShell.setImage(icon);
 						Venuespace venuespace = new Venuespace(
 								venueManagerShell, SWT.None);
@@ -214,7 +216,7 @@ public class eManager {
 			// at least once.
 			else {
 				Shell mode_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
-				mode_shell.setText("Venue Manager");
+				mode_shell.setText("eManager - Venue Management");
 				mode_shell.setLocation(400, 200);
 				PromptPassword mode_page = new PromptPassword(mode_shell,
 						SWT.None, MACRO.MANAGER);
@@ -229,8 +231,10 @@ public class eManager {
 	class MenuApplicantListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell mode_shell = new Shell(display);
-			mode_shell.setText("Venue Applicant");
+			mode_shell.setText("eManager - Venue Applicant");
 			mode_shell.setLocation(200, 50);
+			Image icon = new Image(display, "resources/eManager.png");
+			mode_shell.setImage(icon);
 			SessionManager.setCurrentMode(MACRO.APPLICANT);
 			Venuespace venuspace = new Venuespace(mode_shell, SWT.None);
 			venuspace.pack();

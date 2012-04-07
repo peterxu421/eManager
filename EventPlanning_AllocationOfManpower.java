@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class eP_facilitator_AllocOfManpower extends Composite {
+public class EventPlanning_AllocationOfManpower extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Table table_eP_facilitator_allocOfManpower;
@@ -23,7 +23,7 @@ public class eP_facilitator_AllocOfManpower extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public eP_facilitator_AllocOfManpower(Composite parent, int style,
+	public EventPlanning_AllocationOfManpower(Composite parent, int style,
 			Event event) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {

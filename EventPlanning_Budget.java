@@ -42,8 +42,8 @@ public class EventPlanning_Budget extends Composite {
 
 	private Event event;
 	private ArrayList<BudgetPlanning> budgetAllocationList;
-	private ArrayList<Inflow> inflowList;
-	private ArrayList<Outflow> outflowList;
+	private ArrayList<BudgetInflow> inflowList;
+	private ArrayList<BudgetOutflow> outflowList;
 	private String[] stringArrayBudget = { "Item", "Person in Charge",
 			"Cost($)", "Date" };
 	private int[] signatureArrayBudget = { MACRO.TEXT, MACRO.ORGANIZER,
@@ -162,7 +162,7 @@ public class EventPlanning_Budget extends Composite {
 		toolkit.paintBordersFor(tabFolder_1);
 
 		TabItem tbtmInflow = new TabItem(tabFolder_1, SWT.NONE);
-		tbtmInflow.setText("Inflow");
+		tbtmInflow.setText("BudgetInflow");
 
 		Composite InflowComposite = new Composite(tabFolder_1, SWT.NONE);
 		tbtmInflow.setControl(InflowComposite);
@@ -231,7 +231,7 @@ public class EventPlanning_Budget extends Composite {
 		btnInflowDelete.addSelectionListener(new DeleteInflow());
 
 		TabItem tbtmOutflow = new TabItem(tabFolder_1, SWT.NONE);
-		tbtmOutflow.setText("Outflow");
+		tbtmOutflow.setText("BudgetOutflow");
 
 		Composite OutflowComposite = new Composite(tabFolder_1, SWT.NONE);
 		tbtmOutflow.setControl(OutflowComposite);
@@ -515,11 +515,11 @@ public class EventPlanning_Budget extends Composite {
 						// insert to database
 						String[] tempList = getStringList();
 						Date date = new Date(tempList[3]);
-						BudgetPlanning budgetAllocation = new BudgetPlanning(
+						BudgetPlanning budgetPlanning = new BudgetPlanning(
 								tempList[0], tempList[1],
 								Double.parseDouble(tempList[2]), date);
-						db.insertBudgetAllocation(event, budgetAllocation);
-						budgetAllocationList.add(budgetAllocation);
+						db.insertBudgetAllocation(event, budgetPlanning);
+						budgetAllocationList.add(budgetPlanning);
 						// update the table
 						TableItem item = new TableItem(AllocationTable,
 								SWT.NULL);
@@ -593,13 +593,12 @@ public class EventPlanning_Budget extends Composite {
 					public void onSubmit() {
 						String[] tempList = getStringList();
 
-						BudgetPlanning budgetAllocation = budgetAllocationList
-								.get(index);
-						budgetAllocation.setItem(tempList[0]);
-						budgetAllocation.setPersonInCharge(tempList[1]);
-						budgetAllocation.setCost(Double
+						BudgetPlanning budgetPlanning = budgetAllocationList.get(index);
+						budgetPlanning.setItem(tempList[0]);
+						budgetPlanning.setPersonInCharge(tempList[1]);
+						budgetPlanning.setCost(Double
 								.parseDouble(tempList[2]));
-						budgetAllocation.setDate(new Date(tempList[3]));
+						budgetPlanning.setDate(new Date(tempList[3]));
 
 						/* update budget allocation table */
 						double previous = Double.parseDouble(AllocationTable
@@ -611,7 +610,7 @@ public class EventPlanning_Budget extends Composite {
 								.format(currentAmount - addition + previous)));
 
 						// update database
-						db.updateBudgetAllocation(budgetAllocation);
+						db.updateBudgetAllocation(budgetPlanning);
 						// update the table
 						for (int i = 0; i < stringArrayBudget.length; i++) {
 							AllocationTable.getItem(index).setText(i,
@@ -631,7 +630,7 @@ public class EventPlanning_Budget extends Composite {
 	}
 
 	// Cash Flow
-	// Inflow
+	// BudgetInflow
 	class AddInflow extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (InflowTable.getSelectionCount() == 0) {
@@ -644,11 +643,11 @@ public class EventPlanning_Budget extends Composite {
 						// insert to database
 						String[] tempList = getStringList();
 						Date date = new Date(tempList[2]);
-						Inflow inflow = new Inflow(tempList[0],
+						BudgetInflow budgetInflow = new BudgetInflow(tempList[0],
 								Double.parseDouble(tempList[1]), date,
 								tempList[3]);
-						db.insertInflow(event, inflow);
-						inflowList.add(inflow);
+						db.insertInflow(event, budgetInflow);
+						inflowList.add(budgetInflow);
 						// update the table
 						TableItem item = new TableItem(InflowTable, SWT.NULL);
 						for (int i = 0; i < stringArrayInflow.length; i++) {
@@ -717,13 +716,13 @@ public class EventPlanning_Budget extends Composite {
 
 					public void onSubmit() {
 						String[] tempList = getStringList();
-						Inflow inflow = inflowList.get(index);
-						inflow.setSponsor(tempList[0]);
-						inflow.setAmount(Double.parseDouble(tempList[1]));
-						inflow.setDate(new Date(tempList[2]));
-						inflow.setRemarks(tempList[3]);
+						BudgetInflow budgetInflow = inflowList.get(index);
+						budgetInflow.setSponsor(tempList[0]);
+						budgetInflow.setAmount(Double.parseDouble(tempList[1]));
+						budgetInflow.setDate(new Date(tempList[2]));
+						budgetInflow.setRemarks(tempList[3]);
 						// update database
-						db.updateInflow(inflow);
+						db.updateInflow(budgetInflow);
 
 						/* update budget inflow table */
 						double currentAmount = Double
@@ -750,7 +749,7 @@ public class EventPlanning_Budget extends Composite {
 		}
 	}
 
-	// Outflow
+	// BudgetOutflow
 	class AddOutflow extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			if (OutflowTable.getSelectionCount() == 0) {
@@ -765,10 +764,10 @@ public class EventPlanning_Budget extends Composite {
 						Date date = new Date(tempList[3]);
 						double amount = Double.parseDouble(tempList[4]);
 						int quan = Integer.parseInt(tempList[1]);
-						Outflow outflow = new Outflow(tempList[0], quan,
+						BudgetOutflow budgetOutflow = new BudgetOutflow(tempList[0], quan,
 								tempList[2], date, amount);
-						db.insertOutflow(event, outflow);
-						outflowList.add(outflow);
+						db.insertOutflow(event, budgetOutflow);
+						outflowList.add(budgetOutflow);
 						// update the table
 						TableItem item = new TableItem(OutflowTable, SWT.NULL);
 						for (int i = 0; i < stringArrayOutflow.length; i++) {
@@ -841,16 +840,16 @@ public class EventPlanning_Budget extends Composite {
 
 					public void onSubmit() {
 						String[] tempList = getStringList();
-						Outflow outflow = outflowList.get(index);
+						BudgetOutflow budgetOutflow = outflowList.get(index);
 						int quan = Integer.parseInt(tempList[1]);
 						double amount = Double.parseDouble(tempList[4]);
-						outflow.setItem(tempList[0]);
-						outflow.setQuantity(quan);
-						outflow.setType(tempList[2]);
-						outflow.setDate(new Date(tempList[3]));
-						outflow.setCost(amount);
+						budgetOutflow.setItem(tempList[0]);
+						budgetOutflow.setQuantity(quan);
+						budgetOutflow.setType(tempList[2]);
+						budgetOutflow.setDate(new Date(tempList[3]));
+						budgetOutflow.setCost(amount);
 						// update database
-						db.updateOutflow(outflow);
+						db.updateOutflow(budgetOutflow);
 
 						/* update budget outflow table */
 						int quanPrev = Integer.parseInt(OutflowTable.getItem(

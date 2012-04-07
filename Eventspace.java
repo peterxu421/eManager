@@ -366,19 +366,19 @@ class Eventspace extends Composite {
 						right, SWT.NONE, SessionManager.getCurrentEvent());
 				actual_event.pack();
 			} else if (name.equals("Manpower Allocation")) {
-				eP_facilitator_AllocOfManpower allocation = new eP_facilitator_AllocOfManpower(
+				EventPlanning_AllocationOfManpower allocation = new EventPlanning_AllocationOfManpower(
 						right, SWT.None, SessionManager.getCurrentEvent());
 				allocation.pack();
 			} else if (name.equals("Itinerary")) {
-				eP_participants_itinerary itinerary = new eP_participants_itinerary(
+				EventPlanning_Itineray itinerary = new EventPlanning_Itineray(
 						right, SWT.None, SessionManager.getCurrentEvent());
 				itinerary.pack();
 			} else if (name.equals("Packing List")) {
-				eP_participants_packingList packing = new eP_participants_packingList(
+				EventPlanning_PackingList packing = new EventPlanning_PackingList(
 						right, SWT.None, SessionManager.getCurrentEvent());
 				packing.pack();
 			} else if (name.equals("Event Registration")) {
-				eP_eventRegistration register = new eP_eventRegistration(right,
+				EventPlanning_EventRegistration register = new EventPlanning_EventRegistration(right,
 						SWT.None, stringArrayRegistration,
 						signatureArrayRegistration);
 				register.pack();

@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -83,30 +81,6 @@ public class VenueBooking_WeekView extends Composite {
 			tblclmn[i] = new TableColumn(weekViewTable, SWT.CENTER);
 			tblclmn[i].setWidth(75);	
 		}
-		
-		weekViewTable.addListener(SWT.EraseItem, new Listener()
-		{
-			public void handleEvent(Event event)
-			{
-				event.detail &= ~SWT.SELECTED;
-			}			
-		}); // Disable the default table selection
-		
-		
-		/* trials to remove row highlighting */
-		FocusListener disableHighlighting = new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				// do nothing
-			}
-
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				// do nothing
-			}
-		};
-		weekViewTable.addFocusListener(disableHighlighting);
 		
 		weekViewTable.addListener(SWT.MouseDoubleClick, new chooseTime());
 
@@ -278,9 +252,6 @@ public class VenueBooking_WeekView extends Composite {
 			}	
 			
 		}
-//		public void widgetSelected(SelectionEvent e) {
-//	
-//		}
 	}
 	
 	
@@ -346,10 +317,11 @@ public class VenueBooking_WeekView extends Composite {
 				Shell vBookingShell = new Shell(getDisplay(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				vBookingShell.setLocation(400, 100);
 				Image icon = new Image(getDisplay(), "resources/eManager.png");
-				vBookingShell.setText("eManager");
+				vBookingShell.setText("eManager - Booking Registration");
 				vBookingShell.setImage(icon);
 				VenueBooking_BookingPage vBookingPage  = new VenueBooking_BookingPage(vBookingShell, SWT.None, selectedVenue, bookedDateTimeList);
 				vBookingPage.pack();
+				vBookingShell.setLocation(400,200);
 				vBookingShell.pack();
 				vBookingShell.open();
 			}

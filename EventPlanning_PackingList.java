@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class eP_participants_packingList extends Composite {
+public class EventPlanning_PackingList extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Table table_eP_participants_packingList;
@@ -22,7 +22,7 @@ public class eP_participants_packingList extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public eP_participants_packingList(Composite parent, int style, Event event) {
+	public EventPlanning_PackingList(Composite parent, int style, Event event) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {

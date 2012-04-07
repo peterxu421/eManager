@@ -122,39 +122,39 @@ public class DatabaseReader {
 				budget.getDate().toString());
 	}
 
-	/* Inflow */
-	public ArrayList<Inflow> getInflow(Event event) {
-		ArrayList<Inflow> inflows = new ArrayList<Inflow>();
+	/* BudgetInflow */
+	public ArrayList<BudgetInflow> getInflow(Event event) {
+		ArrayList<BudgetInflow> budgetInflows = new ArrayList<BudgetInflow>();
 		ResultSet rs = null;
 		try {
 			rs = SQLManager.getInflowDetails(connection, event.getEventID());
 			while (rs.next()) {
 				Date date = Date.parseDate(rs.getDate("Date").toString());
-				Inflow inflow = new Inflow(rs.getInt(1), rs.getString(3),
+				BudgetInflow budgetInflow = new BudgetInflow(rs.getInt(1), rs.getString(3),
 						rs.getDouble(4), date, rs.getString(6));
-				inflows.add(inflow);
+				budgetInflows.add(budgetInflow);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return inflows;
+		return budgetInflows;
 	}
 
-	public void insertInflow(Event event, Inflow inflow) {
+	public void insertInflow(Event event, BudgetInflow budgetInflow) {
 		int inflowID = SQLManager.insertInflowDetails(connection,
-				event.getEventID(), inflow.getSponsor(), inflow.getAmount(),
-				inflow.getDate().toString(), inflow.getRemarks());
-		inflow.setInflowID(inflowID);
+				event.getEventID(), budgetInflow.getSponsor(), budgetInflow.getAmount(),
+				budgetInflow.getDate().toString(), budgetInflow.getRemarks());
+		budgetInflow.setInflowID(inflowID);
 	}
 
-	public void deleteInflow(Inflow inflow) {
-		SQLManager.deleteInflowDetails(connection, inflow.getInflowID());
+	public void deleteInflow(BudgetInflow budgetInflow) {
+		SQLManager.deleteInflowDetails(connection, budgetInflow.getInflowID());
 	}
 
-	public void updateInflow(Inflow inflow) {
-		SQLManager.updateInflowDetails(connection, inflow.getInflowID(), inflow
-				.getSponsor(), inflow.getAmount(), inflow.getDate().toString(),
-				inflow.getRemarks());
+	public void updateInflow(BudgetInflow budgetInflow) {
+		SQLManager.updateInflowDetails(connection, budgetInflow.getInflowID(), budgetInflow
+				.getSponsor(), budgetInflow.getAmount(), budgetInflow.getDate().toString(),
+				budgetInflow.getRemarks());
 	}
 
 	/* Meeting */
@@ -194,40 +194,40 @@ public class DatabaseReader {
 				meeting.getTime().toString(), meeting.isDone());
 	}
 
-	/* Outflow */
-	public ArrayList<Outflow> getOutflow(Event event) {
-		ArrayList<Outflow> outflows = new ArrayList<Outflow>();
+	/* BudgetOutflow */
+	public ArrayList<BudgetOutflow> getOutflow(Event event) {
+		ArrayList<BudgetOutflow> budgetOutflows = new ArrayList<BudgetOutflow>();
 		ResultSet rs = null;
 		try {
 			rs = SQLManager.getOutflowDetails(connection, event.getEventID());
 			while (rs.next()) {
 				Date date = Date.parseDate(rs.getDate("Date").toString());
-				Outflow outflow = new Outflow(rs.getInt(1), rs.getString(7),
+				BudgetOutflow budgetOutflow = new BudgetOutflow(rs.getInt(1), rs.getString(7),
 						rs.getInt(3), rs.getString(4), date, rs.getDouble(6));
-				outflows.add(outflow);
+				budgetOutflows.add(budgetOutflow);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return outflows;
+		return budgetOutflows;
 	}
 
-	public void insertOutflow(Event event, Outflow outflow) {
+	public void insertOutflow(Event event, BudgetOutflow budgetOutflow) {
 		int outflowID = SQLManager.insertOutflowDetails(connection,
-				event.getEventID(), outflow.getItem(), outflow.getQuantity(),
-				outflow.getType(), outflow.getDate().toString(),
-				outflow.getCost());
-		outflow.setOutflowID(outflowID);
+				event.getEventID(), budgetOutflow.getItem(), budgetOutflow.getQuantity(),
+				budgetOutflow.getType(), budgetOutflow.getDate().toString(),
+				budgetOutflow.getCost());
+		budgetOutflow.setOutflowID(outflowID);
 	}
 
-	public void deleteOutflow(Outflow outflow) {
-		SQLManager.deleteOutflowDetails(connection, outflow.getOutflowID());
+	public void deleteOutflow(BudgetOutflow budgetOutflow) {
+		SQLManager.deleteOutflowDetails(connection, budgetOutflow.getOutflowID());
 	}
 
-	public void updateOutflow(Outflow outflow) {
-		SQLManager.updateOutflowDetails(connection, outflow.getOutflowID(),
-				outflow.getItem(), outflow.getQuantity(), outflow.getType(),
-				outflow.getDate().toString(), outflow.getCost());
+	public void updateOutflow(BudgetOutflow budgetOutflow) {
+		SQLManager.updateOutflowDetails(connection, budgetOutflow.getOutflowID(),
+				budgetOutflow.getItem(), budgetOutflow.getQuantity(), budgetOutflow.getType(),
+				budgetOutflow.getDate().toString(), budgetOutflow.getCost());
 	}
 
 	/* Feedback */
@@ -345,37 +345,6 @@ public class DatabaseReader {
 				manpowerAllocation.getAssignedTo(), manpowerAllocation
 						.getDate().toString(), manpowerAllocation.isDone());
 	}
-
-//	/* FileDetails */
-//	public ArrayList<EventFile> getFiles(Event event) {
-//		ArrayList<EventFile> files = new ArrayList<EventFile>();
-//		ResultSet rs = null;
-//		try {
-//			rs = SQLManager.getFileDetails(connection, event.getEventID());
-//			while (rs.next()) {
-//				EventFile file = new EventFile(rs.getInt(1), rs.getString(3),
-//						rs.getString(4), rs.getString(5));
-//				files.add(file);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return files;
-//	}
-//	public void insertFile(Event event, EventFile eventFile) {
-//		int id = SQLManager.insertFileDetails(connection, event.getEventID(),
-//				eventFile.getFileName(), eventFile.getFileDirectory(),
-//				eventFile.getFileDescription());
-//		eventFile.setFileID(id);
-//	}
-//	public void deleteFile(EventFile file) {
-//		SQLManager.deleteFileDetails(connection, file.getFileID());
-//	}
-//	public void updateFile(EventFile file) {
-//		SQLManager.updateFileDetails(connection, file.getFileID(),
-//				file.getFileName(), file.getFileDirectory(),
-//				file.getFileDescription());
-//	}
 
 	/* PackingDetails */
 	public ArrayList<PackingItem> getPackingItems(Event event) {

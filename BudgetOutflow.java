@@ -1,4 +1,4 @@
-public class Outflow {
+public class BudgetOutflow {
 	private int outflowID;
 	private String item;
 	private int quantity;
@@ -6,7 +6,7 @@ public class Outflow {
 	private Date date;
 	private double cost;
 
-	public Outflow(int outflowID, String item, int quantity, String type,
+	public BudgetOutflow(int outflowID, String item, int quantity, String type,
 			Date date, double cost) {
 		super();
 		this.outflowID = outflowID;
@@ -17,7 +17,7 @@ public class Outflow {
 		this.cost = cost;
 	}
 
-	public Outflow(String item, int quantity, String type, Date date,
+	public BudgetOutflow(String item, int quantity, String type, Date date,
 			double cost) {
 		super();
 		this.item = item;

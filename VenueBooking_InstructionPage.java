@@ -7,6 +7,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Event;
 
 public class VenueBooking_InstructionPage extends Composite {
 
@@ -53,10 +54,8 @@ public class VenueBooking_InstructionPage extends Composite {
 		}
 
 		list.addListener(SWT.MouseDown, new Listener() {
-			@Override
-			public void handleEvent(org.eclipse.swt.widgets.Event arg0) {
+			public void handleEvent(Event e) {
 				list.deselectAll();
-
 			}
 		}); // disable table item selection
 	}

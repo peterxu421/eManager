@@ -1,18 +1,18 @@
-public class Inflow {
+public class BudgetInflow {
 	private int inflowID;
 	private String sponsor;
 	private double amount;
 	private Date date;
 	private String remarks;
 
-	public Inflow(String sponsor, double amount, Date date, String remarks) {
+	public BudgetInflow(String sponsor, double amount, Date date, String remarks) {
 		this.sponsor = sponsor;
 		this.amount = amount;
 		this.date = date;
 		this.remarks = remarks;
 	}
 
-	public Inflow(int inflowID, String sponsor, double amount, Date date,
+	public BudgetInflow(int inflowID, String sponsor, double amount, Date date,
 			String remarks) {
 		this.inflowID = inflowID;
 		this.sponsor = sponsor;
