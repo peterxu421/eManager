@@ -2,6 +2,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
@@ -424,8 +426,8 @@ public abstract class AbstractForm extends Composite {
 				messageBox.setMessage("Input in " + name
 						+ " is more than 50 characters");
 				messageBox.open();
-				e.text = "";
 			}
+			System.out.println(e.text);
 		}
 	}
 }
