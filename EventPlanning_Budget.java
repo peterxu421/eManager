@@ -44,18 +44,12 @@ public class EventPlanning_Budget extends Composite {
 	private ArrayList<BudgetPlanning> budgetAllocationList;
 	private ArrayList<BudgetInflow> inflowList;
 	private ArrayList<BudgetOutflow> outflowList;
-	private String[] stringArrayBudget = { "Item", "Person in Charge",
-			"Cost($)", "Date" };
-	private int[] signatureArrayBudget = { MACRO.TEXT, MACRO.ORGANIZER,
-			MACRO.DOUBLE, MACRO.DATE };
-	private String[] stringArrayInflow = { "Sponsor", "Amount($)", "Date",
-			"Remarks" };
-	private int[] signatureArrayInflow = { MACRO.TEXT, MACRO.DOUBLE,
-			MACRO.DATE, MACRO.TEXTBIG };
-	private String[] stringArrayOutflow = { "Item", "Quantity", "Type",
-			"Purchase Date", "Cost($)/Item" };
-	private int[] signatureArrayOutflow = { MACRO.TEXT, MACRO.INT, MACRO.TEXT,
-			MACRO.DATE, MACRO.DOUBLE };
+	private String[] stringArrayBudget = { "Item", "Person in Charge", "Cost($)", "Date" };
+	private int[] signatureArrayBudget = { MACRO.TEXT, MACRO.ORGANIZER,	MACRO.DOUBLE, MACRO.DATE };
+	private String[] stringArrayInflow = { "Sponsor", "Amount($)", "Date", "Remarks" };
+	private int[] signatureArrayInflow = { MACRO.TEXT, MACRO.DOUBLE, MACRO.DATE, MACRO.TEXTBIG };
+	private String[] stringArrayOutflow = { "Item", "Quantity", "Type", "Purchase Date", "Cost($)/Item" };
+	private int[] signatureArrayOutflow = { MACRO.TEXT, MACRO.INT, MACRO.TEXT, MACRO.DATE, MACRO.DOUBLE };
 	private int index;
 
 	/**

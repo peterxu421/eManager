@@ -461,8 +461,8 @@ public abstract class AbstractForm extends Composite {
 				messageBox.setMessage("Input in " + name
 						+ " is more than 50 characters");
 				messageBox.open();
-				e.text = "";
 			}
+			System.out.println(e.text);
 		}
 	}
 }
