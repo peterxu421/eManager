@@ -1,4 +1,5 @@
 package eManager.abstractForm;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
@@ -26,7 +27,7 @@ public abstract class AbstractEdit extends AbstractForm {
 		// TODO Auto-generated constructor stub
 		// Set buttons
 		parent.getShell().setText("eManager - Edit");
-		//Set shell's location
+		// Set shell's location
 		parent.getShell().setLocation(400, 200);
 
 		Button btnAdd = new Button(this, SWT.None);
@@ -54,7 +55,8 @@ public abstract class AbstractEdit extends AbstractForm {
 	protected void setData(String string, int signature, int index) {
 		// Deal with Text, BigText, integer, double
 		if (signature == MACRO.TEXT || signature == MACRO.INT
-				|| signature == MACRO.TEXTBIG || signature == MACRO.DOUBLE) {
+				|| signature == MACRO.YEAR || signature == MACRO.TEXTBIG
+				|| signature == MACRO.DOUBLE) {
 			((Text) get(index)).setText(string);
 		}
 		// Deal with Date
