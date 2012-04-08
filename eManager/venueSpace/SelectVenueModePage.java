@@ -15,8 +15,8 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import eManager.PromptPassword;
 import eManager.abstractForm.AbstractAdd;
-import eManager.common.PromptPassword;
 import eManager.database.DatabaseReader;
 import eManager.macro.MACRO;
 import eManager.macro.SessionManager;

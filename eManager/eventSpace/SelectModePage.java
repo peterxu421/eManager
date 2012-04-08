@@ -12,7 +12,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Button;
 
-import eManager.common.PromptPassword;
+import eManager.PromptPassword;
 import eManager.macro.MACRO;
 import eManager.macro.SessionManager;
 
