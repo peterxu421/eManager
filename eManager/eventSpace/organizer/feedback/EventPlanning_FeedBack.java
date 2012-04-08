@@ -48,7 +48,7 @@ public class EventPlanning_FeedBack extends Composite {
 
 		tableFeedBack = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
 		tableFeedBack.setLocation(10, 10);
-		tableFeedBack.setSize(550, 400);
+		tableFeedBack.setSize(550, 419);
 		toolkit.adapt(tableFeedBack);
 		toolkit.paintBordersFor(tableFeedBack);
 		tableFeedBack.setHeaderVisible(true);

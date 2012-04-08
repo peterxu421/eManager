@@ -81,7 +81,7 @@ public class EventPlanning_ActualEvent extends Composite {
 		TabFolder folder_eventPlanning_actualEvent = new TabFolder(this,
 				SWT.NONE);
 		folder_eventPlanning_actualEvent.setLocation(0, 0);
-		folder_eventPlanning_actualEvent.setSize(673, 500);
+		folder_eventPlanning_actualEvent.setSize(673, 450);
 		// tabFolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		folder_eventPlanning_actualEvent.setToolTipText("Itinerary");
 		toolkit.adapt(folder_eventPlanning_actualEvent);

@@ -90,7 +90,7 @@ public class PhotoEditorPage extends Composite {
 		right.setLayout(rightLayout);
 
 		Button auto = new Button(right, SWT.PUSH);
-		GridData autoData = new GridData(180, 70);
+		GridData autoData = new GridData(180, 50);
 		auto.setLayoutData(autoData);
 		auto.setText("Auto-Generate");
 		auto.addSelectionListener(new SelectionAdapter() {
@@ -108,7 +108,7 @@ public class PhotoEditorPage extends Composite {
 		});
 
 		Button undo = new Button(right, SWT.PUSH);
-		GridData undoData = new GridData(180, 70);
+		GridData undoData = new GridData(180, 50);
 		undo.setLayoutData(undoData);
 		undo.setText("Undo");
 		undo.addSelectionListener(new SelectionAdapter() {
@@ -121,7 +121,7 @@ public class PhotoEditorPage extends Composite {
 		});
 		
 		Button save = new Button(right, SWT.PUSH);
-		GridData saveData = new GridData(180,70);
+		GridData saveData = new GridData(180,50);
 		save.setLayoutData(saveData);
 		save.setText("Save");
 		save.addSelectionListener(new SelectionAdapter() {
@@ -134,7 +134,7 @@ public class PhotoEditorPage extends Composite {
 		});
 		
 		Button saveAs = new Button(right, SWT.PUSH);
-		GridData saveAsData = new GridData(180, 70);
+		GridData saveAsData = new GridData(180, 50);
 		saveAs.setLayoutData(saveAsData);
 		saveAs.setText("Save As");
 		saveAs.addSelectionListener(new SelectionAdapter() {

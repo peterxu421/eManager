@@ -60,7 +60,7 @@ public class EventPlanning_PreEvent extends Composite {
 
 		TabFolder tabFolderPreEvent = new TabFolder(this, SWT.NONE);
 		tabFolderPreEvent.setLocation(0, 0);
-		tabFolderPreEvent.setSize(600, 540);
+		tabFolderPreEvent.setSize(680, 450);
 		tabFolderPreEvent.setBackground(SWTResourceManager
 				.getColor(SWT.COLOR_BLACK));
 		tabFolderPreEvent.setToolTipText("Task Assignment");
@@ -122,6 +122,7 @@ public class EventPlanning_PreEvent extends Composite {
 
 		TabItem tbtmTaskChart = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskChart.setText("Task Chart");
+		
 		Composite composite_2 = new Composite(tabFolderPreEvent, SWT.NONE);
 		tbtmTaskChart.setControl(composite_2);
 		toolkit.paintBordersFor(composite_2);
@@ -141,7 +142,6 @@ public class EventPlanning_PreEvent extends Composite {
 		toolkit.paintBordersFor(publicity);
 
 		publicity.pack();
-		tabFolderPreEvent.pack();
 
 		TabItem tbtmCommittee = new TabItem(tabFolderPreEvent, SWT.NONE);
 		tbtmCommittee.setText("Committee");
