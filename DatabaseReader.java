@@ -700,6 +700,7 @@ public class DatabaseReader {
 				booking.getDateTime().getTimeStart().toString(), booking.getDateTime().getTimeEnd().toString(), booking.getStatus());
 		booking.setVenueBookingApplicationID(id);
 	}
+	
 	public void updateVenueBookingInfo(VenueBookingApplication booking){
 		SQLManager.updateVenueBookingDetails(connection, booking.getVenueBookingApplicationID(), 
 				booking.getApplicant().getID(), booking.getDateTime().getDate().toString(),
@@ -716,6 +717,7 @@ public class DatabaseReader {
 			deleteVenueApplicant(applicant);
 		}
 	}
+	
 	public void deleteVenueBookingInfo(VenueBookingApplication booking){
 		SQLManager.deleteVenueBookingDetails(connection, booking.getVenueBookingApplicationID());
 		deleteVenueApplicant(booking.getApplicant());

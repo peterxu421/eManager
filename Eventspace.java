@@ -1,6 +1,8 @@
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -9,6 +11,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 class Eventspace extends Composite {
 	Composite header;
@@ -317,6 +320,27 @@ class Eventspace extends Composite {
 					signatureSetting[0], 0);
 			setData(SessionManager.getCurrentEvent().getEventDescription(),
 					signatureSetting[1], 1);
+			Text eventName = (Text)get(0);
+			eventName.addVerifyListener(new VerifyListener(){
+				public void verifyText(VerifyEvent e) {
+					String exp = "/\\:*?\"<>|";
+					char[] check = exp.toCharArray();
+					boolean isValid = true;
+					for(int i=0; i<check.length; i++){
+						if(e.text.length()!=0)
+							if(e.text.charAt(0)==check[i]) 
+								isValid = false;
+					}
+					if(isValid == false){
+						e.doit = false;
+						MessageBox messageBox = new MessageBox(getShell(), SWT.OK
+								| SWT.ICON_ERROR);
+						messageBox.setText("ERROR");
+						messageBox.setMessage("EventName must not contant " + exp);
+						messageBox.open();
+					}
+				}
+			});
 		}
 
 		@Override

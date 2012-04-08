@@ -1,10 +1,14 @@
 import java.util.ArrayList;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.SWT;
@@ -129,8 +133,7 @@ public class SelectEventPage extends Composite {
 					| SWT.ON_TOP);
 			add_newEvent_shell.setLocation(getShell().getLocation());
 			AbstractAdd add_newEvent_page = new AbstractAdd(add_newEvent_shell,
-					SWT.None, stringArrayNames, signatureNames, new Table(
-							getShell(), SWT.None)) {
+					SWT.None, stringArrayNames, signatureNames, new Table(getShell(), SWT.None)) {
 				public void onSubmit() {
 					Shell shellEvent = new Shell(getDisplay());
 					shellEvent.setLocation(200, 50);
@@ -147,6 +150,29 @@ public class SelectEventPage extends Composite {
 					shellEvent.pack();
 					shellEvent.open();
 					parent.dispose();
+				}
+				public void onLoad(){
+					Text eventName = (Text)get(0);
+					eventName.addVerifyListener(new VerifyListener(){
+						public void verifyText(VerifyEvent e) {
+							String exp = "/\\:*?\"<>|";
+							char[] check = exp.toCharArray();
+							boolean isValid = true;
+							for(int i=0; i<check.length; i++){
+								if(e.text.length()!=0)
+									if(e.text.charAt(0)==check[i]) 
+										isValid = false;
+							}
+							if(isValid == false){
+								e.doit = false;
+								MessageBox messageBox = new MessageBox(getShell(), SWT.OK
+										| SWT.ICON_ERROR);
+								messageBox.setText("ERROR");
+								messageBox.setMessage("EventName must not contant " + exp);
+								messageBox.open();
+							}
+						}
+					});
 				}
 			};
 			add_newEvent_page.setSize(getShell().getSize());
