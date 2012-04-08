@@ -143,7 +143,7 @@ public class PreEvent_Publicity extends Composite {
 			open.setImage(icon);
 			FileDialog browser = new FileDialog(open, SWT.OPEN | SWT.MULTI);
 			browser.setFilterExtensions(new String[] { "*.jpg", "*.png",
-					"*.bmp", "*.*" });
+					"*.bmp"});
 			browser.open();
 
 			String[] filenames = browser.getFileNames();
