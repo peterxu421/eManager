@@ -1,4 +1,5 @@
 package eManager;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -19,7 +20,6 @@ import eManager.venueSpace.SelectVenueModePage;
 public class WelcomePage extends Composite {
 
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-
 
 	/**
 	 * Create the composite.
@@ -60,11 +60,11 @@ public class WelcomePage extends Composite {
 
 	class EventPlanner extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM
-					| SWT.ON_TOP);
+			Shell add_item_shell = new Shell(getDisplay(),
+					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 			add_item_shell.setLocation(400, 200);
-			Image icon = new Image(getDisplay(),
-					"resources/eManager.png");
+			add_item_shell.setText("eManager - Event Management");
+			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			add_item_shell.setImage(icon);
 			SelectEventPage add_new_item_page = new SelectEventPage(
 					add_item_shell, SWT.None);
@@ -78,11 +78,11 @@ public class WelcomePage extends Composite {
 	class VenueManager extends SelectionAdapter {
 
 		public void widgetSelected(SelectionEvent e) {
-			Shell add_item_shell = new Shell(getDisplay(), SWT.NO_TRIM
-					| SWT.ON_TOP);
+			Shell add_item_shell = new Shell(getDisplay(),
+					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 			add_item_shell.setLocation(400, 200);
-			Image icon = new Image(getDisplay(),
-					"resources/eManager.png");
+			add_item_shell.setText("eManager - Venue Management");
+			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			add_item_shell.setImage(icon);
 			SelectVenueModePage add_new_item_page = new SelectVenueModePage(
 					add_item_shell, SWT.None);

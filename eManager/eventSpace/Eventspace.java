@@ -18,13 +18,13 @@ import eManager.abstractForm.AbstractEdit;
 import eManager.dataType.event.Event;
 import eManager.eventSpace.facilitator.EventPlanning_AllocationOfManpower;
 import eManager.eventSpace.organizer.actualEvent.EventPlanning_ActualEvent;
-import eManager.eventSpace.organizer.actualEvent.EventPlanning_Itineray;
 import eManager.eventSpace.organizer.budget.EventPlanning_Budget;
 import eManager.eventSpace.organizer.feedback.EventPlanning_FeedBack;
 import eManager.eventSpace.organizer.meeting.EventPlanning_Meeting;
 import eManager.eventSpace.organizer.preEvent.EventPlanning_PreEvent;
 import eManager.eventSpace.participant.EventPlanning_PackingList;
 import eManager.eventSpace.registration.EventPlanning_EventRegistration;
+import eManager.eventSpace.registration.EventPlanning_Itineray;
 import eManager.macro.MACRO;
 import eManager.macro.SessionManager;
 

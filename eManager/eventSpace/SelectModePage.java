@@ -63,7 +63,11 @@ public class SelectModePage extends Composite {
 
 	class OrganizerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell pass_shell = new Shell(getShell(), SWT.NO_TRIM | SWT.ON_TOP);
+			Image icon = new Image(getDisplay(), "resources/eManager.png");
+			Shell pass_shell = new Shell(getShell(), SWT.APPLICATION_MODAL
+					| SWT.DIALOG_TRIM);
+			pass_shell.setImage(icon);
+			pass_shell.setText("eManager - Enter Organizer Password");
 			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.ORGANIZER);
 			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None,
@@ -77,7 +81,11 @@ public class SelectModePage extends Composite {
 
 	class FacilitatorListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell pass_shell = new Shell(getShell(), SWT.NO_TRIM | SWT.ON_TOP);
+			Image icon = new Image(getDisplay(), "resources/eManager.png");
+			Shell pass_shell = new Shell(getShell(), SWT.APPLICATION_MODAL
+					| SWT.DIALOG_TRIM);
+			pass_shell.setImage(icon);
+			pass_shell.setText("eManager - Enter Facilitator Password");
 			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.FACILITATOR);
 			PromptPassword pass_page = new PromptPassword(pass_shell, SWT.None,

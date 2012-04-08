@@ -1,4 +1,5 @@
 package eManager;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -92,8 +93,11 @@ public class eManager {
 		version.addSelectionListener(new MenuVersionListener());
 
 		// welcome page
-		welcome_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+		welcome_shell = new Shell(display, SWT.APPLICATION_MODAL
+				| SWT.DIALOG_TRIM);
 		welcome_shell.setLocation(400, 200);
+		welcome_shell.setImage(icon);
+		welcome_shell.setText("Welcome to eManagerV0.2");
 		welcome_page = new WelcomePage(welcome_shell, SWT.None);
 
 		welcome_page.setSize(400, 350);
@@ -109,8 +113,11 @@ public class eManager {
 	// opens Welcome page
 	class MenuOpenListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent event) {
-			welcome_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+			welcome_shell = new Shell(display, SWT.APPLICATION_MODAL
+					| SWT.DIALOG_TRIM);
 			welcome_shell.setText("Welcome to eManagerV0.2");
+			Image icon = new Image(display, "resources/eManager.png");
+			welcome_shell.setImage(icon);
 			welcome_shell.setLocation(400, 200);
 			welcome_page = new WelcomePage(welcome_shell, SWT.NONE);
 			welcome_page.setSize(400, 350);
@@ -146,8 +153,11 @@ public class eManager {
 
 	class EventManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell mode_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+			Shell mode_shell = new Shell(display, SWT.APPLICATION_MODAL
+					| SWT.DIALOG_TRIM);
 			mode_shell.setText("eManager - Event Management");
+			Image icon = new Image(display, "resources/eManager.png");
+			mode_shell.setImage(icon);
 			mode_shell.setLocation(400, 200);
 			SessionManager.setCurrentMode(MACRO.ORGANIZER);
 			SelectEventPage newEventPage = new SelectEventPage(mode_shell,
@@ -168,7 +178,8 @@ public class eManager {
 			DatabaseReader db = new DatabaseReader();
 			// If it is the first time to use the software
 			if (db.getPassword() == null) {
-				Shell shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+				Shell shell = new Shell(display, SWT.APPLICATION_MODAL
+						| SWT.DIALOG_TRIM);
 				shell.setLocation(200, 100);
 				AbstractAdd addPasswordVenue = new AbstractAdd(shell, SWT.None,
 						stringPassword, signaturePassword, new Table(shell,
@@ -184,7 +195,8 @@ public class eManager {
 						venueManagerShell.setLocation(200, 50);
 						Image icon = new Image(getDisplay(),
 								"resources/eManager.png");
-						venueManagerShell.setText("eManager - Venue Management");
+						venueManagerShell
+								.setText("eManager - Venue Management");
 						venueManagerShell.setImage(icon);
 						Venuespace venuespace = new Venuespace(
 								venueManagerShell, SWT.None);
@@ -226,8 +238,11 @@ public class eManager {
 			// If the password is not null. Meaning they have used the software
 			// at least once.
 			else {
-				Shell mode_shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+				Shell mode_shell = new Shell(display, SWT.APPLICATION_MODAL
+						| SWT.DIALOG_TRIM);
 				mode_shell.setText("eManager - Venue Management");
+				Image icon = new Image(display, "resources/eManager.png");
+				mode_shell.setImage(icon);
 				mode_shell.setLocation(400, 200);
 				PromptPassword mode_page = new PromptPassword(mode_shell,
 						SWT.None, MACRO.MANAGER);
@@ -254,15 +269,15 @@ public class eManager {
 			SessionManager.disposeShells(display, mode_shell);
 		}
 	}
-	
+
 	public class FileVersion extends Composite {
 
-		private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-
+		private final FormToolkit toolkit = new FormToolkit(
+				Display.getCurrent());
 
 		public FileVersion(Composite parent, int style) {
 			super(parent, style);
-			
+
 			toolkit.adapt(this);
 			toolkit.paintBordersFor(this);
 
@@ -278,7 +293,6 @@ public class eManager {
 
 		}
 	}
-
 
 	public static void main(String[] args) {
 		new eManager();

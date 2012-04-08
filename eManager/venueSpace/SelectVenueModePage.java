@@ -1,4 +1,5 @@
 package eManager.venueSpace;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -66,13 +67,18 @@ public class SelectVenueModePage extends Composite {
 
 	class ManagerListener extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell pass_shell = new Shell(getDisplay(), SWT.NO_TRIM | SWT.ON_TOP);
+			Image icon = new Image(getDisplay(), "resources/eManager.png");
+			Shell pass_shell = new Shell(getDisplay(), SWT.APPLICATION_MODAL
+					| SWT.DIALOG_TRIM);
+			pass_shell.setImage(icon);
 			pass_shell.setLocation(getShell().getLocation());
 			SessionManager.setCurrentMode(MACRO.MANAGER);
 			DatabaseReader db = new DatabaseReader();
 			// If they are the first time to use the software
 			if (db.getPassword() == null) {
-				Shell shell = new Shell(getShell(), SWT.NO_TRIM | SWT.ON_TOP);
+				Shell shell = new Shell(getShell(), SWT.APPLICATION_MODAL
+						| SWT.DIALOG_TRIM);
+				shell.setImage(icon);
 				shell.setLocation(getShell().getLocation());
 				AbstractAdd addPasswordVenue = new AbstractAdd(shell, SWT.None,
 						stringPassword, signaturePassword, new Table(
@@ -122,7 +128,8 @@ public class SelectVenueModePage extends Composite {
 						return isValid;
 					}
 				};
-				addPasswordVenue.setSize(getShell().getSize());
+				shell.setText("eManager - Set Venue Manager Password");
+				addPasswordVenue.pack();
 				shell.pack();
 				shell.open();
 			}
@@ -130,6 +137,7 @@ public class SelectVenueModePage extends Composite {
 			else {
 				PromptPassword pass_page = new PromptPassword(pass_shell,
 						SWT.None, MACRO.MANAGER);
+				pass_shell.setText("eManager - Enter Venue Manager Password");
 				pass_page.pack();
 				pass_shell.pack();
 				pass_shell.open();
