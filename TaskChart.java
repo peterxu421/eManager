@@ -79,7 +79,7 @@ public class TaskChart extends Composite {
 						if (listOfTasks.get(j).isDone()) {
 							temp = listOfTasksDone.get(i);
 							temp++;
-							listOfTasksDone.set(i, temp*10);
+							listOfTasksDone.set(i, temp*100);
 						}
 					}
 				}
