@@ -175,7 +175,7 @@ public class SelectEventPage extends Composite {
 								MessageBox messageBox = new MessageBox(getShell(), SWT.OK
 										| SWT.ICON_ERROR);
 								messageBox.setText("ERROR");
-								messageBox.setMessage("EventName must not contant " + exp);
+								messageBox.setMessage("EventName must not contain " + exp);
 								messageBox.open();
 							}
 						}

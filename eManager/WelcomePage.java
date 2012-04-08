@@ -45,11 +45,11 @@ public class WelcomePage extends Composite {
 		toolkit.adapt(lblEmanager, true, true);
 		lblEmanager.setText("eManager");
 
-		Button btnEventPlanning = new Button(this, SWT.NONE);
-		btnEventPlanning.setBounds(110, 120, 188, 60);
-		toolkit.adapt(btnEventPlanning, true, true);
-		btnEventPlanning.setText("Event Planning");
-		btnEventPlanning.addSelectionListener(new EventPlanner());
+		Button btnEventManagement = new Button(this, SWT.NONE);
+		btnEventManagement.setBounds(110, 120, 188, 60);
+		toolkit.adapt(btnEventManagement, true, true);
+		btnEventManagement.setText("Event Management");
+		btnEventManagement.addSelectionListener(new EventPlanner());
 
 		Button btnVenueManagement = new Button(this, SWT.NONE);
 		btnVenueManagement.setBounds(110, 194, 188, 60);

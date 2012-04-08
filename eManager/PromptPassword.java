@@ -77,7 +77,7 @@ public class PromptPassword extends Composite {
 		Shell shell = new Shell(getDisplay());
 		shell.setLocation(200, 50);
 		Image icon = new Image(getDisplay(), "resources/eManager.png");
-		shell.setText("eManager - Event Planning");
+		shell.setText("eManager - Event Management");
 		shell.setImage(icon);
 		Eventspace eventspace = new Eventspace(shell, SWT.None);
 		eventspace.pack();
