@@ -31,6 +31,7 @@ public class TaskChart extends Composite {
 		// set attributes
 		super(parent, style);
 		event = SessionManager.getCurrentEvent();
+
 		this.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
 				drawChart();
@@ -117,9 +118,9 @@ public class TaskChart extends Composite {
 			yAxis.setRange(new Range(0, 100));
 
 		} else {
-			this.setLayout(new FillLayout());
 			Label label = new Label(this, SWT.None);
 			label.setText("Sorry, there is either no tasks nor committee members added");
+			label.setBounds(0, 0, 500, 50);
 		}
 	}
 }
