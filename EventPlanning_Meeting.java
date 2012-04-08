@@ -27,12 +27,6 @@ public class EventPlanning_Meeting extends Composite {
 			MACRO.CHECK };
 	private int index;
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public EventPlanning_Meeting(Composite parent, int style, Event event) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {

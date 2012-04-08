@@ -52,12 +52,7 @@ public class EventPlanning_ActualEvent extends Composite {
 	private int[] signatureParticipant = { MACRO.TEXT, MACRO.YEAR,
 			MACRO.FACULTY, MACRO.TEXT };
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
+
 	public EventPlanning_ActualEvent(Composite parent, int style, Event event) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {

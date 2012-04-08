@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -298,6 +300,25 @@ public class PhotoEditorPage extends Composite {
 						text.dispose();
 					}
 				}
+			});
+			text.addFocusListener(new FocusListener() {
+				@SuppressWarnings("unchecked")
+				public void focusLost(FocusEvent e) {
+					String content = text.getText();
+					ArrayList<PaintData> current;
+					if (!stack.isEmpty()) {
+						ArrayList<PaintData> temp = stack.pop();
+						stack.push(temp);
+						current = (ArrayList<PaintData>) temp.clone();
+					} else {
+						current = new ArrayList<PaintData>();
+					}
+					current.add(new PaintData(content, x, y));
+					stack.push(current);
+					canvas.redraw();
+					text.dispose();
+				}
+				public void focusGained(FocusEvent e) {}
 			});
 		}
 

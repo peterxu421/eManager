@@ -441,12 +441,8 @@ public class EventPlanning_Budget extends Composite {
 		}
 		double currentAmount = Double.parseDouble(lblReceivedAmount.getText());
 		lblReceivedAmount.setText(String.valueOf(df.format(currentAmount
-				+ totalInflow))); // the double value is
-									// formated to two
-									// decimal palces before
-									// being converted to a
-									// string
-
+				+ totalInflow)));   // the double value is formated to two
+									// decimal palces before being converted to a string
 		/* update budget overview section */
 		label();
 	}

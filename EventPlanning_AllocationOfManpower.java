@@ -17,12 +17,6 @@ public class EventPlanning_AllocationOfManpower extends Composite {
 	private ArrayList<ManpowerAllocation> manpowerList;
 	private Event event;
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public EventPlanning_AllocationOfManpower(Composite parent, int style,
 			Event event) {
 		super(parent, style);

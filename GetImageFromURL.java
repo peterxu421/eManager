@@ -23,26 +23,6 @@ public class GetImageFromURL extends Shell {
 	private Text url;
 	private GalleryItem group;
 
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	//	public static void main(String args[]) {
-	//		try {
-	//			Display display = Display.getDefault();
-	//			GetImageFromURL shell = new GetImageFromURL(display);
-	//			shell.open();
-	//			shell.layout();
-	//			while (!shell.isDisposed()) {
-	//				if (!display.readAndDispatch()) {
-	//					display.sleep();
-	//				}
-	//			}
-	//		} catch (Exception e) {
-	//			e.printStackTrace();
-	//		}
-	//	}
-
 	public GetImageFromURL(Shell shell, int style, GalleryItem group) {
 		super(shell, style);
 
