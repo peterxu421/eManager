@@ -93,7 +93,7 @@ public class VenueManagement_VenueList extends Composite {
 		
 		Button btnView = new Button(composite, SWT.NONE);
 		btnView.setText("View Booking Applications");
-		btnView.setBounds(625, 120, 150, 30);
+		btnView.setBounds(610, 120, 180, 30);
 		toolkit.adapt(btnView, true, true);
 		btnView.addSelectionListener(new viewBookingInfo());
 	   

@@ -37,6 +37,6 @@ public class MACRO {
 			{ true }, { false } };
 	public static boolean[][] APPLICANT_MODE = new boolean[][] {
 			{ false, true }, { false, false }, { true, true, true }, { false } };
-	public static boolean[][] MANAGER_MODE = new boolean[][] { { true, true },
+	public static boolean[][] MANAGER_MODE = new boolean[][] { { true, false },
 			{ true, true }, { true, true, true }, { true } };
 }

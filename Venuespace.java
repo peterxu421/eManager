@@ -94,7 +94,7 @@ class Venuespace extends Composite {
 		eventName.setFont(SWTResourceManager.getFont("Courier New", 11,
 				SWT.NORMAL));
 		eventName
-				.setText("NUS Office of Studnet Affairs\n Copyright National University of Singapore.\nAll Rights Reserved.");
+				.setText("NUS Office of Studnet Affairs\nCopyright National University of Singapore.\nAll Rights Reserved.");
 
 		Label eventDescription = new Label(header, SWT.WRAP);
 		eventDescription.setFont(SWTResourceManager.getFont("Courier New", 11,
