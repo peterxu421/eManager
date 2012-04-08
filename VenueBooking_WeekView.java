@@ -46,11 +46,6 @@ public class VenueBooking_WeekView extends Composite {
 	private ArrayList<BookedDateTime> bookedDateTimeList = new ArrayList<BookedDateTime>();
 	                // an arrayList storing the booked date and time in the format of BookedDateTime
 
-	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
-	 */
 	public VenueBooking_WeekView(Composite parent, int style, Venue selectedVenue) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {

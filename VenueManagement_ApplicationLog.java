@@ -22,12 +22,6 @@ public class VenueManagement_ApplicationLog extends Composite {
 	private DatabaseReader db = new DatabaseReader();
 	private ArrayList<VenueBookingApplication> bookingApplicationList;
 
-	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
-	 * @wbp.parser.constructor
-	 */
 	public VenueManagement_ApplicationLog(Composite parent, int style, final Venue venue, final Table weekViewTable) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {

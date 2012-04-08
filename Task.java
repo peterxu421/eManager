@@ -1,5 +1,5 @@
 public class Task {
-	int taskID = 0;
+	private int taskID = 0;
 	private String taskDesciption;
 	private String assignedTo;
 	private Date dateDue;

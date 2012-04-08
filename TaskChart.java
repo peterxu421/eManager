@@ -15,14 +15,14 @@ import org.swtchart.Range;
 
 public class TaskChart extends Composite {
 
-	DatabaseReader db;
-	ArrayList<Organizer> listOfPeople;
-	ArrayList<Task> listOfTasks;
-	ArrayList<Integer> listOfTotalIndividualTask;
-	ArrayList<Integer> listOfTasksDone;
-	Event event;
-	double[] ySeries;
-	Chart chart;
+	private DatabaseReader db;
+	private ArrayList<Organizer> listOfPeople;
+	private ArrayList<Task> listOfTasks;
+	private ArrayList<Integer> listOfTotalIndividualTask;
+	private ArrayList<Integer> listOfTasksDone;
+	private Event event;
+	private double[] ySeries;
+	private Chart chart;
 
 	public TaskChart(Composite parent, int style) {
 		// set attributes

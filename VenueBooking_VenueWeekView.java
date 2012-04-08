@@ -52,12 +52,6 @@ public class VenueBooking_VenueWeekView extends Composite {
 	// an arrayList storing the booked date and time in the format of
 	// BookedDateTime
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public VenueBooking_VenueWeekView(Composite parent, int style,
 			Venue selectedVenue) {
 		super(parent, style);

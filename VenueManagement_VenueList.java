@@ -29,11 +29,7 @@ public class VenueManagement_VenueList extends Composite {
     private int[] venueInfoSignatureArray = { MACRO.TEXT, MACRO.VENUELOCATION, MACRO.VENUETYPE, MACRO.INT};
   
     private Date today = new Date();
-	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
-	 */
+
 	public VenueManagement_VenueList(Composite parent, int style) {
 		super(parent, style);
 		setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));

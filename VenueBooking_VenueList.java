@@ -29,12 +29,6 @@ public class VenueBooking_VenueList extends Composite {
 			"Central Library", "CFA", "PGP", "YIH", "SRC", "UCC", "Others" };
 	private ArrayList<Venue> venuesAtSameLocation;
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public VenueBooking_VenueList(Composite parent, int style) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {

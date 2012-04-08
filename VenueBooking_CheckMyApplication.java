@@ -29,12 +29,6 @@ public class VenueBooking_CheckMyApplication extends Composite {
 	
 	private Table applicationTable;
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public VenueBooking_CheckMyApplication(Composite parent, int style) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
