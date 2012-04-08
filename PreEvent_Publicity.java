@@ -117,9 +117,10 @@ public class PreEvent_Publicity extends Composite {
 			imageDirectory.mkdir();
 
 		String[] images = imageDirectory.list();
-		
+		String[] imagesLowerCase = new String[images.length];
 		for (int i = 0; i < images.length; i++) {
-			if(images[i].contains(".jpg") || images[i].contains(".png") || images[i].contains(".bmp")){
+			imagesLowerCase[i] = images[i].toLowerCase();
+			if(imagesLowerCase[i].contains(".jpg") || imagesLowerCase[i].contains(".png") || imagesLowerCase[i].contains(".bmp")){
 				Image image = new Image(getDisplay(), new ImageData(pictureDirectory + File.separator + images[i]));
 				if (image != null) {
 					GalleryItem item = new GalleryItem(group, SWT.None);
@@ -151,7 +152,6 @@ public class PreEvent_Publicity extends Composite {
 			gallery.redraw();
 		}
 	}
-
 	private class EditAdapter extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
 			Shell shell = new Shell(getDisplay());
