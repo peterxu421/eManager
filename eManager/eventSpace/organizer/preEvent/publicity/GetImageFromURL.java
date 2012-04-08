@@ -131,7 +131,6 @@ public class GetImageFromURL extends Shell {
 							fos.write(byteArray);
 							fos.flush();
 						}
-						System.out.println("fsdfsdfsdfsdf " + checker);
 					}
 					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
 					warningPage.setText("Thanks for waiting...");
