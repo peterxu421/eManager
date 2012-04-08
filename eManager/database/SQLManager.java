@@ -23,12 +23,12 @@ public class SQLManager {
 			+ "Facilitator_Password VARCHAR(50))";
 	private static String createTaskDetailsTable = "CREATE TABLE TaskDetails("
 			+ "TaskID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
-			+ "EventID INTEGER NOT NULL REFERENCES EventDetails(EventID),"
+			+ "EventID INTEGER NOT NULL,"
 			+ "TaskDescription VARCHAR(255)," + "AssignedTo VARCHAR(50),"
 			+ "Date DATE," + "Done SMALLINT)";
 	private static String createMemberDetailsTable = "CREATE TABLE MemberDetails("
 			+ "MemberID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
-			+ "EventID INTEGER NOT NULL REFERENCES EventDetails(EventID),"
+			+ "EventID INTEGER NOT NULL,"
 			+ "Name VARCHAR(50),"
 			+ "MatricNo VARCHAR(50),"
 			+ "Faculty VARCHAR(50),"
@@ -42,51 +42,51 @@ public class SQLManager {
 			+ "Organization VARCHAR(50))";
 	private static String createMeetingDetailsTable = "CREATE TABLE MeetingDetails("
 			+ "MeetingID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
-			+ "EventID INTEGER NOT NULL REFERENCES EventDetails(EventID),"
+			+ "EventID INTEGER NOT NULL,"
 			+ "MeetingDetails VARCHAR(255),"
 			+ "Date DATE,"
 			+ "Time TIME,"
 			+ "Done SMALLINT)";
 	private static String createBudgetDetailsTable = "CREATE TABLE BudgetDetails("
 			+ "BudgetID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
-			+ "EventID INTEGER NOT NULL REFERENCES EventDetails(EventID),"
+			+ "EventID INTEGER NOT NULL,"
 			+ "Item VARCHAR(255),"
 			+ "PersonInCharge VARCHAR(50),"
 			+ "Cost DOUBLE," + "Date DATE)";
 	private static String createInflowDetailsTable = "CREATE TABLE InflowDetails("
 			+ "InflowID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
-			+ "EventID INTEGER NOT NULL REFERENCES EventDetails(EventID),"
+			+ "EventID INTEGER NOT NULL,"
 			+ "Sponser VARCHAR(50),"
 			+ "Amount DOUBLE,"
 			+ "Date DATE,"
 			+ "Remarks VARCHAR(255))";
 	private static String createOutflowDetailsTable = "CREATE TABLE OutflowDetails("
 			+ "OutflowID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
-			+ "EventID INTEGER NOT NULL REFERENCES EventDetails(EventID),"
+			+ "EventID INTEGER NOT NULL,"
 			+ "Item VARCHAR(50),"
 			+ "Quantity INTEGER,"
 			+ "Type VARCHAR(50),"
 			+ "Date DATE," + "Cost DOUBLE)";
 	private static String createFeedbackDetailsTable = "CREATE TABLE FeedbackDetails("
 			+ "FeedbackID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
-			+ "EventID INTEGER NOT NULL REFERENCES EventDetails(EventID),"
+			+ "EventID INTEGER NOT NULL,"
 			+ "FeedbackDetails VARCHAR(255)," + "Date DATE," + "Time TIME)";
 	private static String createAllocationDetailsTable = "CREATE TABLE AllocationDetails("
 			+ "TaskID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
-			+ "EventID INTEGER NOT NULL REFERENCES EventDetails(EventID),"
+			+ "EventID INTEGER NOT NULL,"
 			+ "TaskDescription VARCHAR(255),"
 			+ "AssignedTo VARCHAR(50),"
 			+ "DateDue DATE," + "Done SMALLINT)";
 	private static String createItineraryDetailsTable = "CREATE TABLE ItineraryDetails("
 			+ "ItineraryID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
-			+ "EventID INTEGER NOT NULL REFERENCES EventDetails(EventID),"
+			+ "EventID INTEGER NOT NULL,"
 			+ "ItineraryDetails VARCHAR(255),"
 			+ "Date DATE,"
 			+ "Time TIME,"
 			+ "Done SMALLINT)";
 	private static String createPackingDetailsTable = "CREATE TABLE PackingDetails("
 			+ "PackingID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
-			+ "EventID INTEGER NOT NULL REFERENCES EventDetails(EventID),"
+			+ "EventID INTEGER NOT NULL,"
 			+ "Category VARCHAR(50),"
 			+ "Item VARCHAR(50),"
 			+ "Quantity INTEGER," + "Remarks VARCHAR(255))";
@@ -988,7 +988,7 @@ public class SQLManager {
 	}
 	/*-------------------------------------------------------DELETE----------------------------------------------------------------------------------*/
 	public static void deleteEventDetails(Connection connection, int eventID) {
-		String deleteEvent = "DELETE FROM EventDetails " + "WHERE EventID=?";
+		String deleteEvent = "DELETE FROM EventDetails WHERE EventID=?";
 		try {
 			PreparedStatement prep = connection.prepareStatement(deleteEvent);
 			prep.setInt(1, eventID);
