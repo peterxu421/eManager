@@ -177,27 +177,19 @@ public class VenueBooking_WeekView extends Composite {
 				/* Arrange the week view table */
 				int day_of_week;
 				Date _date = new Date();
-				tblclmn[3].setToolTipText("Prefered date");
+				tblclmn[0].setToolTipText("Prefered date");
 				for(int i=0; i<7; i++){
 					dateInAWeekList.add(new Date(0,0,0)); // initialize the arraylist
 				}
-				for(int i=0; i<7; i++){ // right hand side half
+				for(int i=0; i<7; i++){ 
 					day_of_week = date.get(Calendar.DAY_OF_WEEK);
 					tblclmnTextFill(day_of_week, date, tblclmn[i]);
 					_date = new Date(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1, date.get(Calendar.DAY_OF_MONTH)); // MONTH+1 because MONTH starts from 0 in default
 					dateInAWeekList.set(i, _date);
 					date.add(Calendar.DAY_OF_MONTH, 1);  // roll the date forward
 				} 
-//				date.add(Calendar.DAY_OF_MONTH, -4); // roll back to the selected date
-//				for(int i=3; i>=0; i--){
-//					day_of_week = date.get(Calendar.DAY_OF_WEEK);
-//					tblclmnTextFill(day_of_week, date, tblclmn[i]);
-//					_date = new Date(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1, date.get(Calendar.DAY_OF_MONTH)); // MONTH+1 because MONTH starts from 0 in default
-//					dateInAWeekList.set(i, _date);
-//					date.add(Calendar.DAY_OF_MONTH, -1); // roll the date backward
-//				}
-//				
-				/* Update the table color highlighting from the list of selected date and time*/
+
+        		/* Update the table color highlighting from the list of selected date and time*/
 				for (int k=0; k<selectedDateTimeList.getItemCount(); k++){
 					BookedDateTime dt = BookedDateTime.parseBookedDateTime(selectedDateTimeList.getItem(k));
 					for(int i=0; i<weekViewTable.getItemCount(); i++){
@@ -323,7 +315,7 @@ public class VenueBooking_WeekView extends Composite {
 			else {
 				MessageBox noInputWarning = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
 				noInputWarning.setText("Warning!");
-				noInputWarning.setMessage("No timeslot chosen!");
+				noInputWarning.setMessage("No time slot chosen!");
 				noInputWarning.open();
 			}
 		}	
@@ -346,7 +338,7 @@ public class VenueBooking_WeekView extends Composite {
 			else {
 				MessageBox noInputWarning = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING);
 				noInputWarning.setText("Warning!");
-				noInputWarning.setMessage("No timeslot chosen!");
+				noInputWarning.setMessage("No time slot chosen!");
 				noInputWarning.open();
 			}
 		}

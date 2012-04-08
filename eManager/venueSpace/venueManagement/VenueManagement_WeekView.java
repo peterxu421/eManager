@@ -172,26 +172,17 @@ public class VenueManagement_WeekView extends Composite {
 				
 				/* Arrange the week view table */
 				int day_of_week;
-				tblclmn[3].setToolTipText("Chosen date");
+				tblclmn[0].setToolTipText("Chosen date");
 				for(int i=0; i<7; i++){
 					dateInAWeekList.add(new Date(0,0,0)); // initialize the arraylist
 				}
-				for(int i=3; i<7; i++){ // right hand side half
+				for(int i=0; i<7; i++){
 					day_of_week = date.get(Calendar.DAY_OF_WEEK);
 					tblclmnTextFill(day_of_week, date, tblclmn[i]);
 					Date _date = new Date(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1, date.get(Calendar.DAY_OF_MONTH)); // MONTH+1 because MONTH starts from 0 in default
 					dateInAWeekList.set(i, _date);
 					date.add(Calendar.DAY_OF_MONTH, 1);  // roll the date forward
 				} 
-				date.add(Calendar.DAY_OF_MONTH, -4); // roll back to the selected date
-				for(int i=3; i>=0; i--){
-					day_of_week = date.get(Calendar.DAY_OF_WEEK);
-					tblclmnTextFill(day_of_week, date, tblclmn[i]);
-					Date _date = new Date(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1, date.get(Calendar.DAY_OF_MONTH)); // MONTH+1 because MONTH starts from 0 in default
-					dateInAWeekList.set(i, _date);
-					date.add(Calendar.DAY_OF_MONTH, -1); // roll the date backward
-				}
-				
 				
 				/* Get bookingInfo of the venue from database */
 				ArrayList<VenueBookingApplication> bookingInfoList = db.getVenueBookingInfo(selectedVenue);
