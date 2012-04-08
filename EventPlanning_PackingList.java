@@ -16,12 +16,6 @@ public class EventPlanning_PackingList extends Composite {
 	private ArrayList<PackingItem> packingList;
 	private Event event;
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public EventPlanning_PackingList(Composite parent, int style, Event event) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
@@ -67,7 +61,6 @@ public class EventPlanning_PackingList extends Composite {
 	public void fillTable() {
 		DatabaseReader dbReader = new DatabaseReader();
 		packingList = dbReader.getPackingItems(event);
-		// memberList = dbReader.getMember(event);
 		TableItem item;
 
 		for (int i = 0; i < packingList.size(); i++) {

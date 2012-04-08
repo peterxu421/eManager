@@ -160,9 +160,8 @@ public class PreEvent_Publicity extends Composite {
 			shell.setImage(icon);
 			shell.setLocation(300, 100);
 			if (gallery.getSelection().length != 0) {
-				Image image = gallery.getSelection()[0].getImage();
-				PhotoEditorPage page = new PhotoEditorPage(shell, SWT.NONE,
-						image);
+				String imagePath = pictureDirectory + File.separator + gallery.getSelection()[0].getText();
+				PhotoEditorPage page = new PhotoEditorPage(shell, SWT.NONE,	imagePath);
 				page.pack();
 				shell.pack();
 				shell.open();

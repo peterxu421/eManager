@@ -16,12 +16,6 @@ public class EventPlanning_Itineray extends Composite {
 	private ArrayList<Itinerary> itineraryList;
 	private Event event;
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public EventPlanning_Itineray(Composite parent, int style, Event event) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {

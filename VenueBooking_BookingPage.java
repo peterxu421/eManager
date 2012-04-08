@@ -29,12 +29,7 @@ public class VenueBooking_BookingPage extends Composite {
 	private Venue selected;
 	private ArrayList<BookedDateTime> bookedDateTimeIntervalList = new ArrayList<BookedDateTime>();
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
+
 	public VenueBooking_BookingPage(Composite parent, int style,
 			Venue selected, ArrayList<BookedDateTime> bookedDateTimeList) {
 		super(parent, style);

@@ -40,54 +40,6 @@ public abstract class AbstractAdd extends AbstractForm {
 
 	}
 
-	// Submit button selection handler: check whether there are duplicate input
-	// public class SubmitHandler extends SelectionAdapter {
-	// public void widgetSelected(SelectionEvent e) {
-	// if (check() == -1 && additionalCheck()) {
-	// // check for duplicate input
-	// String inputStr = "";
-	// boolean noDuplicateInput = true;
-	// stringList = getStringList();
-	// for (int i = 0; i < stringList.length; i++) {
-	// inputStr += stringList[i];
-	// }
-	// for (int i = 0; i < table.getItemCount(); i++) {
-	// TableItem item = table.getItem(i);
-	// String tableStr = "";
-	// for (int j = 0; j < table.getColumnCount(); j++) {
-	// tableStr += item.getText(j);
-	// }
-	// if (inputStr.equalsIgnoreCase(tableStr)) {
-	// MessageBox warningPage = new MessageBox(getDisplay()
-	// .getActiveShell(), SWT.OK | SWT.ICON_WARNING);
-	// warningPage.setText("Warning!");
-	// warningPage.setMessage("Already exsits!");
-	// warningPage.open();
-	// noDuplicateInput = false;
-	// break;
-	// }
-	// }
-	// if (noDuplicateInput == true) {
-	// onSubmit();
-	// getParent().dispose();
-	// }
-	// } else {
-	// // Show messageBox if there is error in input data and specify
-	// // where is the error.
-	// MessageBox warningPage = new MessageBox(getDisplay()
-	// .getActiveShell(), SWT.OK | SWT.ICON_WARNING);
-	// warningPage.setText("Warning!");
-	// warningPage.setMessage("Wrong input format in "
-	// + labelList[check()] + ".");
-	// int choice = warningPage.open(); // indicates the user's choice
-	// switch (choice) {
-	// case SWT.OK:
-	// break;
-	// }
-	// }
-	// }
-	// }
-
 	// Override the additionalCheck();
 	public boolean additionalCheck() {
 		// check for duplicate input

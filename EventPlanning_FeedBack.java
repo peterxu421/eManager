@@ -23,12 +23,6 @@ public class EventPlanning_FeedBack extends Composite {
 	private int[] signatureArray = { MACRO.TEXTBIG, MACRO.DATE, MACRO.TIME };
 	private int index;
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public EventPlanning_FeedBack(Composite parent, int style, Event event) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {

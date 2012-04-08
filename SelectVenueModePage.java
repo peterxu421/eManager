@@ -21,12 +21,6 @@ public class SelectVenueModePage extends Composite {
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	Composite parent;
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public SelectVenueModePage(Composite parent, int style) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {

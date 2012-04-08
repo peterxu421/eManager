@@ -22,12 +22,6 @@ public class PromptPassword extends Composite {
 	private int changeToMode;
 	private Composite parent;
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public PromptPassword(Composite parent, int style, int changeToMode) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {

@@ -459,7 +459,7 @@ public abstract class AbstractForm extends Composite {
 						| SWT.ICON_ERROR);
 				messageBox.setText("ERROR");
 				messageBox.setMessage("Input in " + name
-						+ " is more than 50 characters");
+						+ " is more than "+length+" characters");
 				messageBox.open();
 				e.doit = false;
 			}

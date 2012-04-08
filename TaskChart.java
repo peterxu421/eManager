@@ -3,10 +3,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.swtchart.Chart;
@@ -18,14 +15,14 @@ import org.swtchart.Range;
 
 public class TaskChart extends Composite {
 
-	DatabaseReader db;
-	ArrayList<Organizer> listOfPeople;
-	ArrayList<Task> listOfTasks;
-	ArrayList<Integer> listOfTotalIndividualTask;
-	ArrayList<Integer> listOfTasksDone;
-	Event event;
-	double[] ySeries;
-	Chart chart;
+	private DatabaseReader db;
+	private ArrayList<Organizer> listOfPeople;
+	private ArrayList<Task> listOfTasks;
+	private ArrayList<Integer> listOfTotalIndividualTask;
+	private ArrayList<Integer> listOfTasksDone;
+	private Event event;
+	private double[] ySeries;
+	private Chart chart;
 
 	public TaskChart(Composite parent, int style) {
 		// set attributes
@@ -84,7 +81,6 @@ public class TaskChart extends Composite {
 					}
 				}
 			}
-
 
 			// set xAxis
 			IAxisSet axisSet = chart.getAxisSet();

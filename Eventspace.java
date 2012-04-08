@@ -119,7 +119,7 @@ class Eventspace extends Composite {
 		header.setLayout(headerLayout);
 		eventName = new Label(header, SWT.NONE);
 		eventName.setText(SessionManager.getCurrentEvent().getEventName());
-		eventDescription = new Label(header, SWT.NONE);
+		eventDescription = new Label(header, SWT.WRAP);
 		eventDescription.setText(SessionManager.getCurrentEvent()
 				.getEventDescription());
 

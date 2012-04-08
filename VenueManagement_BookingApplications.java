@@ -31,12 +31,6 @@ public class VenueManagement_BookingApplications extends Composite {
 
 	// list of applications either rejected or pending
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
 	public VenueManagement_BookingApplications(Composite parent, int style) {
 		super(parent, style);
 		addDisposeListener(new DisposeListener() {
