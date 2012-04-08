@@ -1,4 +1,5 @@
 package eManager.abstractForm;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import org.eclipse.nebula.widgets.calendarcombo.CalendarCombo;
@@ -465,12 +466,11 @@ public abstract class AbstractForm extends Composite {
 				MessageBox messageBox = new MessageBox(getShell(), SWT.OK
 						| SWT.ICON_ERROR);
 				messageBox.setText("ERROR");
-				messageBox.setMessage("Input in " + name
-						+ " is more than "+length+" characters");
+				messageBox.setMessage("Input in " + name + " is more than "
+						+ length + " characters");
 				messageBox.open();
 				e.doit = false;
-			}
-			else{
+			} else {
 				e.doit = true;
 			}
 		}

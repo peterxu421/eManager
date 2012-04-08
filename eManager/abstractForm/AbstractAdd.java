@@ -1,4 +1,5 @@
 package eManager.abstractForm;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -21,9 +22,9 @@ public abstract class AbstractAdd extends AbstractForm {
 		// get the table with stored input information
 		this.table = table;
 		parent.getShell().setText("eManager - Add");
-		//Set shell's location
+		// Set shell's location
 		parent.getShell().setLocation(400, 200);
-		
+
 		// Set buttons
 		Button btnAdd = new Button(this, SWT.None);
 		btnAdd.addSelectionListener(new SubmitHandler());
