@@ -75,7 +75,7 @@ public class EventPlanning_Budget extends Composite {
 	 * @param style
 	 */
 	public EventPlanning_Budget(Composite parent, int style, Event event) {
-		super(parent, style);
+		super(parent, SWT.NONE);
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				toolkit.dispose();
@@ -86,7 +86,7 @@ public class EventPlanning_Budget extends Composite {
 		this.event = event;
 
 		TabFolder tabFolder = new TabFolder(this, SWT.NONE);
-		tabFolder.setSize(673, 500);
+		tabFolder.setSize(673, 450);
 		toolkit.adapt(tabFolder);
 		toolkit.paintBordersFor(tabFolder);
 
