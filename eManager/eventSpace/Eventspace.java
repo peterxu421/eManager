@@ -1,4 +1,5 @@
 package eManager.eventSpace;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -13,7 +14,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-
 import eManager.abstractForm.AbstractEdit;
 import eManager.dataType.event.Event;
 import eManager.eventSpace.facilitator.EventPlanning_AllocationOfManpower;
@@ -22,9 +22,9 @@ import eManager.eventSpace.organizer.budget.EventPlanning_Budget;
 import eManager.eventSpace.organizer.feedback.EventPlanning_FeedBack;
 import eManager.eventSpace.organizer.meeting.EventPlanning_Meeting;
 import eManager.eventSpace.organizer.preEvent.EventPlanning_PreEvent;
+import eManager.eventSpace.participant.EventPlanning_Itinerary;
 import eManager.eventSpace.participant.EventPlanning_PackingList;
 import eManager.eventSpace.registration.EventPlanning_EventRegistration;
-import eManager.eventSpace.registration.EventPlanning_Itineray;
 import eManager.macro.MACRO;
 import eManager.macro.SessionManager;
 
@@ -335,23 +335,24 @@ public class Eventspace extends Composite {
 					signatureSetting[0], 0);
 			setData(SessionManager.getCurrentEvent().getEventDescription(),
 					signatureSetting[1], 1);
-			Text eventName = (Text)get(0);
-			eventName.addVerifyListener(new VerifyListener(){
+			Text eventName = (Text) get(0);
+			eventName.addVerifyListener(new VerifyListener() {
 				public void verifyText(VerifyEvent e) {
 					String exp = "/\\:*?\"<>|";
 					char[] check = exp.toCharArray();
 					boolean isValid = true;
-					for(int i=0; i<check.length; i++){
-						if(e.text.length()!=0)
-							if(e.text.charAt(0)==check[i]) 
+					for (int i = 0; i < check.length; i++) {
+						if (e.text.length() != 0)
+							if (e.text.charAt(0) == check[i])
 								isValid = false;
 					}
-					if(isValid == false){
+					if (isValid == false) {
 						e.doit = false;
-						MessageBox messageBox = new MessageBox(getShell(), SWT.OK
-								| SWT.ICON_ERROR);
+						MessageBox messageBox = new MessageBox(getShell(),
+								SWT.OK | SWT.ICON_ERROR);
 						messageBox.setText("ERROR");
-						messageBox.setMessage("EventName must not contant " + exp);
+						messageBox.setMessage("EventName must not contant "
+								+ exp);
 						messageBox.open();
 					}
 				}
@@ -409,7 +410,7 @@ public class Eventspace extends Composite {
 						right, SWT.None, SessionManager.getCurrentEvent());
 				allocation.pack();
 			} else if (name.equals("Itinerary")) {
-				EventPlanning_Itineray itinerary = new EventPlanning_Itineray(
+				EventPlanning_Itinerary itinerary = new EventPlanning_Itinerary(
 						right, SWT.None, SessionManager.getCurrentEvent());
 				itinerary.pack();
 			} else if (name.equals("Packing List")) {
@@ -417,8 +418,8 @@ public class Eventspace extends Composite {
 						right, SWT.None, SessionManager.getCurrentEvent());
 				packing.pack();
 			} else if (name.equals("Event Registration")) {
-				EventPlanning_EventRegistration register = new EventPlanning_EventRegistration(right,
-						SWT.None, stringArrayRegistration,
+				EventPlanning_EventRegistration register = new EventPlanning_EventRegistration(
+						right, SWT.None, stringArrayRegistration,
 						signatureArrayRegistration);
 				register.pack();
 			}
