@@ -190,6 +190,7 @@ public class PreEvent_Publicity extends Composite {
 		public void widgetSelected(SelectionEvent e){
 			Shell shell = new GetImageFromURL(getShell(), SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM, group);
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
+			shell.setText("eManager - Image Grabber");
 			shell.setImage(icon);
 			shell.setLocation(400, 200);
 			shell.open();
