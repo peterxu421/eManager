@@ -68,7 +68,6 @@ public class GetImageFromURL extends Shell {
 			String link = "";
 			if(url.getText().contains("http://")) {
 				link = url.getText().trim().substring(url.getText().indexOf("http://")+7);
-				System.out.println(link);
 			} else {
 				link = url.getText().trim();
 			}
