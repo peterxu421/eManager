@@ -3,6 +3,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -26,24 +27,12 @@ public class TaskChart extends Composite {
 	double[] ySeries;
 	Chart chart;
 
-	public TaskChart(Composite parent, int style, Event event) {
+	public TaskChart(Composite parent, int style) {
 		// set attributes
 		super(parent, style);
-
-		// create a chart
-		chart = new Chart(this, SWT.LEFT);
-		// set titles
-		chart.getTitle().setText("Task Chart");
-		chart.getAxisSet().getXAxis(0).getTitle().setText("");
-		chart.getAxisSet().getYAxis(0).getTitle().setText("% of work done");
-		chart.setLocation(0, 0);
-		chart.setBounds(0, 0, 600, 400);
-		// set Vertical
-		chart.setOrientation(SWT.VERTICAL);
-		
-		drawChart();
+		event = SessionManager.getCurrentEvent();
 		this.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent arg0) {
+			public void paintControl(PaintEvent e) {
 				drawChart();
 			}
 		});
@@ -52,7 +41,22 @@ public class TaskChart extends Composite {
 		db = new DatabaseReader();
 		listOfPeople = db.getOrganizers(event);
 		listOfTasks = db.getTasks(event);
-		if (listOfPeople.size() != 0 && listOfTasks.size() != 0 && listOfPeople!=null && listOfTasks!=null) {
+		
+		if(this.getChildren().length!=0)
+			this.getChildren()[0].dispose();
+
+		if (listOfPeople.size() != 0 && listOfTasks.size() != 0) {
+			chart = new Chart(this, SWT.LEFT);
+			// set titles
+			chart.getTitle().setText("Task Chart");
+			chart.getAxisSet().getXAxis(0).getTitle().setText("");
+			chart.getAxisSet().getYAxis(0).getTitle().setText("% of work done");
+			chart.setLocation(0, 0);
+			chart.setBounds(0, 0, 600, 400);
+			// set Vertical
+			chart.setOrientation(SWT.VERTICAL);
+			
+
 			listOfTotalIndividualTask = new ArrayList<Integer>();
 			listOfTasksDone = new ArrayList<Integer>();
 			// initialize
@@ -60,6 +64,7 @@ public class TaskChart extends Composite {
 				listOfTotalIndividualTask.add(0);
 				listOfTasksDone.add(0);
 			}
+			
 			String[] stringOfPeople = new String[listOfPeople.size()];
 			for (int i = 0; i < listOfPeople.size(); i++) {
 				// populating the stringOfPeople
@@ -73,7 +78,7 @@ public class TaskChart extends Composite {
 						if (listOfTasks.get(j).isDone()) {
 							temp = listOfTasksDone.get(i);
 							temp++;
-							listOfTasksDone.set(i, temp);
+							listOfTasksDone.set(i, temp*10);
 						}
 					}
 				}
@@ -99,7 +104,7 @@ public class TaskChart extends Composite {
 
 			// create bar series
 			IBarSeries barSeries = (IBarSeries) chart.getSeriesSet()
-					.createSeries(SeriesType.BAR, "bar series");
+					.createSeries(SeriesType.BAR, "% of Task Done");
 			barSeries.setYSeries(ySeries);
 
 			// setting the bar's color
@@ -112,8 +117,7 @@ public class TaskChart extends Composite {
 			yAxis.setRange(new Range(0, 100));
 
 		} else {
-			this.setLayout(new GridLayout());
-			this.getChildren()[0].dispose();
+			this.setLayout(new FillLayout());
 			Label label = new Label(this, SWT.None);
 			label.setText("Sorry, there is either no tasks nor committee members added");
 		}

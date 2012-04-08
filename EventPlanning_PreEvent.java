@@ -116,7 +116,7 @@ public class EventPlanning_PreEvent extends Composite {
 		FillLayout fillLayout = new FillLayout();
 		fillLayout.marginWidth = 0;
 		composite_2.setLayout(fillLayout);
-		TaskChart taskChart = new TaskChart(composite_2, SWT.None, event);
+		TaskChart taskChart = new TaskChart(composite_2, SWT.None);
 		taskChart.setSize(400, 300);
 		taskChart.pack();
 		composite_2.pack();
