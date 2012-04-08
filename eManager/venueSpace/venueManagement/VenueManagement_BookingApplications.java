@@ -225,9 +225,6 @@ public class VenueManagement_BookingApplications extends Composite {
 						}
 						if (bookingAppList.get(i).getStatus() == MACRO.PENDING) {
 							conflictedAppList.add(bookingAppList.get(i));
-							System.out.println("Here");
-							System.out.println(bookingAppList.get(i).getVenue().getName() + bookingAppList.get(i).getDateTime().toString());
-							
 							for(int j=0; j<notApprovedBookingAppList.size(); j++){
 								if(notApprovedBookingAppList.get(j).getVenueBookingApplicationID() 
 										== bookingAppList.get(i).getVenueBookingApplicationID()){
@@ -281,8 +278,6 @@ public class VenueManagement_BookingApplications extends Composite {
 						/* highlight conflicts in the table */
 						Color conflictedColor = applicationTable.getDisplay().getSystemColor(SWT.COLOR_RED);
 						for (int i = 0; i < conflictIndexList.size(); i++) {
-							System.out.printf("%d           %d\n", applicationTable.getItemCount(), conflictedAppList.size());
-							System.out.println(conflictedAppList.get(0).getVenue().getName());
 							TableItem tempItem = applicationTable.getItem(conflictIndexList.get(i));
 							tempItem.setBackground(conflictedColor);
 						}

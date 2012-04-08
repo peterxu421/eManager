@@ -105,7 +105,6 @@ public class SelectModePage extends Composite {
 			shell.setImage(icon);
 			SessionManager.setCurrentMode(MACRO.PARTICIPANT);
 			Eventspace eventSpace = new Eventspace(shell, SWT.None);
-			System.out.println(getDisplay().getShells().length);
 			SessionManager.disposeShells(getDisplay(), shell);
 			eventSpace.pack();
 			shell.pack();

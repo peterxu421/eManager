@@ -180,7 +180,6 @@ public class PreEvent_Publicity extends Composite {
 					group.remove(images[i]);
 					File file = new File(pictureDirectory + File.separator
 							+ images[i].getText());
-					System.out.println(file);
 					file.delete();
 				}
 			}
