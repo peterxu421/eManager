@@ -454,15 +454,18 @@ public abstract class AbstractForm extends Composite {
 		public void verifyText(VerifyEvent e) {
 			String name = (String) reverseMap.get(e.getSource());
 			Text text = (Text) e.getSource();
-			if (text.getText().length() > length) {
+			if ((text.getText().length() + e.text.length()) >= length) {
 				MessageBox messageBox = new MessageBox(getShell(), SWT.OK
 						| SWT.ICON_ERROR);
 				messageBox.setText("ERROR");
 				messageBox.setMessage("Input in " + name
 						+ " is more than 50 characters");
 				messageBox.open();
+				e.doit = false;
 			}
-			System.out.println(e.text);
+			else{
+				e.doit = true;
+			}
 		}
 	}
 }
