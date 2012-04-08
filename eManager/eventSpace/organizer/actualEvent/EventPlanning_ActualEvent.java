@@ -699,7 +699,7 @@ public class EventPlanning_ActualEvent extends Composite {
 						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
 				AbstractEdit packingListEditItem = new AbstractEdit(
 						packingListEditItemPage, SWT.None,
-						stringArrayItinerary, signatureItinerary) {
+						stringArrayPackingList, signaturePackingList) {
 					// setText
 					public void onLoad() {
 						for (int i = 0; i < stringArrayPackingList.length; i++) {
