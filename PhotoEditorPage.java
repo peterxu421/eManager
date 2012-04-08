@@ -42,12 +42,14 @@ public class PhotoEditorPage extends Composite {
 
 	private int height = 500;
 	private int width = 500;
+	private Image image = null;
 	private Image newImage = null;
 	private LinkedList<ArrayList<PaintData>> stack = null;
 	private Canvas canvas = null;
 
-	public PhotoEditorPage(Composite parent, int style, final Image image) {
+	public PhotoEditorPage(Composite parent, int style, final String imagePath) {
 		super(parent, style);
+		image = new Image(getDisplay(), imagePath);
 		stack = new LinkedList<ArrayList<PaintData>>();
 
 		// bg->
@@ -112,12 +114,25 @@ public class PhotoEditorPage extends Composite {
 				}
 			}
 		});
-
+		
 		Button save = new Button(right, SWT.PUSH);
-		GridData saveData = new GridData(180, 70);
+		GridData saveData = new GridData(180,70);
 		save.setLayoutData(saveData);
-		save.setText("Save As");
+		save.setText("Save");
 		save.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				ImageLoader imageLoader = new ImageLoader();
+				imageLoader.data = new ImageData[] { newImage.getImageData() };
+				if (imagePath != null)
+					imageLoader.save(imagePath, SWT.IMAGE_JPEG);
+			}
+		});
+		
+		Button saveAs = new Button(right, SWT.PUSH);
+		GridData saveAsData = new GridData(180, 70);
+		saveAs.setLayoutData(saveAsData);
+		saveAs.setText("Save As");
+		saveAs.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				ImageLoader imageLoader = new ImageLoader();
 				imageLoader.data = new ImageData[] { newImage.getImageData() };

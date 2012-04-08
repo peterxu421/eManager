@@ -85,7 +85,6 @@ public class TaskChart extends Composite {
 				}
 			}
 
-
 			// set xAxis
 			IAxisSet axisSet = chart.getAxisSet();
 			IAxis xAxis = axisSet.getXAxis(0);
