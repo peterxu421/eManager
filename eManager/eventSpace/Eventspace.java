@@ -419,7 +419,7 @@ public class Eventspace extends Composite {
 				packing.pack();
 			} else if (name.equals("Event Registration")) {
 				EventPlanning_EventRegistration register = new EventPlanning_EventRegistration(
-						right, SWT.None, stringArrayRegistration,
+						right, SWT.BORDER, stringArrayRegistration,
 						signatureArrayRegistration);
 				register.pack();
 			}
