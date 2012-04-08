@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+
 import eManager.macro.MACRO;
 import eManager.macro.SessionManager;
 
@@ -127,8 +131,6 @@ public class SQLManager {
 			statement.execute();
 			statement = connection.prepareStatement(createMeetingDetailsTable);
 			statement.execute();
-			// statement = connection.prepareStatement(createFileDetailsTable);
-			// statement.execute();
 			statement = connection.prepareStatement(createBudgetDetailsTable);
 			statement.execute();
 			statement = connection.prepareStatement(createInflowDetailsTable);
@@ -152,7 +154,12 @@ public class SQLManager {
 			statement = connection.prepareStatement(createPasswordTable);
 			statement.execute();
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			Shell shell = new Shell(SessionManager.getDisplay());
+			MessageBox messageBox = new MessageBox(shell, SWT.ERROR | SWT.OK);
+			messageBox.setText("Error");
+			messageBox.setMessage("We detect you are running another copy of our application, please stop that first!");
+			messageBox.open();
+			System.exit(-1);
 		}
 		return connection;
 	}

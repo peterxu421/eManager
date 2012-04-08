@@ -31,6 +31,7 @@ public class eManager {
 
 	public eManager() {
 		display = new Display();
+		SessionManager.setDisplay(display);
 		rootShell = new Shell(display);
 		// menu
 		Menu menu = new Menu(rootShell, SWT.BAR);
