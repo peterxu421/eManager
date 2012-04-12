@@ -115,7 +115,10 @@ public class PreEvent_Publicity extends Composite {
 	
 	/*Directory is created here*/
 	private void fillImages() {
+		File directory = new File("Pictures");
 		File imageDirectory = new File(pictureDirectory);
+		if (!directory.exists()) 
+			directory.mkdir();
 		if (!imageDirectory.exists())
 			imageDirectory.mkdir();
 
