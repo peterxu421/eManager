@@ -78,6 +78,13 @@ public class GetImageFromURL extends Shell {
 					warningPage.open(); 
 					getShell().dispose();
 				}
+				else if(!filepath.contains(".png") && !filepath.contains(".jpg")){
+					MessageBox warningPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
+					warningPage.setText("Warning!");
+					warningPage.setMessage("Extension doesn't support!");
+					warningPage.open(); 
+					getShell().dispose();
+				}
 				else{
 						fos = new FileOutputStream(path + File.separator + filename, true);
 						byte[] b = new byte[2048];
