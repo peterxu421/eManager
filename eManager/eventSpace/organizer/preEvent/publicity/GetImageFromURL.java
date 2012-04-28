@@ -98,6 +98,7 @@ public class GetImageFromURL extends Shell {
 						Image image = new Image(getDisplay(), path + File.separator + filename);
 						GalleryItem item = new GalleryItem(group, SWT.None);
 						item.setImage(image);
+						item.setText(filename);
 						
 						MessageBox successPage  = new MessageBox(getDisplay().getActiveShell(), SWT.OK | SWT.ICON_WARNING );
 						successPage.setText("Thanks for waiting...");

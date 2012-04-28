@@ -112,6 +112,9 @@ public class PreEvent_Publicity extends Composite {
 			item.setText(filename);
 		}
 	}
+	public void updatePictureDirectory(){
+		pictureDirectory = "Pictures" + File.separator + SessionManager.getCurrentEvent().getEventName();
+	}
 	
 	/*Directory is created here*/
 	private void fillImages() {
@@ -160,7 +163,8 @@ public class PreEvent_Publicity extends Composite {
 	}
 	private class EditAdapter extends SelectionAdapter {
 		public void widgetSelected(SelectionEvent e) {
-			Shell shell = new Shell(getDisplay());
+			updatePictureDirectory();
+			Shell shell = new Shell(getShell());
 			shell.setText("Edit Image");
 			Image icon = new Image(getDisplay(), "resources/eManager.png");
 			shell.setImage(icon);
