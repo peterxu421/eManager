@@ -1,0 +1,252 @@
+package eManager.eventSpace;
+
+import java.util.ArrayList;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Label;
+
+import eManager.abstractForm.AbstractAdd;
+import eManager.dataType.event.Event;
+import eManager.database.DatabaseReader;
+import eManager.macro.MACRO;
+import eManager.macro.SessionManager;
+
+public class SelectEventPage extends Composite {
+
+	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
+	private ArrayList<Event> events;
+	private DatabaseReader databaseReader;
+	private List list;
+	private Button btnSelect;
+	private String[] stringArrayNames = { "Event Name", "Description",
+			"Password for Organizer", "Password for Facilitator" };
+	private int[] signatureNames = { MACRO.TEXT, MACRO.TEXTBIG, MACRO.PASSWORD,
+			MACRO.PASSWORD };
+	private String[] stringArrayPassword = { "Enter Password" };
+	private int[] signatureArrayPassword = { MACRO.PASSWORD };
+	Composite parent;
+
+	public SelectEventPage(Composite parent, int style) {
+		super(parent, SWT.NONE);
+		addDisposeListener(new DisposeListener() {
+			public void widgetDisposed(DisposeEvent e) {
+				toolkit.dispose();
+			}
+		});
+		toolkit.adapt(this);
+		toolkit.paintBordersFor(this);
+		this.parent = parent;
+
+		databaseReader = new DatabaseReader();
+		events = databaseReader.getEvents();
+		setLayout(null);
+
+		Button btnCreateNewProject = new Button(this, SWT.NONE);
+		btnCreateNewProject.setBounds(48, 30, 130, 40);
+		toolkit.adapt(btnCreateNewProject, true, true);
+		btnCreateNewProject.setText("Create New Event");
+		btnCreateNewProject.addSelectionListener(new AddEventHandler());
+
+		list = new List(this, SWT.BORDER | SWT.V_SCROLL);
+		list.setBounds(48, 104, 283, 249);
+		list.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				btnSelect.notifyListeners(SWT.Selection, null);
+			}
+		});
+		for (int i = 0; i < events.size(); i++) {
+			list.add(events.get(i).getEventName());
+		}
+		toolkit.adapt(list, true, true);
+
+		btnSelect = new Button(this, SWT.NONE);
+		btnSelect.setBounds(338, 162, 109, 40);
+		toolkit.adapt(btnSelect, true, true);
+		btnSelect.setText("Select");
+		btnSelect.addSelectionListener(new SelectProjectHandler());
+
+		Button btnCancel = new Button(this, SWT.NONE);
+		btnCancel.setBounds(338, 254, 109, 40);
+		toolkit.adapt(btnCancel, true, true);
+		btnCancel.setText("Cancel");
+		btnCancel.addSelectionListener(new Cancel());
+
+		Label lblWelcom = new Label(this, SWT.NONE);
+		lblWelcom.setBounds(48, 8, 167, 17);
+		toolkit.adapt(lblWelcom, true, true);
+		lblWelcom.setText("Welcome to Event Planner!");
+
+		Label lblSelectProject = new Label(this, SWT.NONE);
+		lblSelectProject.setBounds(48, 79, 109, 40);
+		toolkit.adapt(lblSelectProject, true, true);
+		lblSelectProject.setText("Select Event");
+
+		Button btnDeleteEvent = new Button(this, SWT.NONE);
+		btnDeleteEvent.setBounds(338, 208, 109, 40);
+		btnDeleteEvent.addSelectionListener(new DeleteProjectHandler());
+		toolkit.adapt(btnDeleteEvent, true, true);
+		btnDeleteEvent.setText("Delete");
+	}
+
+	class Cancel extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
+			getParent().dispose();
+		}
+	}
+
+	class DeleteProjectHandler extends SelectionAdapter {
+		int index = -1;
+
+		public void widgetSelected(SelectionEvent e) {
+			index = list.getSelectionIndex();
+			if (index >= 0 && index <= list.getItemCount()) {
+				// Double check whether the user has the authority to delete
+				// event.
+				Shell passwordShell = new Shell(getDisplay(),
+						SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
+				passwordShell.setLocation(400, 200);
+				Image icon = new Image(getDisplay(), "resources/eManager.png");
+				passwordShell.setImage(icon);
+				AbstractAdd passwordCheckPage = new AbstractAdd(passwordShell,
+						SWT.None, stringArrayPassword, signatureArrayPassword,
+						new Table(getShell(), SWT.None)) {
+
+					public void onSubmit() {
+						getStringList();
+						// update database
+						list.remove(index);
+						databaseReader.deleteEvent(events.get(index));
+					}
+
+					public boolean additionalCheck() {
+						getStringList();
+						String password = db.getEvents()
+								.get(list.getSelectionIndex())
+								.getOrganizerPassword();
+						boolean isValid = true;
+						// if the two input password does not match
+						if (!stringList[0].equals(password)) {
+							isValid = false;
+							MessageBox warningPage = new MessageBox(
+									getDisplay().getActiveShell(), SWT.OK
+											| SWT.ICON_WARNING);
+							warningPage.setText("Warning!");
+							warningPage
+									.setMessage("The password entered does not match to the original one!");
+							warningPage.open();
+						}
+						return isValid;
+					}
+				};
+				passwordShell.setText("eManager - Enter Organizer Password");
+				passwordCheckPage.pack();
+				passwordShell.pack();
+				passwordShell.open();
+			}
+		}
+	}
+
+	class SelectProjectHandler extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
+			Shell shell = new Shell(getDisplay(), SWT.APPLICATION_MODAL
+					| SWT.DIALOG_TRIM);
+			Image icon = new Image(getDisplay(), "resources/eManager.png");
+			shell.setImage(icon);
+			shell.setText("eManager - Select Mode");
+			shell.setLocation(500, 250);
+			int index = list.getSelectionIndex();
+			if (index != -1) {
+				Event existEvent = events.get(index);
+				SessionManager.setCurrentEvent(existEvent);
+				SelectModePage mode = new SelectModePage(shell, SWT.None);
+				mode.pack();
+				shell.pack();
+				shell.open();
+				getParent().dispose();
+			}
+		}
+	}
+
+	class AddEventHandler extends SelectionAdapter {
+		public void widgetSelected(SelectionEvent e) {
+			Shell add_newEvent_shell = new Shell(getDisplay(),
+					SWT.APPLICATION_MODAL | SWT.DIALOG_TRIM);
+			add_newEvent_shell.setLocation(getShell().getLocation());
+			Image icon = new Image(getDisplay(), "resources/eManager.png");
+			add_newEvent_shell.setImage(icon);
+			AbstractAdd add_newEvent_page = new AbstractAdd(add_newEvent_shell,
+					SWT.None, stringArrayNames, signatureNames, new Table(
+							getShell(), SWT.None)) {
+				public void onSubmit() {
+					Shell shellEvent = new Shell(getDisplay());
+					shellEvent.setLocation(200, 50);
+					Image icon = new Image(getDisplay(),
+							"resources/eManager.png");
+					shellEvent.setText("eManager - Event Management");
+					shellEvent.setImage(icon);
+					String[] tempList = getStringList();
+					Event newEvent = new Event(tempList[0], tempList[1],
+							tempList[2], tempList[3]);
+					db.insertEvent(newEvent);
+					SessionManager.setCurrentEvent(newEvent);
+					SessionManager.setCurrentMode(MACRO.ORGANIZER);
+					Eventspace eventspace = new Eventspace(shellEvent, SWT.None);
+					eventspace.setSize(1000, 650);
+					shellEvent.pack();
+					shellEvent.open();
+					parent.dispose();
+				}
+
+				public void onLoad() {
+					Text eventName = (Text) get(0);
+					eventName.addVerifyListener(new VerifyListener() {
+						public void verifyText(VerifyEvent e) {
+							String exp = "/\\:*?\"<>|";
+							char[] check = exp.toCharArray();
+							boolean isValid = true;
+							for (int i = 0; i < check.length; i++) {
+								if (e.text.length() != 0)
+									if (e.text.charAt(0) == check[i])
+										isValid = false;
+							}
+							if (isValid == false) {
+								e.doit = false;
+								MessageBox messageBox = new MessageBox(
+										getShell(), SWT.OK | SWT.ICON_ERROR);
+								messageBox.setText("ERROR");
+								messageBox
+										.setMessage("EventName must not contain "
+												+ exp);
+								messageBox.open();
+							}
+						}
+					});
+				}
+			};
+			add_newEvent_shell.setText("eManager - Create New Event");
+			add_newEvent_page.setSize(getShell().getSize());
+			add_newEvent_shell.pack();
+			add_newEvent_shell.open();
+		}
+	}
+
+	public void disposeShell() {
+		getParent().dispose();
+	}
+}
